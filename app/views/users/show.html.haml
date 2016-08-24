@@ -1,0 +1,24 @@
+%p#notice= notice
+
+%p
+  %b Fname:
+  = @user.fname
+%p
+  %b Lname:
+  = @user.lname
+%p
+  %b Uname:
+  = @user.uname
+%p
+  %b Passwd:
+  = @user.passwd
+%p
+  %b Active:
+  = @user.active
+%p
+  %b Group:
+  = @user.group
+
+= link_to 'Edit', edit_user_path(@user)
+\|
+= link_to 'Back', users_path

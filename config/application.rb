@@ -16,6 +16,7 @@ module Schnell
     config.generators do |g|
       g.stylesheets = false
       g.javascripts = false
+      g.javascript_engine :js
       g.test_framework  :rspec, fixture: false
       g.template_engine :haml
       g.fixture_replacement :factory_girl, dir: 'spec/factories'
