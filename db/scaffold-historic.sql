@@ -22,9 +22,6 @@ CREATE TABLE users (
 );
 
 
-
-
-
 CREATE TABLE comments (  --discutions on news
  	"id" serial PRIMARY KEY,
  	"notice_id" int NOT NULL REFERENCES notices(id) ON DELETE CASCADE,

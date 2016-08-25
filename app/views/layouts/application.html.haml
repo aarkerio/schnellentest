@@ -1,0 +1,46 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title ::Vets4Pets::
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = csrf_meta_tags
+%body
+  - if flash[:notice]
+    .alert-message.warning
+      %p
+        = flash[:notice]
+  - if flash[:error]
+    .alert-message.error
+      %p
+        = flash[:error]
+  #wrap
+    #header
+      %h1 Veterynary Clinic System 0.1
+    #nav
+      %a{ href: '/'} Home
+      %a{ href: '/about'} About Us
+      %a{ href: '/map'} Map
+      %a{ href: '/appointment/new'} Appointment
+      %a{ href: '/groups/start'} Admin
+      =render partial: 'site/loginbar'
+
+    #main
+      =yield
+
+    #sidebar
+      %div
+        = link_to 'Facebook', '/fb_path/'
+      %div
+        = link_to 'Twitter', '/tw_path/'
+
+      %div
+        = link_to 'Our Staff', '/staff_path/'
+ 
+    #footer
+      %br
+      %span.copy Copyright Chipotle Software &copy; 2015-2016
+      %a{ href: '/site/about'} Read more
+
+

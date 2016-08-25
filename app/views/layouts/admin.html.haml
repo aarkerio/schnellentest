@@ -1,0 +1,30 @@
+!!! XML
+!!!
+%html{xmlns: 'http://www.w3.org/1999/xhtml'}
+  %head
+  %meta{:content => "text/html; charset=utf-8", "http-equiv" => "Content-Type"}
+  = favicon_link_tag 'favicon.ico'
+  %title Vet4pet :: Admin
+  = stylesheet_link_tag 'admin'
+  = csrf_meta_tags
+  %body
+    - flash.each do |k, v|
+      %div{id: k}= v
+    %div{id: 'wrap'}
+      %div{id: 'header'}
+        %h1 Vets4Pets Clinic OpenEHR
+
+      %div{id: 'main'}
+        =yield
+      %div{id: 'sidebar'}
+        %h2 Column 2
+        %p
+          Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Mauris vel magna.
+        %ul
+          %li= link_to 'Link 1', 'fsddsfdsf'
+          %li= link_to 'Link 2', '111'
+          %li= link_to 'Link 3', '2222222'
+      %div{id: 'footer'}
+        %p ChipotleSoftware &copy; 2015-2016
+  = javascript_include_tag 'bundle'
+
