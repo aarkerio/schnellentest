@@ -4,7 +4,7 @@ var webpack = require('webpack');
 var GlobalizePlugin = require('globalize-webpack-plugin');
 
 module.exports = {
-  name: 'vets4pets',
+  name: 'schnell_test',
   target: 'web',
   version: '0.0.1',
   author: 'Chipotle Software (c) 2016',

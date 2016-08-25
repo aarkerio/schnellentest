@@ -1,11 +1,11 @@
 {
-  "name": "vet4pet",
-  "description": "Vets4pets",
+  "name": "schnell_test",
+  "description": "schnell_test",
   "author": "Manuel Montoya <mmontoya@gmail.com> MIT license",
   "license": "MIT License",
   "repository": {
     "type": "git",
-    "url": "https://github.com/aarkerio/rails4vet.git"
+    "url": "https://github.com/aarkerio/schnelltest.git"
   },
   "dependencies": {
     "ansi-regex": "^2.0.0",
