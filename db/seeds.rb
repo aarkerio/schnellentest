@@ -6,46 +6,29 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
- admin   = Group.create! name: 'admin', description: 'admin'
- owners  = Group.create! name: 'owners', description: 'owners'
- doctors = Group.create! name: 'doctors', description: 'doctors'
- staff   = Group.create! name: 'staff', description: 'staff'
-
-
-kinds = %w(cat dog reptile bird horse)
-
-kinds.each do |kind|
-  Kind.create! name: kind
-end
-
-kind = Kind.find_by_name 'dog'
+ admin      = Group.create! name: 'admin', description: 'admin'
+ customers  = Group.create! name: 'customers', description: 'customers'
+ staff      = Group.create! name: 'staff', description: 'staff'
 
 unless User.exists?(username: 'admin')
   admin  = User.create! username: "admin", email: "admin@example.com", password: 'password', fname: 'admin', lname: 'admin', group_id: admin.id, active: true
 end
 
-doctor_1 = User.create! username: "doctor_#{Random.rand(1000)}",email: "adoc_#{Random.rand(1000)}@exale.com",password: 'password',fname: 'Ric doctor', lname: 'Mayer', group_id: doctors.id, active: true
-doctor_2 = User.create! username: "doc_#{Random.rand(1000)}",email: "adogc_#{Random.rand(1000)}@exahle.com",password: 'password',fname: 'Luis', lname: 'Salgado', group_id: doctors.id, active: true
-doctor_3 = User.create! username: "doctora_#{Random.rand(1000)}",email: "aoc_#{Random.rand(1000)}@ehxale.com",password: 'password',fname: 'Andrea', lname: 'Mayer', group_id: doctors.id, active: true
-doctor_4 = User.create! username: "alo_#{Random.rand(1000)}",email: "lao_#{Random.rand(1000)}@hxale.com",password: 'password',fname: 'Lalo', lname: 'Herrera', group_id: doctors.id, active: true
-owner_1  = User.create! username: "manuel_#{Random.rand(1000)}",email: "owner_#{Random.rand(1000)}@eample.com",password: 'password',fname: 'Manuel', lname: 'Hurtado', group_id: owners.id, active: true
-owner_2  = User.create! username: "mario_#{Random.rand(1000)}",email: "owggh_#{Random.rand(1000)}@exmyple.com",password: 'password',fname: 'Mario', lname: 'Soto', group_id: owners.id, active: true
-owner_3  = User.create! username: "lon_#{Random.rand(1000)}",email: "osusan_#{Random.rand(1000)}@exnynple.com",password: 'password',fname: 'Susan', lname: 'McCarthy', group_id: owners.id, active: true
-owner_4  = User.create! username: "robert_#{Random.rand(1000)}",email: "owner_#{Random.rand(1000)}@eattmple.com",password: 'password',fname: 'Robert', lname: 'Gonzalez', group_id: owners.id, active: true
-owner_5  = User.create! username: "marion_#{Random.rand(1000)}",email: "owggh_#{Random.rand(1000)}@exkkmple.com",password: 'password',fname: 'Mariana', lname: 'Marilian', group_id: owners.id, active: true
-owner_6  = User.create! username: "laura_#{Random.rand(1000)}",email: "osusan_#{Random.rand(1000)}@exkknnple.com",password: 'password',fname: 'Karla', lname: 'Lopez', group_id: owners.id, active: true
-owner_7  = User.create! username: "rick_#{Random.rand(1000)}",email: "owner_#{Random.rand(1000)}@eamplkke.com",password: 'password',fname: 'Sucliff', lname: 'Soho', group_id: owners.id, active: true
-owner_8  = User.create! username: "martina_#{Random.rand(1000)}",email: "owggh_#{Random.rand(1000)}@exkmple.com",password: 'password',fname: 'Luis', lname: 'Estrada', group_id: owners.id, active: true
-owner_9  = User.create! username: "lonaa_#{Random.rand(1000)}",email: "osusan_#{Random.rand(1000)}@exnhple.com",password: 'password',fname: 'Carl', lname: 'Jonas', group_id: owners.id, active: true
+ctmr_1 = User.create! username: "customer_#{Random.rand(1000)}",email: "adoc_#{Random.rand(1000)}@exale.com",password: 'password',fname: 'Ric customer', lname: 'Mayer', group_id: customers.id, active: true
+ctmr_2 = User.create! username: "doc_#{Random.rand(1000)}",email: "adogc_#{Random.rand(1000)}@exahle.com",password: 'password',fname: 'Luis', lname: 'Salgado', group_id: customers.id, active: true
+ctmr_3 = User.create! username: "customera_#{Random.rand(1000)}",email: "aoc_#{Random.rand(1000)}@ehxale.com",password: 'password',fname: 'Andrea', lname: 'Mayer', group_id: customers.id, active: true
 
-pet_1  = Pet.create! name: 'Babby', age: 4, kind_id: kind.id, interned: false,  created: Time.now, user_id: owner_1.id, active: true
+test_1  = Test.create! name: 'Test Eins',  description: 'Test Eins Description' active: true
+test_2  = Test.create! name: 'Test Zweig', description: 'Test Zweig Description' active: true
+test_3  = Test.create! name: 'Test Drei',  description: 'Test Drei Description' active: true
+
 appo1 = {
   date: 2.days.from_now.change(hour: 7),
   pet_id: pet_1.id,
   reminder:  true,
   active:  true,
   reason: 'pain in leg',
-  doctor_id: doctor_1.id,
+  customer_id: customer_1.id,
   owner_id: owner_1.id
 }
 u1 = Appointment.create! appo1
@@ -58,7 +41,7 @@ appo2 = {
   reminder:  true,
   active:  true,
   reason: 'Allergic itchy',
-  doctor_id: doctor_2.id,
+  customer_id: customer_2.id,
   owner_id: owner_2.id
 }
 u2 = Appointment.create! appo2
@@ -70,7 +53,7 @@ appo3 = {
   reminder:  true,
   active:  true,
   reason: 'Vaccines',
-  doctor_id: doctor_1.id,
+  customer_id: customer_1.id,
   owner_id: owner_3.id
 }
 u3 = Appointment.create! appo3
@@ -82,7 +65,7 @@ appo4 = {
   reminder:  true,
   active:  true,
   reason: 'Infection',
-  doctor_id: doctor_1.id,
+  customer_id: customer_1.id,
   owner_id: owner_4.id
 }
 u4 = Appointment.create! appo4
@@ -94,7 +77,7 @@ appo5 = {
   reminder:  true,
   active:  true,
   reason: 'Infection',
-  doctor_id: doctor_1.id,
+  customer_id: customer_1.id,
   owner_id: owner_5.id
 }
 u5 = Appointment.create! appo5
@@ -106,7 +89,7 @@ appo6 = {
   reminder:  true,
   active:  true,
   reason: 'Infection',
-  doctor_id: doctor_1.id,
+  customer_id: customer_1.id,
   owner_id: owner_6.id
 }
 u6 = Appointment.create! appo6
@@ -118,7 +101,7 @@ appo7 = {
   reminder:  true,
   active:  true,
   reason: 'Infection',
-  doctor_id: doctor_1.id,
+  customer_id: customer_1.id,
   owner_id: owner_7.id
 }
 u7 = Appointment.create! appo7
@@ -130,7 +113,7 @@ appo8 = {
   reminder:  true,
   active:  true,
   reason: 'Infection',
-  doctor_id: doctor_2.id,
+  customer_id: customer_2.id,
   owner_id: owner_8.id
 }
 
@@ -144,7 +127,7 @@ appo11 = {
   reminder:  true,
   active:  true,
   reason: 'Infection',
-  doctor_id: doctor_1.id,
+  customer_id: customer_1.id,
   owner_id: owner_8.id
 }
 

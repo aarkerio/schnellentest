@@ -1,7 +1,12 @@
+#Chipotle Software (c) 2016 MIT License 
 Rails.application.routes.draw do
-  resources :users
-  resources :groups
 
+  resources :groups do
+    collection do
+      get 'welcome'
+      get 'start'
+    end
+  end
   namespace :v1, defaults: {format: :json} do
     # TEST SECTION
     post  '/tests/listing/(/:id)'=> 'tests#listing', as: 'tests_listing'
@@ -10,7 +15,6 @@ Rails.application.routes.draw do
     get   '/tests/delete/(/:id)' => 'tests#delete',  as: 'tests_delete'
     
     # QUESTION SECTION
-    # TEST SECTION
     post  '/questions/listing/(/:test_id)' => 'questions#listing', as: 'questions_listing'
     post  '/questions/create/'             => 'questions#create',  as: 'questions_create'
     post  '/questions/update/'             => 'questions#update',  as: 'questions_update'

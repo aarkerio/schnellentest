@@ -63,8 +63,9 @@ ActiveRecord::Schema.define(version: 20160825210717) do
     t.string   "passwd"
     t.boolean  "active"
     t.integer  "group_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.string   "guid",       limit: 255, null: false
     t.index ["group_id"], name: "index_users_on_group_id", using: :btree
   end
 

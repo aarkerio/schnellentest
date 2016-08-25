@@ -1,10 +1,12 @@
 class CreateUsers < ActiveRecord::Migration[5.0]
   def change
     create_table :users do |t|
-      t.string :fname
-      t.string :lname
-      t.string :uname
-      t.string :passwd
+      t.string :uname, unique: true, null: false 
+      t.string :email, unique: true, null: false
+      t.string :fname, null: false 
+      t.string :lname, null: false
+      t.string :guid   # global user ID
+      t.string :passwd, null: false
       t.boolean :active
       t.references :group, foreign_key: true
 

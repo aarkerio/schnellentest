@@ -1,6 +1,11 @@
 class GroupsController < ApplicationController
   before_action :set_group, only: [:show, :edit, :update, :destroy]
 
+  # GET /groups/welcome
+  def welcome
+    
+  end
+
   # GET /groups
   # GET /groups.json
   def index
