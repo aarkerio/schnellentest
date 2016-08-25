@@ -1,0 +1,21 @@
+%p#notice= notice
+
+%p
+  %b User:
+  = @test.user
+%p
+  %b Title:
+  = @test.title
+%p
+  %b Description:
+  = @test.description
+%p
+  %b Active:
+  = @test.active
+%p
+  %b Shared:
+  = @test.shared
+
+= link_to 'Edit', edit_test_path(@test)
+\|
+= link_to 'Back', tests_path

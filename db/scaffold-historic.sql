@@ -1,84 +1,100 @@
 -- Schnell Test Tables
 -- Chipotle Software (c) 2015-2016   MIT License
 
--- rails g scaffold Group name:string description:string
-CREATE TABLE groups (
+-- Group Model
+-- bin/rails g scaffold Group name:string description:string
+
+-- User Model
+-- bin/rails g scaffold User fname:string lname:string uname:string passwd:string active:boolean group:references
+
+-- Test Model
+-- bin/rails g scaffold Test user:references title:string description:text active:boolean shared:boolean 
+
+-- Question Model
+-- bin/rails g scaffold Question user:references question:text hint:text explanation:text worth:integer active:boolean type:boolean 
+
+CREATE TABLE "questions" (
   "id" serial PRIMARY KEY,
-  "name" varchar(50) NOT NULL UNIQUE,
-  "description" varchar(150) NOT NULL
+  "user_id" int NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  "question" text NOT NULL,
+  "hint" varchar(150) NOT NULL,
+  "explanation" text NOT NULL,
+  "active" smallint NOT NULL DEFAULT 0,
+  "worth" smallint NOT NULL DEFAULT 1,
+  "type" BOOLEAN DEFAULT TRUE
 );
 
--- Users
--- rails g scaffold User fname:string lname:string uname:string passwd:string active:boolean group:references
-CREATE TABLE users (
-    "id" serial PRIMARY KEY,
-    "uname" varchar(50) NOT NULL UNIQUE, --login
-    "passwd"  varchar(36)  NOT NULL,
-    "fname"  varchar(70)  NOT NULL,           --real name
-    "lname"  varchar(70)  NOT NULL,           --real name
-    -- "email"  varchar(45)  NOT NULL UNIQUE,    -- this column is currently dropped in order to use devise
-    "group_id" integer NOT NULL,                                                     -- Admin, normal user
-    "created" timestamp(0) with time zone DEFAULT now() NOT NULL
+COMMENT ON TABLE questions IS 'Questions in tests, hasMany Answer';
+COMMENT ON COLUMN questions.hint IS 'Optional hint to student';
+COMMENT ON COLUMN questions.type IS 'true=multiple options, false=open answer';
+COMMENT ON COLUMN questions.order IS 'Order in test';
+
+-- TestQuestion Model
+-- bin/rails g model TestQuestion test:references question:references order:integer
+
+CREATE TABLE "test_questions" (
+  "id" serial PRIMARY KEY,
+  "test_id" int NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  "question_id" text NOT NULL,
+  "order" smallint NOT NULL DEFAULT 1
 );
 
+-- Answer Model
+-- bin/rails g model Answer user:references answer:text correct:boolean question:references 
 
-CREATE TABLE comments (  --discutions on news
- 	"id" serial PRIMARY KEY,
- 	"notice_id" int NOT NULL REFERENCES notices(id) ON DELETE CASCADE,
- 	"name" varchar(100),
- 	"comment" text NOT NULL,
- 	"created" timestamp(0) with time zone DEFAULT now() NOT NULL,
- 	"level" int NOT NULL,
- 	"comentnew_id" int NOT NULL,
- 	"user_id" int NOT NULL,
- 	"status" int NOT NULL DEFAULT 1,
- 	"spam" int NOT NULL DEFAULT 0
+CREATE TABLE "answers" (
+  "id" serial PRIMARY KEY,
+  "answer" varchar(150) NOT NULL,
+  "correct" smallint NOT NULL,
+  "question_id" int NOT NULL REFERENCES questions(id) ON DELETE CASCADE,
+  "user_id" int NOT NULL REFERENCES users(id) ON DELETE CASCADE
 );
 
--- Images if portal users
--- rails g scaffold Image file:string user:references
-CREATE TABLE images (
-   id serial PRIMARY KEY,
-   file varchar(40) NOT NULL UNIQUE,
-   user_id int NOT NULL REFERENCES users(id) ON DELETE CASCADE
+COMMENT ON TABLE answers IS 'Answers to Question Model, Test module';
+COMMENT ON COLUMN answers.correct IS 'wrong = 0, correct = 1';
+
+--  Tests student results
+CREATE TABLE results ( 
+  "id" serial NOT NULL UNIQUE,
+  "user_id" int NOT NULL REFERENCES users(id) ON DELETE CASCADE,    -- student id
+  "question_id" int NOT NULL REFERENCES questions(id) ON DELETE CASCADE,
+  "answer_id" int,
+  "answer" text,
+  "correct" smallint NOT NULL DEFAULT 0,
+  "test_id" int NOT NULL REFERENCES tests(id) ON DELETE CASCADE,
+  "vclassroom_id" int NOT NULL REFERENCES vclassrooms(id) ON DELETE CASCADE,
+  "checked" smallint NOT NULL DEFAULT 0,
+  "created" timestamp(0) with time zone DEFAULT now() NOT NULL,
+   PRIMARY KEY (user_id, test_id, vclassroom_id, question_id));
+
+COMMENT ON TABLE results IS 'Student answers to quizz tests HABTM relationship';
+COMMENT ON COLUMN results.answer_id IS 'Answer to multiple option, is not used in open questions';
+COMMENT ON COLUMN results.answer IS 'Answer to open questions';
+COMMENT ON COLUMN results.correct IS 'Answer to open questions: correct or wrong';
+
+--  Tests student results
+CREATE TABLE "tests_students" ( 
+  "id" serial NOT NULL UNIQUE,
+  "user_id" int NOT NULL,   
+  "test_id" int NOT NULL,
+  "vclassroom_id" int NOT NULL,
+  "checked" smallint NOT NULL DEFAULT 0,
+  "created" timestamp(0) with time zone DEFAULT now() NOT NULL,
+   PRIMARY KEY (user_id, test_id, vclassroom_id)
 );
 
--- rails g scaffold Kind name:string image:references
+COMMENT ON TABLE tests_students IS 'Test answered by student,graded and sent by teacher';
+COMMENT ON COLUMN tests_students.checked IS 'If 1 teacher has sent tests result to students email manually';
 
--- Pets
--- rails g scaffold Pet name:string age:int image:references kind:references interned:boolean created:timestamp tags:string user:references
-
-
--- User profiles
--- rails g scaffold Profile cv:text avatar:string quote:string name_blog:string livechat:boolean wiwd:boolean tags:string fck:boolean  user:references
-CREATE TABLE profiles (
-    id serial PRIMARY KEY,
-    website  varchar(500),
-    cv text,
-    lang varchar(3) DEFAULT 'es',   -- english by default
-    avatar  varchar(100) DEFAULT 'default-avatar.jpg' NOT NULL,
-    "quote"  varchar(150),
-    name_blog  varchar(150),
-    license_id smallint REFERENCES licenses(id) ON DELETE CASCADE NOT NULL DEFAULT 6,  -- kind of license selecte dby the user
-    livechat smallint NOT NULL DEFAULT 1,  -- active ajax chat on blog
-    wiwd smallint NOT NULL DEFAULT 1,   -- what I was doing
-    active smallint NOT NULL DEFAULT 0,  -- active =1, desactived = 0
-    tags text NOT NULL DEFAULT 'arts, music, hacking, environment, education, pets',
-    fck boolean NOT NULL DEFAULT True
+-- Linking Kandie
+CREATE TABLE "tests_vclassrooms" (
+ "id" serial PRIMARY KEY,
+ "test_id" int NOT NULL REFERENCES tests(id) ON DELETE CASCADE,
+ "vclassroom_id" int NOT NULL REFERENCES vclassrooms(id) ON DELETE CASCADE,
+ "sdate"  timestamp(0) with time zone DEFAULT now() NOT NULL,
+ "fdate"  timestamp(0) with time zone DEFAULT now() NOT NULL,
+ "hidden" boolean NOT NULL DEFAULT True,
+  UNIQUE  ("test_id", "vclassroom_id")
 );
 
-
--- rails g scaffold Activity title:string activity:text notes:text points:integer minutes:integer order:integer status:boolean user:references course:references 
-CREATE TABLE activities (
-    "id" serial PRIMARY KEY,
-    "title" varchar(40) NOT NULL,
-    "activity" text NOT NULL,
-    "order" smallint DEFAULT 1 NOT NULL,
-    "status" smallint DEFAULT 0 NOT NULL,
-    "user_id" int NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    "ecourse_id" int NOT NULL REFERENCES ecourses(id) ON DELETE CASCADE,
-    "notes" text,
-    "points" smallint DEFAULT 0 NOT NULL,
-    "minutes" smallint DEFAULT 0 NOT NULL
-);
 

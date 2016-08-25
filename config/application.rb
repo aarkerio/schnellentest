@@ -16,6 +16,13 @@ module Schnell
     config.generators do |g|
       g.stylesheets = false
       g.javascripts = false
+      g.template_engine nil #to skip views
+      g.test_framework  nil #to skip test framework
+      g.helper = false
+      g.view = false
+      g.routing_specs = false
+      g.view_specs = false
+      g.helper_specs = false
       g.javascript_engine :js
       g.test_framework  :rspec, fixture: false
       g.template_engine :haml
