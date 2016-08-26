@@ -1,6 +1,9 @@
+# Chipotle Software 2016 (c) MIT License
 class GroupsController < ApplicationController
-  before_action :set_group, only: [:show, :edit, :update, :destroy]
 
+  # before_action :set_group, only: [:show, :edit, :update, :destroy]
+  #before_action :login_required,  only: [:index, :new]
+  
   # GET /groups/welcome
   def welcome
     

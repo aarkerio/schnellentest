@@ -22,7 +22,7 @@ test_1  = Test.create! name: 'Test Eins',  description: 'Test Eins Description' 
 test_2  = Test.create! name: 'Test Zweig', description: 'Test Zweig Description' active: true
 test_3  = Test.create! name: 'Test Drei',  description: 'Test Drei Description' active: true
 
-appo1 = {
+question_1 = {
   date: 2.days.from_now.change(hour: 7),
   pet_id: pet_1.id,
   reminder:  true,
@@ -31,9 +31,10 @@ appo1 = {
   customer_id: customer_1.id,
   owner_id: owner_1.id
 }
-u1 = Appointment.create! appo1
 
-pet_2 = Pet.create! name: 'Totopo', age: 3, kind_id: kind.id, interned: false,  created: Time.now, user_id: owner_2.id, active: true
+u1 = Question.create! question_1
+
+answer_1 = Answer.create! name: 'Totopo', age: 3, kind_id: kind.id, interned: false,  created: Time.now, user_id: owner_2.id, active: true
 
 appo2 = {
   date: 10.days.from_now.change(hour: 7),

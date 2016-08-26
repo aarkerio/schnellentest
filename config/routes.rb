@@ -1,10 +1,10 @@
 #Chipotle Software (c) 2016 MIT License 
 Rails.application.routes.draw do
 
+  devise_for :users
   resources :groups do
     collection do
       get 'welcome'
-      get 'start'
     end
   end
   namespace :v1, defaults: {format: :json} do
