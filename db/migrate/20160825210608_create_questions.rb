@@ -7,7 +7,7 @@ class CreateQuestions < ActiveRecord::Migration[5.0]
       t.text :explanation
       t.integer :worth, default: 5
       t.boolean :active, default: true
-      t.boolean :type, default: true  # multiple option by default
+      t.boolean :qtype, default: true  # question type multiple option by default
 
       t.timestamps
     end

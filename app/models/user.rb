@@ -1,4 +1,4 @@
-# GPLv3 Chipotle Software (c) 2015
+# GPLv3 Chipotle Software (c) 2016
 class User < ApplicationRecord
 
   extend Devise::Models
@@ -13,7 +13,9 @@ class User < ApplicationRecord
 
   before_create :generate_token
   before_create :set_active
-
+  
+  has_many :tests, dependent: :destroy
+  
   validates :guid, uniqueness: true
   validates :email, presence: true, uniqueness: true
   validates :uname, presence: true, uniqueness: true
