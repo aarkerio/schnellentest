@@ -2,9 +2,7 @@
 %html
   %head
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
-    %title ::Vets4Pets::
-    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
-    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    %title ::Schnell::
     = csrf_meta_tags
 %body
   - if flash[:notice]
@@ -17,14 +15,13 @@
         = flash[:error]
   #wrap
     #header
-      %h1 Veterynary Clinic System 0.1
+      %h1 Schnell System 0.1
     #nav
       %a{ href: '/'} Home
       %a{ href: '/about'} About Us
       %a{ href: '/map'} Map
       %a{ href: '/appointment/new'} Appointment
       %a{ href: '/groups/start'} Admin
-      =render partial: 'site/loginbar'
 
     #main
       =yield
