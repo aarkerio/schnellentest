@@ -13,17 +13,6 @@
 -- Question Model
 -- bin/rails g scaffold Question user:references question:text hint:text explanation:text worth:integer active:boolean type:boolean 
 
-CREATE TABLE "questions" (
-  "id" serial PRIMARY KEY,
-  "user_id" int NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-  "question" text NOT NULL,
-  "hint" varchar(150) NOT NULL,
-  "explanation" text NOT NULL,
-  "active" smallint NOT NULL DEFAULT 0,
-  "worth" smallint NOT NULL DEFAULT 1,
-  "type" BOOLEAN DEFAULT TRUE
-);
-
 COMMENT ON TABLE questions IS 'Questions in tests, hasMany Answer';
 COMMENT ON COLUMN questions.hint IS 'Optional hint to student';
 COMMENT ON COLUMN questions.type IS 'true=multiple options, false=open answer';
@@ -32,26 +21,16 @@ COMMENT ON COLUMN questions.order IS 'Order in test';
 -- TestQuestion Model
 -- bin/rails g model TestQuestion test:references question:references order:integer
 
-CREATE TABLE "test_questions" (
-  "id" serial PRIMARY KEY,
-  "test_id" int NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-  "question_id" text NOT NULL,
-  "order" smallint NOT NULL DEFAULT 1
-);
-
 -- Answer Model
--- bin/rails g model Answer user:references answer:text correct:boolean question:references 
+-- bin/rails g model Answer user:references answer:text correct:boolean question:references
 
-CREATE TABLE "answers" (
-  "id" serial PRIMARY KEY,
-  "answer" varchar(150) NOT NULL,
-  "correct" smallint NOT NULL,
-  "question_id" int NOT NULL REFERENCES questions(id) ON DELETE CASCADE,
-  "user_id" int NOT NULL REFERENCES users(id) ON DELETE CASCADE
-);
+-- Classroom Model
+-- bin/rails g model Answer user:references answer:text correct:boolean question:references
 
-COMMENT ON TABLE answers IS 'Answers to Question Model, Test module';
-COMMENT ON COLUMN answers.correct IS 'wrong = 0, correct = 1';
+
+-- Result Model
+-- bin/rails g model Result user:references classroom:references test:references question:references answer:references answertxt:text correct:boolean
+
 
 --  Tests student results
 CREATE TABLE results ( 
@@ -64,7 +43,6 @@ CREATE TABLE results (
   "test_id" int NOT NULL REFERENCES tests(id) ON DELETE CASCADE,
   "vclassroom_id" int NOT NULL REFERENCES vclassrooms(id) ON DELETE CASCADE,
   "checked" smallint NOT NULL DEFAULT 0,
-  "created" timestamp(0) with time zone DEFAULT now() NOT NULL,
    PRIMARY KEY (user_id, test_id, vclassroom_id, question_id));
 
 COMMENT ON TABLE results IS 'Student answers to quizz tests HABTM relationship';
@@ -96,5 +74,59 @@ CREATE TABLE "tests_vclassrooms" (
  "hidden" boolean NOT NULL DEFAULT True,
   UNIQUE  ("test_id", "vclassroom_id")
 );
+
+CREATE TABLE vclassrooms (
+    "id" serial PRIMARY KEY,
+    "name" varchar(150) NOT NULL,
+    "created" timestamp(0) with time zone DEFAULT now() NOT NULL,
+    "status" smallint DEFAULT 0 NOT NULL,
+    "historical" smallint DEFAULT 0 NOT NULL,
+    "ecourse_id" int NOT NULL REFERENCES ecourses(id) ON DELETE CASCADE,
+    "secret" varchar(10),
+    "sdate" date NOT NULL DEFAULT now(), --starting date
+    "fdate" date NOT NULL DEFAULT now(), -- finish date
+    "access" smallint NOT NULL DEFAULT 0,
+    "message" boolean NOT NULL DEFAULT True,
+    "chat" smallint NOT NULL DEFAULT 0, -- active / desactive chat
+    "videoconference" smallint NOT NULL DEFAULT 0, -- active / desactive FLV stream
+    "streaming" text,
+    "evaluation" smallint NOT NULL DEFAULT 0, -- active / desactive student evaluation when course finish
+    "diploma" smallint NOT NULL DEFAULT 0, -- active / desactive diploma when student get enough points
+    "gcalendar_id" varchar(70) 
+);
+
+COMMENT ON TABLE vclassrooms IS 'Virtual classrooms';
+COMMENT ON COLUMN vclassrooms.status IS 'Define published or draft';
+COMMENT ON COLUMN vclassrooms.historical IS 'Vclassroom is now historical record';
+COMMENT ON COLUMN vclassrooms.secret IS 'Secret code to allow students register by themselves';
+COMMENT ON COLUMN vclassrooms.access IS 'Public VC in other words without secret code';
+COMMENT ON COLUMN vclassrooms.message IS 'Just enabled disabled little message in vclassroom if teacher is logged, See show method';
+
+-- Students comments about course when vclassroom finish
+CREATE TABLE evaluations (
+ "id" serial PRIMARY KEY,
+ "vclassroom_id" int NOT NULL REFERENCES vclassrooms(id) ON DELETE CASCADE,
+ "evaluation" smallint,
+ "intructors" text,
+ "materiales" text,
+ "take_another" boolean,
+ "free" text, 
+ "created" timestamp(0) with time zone DEFAULT now() NOT NULL
+);
+
+COMMENT ON TABLE evaluations IS 'Students comments about course when vclassroom finish';
+COMMENT ON COLUMN evaluations.free IS 'suggestions, opinion or something missing';
+COMMENT ON COLUMN evaluations.evaluation IS '1 to 10';
+
+--HABTM (Core Karamelo Model)
+CREATE TABLE user_vclassrooms (
+  "id" serial PRIMARY KEY,
+  "user_id" int NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  "vclassroom_id" int NOT NULL REFERENCES vclassrooms(id) ON DELETE CASCADE,
+  "group_id" smallint NOT NULL REFERENCES groups(id) ON DELETE CASCADE DEFAULT 3,
+  "kind" smallint NOT NULL DEFAULT 0,
+   UNIQUE ("user_id", "vclassroom_id", "kind")
+);
+
 
 

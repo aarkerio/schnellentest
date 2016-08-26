@@ -1,49 +1,43 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+# Chipotle Software 2016 (c)  MIT License 
 
- admin      = Group.create! name: 'admin', description: 'admin'
- customers  = Group.create! name: 'customers', description: 'customers'
- staff      = Group.create! name: 'staff', description: 'staff'
+admin      = Group.create! name: 'admin', description: 'admin'
+customers  = Group.create! name: 'customers', description: 'customers'
+staff      = Group.create! name: 'staff', description: 'staff'
 
 unless User.exists?(username: 'admin')
   admin  = User.create! username: "admin", email: "admin@example.com", password: 'password', fname: 'admin', lname: 'admin', group_id: admin.id, active: true
 end
 
-ctmr_1 = User.create! username: "customer_#{Random.rand(1000)}",email: "adoc_#{Random.rand(1000)}@exale.com",password: 'password',fname: 'Ric customer', lname: 'Mayer', group_id: customers.id, active: true
-ctmr_2 = User.create! username: "doc_#{Random.rand(1000)}",email: "adogc_#{Random.rand(1000)}@exahle.com",password: 'password',fname: 'Luis', lname: 'Salgado', group_id: customers.id, active: true
-ctmr_3 = User.create! username: "customera_#{Random.rand(1000)}",email: "aoc_#{Random.rand(1000)}@ehxale.com",password: 'password',fname: 'Andrea', lname: 'Mayer', group_id: customers.id, active: true
+ctmr_1 = User.create! username: "emily77", email: 'emily@exale.com', password: 'password', fname: 'Emily',lname: 'Mayer', group_id: customers.id, active: true
 
-test_1  = Test.create! name: 'Test Eins',  description: 'Test Eins Description' active: true
-test_2  = Test.create! name: 'Test Zweig', description: 'Test Zweig Description' active: true
-test_3  = Test.create! name: 'Test Drei',  description: 'Test Drei Description' active: true
+test_1  = Test.create! name: 'Test Eins',  description: 'Test Eins Description' active: true, user_id: ctmr_1.id
+test_2  = Test.create! name: 'Test Zweig', description: 'Test Zweig Description' active: true, user_id: ctmr_1.id
+test_3  = Test.create! name: 'Test Drei',  description: 'Test Drei Description' active: true, user_id: ctmr_1.id
 
 question_1 = {
-  date: 2.days.from_now.change(hour: 7),
-  pet_id: pet_1.id,
-  reminder:  true,
-  active:  true,
-  reason: 'pain in leg',
-  customer_id: customer_1.id,
-  owner_id: owner_1.id
+  user_id: ctmr_1.id, question: 'Question 11111', hint: 'Hint 111',explanation: 'Etwas Explanation 11', worth: 1, active: true, type:true
 }
 
-u1 = Question.create! question_1
+question_2 = {
+  user_id: ctmr_1.id, question: 'Question 222', hint: 'Hint 222',explanation: 'Etwas Explanation 22', worth: 1, active: true, type:true
+}
+
+q1 = Question.create! question_1
+q2 = Question.create! question_2
+
+test_questions_1 = { test_id: test_1.id, question_id: q1.id,  order: 1 }
+
+tq1 = TestQuestion.create! test_questions_1
+
+test_questions_2 = { test_id: test_1.id, question_id: q2.id,  order: 1 }
+
+tq1 = TestQuestion.create! test_questions_2
 
 answer_1 = Answer.create! name: 'Totopo', age: 3, kind_id: kind.id, interned: false,  created: Time.now, user_id: owner_2.id, active: true
 
-appo2 = {
-  date: 10.days.from_now.change(hour: 7),
-  pet_id: pet_2.id,
-  reminder:  true,
-  active:  true,
-  reason: 'Allergic itchy',
-  customer_id: customer_2.id,
-  owner_id: owner_2.id
+answer_1 = {
+ 
+  question_id: owner_2.id
 }
 u2 = Appointment.create! appo2
 
