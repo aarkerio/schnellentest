@@ -1,11 +1,15 @@
 var path = require('path');
 var webpack = require('webpack');
 
-var GlobalizePlugin = require('globalize-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+var GlobalizePlugin     = require('globalize-webpack-plugin');
+
 
 module.exports = {
   entry: {
-    app: ["./entry.js"]
+    app: [
+ 'webpack-dev-server/client?http://0.0.0.0:8080',
+'webpack/hot/dev-server', "./entry.js"] 
   },
   output: {
     path: path.resolve(__dirname, "build"),
@@ -20,7 +24,9 @@ module.exports = {
                                 }, include: path.app
                 },
                 { test: /\.css$/, loader: 'style-loader!css-loader'},
-                { test: /\.js$/, loader: 'babel', exclude: /node_modules/},
+                { test: /\.js$/, loader: 'babel', exclude: /node_modules/, query: {
+                        presets: [ 'es2015', 'react', 'react-hmre' ]
+                }},
                 { test: /\.less$/, loader: 'style!css!less' },
                 { test: /\.scss$/, loader: 'style!css!sass' },
                 { test: /\.json$/, loader: "json-loader" },
@@ -29,13 +35,22 @@ module.exports = {
                 { test: /\.gif$/, loader: "url-loader?mimetype=image/png" }
               ]
   },
+  devServer: {
+    hot: true,
+    inline: true,
+    historyApiFallback: true
+  },
   node: {
      fs: "empty"
   },
   plugins: [
+       new webpack.HotModuleReplacementPlugin(),
        new webpack.ProvidePlugin({
             $: "jquery",
             jQuery: "jquery"
+        }),
+        new HtmlWebpackPlugin({
+            template: './index.html'
         }),
         // Globalize modules are wrapped by UMD offering AMD, CJS and global choices. Webpack tries to use AMD (the one that appears first) 
         // and can't resolve paths correctly. globalize-webpack-plugin makes webpack to use CJS over AMD in globalize packages, 

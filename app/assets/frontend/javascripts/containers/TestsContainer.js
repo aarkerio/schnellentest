@@ -23,7 +23,7 @@ class TestContainer extends Component {
   }
 
   /**  
-   *   
+   * Order tests method   
    */
   orderList(field, order) {
     return field;

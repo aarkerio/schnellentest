@@ -25,16 +25,15 @@ function requestTEST(TEST_id) {
 export function fetchTests(active=true, user_id=11) {
   return function (dispatch) {
     let data = {
-      method: 'POST',
-      credentials: 'same-origin',
-      mode: 'same-origin',
+      method: 'GET',
+      credentials: 'omit',
+      mode: 'cors',
       body: JSON.stringify({
         active: active  // get all
       }),
       headers: {
         'Accept':       'application/json',
-        'Content-Type': 'application/json',
-        'X-CSRFToken':  cookie.load('csrftoken')
+        'Content-Type': 'application/json'
       }
     };
     return fetch('http://localhost:3000/api/v1/tests/listing/'+user_id, data)
@@ -54,8 +53,8 @@ export function fulFillForm() {
     return function (dispatch) {
       let data = {
         method:      'GET',
-        credentials: 'same-origin',
-        mode:        'same-origin',
+        credentials: 'omit',
+        mode:        'cors',
         headers: {
           'Accept':       'application/json',
           'Content-Type': 'application/json',
@@ -114,8 +113,8 @@ export function getPets(id, owner=true) {
     return function (dispatch) {
       let data = {
         method:      'POST',
-        credentials: 'same-origin',
-        mode:        'same-origin',
+        credentials: 'omit',
+        mode:        'cors',
         body:        JSON.stringify({
                        id: id,
                        owner: owner
@@ -144,8 +143,8 @@ export function createTEST(fields) {
   let data = {
       method: 'POST',
       body: JSON.stringify(fields),
-      credentials: 'same-origin',
-      mode: 'same-origin',
+      credentials: 'omit',
+      mode: 'cors',
       headers: {
         'Accept':       'application/json',
         'Content-Type': 'application/json',
@@ -164,8 +163,8 @@ export function updateTEST(fields) {
   let data = {
       method: 'PATCH',
       body:  {TESTintment: JSON.stringify(fields)},
-      credentials: 'same-origin',
-      mode: 'same-origin',
+      credentials: 'omit',
+      mode: 'cors',
       headers: {
           'Accept':       'application/json',
           'Content-Type': 'application/json',
@@ -173,7 +172,7 @@ export function updateTEST(fields) {
       }
   };
   return dispatch => {
-    return fetch('/TESTintments/', data)
+    return fetch('/intments/', data)
            .then(response => response.json())
            .then(json => dispatch(updatedTEST(json)))
   };
@@ -191,14 +190,14 @@ export function removeTEST(TEST_id) {
   let data = {
       method: 'GET',
       id: aid,
-      credentials: 'same-origin',
+      credentials: 'omit',
       headers: {
           'X-CSRFToken': cookie.load('csrftoken')
       }
   };
 
   return dispatch => {
-    return fetch('/TESTintments/delete_TEST', data)
+    return fetch('/intments/delete_TEST', data)
            .then(response => response.json())
            .then(json => dispatch(receiveTESTs(json)))
   };
@@ -215,8 +214,8 @@ export function getUsersByGroup(group_id=1) {
         body:  JSON.stringify({
                        group_id: group_id
                      }),
-        credentials: 'same-origin',
-        mode:        'same-origin',
+        credentials: 'omit',
+        mode:        'cors',
         headers: {
           'Accept':       'application/json',
           'Content-Type': 'application/json',
@@ -255,8 +254,8 @@ export function deleteTEST(id){
      return function (dispatch) {
       let data = {
         method: 'DELETE',
-        credentials: 'same-origin',
-        mode:        'same-origin',
+        credentials: 'omit',
+        mode:        'cors',
         headers: {
           'Accept':       'application/json',
           'Content-Type': 'application/json',
