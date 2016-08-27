@@ -12,7 +12,7 @@ module.exports = {
     publicPath: "/app/assets/",
     filename: "bundle.js"
   },
-   module: {
+  module: {
     loaders:  [
                 {test: /\.jsx?$/, loader: 'babel', exclude: /node_modules/,  query: {
                                  cacheDirectory: true,
@@ -29,8 +29,22 @@ module.exports = {
                 { test: /\.gif$/, loader: "url-loader?mimetype=image/png" }
               ]
   },
-   node: {
+  node: {
      fs: "empty"
-  }
+  },
+  plugins: [
+       new webpack.ProvidePlugin({
+            $: "jquery",
+            jQuery: "jquery"
+        }),
+        // Globalize modules are wrapped by UMD offering AMD, CJS and global choices. Webpack tries to use AMD (the one that appears first) 
+        // and can't resolve paths correctly. globalize-webpack-plugin makes webpack to use CJS over AMD in globalize packages, 
+        new GlobalizePlugin({
+           production: false,
+           messages: "messages/[locale].json", // messages (not optional)
+           developmentLocale: "en",
+           supportedLocales: ["en"],
+           output: "i18n/[locale].[hash].js"
+    })
+    ]
 };
-

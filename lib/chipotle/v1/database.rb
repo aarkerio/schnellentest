@@ -1,3 +1,4 @@
+#Chipotle Software (c) 2016 MIT License
 module Chipotle
   module V1
     module Database

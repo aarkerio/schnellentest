@@ -19,10 +19,11 @@ Rails.application.routes.draw do
   namespace :api, defaults: {format: :json} do
     namespace :v1 do
       # TEST SECTION
-      post  '/tests/listing/(/:id)'=> 'tests#listing', as: 'tests_listing'
-      post  '/tests/update/'       => 'tests#update',  as: 'tests_update'
-      post  '/tests/create'        => 'tests#create',  as: 'tests_create'
-      get   '/tests/delete/(/:id)' => 'tests#delete',  as: 'tests_delete'
+      get  '/tests/listing/(/:guid)'=> 'tests#listing', as: 'tests_listing'
+      post  '/tests/getone/(/:id)'  => 'tests#getone',  as: 'tests_getone'
+      post  '/tests/update/'        => 'tests#update',  as: 'tests_update'
+      post  '/tests/create'         => 'tests#create',  as: 'tests_create'
+      get   '/tests/delete/(/:id)'  => 'tests#delete',  as: 'tests_delete'
     
       # QUESTION SECTION
       post  '/questions/listing/(/:test_id)' => 'questions#listing', as: 'questions_listing'

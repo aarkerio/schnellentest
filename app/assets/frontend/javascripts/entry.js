@@ -9,11 +9,11 @@ import { Provider } from 'react-redux';
 import { Router, Route, browserHistory, IndexRoute } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 
-import AppContainer       from './containers/AppContainer';
-import ApposContainer     from './containers/ApposContainer';
+import AppContainer           from './containers/AppContainer';
+import TestsContainer         from './containers/TestsContainer';
 import AppoModalEditComponent from './components/AppoModalEditComponent';
 import AppoModalNewComponent  from './components/AppoModalNewComponent';
-import NotFound           from './components/NotFound';
+import NotFound               from './components/NotFound';
 
 import configureStore from './configureStore';
 
@@ -25,10 +25,10 @@ render(
     <div>
       { /* Tell the Router to use our enhanced history */ }
       <Router history={history}>
-        <Route name="app" path="/groups/start" component={AppContainer} />
-        <Route path="/appointments" component={ApposContainer}>
-          <Route path="/appointment/:id" component={AppoModalEditComponent} />
-          <Route path="/appointmentnew" component={AppoModalNewComponent} />
+        <Route name="app" path="/welcome" component={AppContainer} />
+        <Route path="/tests" component={TestsContainer}>
+          <Route path="/tests/:id" component={AppoModalEditComponent} />
+          <Route path="/testnew" component={AppoModalNewComponent} />
         </Route>
 
         <Route path="*" component={NotFound} status={404} />
