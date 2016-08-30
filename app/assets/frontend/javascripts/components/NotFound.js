@@ -7,7 +7,7 @@ export default class NotFound extends Component {
     return (
         <div className="container">
           <h1>Error 404! Page not found.</h1>
-          <Link to="/welcome">Zuhause</Link>
+          <Link to="/">Zuhause</Link>
         </div>
     );
   }

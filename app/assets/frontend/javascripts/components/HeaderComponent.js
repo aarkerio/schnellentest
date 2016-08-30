@@ -15,9 +15,9 @@ class HeaderComponent extends Component {
     return (
       <div>
        <ul id="nav">
-         <li><Link to="/groups/start">Zuhause</Link></li>
-         <li><Link to="/appointments">Ernennungs</Link></li>
-         <li><Link to="/appointment/5">Bearbeitung</Link></li>
+         <li><Link to="/">Zuhause</Link></li>
+         <li><Link to="/tests">Ernennungs</Link></li>
+         <li><Link to="/tests/view/11">Bearbeitung</Link></li>
          <li><Link to="/users">Users</Link></li>
          {this.props.children}
         </ul>

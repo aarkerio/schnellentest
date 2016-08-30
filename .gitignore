@@ -32,11 +32,11 @@ app/assets/frontend/javascripts/built/*.svg
 app/assets/frontend/javascripts/built/*.ttf
 app/assets/frontend/javascripts/built/*.eot
 app/assets/frontend/javascripts/built/*.woff
-
 *~
-
 # emacs temp files
 \#*#
 .#*
 .tmp-globalize-webpack/
+*.hot-update.js
+*.hot-update.json
 

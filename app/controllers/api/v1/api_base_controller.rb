@@ -3,6 +3,8 @@ require 'chipotle/v1/error_handling'
 module Api
 module V1
   class ApiBaseController < ::ApplicationController
+    
+    skip_before_action :verify_authenticity_token
 
     # before_action :connect_customer   if Rails.env != 'test'
     layout false

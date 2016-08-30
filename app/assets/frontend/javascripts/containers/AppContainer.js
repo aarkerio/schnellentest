@@ -19,7 +19,7 @@ class AppContainer extends Component {
        <h1>Anwendung</h1>
        <p><Link to="/">Zuhause.</Link></p>
        <div><button onClick={() => browserHistory.push('/tests')}>Zu Ernennungs </button></div>
-       <p><Link to="/test/5">Bearbeitung</Link></p>
+       <p><Link to="/tests/11">Bearbeitung</Link></p>
        <p><Link to="/about">About</Link></p>
        <p><Link to="/users">Users</Link></p>
        {this.props.children}

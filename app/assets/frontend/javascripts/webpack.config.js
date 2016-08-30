@@ -7,13 +7,11 @@ var GlobalizePlugin     = require('globalize-webpack-plugin');
 
 module.exports = {
   entry: {
-    app: [
- 'webpack-dev-server/client?http://0.0.0.0:8080',
-'webpack/hot/dev-server', "./entry.js"] 
+    app: ["./entry.js"] 
   },
   output: {
     path: path.resolve(__dirname, "build"),
-    publicPath: "/app/assets/",
+    publicPath: "http://localhost:8080/build/",
     filename: "bundle.js"
   },
   module: {
@@ -44,13 +42,9 @@ module.exports = {
      fs: "empty"
   },
   plugins: [
-       new webpack.HotModuleReplacementPlugin(),
        new webpack.ProvidePlugin({
             $: "jquery",
             jQuery: "jquery"
-        }),
-        new HtmlWebpackPlugin({
-            template: './index.html'
         }),
         // Globalize modules are wrapped by UMD offering AMD, CJS and global choices. Webpack tries to use AMD (the one that appears first) 
         // and can't resolve paths correctly. globalize-webpack-plugin makes webpack to use CJS over AMD in globalize packages, 

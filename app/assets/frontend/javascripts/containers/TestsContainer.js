@@ -38,7 +38,7 @@ class TestContainer extends Component {
     return (
       <div>
       <HeaderComponent />
-      <div><Link to="/appointmentnew">
+      <div><Link to="/testnew">
             <button type="button" className="btn btn-default btn-sm">
               <span className="glyphicon glyphicon-plus"></span>
             </button>

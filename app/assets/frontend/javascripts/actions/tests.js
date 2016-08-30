@@ -25,27 +25,28 @@ function requestTEST(TEST_id) {
 export function fetchTests(active=true, user_id=11) {
   return function (dispatch) {
     let data = {
-      method: 'GET',
-      credentials: 'omit',
-      mode: 'cors',
+      method: 'POST',
+      credentials: 'same-origin',
+      mode: 'same-origin',
       body: JSON.stringify({
-        active: active  // get all
+        active: active,  // get all
       }),
       headers: {
         'Accept':       'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'X-CSRFToken': cookie.load('csrftoken')
       }
     };
-    return fetch('http://localhost:3000/api/v1/tests/listing/'+user_id, data)
+    return fetch('/api/v1/tests/listing/'+user_id, data)
           .then(response => response.json())
-          .then(json => dispatch(receiveTESTs(json)));
+          .then(json => dispatch(receiveTests(json)));
   }
 };
 
-export function receiveTESTs(TESTsArrayProp) {
+export function receiveTests(TestsArrayProp) {
   return {
     type:  RECEIVE_TESTS,
-    TESTsArrayProp
+    TestsArrayProp
   }
 };
 
@@ -53,29 +54,29 @@ export function fulFillForm() {
     return function (dispatch) {
       let data = {
         method:      'GET',
-        credentials: 'omit',
-        mode:        'cors',
+        credentials: 'same-origin',
+        mode:        'same-origin',
         headers: {
           'Accept':       'application/json',
           'Content-Type': 'application/json',
           'X-CSRFToken':  cookie.load('csrftoken')
         }
       };
-      return fetch('/TESTintments/fulfill_form', data)
+      return fetch('/tests/fulfill_form', data)
           .then(response => response.json())
-          .then(json => dispatch(setTESTForm(json)));
+          .then(json => dispatch(setTestForm(json)));
   };
 };
 
 /*  Auxiliar Method */  
-function setTESTForm(TEST_arrays) {
+function setTestForm(test_arrays) {
   return {
     type:  FULFILL_FORM,
-    TEST_arrays: TEST_arrays
+    TEST_arrays: test_arrays
   };
 };
 
-/* Load data in form to edit TESTintment */
+/* Load data in form to edit test */
 export function updateForm(id) {
     return function (dispatch) {
       let data = {
@@ -108,13 +109,13 @@ function receiveTEST(update_form) {
   Load pets owned for a customer 
   owner defines if it gets the pets (:id, :name) for owner or for TESTintment model 
 */
-export function getPets(id, owner=true) {
+export function getTests(id, owner=true) {
     console.log('#############  In action getPets!!!');
     return function (dispatch) {
       let data = {
         method:      'POST',
-        credentials: 'omit',
-        mode:        'cors',
+        credentials: 'same-origin',
+        mode:        'same-origin',
         body:        JSON.stringify({
                        id: id,
                        owner: owner
@@ -125,17 +126,17 @@ export function getPets(id, owner=true) {
           'X-CSRFToken':  cookie.load('csrftoken')
         }
       }
-      return fetch('/pets/get_pets', data)
+      return fetch('/pets/get_tests', data)
           .then(response => response.json())
           .then(json => dispatch(setPets(json)));
   }
 };
 
-export function setPets(pets_options) {
+export function setPets(tests_options) {
   console.log('>>>>>>>>>>>>> Fields in setPets: ' + JSON.stringify(pets_options));
   return {
     type:  SET_PETS,
-    pets_options
+    tests_options
   }
 };
 
@@ -143,8 +144,8 @@ export function createTEST(fields) {
   let data = {
       method: 'POST',
       body: JSON.stringify(fields),
-      credentials: 'omit',
-      mode: 'cors',
+      credentials: 'same-origin',
+      mode: 'same-origin',
       headers: {
         'Accept':       'application/json',
         'Content-Type': 'application/json',

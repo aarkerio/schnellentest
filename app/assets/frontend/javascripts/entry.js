@@ -25,7 +25,7 @@ render(
     <div>
       { /* Tell the Router to use our enhanced history */ }
       <Router history={history}>
-        <Route name="app" path="/welcome" component={AppContainer} />
+        <Route name="app" path="/" component={AppContainer} />
         <Route path="/tests" component={TestsContainer}>
           <Route path="/tests/:id" component={AppoModalEditComponent} />
           <Route path="/testnew" component={AppoModalNewComponent} />

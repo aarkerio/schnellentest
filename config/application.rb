@@ -11,7 +11,10 @@ module Schnell
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
-    
+
+    # Make sure devise accepts json requests.
+    # DeviseController.respond_to :html, :json
+
     # turn off generators 
     config.generators do |g|
       g.stylesheets = false
