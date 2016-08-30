@@ -9,8 +9,9 @@ module V1
     def listing
       #return render json: params.to_json
       fail ActiveRecord::RecordNotFound, 'Test not found one'  if params[:guid].blank?
+      
       tests = Test.where( user_id: params[:guid] )   
-      all = TestSerializer.new.all_test(tests)
+      all   = TestSerializer.new.all_test(tests)
       return render json: all.as_json
       fail ActiveRecord::RecordNotFound, 'Test not found two'  if @test.nil?
     end
@@ -20,7 +21,7 @@ module V1
     # guid  - The guid String.
     #
     # Returns a json object.
-    def getone
+    def get_one
       #return render json: params.to_json
       fail ActiveRecord::RecordNotFound, 'Test not found one'  if params[:id].blank?
       

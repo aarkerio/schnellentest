@@ -6,7 +6,7 @@ import * as TestsActionCreators from '../actions/tests';
 import React, { Component, PropTypes } from 'react';
 import { Link, browserHistory } from 'react-router';
 import HeaderComponent    from '../components/HeaderComponent';
-import AppoRowComponent   from '../components/AppoRowComponent';
+import TestRowComponent   from '../components/TestRowComponent';
 import AppoModalNewComponent from '../components/AppoModalNewComponent';
 
 class TestContainer extends Component {
@@ -31,8 +31,8 @@ class TestContainer extends Component {
 
   render() {
     let rows = [];
-    this.props.TestsArrayProp.forEach(function(appo) {
-       rows.push(<AppoRowComponent appointment={appo} key={appo.id} keyRow={appo.id} />);
+    this.props.TestsArrayProp.forEach(function(test) {
+       rows.push(<TestRowComponent appointment={test} key={test.id} keyRow={test.id} />);
     });
     
     return (
@@ -47,11 +47,10 @@ class TestContainer extends Component {
         <thead>
           <tr>
              <th style={{width: '35px', padding:0}} key='kedit'>Edit</th>
-             <th style={{width: '35px', padding:0}} key='kowner'><a href="#" onClick={this.orderList.bind(this, 'owner', 'asc')}>Owner</a></th>
-             <th style={{width: '35px', padding:0}} key='kdate'><a href="#" onClick={this.orderList.bind(this, 'date', 'asc')}>Scheduled date</a></th>
-             <th style={{width: '35px', padding:0}} key='kpetname'>Pet</th>
-             <th style={{width: '35px', padding:0}} key='kreason'>Reason</th>
-             <th style={{width: '35px', padding:0}} key='kdoctor'><a href="#" onClick={this.orderList.bind(this, 'doctor', 'asc')}>Doctor</a></th>
+             <th style={{width: '35px', padding:0}} key='kowner'><a href="#" onClick={this.orderList.bind(this, 'owner', 'asc')}>Title</a></th>
+             <th style={{width: '35px', padding:0}} key='kdate'><a href="#" onClick={this.orderList.bind(this, 'date', 'asc')}>Description</a></th>
+             <th style={{width: '35px', padding:0}} key='kpetname'>Active</th>
+             <th style={{width: '35px', padding:0}} key='kreason'>Shared</th>
              <th style={{width: '35px', padding:0}} key='kdel'>Delete</th>
            </tr>
          </thead>

@@ -37,7 +37,7 @@ export function fetchTests(active=true, user_id=11) {
         'X-CSRFToken': cookie.load('csrftoken')
       }
     };
-    return fetch('/api/v1/tests/listing/'+user_id, data)
+    return fetch('/api/v1/tests/listing/'+user_id+'/', data)
           .then(response => response.json())
           .then(json => dispatch(receiveTests(json)));
   }
