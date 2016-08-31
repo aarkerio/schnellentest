@@ -1,0 +1,11 @@
+html, 
+body {height:100%; padding:0; margin:0; width:100%;}
+body {display:flex; flex-direction:column;}
+#main {flex-grow:1;}
+
+/* optional */
+header {min-height:50px; background:green;}
+#main {background:red;}
+footer {min-height:50px; background:blue;}
+
+
