@@ -7,7 +7,6 @@ import React, { Component, PropTypes } from 'react';
 import { Link, browserHistory } from 'react-router';
 import HeaderComponent    from '../components/HeaderComponent';
 import TestRowComponent   from '../components/TestRowComponent';
-import AppoModalNewComponent from '../components/AppoModalNewComponent';
 
 class TestContainer extends Component {
   constructor(props) {
@@ -75,7 +74,7 @@ TestContainer.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    TestsArrayProp: state.rootReducer.appointments_rdcer.TestsArrayProp
+    TestsArrayProp: state.rootReducer.test_rdcer.TestsArrayProp
   }
 };
 

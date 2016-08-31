@@ -1,19 +1,19 @@
 'use strict';
 
-import { REQUEST_POSTS, RECEIVE_APPOS } from '../actions/appos';
+import { REQUEST_TESTS, RECEIVE_TESTS } from '../actions/tests';
 
 const initialState = {
-    apposArrayProp: [],
+    TestsArrayProp: [],
 };
 
 const tests_rdcer = (state = initialState, action) => { 
   switch (action.type) {
-    case RECEIVE_APPOS:
+    case RECEIVE_TESTS:
       return Object.assign({}, state, {
            TestsArrayProp: action.TestsArrayProp
       });
      
-    case REQUEST_POSTS:
+    case REQUEST_TESTS:
       return Object.assign({}, state, {
         isFetching: true,
         didInvalidate: false
@@ -24,4 +24,4 @@ const tests_rdcer = (state = initialState, action) => {
   }
 };
 
-export default appointments_rdcer;
+export default tests_rdcer;

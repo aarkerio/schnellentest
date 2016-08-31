@@ -5,7 +5,7 @@ import 'babel-polyfill';
 export const RECEIVE_TESTS    = 'RECEIVE_TESTS';
 export const RECEIVE_ONE_TEST = 'RECEIVE_ONE_TEST';
 export const REMOVE_TEST      = 'REMOVE_TEST';
-export const REQUEST_POSTS    = 'REQUEST_POSTS';
+export const REQUEST_TESTS    = 'REQUEST_TESTS';
 export const CREATE_TEST      = 'CREATE_TEST';
 export const UPDATED_TEST     = 'UPDATED_TEST';
 export const UPDATE_FORM      = 'UPDATE_FORM';
@@ -15,10 +15,10 @@ export const RECEIVE_OWNERS   = 'RECEIVE_OWNERS';
 export const RECEIVE_DOCTORS  = 'RECEIVE_DOCTORS';
 export const SET_PETS         = 'SET_PETS';
 
-function requestTEST(TEST_id) {
+function requestTest(test_id) {
   return {
     type: REQUEST_POSTS,
-    TEST_id
+    test_id
   }
 }
 

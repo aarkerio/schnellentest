@@ -21,10 +21,10 @@ class TestRow extends Component {
   *  Add appointment
   *  Private
   */
-  deleteAppointment(appo_id) {
-    let action = ApposActionCreators.deleteAppo(appo_id);
+  deleteAppointment(test_id) {
+    let action = ApposActionCreators.deleteAppo(test_id);
     this.props.dispatch(action);
-    console.log(' to delete appo_id: >>>>' + appo_id);
+    console.log(' to delete test_id: >>>>' + test_id);
     window.location='/tests';
   }
 
@@ -45,11 +45,11 @@ class TestRow extends Component {
   }
 }
 
-AppoRow.propTypes = {
+TestRow.propTypes = {
   test: PropTypes.object,
   keyRow:      PropTypes.number,
   dispatch:    PropTypes.func
 }
 
-export default connect()(AppoRow);
+export default connect()(TestRow);
 
