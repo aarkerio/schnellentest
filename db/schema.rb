@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(version: 20160826183745) do
     t.text     "explanation"
     t.integer  "worth",       default: 5
     t.boolean  "active",      default: true
-    t.boolean  "type",        default: true
+    t.boolean  "qtype",       default: true
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
     t.index ["user_id"], name: "index_questions_on_user_id", using: :btree
