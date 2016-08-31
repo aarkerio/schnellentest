@@ -14,7 +14,7 @@ class AppContainer extends Component {
   
   render() {
     return (
-      <div>
+      <div className="someClass">
        <HeaderComponent />
        <h1>Anwendung</h1>
        <p><Link to="/">Zuhause.</Link></p>

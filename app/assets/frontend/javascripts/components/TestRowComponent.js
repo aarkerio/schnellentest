@@ -29,7 +29,7 @@ class TestRow extends Component {
   }
 
   render() {
-    const { appointment, keyRow } = this.props;
+    const { test, keyRow } = this.props;
     return (
       <tr key={keyRow}>
         <td style={{width: '35px', padding:0, textAlign: 'center'}}> <Link to={"/test/"+test.id+"/"}><i className="glyphicon glyphicon-pencil"></i></Link></td>
@@ -46,8 +46,8 @@ class TestRow extends Component {
 }
 
 TestRow.propTypes = {
-  test: PropTypes.object,
-  keyRow:      PropTypes.number,
+  test:    PropTypes.object,
+  keyRow:      PropTypes.string,
   dispatch:    PropTypes.func
 }
 

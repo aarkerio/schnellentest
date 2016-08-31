@@ -43,10 +43,11 @@ export function fetchTests(active=true, user_id=11) {
   }
 };
 
-export function receiveTests(TestsArrayProp) {
+/* Internal method */
+function receiveTests(TestsArrayProp) {
   return {
     type:  RECEIVE_TESTS,
-    TestsArrayProp
+    TestsArrayProp: TestsArrayProp
   }
 };
 
