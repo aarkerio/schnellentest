@@ -7,7 +7,7 @@ module V1
     skip_before_action :verify_authenticity_token
 
     # before_action :connect_customer   if Rails.env != 'test'
-    layout false
+    #layout false
 
     private
 

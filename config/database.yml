@@ -3,8 +3,8 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  username: schnell
-  password: ay!caramba!
+  username: postgres
+  password: renx08
   host: localhost
   port: 5432
 

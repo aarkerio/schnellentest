@@ -1,3 +1,4 @@
+module Api
 module V1
   class UsersController < BaseController
 
@@ -124,4 +125,5 @@ module V1
       #  @user = User.find(params[:id])
       #end
     end
+end
 end
