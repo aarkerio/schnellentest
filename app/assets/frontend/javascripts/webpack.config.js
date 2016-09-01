@@ -9,6 +9,7 @@ module.exports = {
   entry: {
     app: ["./entry.js"] 
   },
+  devtool: 'eval-source-map',
   output: {
     path: path.resolve(__dirname, "build"),
     publicPath: "http://localhost:8080/build/",

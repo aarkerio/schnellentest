@@ -1,13 +1,11 @@
 # GPLv3 Chipotle Software (c) 2016
 class User < ApplicationRecord
 
-  extend Devise::Models
-  # Include default devise modules. Others available are:
+   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  #attr_accessor :uname, :email, :password, :password_confirmation
   
   belongs_to :group
 

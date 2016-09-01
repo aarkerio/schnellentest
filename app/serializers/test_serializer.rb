@@ -10,7 +10,6 @@ class TestSerializer
   
   def as_json(test)
     {
-      test: {
         id: test.id.to_s,
         title: test.title,
         description: test.description,
@@ -19,7 +18,6 @@ class TestSerializer
         user: test.user_id,
         active: test.active,
         shared: test.shared
-      }
     }
   end
 end

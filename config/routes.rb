@@ -1,20 +1,16 @@
-#Chipotle Software (c) 2016 MIT License 
 Rails.application.routes.draw do
-
+  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   devise_for :users
+  
   resources :users
+  
   resources :groups do
     collection do
       get 'welcome'
     end
   end
   
-  # namespace :api, defaults: {format: 'json'} do
-  #  namespace :v1 do
-  #    mount_devise_token_auth_for 'Test', at: 'auth'
-  #    resources :tests, only: [:index, :show, :create, :update, :destroy]
-  #  end
-  # end
+  root 'groups#welcome'
   
   namespace :api, defaults: {format: :json} do
     namespace :v1 do
@@ -42,7 +38,4 @@ Rails.application.routes.draw do
     end
   end
   
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  # You can have the root of your site routed with "root"
-  root 'groups#welcome'
 end

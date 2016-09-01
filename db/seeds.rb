@@ -30,8 +30,7 @@ q2 = Question.create! question_2
 tq1 = TestQuestion.create! test_id: test_1.id, question_id: q1.id, order: 1
 tq2 = TestQuestion.create! test_id: test_1.id, question_id: q2.id, order: 2
 
-answer_1 = {
-  user_id: tchr_1.id, 
+answer_1 = { 
   answer: 'This is the Answer 111',  
   correct: true, 
   question_id: q1.id

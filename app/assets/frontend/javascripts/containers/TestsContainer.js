@@ -8,7 +8,7 @@ import { Link, browserHistory } from 'react-router';
 import HeaderComponent    from '../components/HeaderComponent';
 import TestRowComponent   from '../components/TestRowComponent';
 
-class TestContainer extends Component {
+class TestsContainer extends Component {
   constructor(props) {
       super(props);
   }
@@ -16,7 +16,7 @@ class TestContainer extends Component {
   /**
    * Load default appointment
    **/
-  componentDidMount() {
+  componentWillMount() {
     let action = TestsActionCreators.fetchTests();
     this.props.dispatch(action);
   }
@@ -31,7 +31,7 @@ class TestContainer extends Component {
   render() {
     let rows = [];
     this.props.TestsArrayProp.forEach(function(test) {
-       rows.push(<TestRowComponent appointment={test} key={test.id} keyRow={test.id} />);
+       rows.push(<TestRowComponent test={test} key={test.id} keyRow={test.id} />);
     });
     
     return (
@@ -63,20 +63,20 @@ class TestContainer extends Component {
   }
 };
 
-TestContainer.propTypes = {
+TestsContainer.propTypes = {
   TestsArrayProp: PropTypes.array,
   dispatch: PropTypes.func
 };
 
- TestContainer.defaultProps = {
+ TestsContainer.defaultProps = {
       TestsArrayProp:  []
  };
 
 const mapStateToProps = (state) => {
   return {
-    TestsArrayProp: state.rootReducer.test_rdcer.TestsArrayProp
+    TestsArrayProp: state.rootReducer.tests_rdcr.TestsArrayProp
   }
 };
 
-export default connect(mapStateToProps)(TestContainer);
+export default connect(mapStateToProps)(TestsContainer);
 
