@@ -12,9 +12,9 @@ end
 tchr_1 = User.create! uname: "emily77", email: 'emily@exale.com', password: 'password', fname: 'Emily',lname: 'Mayer', group_id: teachers.id, active: true
 stud_1 = User.create! uname: "rose79", email: 'rose@exale.com', password: 'password', fname: 'Rose',lname: 'Martinez', group_id: students.id, active: true
 
-test_1  = Test.create! title: 'Test Eins',  description: 'Test Eins Description', active: true, user_id: tchr_1.id
-test_2  = Test.create! title: 'Test Zweig', description: 'Test Zweig Description', active: true, user_id: tchr_1.id
-test_3  = Test.create! title: 'Test Drei',  description: 'Test Drei Description', active: true, user_id: tchr_1.id
+test_1  = Test.create! title: 'Test Eins Neerland gesichte',  description: 'Test Eins Description', active: true, user_id: tchr_1.id
+test_2  = Test.create! title: 'Test Zweig Mexikan Neerland gesichte', description: 'Test Zweig Description', active: true, user_id: tchr_1.id
+test_3  = Test.create! title: 'Test Drei brasilianische Wirtschaft',  description: 'Test Drei Description', active: true, user_id: tchr_1.id
 
 question_1 = {
   user_id: tchr_1.id, question: 'Question 11111', hint: 'Hint 111',explanation: 'Etwas Explanation 11', worth: 1, active: true, qtype:true

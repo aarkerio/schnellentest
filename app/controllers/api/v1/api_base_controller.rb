@@ -1,13 +1,13 @@
-require 'chipotle/v1/error_handling'
-
 module Api
 module V1
-  class ApiBaseController < ::ApplicationController
+  class ApiBaseController < ::ActionController::Base
     
-    skip_before_action :verify_authenticity_token
-
+    # include Chipotle::V1::ErrorHandling
+    
+    protect_from_forgery with: :null_session
+         
     # before_action :connect_customer   if Rails.env != 'test'
-    #layout false
+    layout false
 
     private
 
@@ -16,7 +16,7 @@ module V1
     #
     # Returns database object.
     def connect_customer
-      # Chipotle::V1::Database::DbConnect.connect_customer(@customer)
+      # ::Chipotle::V1::Database::DbConnect.connect_customer(@customer)
     end
 
     def parse_request

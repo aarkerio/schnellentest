@@ -1,6 +1,9 @@
 module Api
 module V1
   class TestsController < ApiBaseController
+  
+    #before_action :set_test, only: [:show, :edit, :update, :destroy]
+    
     # Shows all Test. /api/v1/tests/listing/(:guid) route
     #
     # guid  - The guid String.
@@ -32,7 +35,7 @@ module V1
       # Creates a new Test Account.
       #
       # Returns a Test object.
-      def create_Test
+      def create
         #return render json: Test_params.to_json
         @test = Account.new.create_Test(Test_params)
         if @test.class.name == 'Test'
@@ -46,7 +49,7 @@ module V1
       # Creates a new Test Account.
       #
       # Returns a Test object.
-      def update_Test
+      def update
         #return render json: Test_params.to_json
         if Test_params[:guid].blank?
           return fail ActiveRecord::RecordNotFound, 'Test not found'
@@ -62,37 +65,7 @@ module V1
         render 'index'
       end
 
-      # Shows an Test.
-      #
-      # text  - The guid String.
-      #
-      # Returns a Test object.
-      def get_guid
-        #return render json: 'gettoken'
-        #customer_profile_external_id
-        @test  = Account.get_guid(Test_params)
-
-        if @test.nil?
-          fail ActiveRecord::RecordNotFound, 'Test not found'
-        end
-
-        render 'index'
-      end
-
-      # Create a guid for the Account.
-      #
-      # text  - The guid String.
-      #
-      # Returns a Test object.
-      def create_guid
-        @test = Account.create_token(Test_params)
-
-        fail ActiveRecord::RecordNotFound, 'Test not found'  if @test.nil?
-
-        render 'index'
-      end
-
-      # Disable an Account.
+           # Disable an Account.
       #
       # text  - The guid String.
       #
@@ -104,11 +77,9 @@ module V1
       # Returns a Test object.
       def delete
         #return render json: params.to_json
-        if params[:guid].blank?
-          return fail ActiveRecord::RecordNotFound, 'Test not found'
-        end
+        return fail ActiveRecord::RecordNotFound, 'Test not found'  if params[:guid].blank?
 
-        result = Account.new.disable_Test(params[:guid])
+        result = Test.new.destroy(params[:guid])
 
         if result
           @message = { message: 'Test sucesfully deleted'}
@@ -117,21 +88,11 @@ module V1
         end
       end
 
-      def errorr(error_name)
-        errors_by_name = { not_valid_Test: { code: '2', message: 'Not valid Account.' },
-                         register_error: { code: '3', message: 'Test could not be found in subscriptions.' },
-                         epub_Test:      { code: '4', message: 'Test could not be found in IBJ.' },
-                         connection:     { code: '5', message: 'Connection could not be established.' }
-                       }
-
-        errors_by_name[error_name]
-      end
-
       private
 
       # Never trust parameters from the scary internet, only allow the white list.
       def test_params
-        params.require(:Test).permit(:fname, :lname, :uname, :email, :passwd, :guid)
+        params.require(:Test).permit(:user_id, :title, :description,  :active, :shared)
       end
       
       def test
@@ -143,9 +104,9 @@ module V1
       end
       
       # Use callbacks to share common setup or constraints between actions.
-      #def set_Test
-      #  @test = Test.find(params[:id])
-      #end
+      def set_test
+        @test = Test.find(params[:id])
+      end
     end
 end
 end

@@ -6,7 +6,13 @@
     = stylesheet_link_tag 'mainstyles'
     = csrf_meta_tags
 %body
-        
+  - if flash[:notice]
+    .alert-message.warning
+      = flash[:notice]
+  - if flash[:error]
+    .alert-message.error
+      = flash[:error]
+
   #header
     %h1 Schnell System 0.1
     %a{ href: '/'} Home

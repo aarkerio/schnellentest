@@ -6,11 +6,11 @@ module Chipotle
       include Chipotle::V1
 
         included do
-          rescue_from Exception, :with => :rescue_from_exception          # catch-all
-          rescue_from StandardError, :with => :rescue_from_standard_error # catch-all *almost*
-          rescue_from HttpErrors::BadRequest, :with => :rescue_from_unsupported_action_exception
-          rescue_from HttpErrors::NotFound, :with => :rescue_from_not_found
-          rescue_from ActiveRecord::RecordInvalid, :with => :rescue_from_record_invalid
+          rescue_from Exception,                    :with => :rescue_from_exception          # catch-all
+          rescue_from StandardError,                :with => :rescue_from_standard_error # catch-all *almost*
+          rescue_from HttpErrors::BadRequest,       :with => :rescue_from_unsupported_action_exception
+          rescue_from HttpErrors::NotFound,         :with => :rescue_from_not_found
+          rescue_from ActiveRecord::RecordInvalid,  :with => :rescue_from_record_invalid
           rescue_from ActiveRecord::RecordNotFound, :with => :rescue_from_record_not_found
         end
 
