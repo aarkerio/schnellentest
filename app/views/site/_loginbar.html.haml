@@ -1,4 +1,4 @@
--if current_user.blank?
+-unless user_signed_in?
   .loginform
     = form_tag user_session_path, method: :post do
       = text_field_tag "email", ""
