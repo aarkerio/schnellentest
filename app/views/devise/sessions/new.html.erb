@@ -7,6 +7,21 @@
   </div>
 
   <div class="field">
+    <%= f.label :uname, 'User Name' %><br />
+    <%= f.text_field :uname, required: true %>
+  </div>
+
+  <div class="field">
+    <%= f.label :fname, 'First Name' %><br />
+    <%= f.text_field :fname %>
+  </div>
+ 
+  <div class="field">
+    <%= f.label :lname, 'Last Name' %><br />
+    <%= f.text_field :lname %>
+  </div>
+  
+  <div class="field">
     <%= f.label :password %><br />
     <%= f.password_field :password, autocomplete: "off" %>
   </div>

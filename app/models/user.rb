@@ -34,7 +34,8 @@ class User < ApplicationRecord
   end
 
   def set_active
-    self.active = true
+    self.active   = true
+    self.group_id = 2
   end
 
   # To update a table with already existent users
