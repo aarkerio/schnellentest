@@ -13,11 +13,11 @@ class TestSerializer
         id: test.id.to_s,
         title: test.title,
         description: test.description,
-        created: test.created_at,
-        upated: test.updated_at,
+        created: test.created_at.strftime('%F'),
+        upated: test.updated_at.strftime('%F'),
         user: test.user_id,
-        active: test.active,
-        shared: test.shared
+        active: test.active.to_s,
+        shared: test.shared.to_s
     }
   end
 end

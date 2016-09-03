@@ -10,12 +10,13 @@ body {display:flex; flex-direction:column;}
 }
 
 /* optional */
-#header {min-height:110px; background:#e0e0e0;}
+#header {min-height:120px; background:#e0e0e0;}
 #main {background:#fff; border: 1px dotted gray;}
 #footer {min-height:50px; background:e0e0e0;}
 
-#logindiv{
+#logindiv {
  float:right;
+ width:19%;
  border: 1px dotted gray;
  margin:6px;
  padding: 6px;
@@ -34,3 +35,12 @@ body {display:flex; flex-direction:column;}
   padding: 4px;
   border: 1px dotted orange;
 }
+
+#floatright{
+ float:right;
+}
+
+#floatleft{
+ float:left;
+}
+

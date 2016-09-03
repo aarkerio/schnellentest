@@ -1,12 +1,19 @@
 #logindiv
   -unless user_signed_in?
     .loginform
-      = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
-        = f.text_field :email
-        = f.password_field :password
-        = f.submit 'Submit'
-      
-    = link_to 'Or register', new_user_registration_path
+      = form_tag session_path(:user) do
+        = text_field_tag 'user[email]'
+        = password_field_tag 'user[password]'
+        = check_box_tag 'user[remember_me]'
+        = label_tag 'user[remember_me]', 'Remember me'
+        %button Sign in
+        %div
+          = link_to "Forgot your password?", new_password_path(:user)
+          = link_to 'Or register', new_user_registration_path
   -else
-    = button_to 'Edit profile', edit_user_registration_path, method: :get
-    = button_to 'Logout', destroy_user_session_path, method: :delete
+    %p
+      = "Hi! #{cookies[:fullname]}"
+    #floatleft
+      = button_to 'Edit profile', edit_user_registration_path, method: :get
+    #floatright
+      = button_to 'Logout', destroy_user_session_path, method: :delete
