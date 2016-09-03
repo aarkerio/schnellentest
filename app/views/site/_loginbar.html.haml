@@ -1,11 +1,12 @@
--unless user_signed_in?
-  .loginform
-    = form_tag user_session_path, method: :post do
-      = text_field_tag "email", ""
-      = password_field_tag "password", ""
-      = submit_tag "Submit"
+#logindiv
+  -unless user_signed_in?
+    .loginform
+      = form_tag user_session_path, method: :post do
+        = text_field_tag "email", ""
+        = password_field_tag "password", ""
+        = submit_tag "Submit"
       
-  = link_to 'Or register', new_user_registration_path
--else
-  = link_to 'Edit profile', edit_user_registration_path 
-  = link_to 'Logout', destroy_user_session_path, method: :delete
+    = link_to 'Or register', new_user_registration_path
+  -else
+    = link_to 'Edit profile', edit_user_registration_path 
+    = link_to 'Logout', destroy_user_session_path, method: :delete

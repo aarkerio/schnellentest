@@ -1,5 +1,5 @@
 html, 
-body {height:100%; padding:5px; margin:5px; width:100%;}
+body {height:96%; padding:5px; margin:5px; width:96%;}
 body {display:flex; flex-direction:column;}
 
 /*  It dictates what amount of the available space inside the flex container the item should take up. */
@@ -10,8 +10,27 @@ body {display:flex; flex-direction:column;}
 }
 
 /* optional */
-#header {min-height:50px; background:#e0e0e0;}
+#header {min-height:100px; background:#e0e0e0;}
 #main {background:#fff; border: 1px dotted gray;}
 #footer {min-height:50px; background:e0e0e0;}
 
+#logindiv{
+ float:right;
+ border: 1px dotted gray;
+ margin:6px;
+ padding: 6px;
+}
 
+.container_div{
+  width:100%;
+  margin:  4px;
+  padding: 4px;
+  border: 1px dotted orange;
+}
+
+.table_class{
+  width:100%;
+  margin:  4px;
+  padding: 4px;
+  border: 1px dotted orange;
+}

@@ -1,10 +1,9 @@
 module Api
 module V1
   class TestsController < ApiBaseController
-  
-    #before_action :set_test, only: [:show, :edit, :update, :destroy]
+    #before_action :set_test, only: [:show, :edit, :update, :destroy] 
     
-    # Shows all Test. /api/v1/tests/listing/(:guid) route
+    # Gets all Tests. POST /api/v1/tests/listing/(:guid) route
     #
     # guid  - The guid String.
     #
@@ -19,7 +18,7 @@ module V1
       fail ActiveRecord::RecordNotFound, 'Test not found two'  if @test.nil?
     end
 
-    # Shows all Test. /api/v1/tests/listing/(:guid) route
+    # Gets one Test. /api/v1/tests/listing/(:guid) route
     #
     # guid  - The guid String.
     #
@@ -32,59 +31,60 @@ module V1
       fail ActiveRecord::RecordNotFound, 'Test not found two'  if @test.nil?
     end
 
-      # Creates a new Test Account.
-      #
-      # Returns a Test object.
-      def create
-        #return render json: Test_params.to_json
-        @test = Account.new.create_Test(Test_params)
-        if @test.class.name == 'Test'
-          @message = { message: 'Test created sucessfully' }
-        else
-          fail Exception, "Test not created: #{@test.inspect}"
-        end
-        render 'index'
+    # Creates a new Test Account.
+    #
+    # Returns a JSON object.
+    def create
+      # return render json: params.to_json
+      
+      result = Test.new.create_test(params['test'])
+
+      if result
+        return render json: {message: 'Test was created succesfully'} 
+      else
+        return render json: {message: 'Test was not created succesfully'}
+      end
+    end
+
+    # Creates a new Test Account.
+    #
+    # Returns a Test object.
+    def update
+      #return render json: Test_params.to_json
+      if Test_params[:guid].blank?
+        return fail ActiveRecord::RecordNotFound, 'Test not found'
       end
 
-      # Creates a new Test Account.
-      #
-      # Returns a Test object.
-      def update
-        #return render json: Test_params.to_json
-        if Test_params[:guid].blank?
-          return fail ActiveRecord::RecordNotFound, 'Test not found'
-        end
+      @test = Account.new.update_Test(Test_params)
 
-        @test = Account.new.update_Test(Test_params)
-
-        if @test.class.name == 'Test'
+      if @test.class.name == 'Test'
           @message = { message: 'Test updated sucessfully' }
-        else
+      else
           fail Exception, "Test not updated: #{@test.inspect}"
-        end
-        render 'index'
       end
+      render 'index'
+    end
 
-           # Disable an Account.
-      #
-      # text  - The guid String.
-      #
-      # Examples
-      #
-      #   show('xVpK6SgP2NAhVtA-ygEIww')
-      #   # => Test
-      #
-      # Returns a Test object.
-      def delete
+    # Disable an Account.
+    #
+    # text  - The guid String.
+    #
+    # Examples
+    #
+    #   show('xVpK6SgP2NAhVtA-ygEIww')
+    #   # => Test
+    #
+    # Returns a Test object.
+    def delete
         #return render json: params.to_json
-        return fail ActiveRecord::RecordNotFound, 'Test not found'  if params[:guid].blank?
-
-        result = Test.new.destroy(params[:guid])
+        return fail ActiveRecord::RecordNotFound, 'Test not found'  if params[:id].blank?
+        test = Test.find(params[:id])
+        result = test.destroy
 
         if result
-          @message = { message: 'Test sucesfully deleted'}
+          return render json: {message: 'Test was removed succesfully.'}
         else
-          @message = { message: 'Something went wrong, Test not deleted'}
+          return render json: {message: 'Something went wrong. Test was not removed.'}
         end
       end
 
@@ -92,7 +92,7 @@ module V1
 
       # Never trust parameters from the scary internet, only allow the white list.
       def test_params
-        params.require(:Test).permit(:user_id, :title, :description,  :active, :shared)
+        params.require(:Test).permit(:user_id, :title, :description, :tags, :active, :shared)
       end
       
       def test
@@ -103,7 +103,6 @@ module V1
         @serializer ||= TestSerializer.new(test)
       end
       
-      # Use callbacks to share common setup or constraints between actions.
       def set_test
         @test = Test.find(params[:id])
       end
