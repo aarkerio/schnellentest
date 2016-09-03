@@ -12,12 +12,14 @@ Rails.application.routes.draw do
       get 'welcome'
     end
   end
-  
+
+  get '/tests/' => 'tests#index', as: 'tests_index'
+
   namespace :api, defaults: {format: :json} do
     namespace :v1 do
       # TEST SECTION
       post   '/tests/listing/(/:guid)' => 'tests#listing', as: 'tests_listing'
-      post   '/tests/getone/(/:id)'    => 'tests#getone',  as: 'tests_getone'
+      post   '/tests/get_one/'         => 'tests#get_one', as: 'tests_get_one'
       patch  '/tests/update/'          => 'tests#update',  as: 'tests_update'
       post   '/tests/create'           => 'tests#create',  as: 'tests_create'
       delete '/tests/delete/(/:id)'    => 'tests#delete',  as: 'tests_delete'
@@ -38,6 +40,9 @@ Rails.application.routes.draw do
     end
   end
 
-  # redirect all unknown routes to root 
-  get '*path', to: 'groups#welcome'
+  authenticated :user do
+    #root :to => "main#dashboard"
+    # redirect all unknown routes to root 
+    get '*path', to: 'tests#index'
+  end
 end

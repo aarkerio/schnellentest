@@ -19,8 +19,10 @@
     %a{ href: '/'} Home
     %a{ href: '/about'} About Us
     %a{ href: '/map'} Map
-    %a{ href: '/appointment/new'} Appointment
-    %a{ href: '/groups/start'} Admin
+    - if user_signed_in?
+      %a{ href: '/tests/'} Tests
+      %a{ href: '/user/history'} History
+
     =render partial: 'site/loginbar'
 
   #main
