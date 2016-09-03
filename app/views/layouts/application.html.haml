@@ -5,6 +5,7 @@
     %title ::Schnell::
     = stylesheet_link_tag 'mainstyles'
     = csrf_meta_tags
+
 %body
   - if flash[:notice]
     .alert-message.warning
@@ -29,6 +30,4 @@
     %br
     %span.copy Copyright Chipotle Software &copy; 2015-2016
     %a{ href: '/site/about'} Read more
-      
-      
-  = javascript_include_tag 'http://localhost:8080/build/bundle.js'
+
