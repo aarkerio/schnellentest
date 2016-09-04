@@ -2,8 +2,8 @@
 
 class Test < ApplicationRecord
   belongs_to :user
-
-  has_many :question
+  has_many :test_question
+  has_many :question, through: :test_question 
 
   validates :title, presence: true
 
@@ -13,6 +13,12 @@ class Test < ApplicationRecord
     logger.debug create_params.inspect
     test = Test.new create_params
     test.save
+  end
+  
+  def self.get_one(test_id)
+    data = where(id: test_id).includes(:question)
+    logger.debug data.inspect
+    data
   end
 
   private

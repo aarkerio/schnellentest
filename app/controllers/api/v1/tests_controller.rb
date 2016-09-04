@@ -24,11 +24,8 @@ module V1
     #
     # Returns a json object.
     def get_one
-      #return render json: params.to_json
-      fail ActiveRecord::RecordNotFound, 'Test not found one'  if params[:id].blank?
-      
-      return render json: serializer.as_json
-      fail ActiveRecord::RecordNotFound, 'Test not found two'  if @test.nil?
+      test_data = Test.get_one( params[:id] )
+      return render json: test_data
     end
 
     # Creates a new Test Account.
