@@ -7,9 +7,9 @@ class Question < ApplicationRecord
   validates :question, presence: true
 
   def create_question(params)
+    logger.debug " ###>>>>>> create_question params #{params.inspect} "
+    test = Test.find params['test_id']
     create_params = order_params params
-    logger.debug create_params.inspect
-    test = Test.find params[:test_id]
     test.question.create create_params
   end
   
@@ -27,8 +27,6 @@ class Question < ApplicationRecord
   #
   # Returns hash object or nil.
   def order_params(params)
-    test_question = TestQuestion.where( ["test_id = ?", params[:test_id]]).select(:order).first
-    order = test_question.order.nil?  ?  0  :  test_question.order.to_i + 1 
     { 
       question:    params['question'],
       explanation: params['explanation'],
@@ -36,8 +34,7 @@ class Question < ApplicationRecord
       worth:       params['worth'],
       tags:        params['tags'],
       active:      params['active'],
-      user_id:     params['user_id'],
-      order:       order
+      user_id:     params['user_id']
     }
   end
   

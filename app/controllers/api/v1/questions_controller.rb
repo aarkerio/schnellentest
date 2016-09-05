@@ -34,7 +34,7 @@ module V1
     def create
       # return render json: params.to_json
       
-      result = Question.new.create_question(params['question'])
+      result = Question.new.create_question(params)
 
       if result
         return render json: {message: 'Question was created succesfully'} 
