@@ -18,7 +18,7 @@ module V1
       fail ActiveRecord::RecordNotFound, 'Test not found two'  if @test.nil?
     end
 
-    # Gets one Test. /api/v1/tests/listing/(:guid) route
+    # Gets one Test.  POST /api/v1/tests/get_one/ 
     #
     # guid  - The guid String.
     #
