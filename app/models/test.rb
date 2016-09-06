@@ -15,15 +15,18 @@ class Test < ApplicationRecord
     test.save
   end
   
-  def self.get_one(test_id)
-    data = where(id: test_id).includes(:question)
-    logger.debug data.inspect
-    data
+  def get_one(test_id)
+    #data = Test.as_json(includes(:question).where(id: test_id).first)
+    #test = Test.to_json({include: :question}).where(id: test_id).first
+    test = Test.includes(:question).where(id: test_id).first
+    newhash = nest_questions(test)
+    logger.debug "88888888 >>>  get_one data   #{newhash.inspect}"
+    newhash
   end
 
   private
 
-  # Private: Sabe a new test.
+  # Private: Order a new test hash.
   #
   # appo_id - The Integer number of appointemnt id.
   #
@@ -36,6 +39,18 @@ class Test < ApplicationRecord
       shared:      params['shared'],
       user_id:     params['user_id']
     }
+  end
+
+  def nest_questions(test)
+    all               = Hash.new
+    all[:title]       = test.title
+    all[:description] = test.description
+    all[:id]          = test.id
+    all[:questions]   = []
+    test.question.each do |q|
+      all[:questions] << q 
+    end
+    all
   end
 
 end

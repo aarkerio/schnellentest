@@ -24,7 +24,7 @@ module V1
     #
     # Returns a json object.
     def get_one
-      test_data = Test.get_one( params[:id] )
+      test_data = Test.new.get_one( params['id'] )
       return render json: test_data
     end
 
