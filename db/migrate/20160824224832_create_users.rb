@@ -5,9 +5,10 @@ class CreateUsers < ActiveRecord::Migration[5.0]
       t.string :uname, unique: true, null: false
       t.string :fname, null: false 
       t.string :lname, null: false
-      t.string :guid   # global user ID
+      t.string :guid, unique: true, null: false   # global user ID
       t.string :password
       t.boolean :active
+      t.string :token, unique: true, null: false
       t.references :group, foreign_key: true
 
       t.timestamps

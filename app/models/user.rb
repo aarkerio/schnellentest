@@ -1,15 +1,17 @@
 # GPLv3 Chipotle Software (c) 2016
 class User < ApplicationRecord
 
-   # Include default devise modules. Others available are:
+  # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
   
+  has_secure_token  # For API calls
+
   belongs_to :group
 
-  before_create :generate_token
+  before_create :generate_guid   # access_token
   before_create :set_active
   
   has_many :tests, dependent: :destroy
@@ -18,19 +20,23 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true
   validates :uname, presence: true, uniqueness: true
 
-  def get_token
-    random_token = ''
+  def get_guid
+    random_guid = ''
     loop do
-      random_token = SecureRandom.urlsafe_base64(nil, false)
-      break random_token   unless ::User.exists?(guid: random_token)
+      random_guid = SecureRandom.urlsafe_base64(nil, false)
+      break random_guid   unless ::User.exists?(guid: random_guid)
     end
-    random_token
+    random_guid
+  end
+
+  def get_guid!(token)
+    token == self.guid
   end
 
   private
 
-  def generate_token
-    self.guid = get_token
+  def generate_guid
+    self.guid = get_guid
   end
 
   def set_active
@@ -39,7 +45,7 @@ class User < ApplicationRecord
   end
 
   # To update a table with already existent users
-  def generate_all_tokens
+  def generate_all_guids
     find_each do |user|
       next  if guid.nil?
       guid = SecureRandom.urlsafe_base64(nil, false)
