@@ -271,4 +271,11 @@ Devise.setup do |config|
   # When using OmniAuth, Devise cannot automatically set OmniAuth path,
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
+
+  Warden::Manager.after_authentication do |user, auth, opts|
+    auth.cookies[:username]  = {value: user.uname, expires: 2.weeks.from_now}
+    auth.cookies[:fullname]  = {value:"#{user.fname} #{current_user.lname}", expires: 2.weeks.from_now}
+    auth.cookies[:user_id]   = {value: user.id, expires: 2.weeks.from_now}
+  end  # warden ends 
+
 end

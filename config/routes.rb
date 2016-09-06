@@ -17,6 +17,7 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: {format: :json} do
     namespace :v1 do
+      post 'authenticate' => 'auth#authenticate'
       # TEST SECTION
       post   '/tests/listing/(/:guid)' => 'tests#listing', as: 'tests_listing'
       post   '/tests/get_one/'         => 'tests#get_one', as: 'tests_get_one'

@@ -5,11 +5,7 @@ class GroupsController < ApplicationController
   
   # GET /groups/welcome
   def welcome
-    if user_signed_in? && cookies[:username].blank? 
-      cookies[:username] = current_user.uname
-      cookies[:fullname] = "#{current_user.fname} #{current_user.lname}"
-      cookies[:user_id]  = current_user.id
-    end
+
   end
 
   # GET /groups
