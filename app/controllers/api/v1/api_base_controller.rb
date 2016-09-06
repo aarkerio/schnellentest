@@ -2,8 +2,8 @@ module Api
 module V1
   class ApiBaseController < ::ActionController::Base
     
-    # include Chipotle::V1::ErrorHandling
-    before_action :authenticate_user_from_token!
+    # include Chipotle::API::V1::ErrorHandling
+    # before_action :authenticate_user_from_token!
     
     protect_from_forgery with: :null_session
          
