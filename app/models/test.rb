@@ -16,11 +16,9 @@ class Test < ApplicationRecord
   end
   
   def get_one(test_id)
-    #data = Test.as_json(includes(:question).where(id: test_id).first)
-    #test = Test.to_json({include: :question}).where(id: test_id).first
     test = Test.includes(:question).where(id: test_id).first
     newhash = nest_questions(test)
-    logger.debug "88888888 >>>  get_one data   #{newhash.inspect}"
+    # logger.debug "88888888 >>>  get_one data   #{newhash.inspect}"
     newhash
   end
 
