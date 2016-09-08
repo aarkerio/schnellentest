@@ -1,11 +1,10 @@
 FactoryGirl.define do
   factory :question do
-    user nil
-    question "MyText"
-    hint "MyText"
-    explanation "MyText"
+    question  { 'The  question is ' + FFaker::Lorem.words.join(' ') + ' ?'   }
+    hint { 'Hint ' + FFaker::Lorem.words.join(' ')   }
+    explanation { 'Explanation ' + FFaker::Lorem.words.join(' ')   }
     worth 1
     active false
-    type false
+    type true
   end
 end

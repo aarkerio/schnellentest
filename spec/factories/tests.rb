@@ -1,7 +1,5 @@
 # Chipotle Software (c) 2016  MIT License
 
-require 'ffaker'
-
 FactoryGirl.define do
   factory :test do
     title { 'Test title ' + FFaker::Lorem.words.join(' ')   }
