@@ -10,9 +10,8 @@ module V1
     # Returns a json object.
     def listing
       #return render json: params.to_json
-      fail ActiveRecord::RecordNotFound, 'Test not found one'  if params[:guid].blank?
-      
-      tests = Test.where( user_id: params[:guid] )   
+      params = test_params
+      tests = Test.where( user_id: params[:user_id] ) 
       all   = TestSerializer.new.all_test(tests)
       return render json: all.as_json
       fail ActiveRecord::RecordNotFound, 'Test not found two'  if @test.nil?
@@ -34,7 +33,7 @@ module V1
     def create
       # return render json: params.to_json
       
-      result = Test.new.create_test(params['test'])
+      result = Test.new.create_test(test_params)
 
       if result
         return render json: {message: 'Test was created succesfully'} 
@@ -89,7 +88,7 @@ module V1
 
       # Never trust parameters from the scary internet, only allow the white list.
       def test_params
-        params.require(:Test).permit(:user_id, :title, :description, :tags, :active, :shared)
+        params.require(:test).permit(:user_id, :title, :description, :tags, :active, :shared)
       end
       
       def test

@@ -46,9 +46,9 @@ class Question < ApplicationRecord
     all               = Hash.new
     all[:question]    = question.question
     all[:id]          = question.id
-    all[:questions]   = Array.new
-    questions.question.each do |q|
-      all[:questions] << q 
+    all[:answers]   = Array.new
+    question.answer.each do |a|
+      all[:answers] << a
     end
     all
   end

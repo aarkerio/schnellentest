@@ -19,7 +19,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       post 'authenticate' => 'auth#authenticate'
       # TEST SECTION
-      post   '/tests/listing/(/:guid)' => 'tests#listing', as: 'tests_listing'
+      post   '/tests/listing/' => 'tests#listing', as: 'tests_listing'
       post   '/tests/get_one/'         => 'tests#get_one', as: 'tests_get_one'
       patch  '/tests/update/'          => 'tests#update',  as: 'tests_update'
       post   '/tests/create'           => 'tests#create',  as: 'tests_create'
@@ -27,10 +27,14 @@ Rails.application.routes.draw do
      
       # QUESTION SECTION
       post   '/questions/listing/(/:test_id)' => 'questions#listing', as: 'questions_listing'
+      post   '/questions/get_one/'            => 'questions#get_one', as: 'questions_get_one'
       post   '/questions/create/'             => 'questions#create',  as: 'questions_create'
       patch  '/questions/update/'             => 'questions#update',  as: 'questions_update'
       delete '/questions/delete/'             => 'questions#delete',  as: 'questions_delete'   
  
+      # ANSWER SECTION
+      post   '/answers/create/'               => 'answers#create',    as: 'answers_create'
+
       # USER SECTION
       patch  '/users/update/'         => 'users#update_user', as: 'users_update'
       post   '/users/create'          => 'users#create_user', as: 'users_create'

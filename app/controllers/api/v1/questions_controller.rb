@@ -24,7 +24,7 @@ module V1
     #
     # Returns a json object.
     def get_one
-      question_data = Question.get_one( params[:id] )
+      question_data = Question.new.get_one( params[:id] )
       return render json: question_data
     end
 
@@ -34,7 +34,7 @@ module V1
     def create
       # return render json: params.to_json
       
-      result = Question.new.create_question(params)
+      result = Question.new.create_question(question_params)
 
       if result
         return render json: {message: 'Question was created succesfully'} 
@@ -89,15 +89,11 @@ module V1
 
       # Never trust parameters from the scary internet, only allow the white list.
       def question_params
-        params.require(:Question).permit(:user_id, :title, :description, :tags, :active, :shared)
+        params.require(:question).permit(:user_id, :title, :description, :tags, :active, :shared)
       end
       
       def question
         @question ||= Question.find(params[:id])
-      end
-
-      def serializer
-        @serializer ||= QuestionSerializer.new(question)
       end
       
       def set_question
