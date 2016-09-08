@@ -17,9 +17,11 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: {format: :json} do
     namespace :v1 do
+
       post 'authenticate' => 'auth#authenticate'
+
       # TEST SECTION
-      post   '/tests/listing/' => 'tests#listing', as: 'tests_listing'
+      post   '/tests/listing/'         => 'tests#listing', as: 'tests_listing'
       post   '/tests/get_one/'         => 'tests#get_one', as: 'tests_get_one'
       patch  '/tests/update/'          => 'tests#update',  as: 'tests_update'
       post   '/tests/create'           => 'tests#create',  as: 'tests_create'
@@ -46,8 +48,6 @@ Rails.application.routes.draw do
   end
 
   authenticated :user do
-    #root :to => "main#dashboard"
-    # redirect all unknown routes to root 
     get '*path', to: 'tests#index'
   end
 end

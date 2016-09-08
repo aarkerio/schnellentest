@@ -1,6 +1,6 @@
 # Chipotle Software 2016 (c)  MIT License 
 
-admin      = Group.create! name: 'admin', description: 'admin'
+admin      = Group.create! name: 'Admin', description: 'Admin'
 teachers   = Group.create! name: 'Teacher group', description: 'Teacher group'
 students   = Group.create! name: 'Students group', description: 'Students group'
 staff      = Group.create! name: 'staff', description: 'staff'

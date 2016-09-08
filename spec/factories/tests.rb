@@ -1,9 +1,14 @@
+# Chipotle Software (c) 2016  MIT License
+
+require 'ffaker'
+
 FactoryGirl.define do
   factory :test do
-    user nil
-    title "MyString"
-    description "MyText"
-    active false
+    title { 'Test title ' + FFaker::Lorem.words.join(' ')   }
+    description { 'Test description ' + FFaker::Lorem.words.join(' ')  }
+    active true
     shared false
+    user
   end
 end
+

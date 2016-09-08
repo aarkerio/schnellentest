@@ -3,7 +3,7 @@ module V1
   class TestsController < ApiBaseController
     #before_action :set_test, only: [:show, :edit, :update, :destroy] 
     
-    # Gets all Tests. POST /api/v1/tests/listing/(:guid) route
+    # Gets all Tests. POST /api/v1/tests/listing/ route
     #
     # guid  - The guid String.
     #
