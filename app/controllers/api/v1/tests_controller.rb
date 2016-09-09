@@ -38,7 +38,7 @@ module V1
       if result
         return render json: {message: 'Test was created succesfully'} 
       else
-        return render json: {message: 'Test was not created succesfully'}
+        return render json: {message: 'Error: Test was not created succesfully'}
       end
     end
 

@@ -39,7 +39,7 @@ module V1
       if result
         return render json: {message: 'Question was created succesfully'} 
       else
-        return render json: {message: 'Question was not created succesfully'}
+        return render json: {message: 'Error: Question was not created succesfully'}
       end
     end
 
@@ -89,7 +89,7 @@ module V1
 
       # Never trust parameters from the scary internet, only allow the white list.
       def question_params
-        params.require(:question).permit(:user_id, :title, :description, :tags, :active, :shared)
+        params.require(:question).permit(:user_id, :question, :explanation, :tags, :active, :qtype, :test_id)
       end
       
       def question

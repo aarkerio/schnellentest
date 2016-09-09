@@ -15,7 +15,7 @@ module V1
       if answer.save
         return render json: {message: 'Answer was created succesfully'} 
       else
-        return render json: {message: 'Answer was not created succesfully'}
+        return render json: {message: 'Error: Answer was not created succesfully'}
       end
     end
 
@@ -33,7 +33,7 @@ module V1
       if @answer.class.name == 'Answer'
           @message = { message: 'Answer updated sucessfully' }
       else
-          fail Exception, "Answer not updated: #{@answer.inspect}"
+          fail Exception, "Error: Answer not updated: #{@answer.inspect}"
       end
       render 'index'
     end
@@ -52,7 +52,7 @@ module V1
       if @answer.destroy
         return render json: {message: 'Answer was removed succesfully.'}
       else
-        return render json: {message: 'Something went wrong. Answer was not removed.'}
+        return render json: {message: 'Error :Something went wrong. Answer was not removed.'}
       end
     end
 

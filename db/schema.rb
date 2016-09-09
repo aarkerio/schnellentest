@@ -16,11 +16,12 @@ ActiveRecord::Schema.define(version: 20160826183745) do
   enable_extension "plpgsql"
 
   create_table "answers", force: :cascade do |t|
-    t.text     "answer",      null: false
-    t.boolean  "correct",     null: false
+    t.text     "answer",                      null: false
+    t.boolean  "correct",                     null: false
+    t.boolean  "active",      default: false
     t.integer  "question_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.index ["question_id"], name: "index_answers_on_question_id", using: :btree
   end
 
@@ -33,9 +34,10 @@ ActiveRecord::Schema.define(version: 20160826183745) do
 
   create_table "questions", force: :cascade do |t|
     t.integer  "user_id"
-    t.text     "question"
-    t.text     "hint"
+    t.text     "question",                   null: false
     t.text     "explanation"
+    t.text     "hint"
+    t.text     "tags"
     t.integer  "worth",       default: 5
     t.boolean  "active",      default: true
     t.boolean  "qtype",       default: true
@@ -56,7 +58,8 @@ ActiveRecord::Schema.define(version: 20160826183745) do
 
   create_table "tests", force: :cascade do |t|
     t.integer  "user_id"
-    t.string   "title"
+    t.string   "title",                      null: false
+    t.string   "tags"
     t.text     "description"
     t.boolean  "active",      default: true
     t.boolean  "shared",      default: true
@@ -69,9 +72,10 @@ ActiveRecord::Schema.define(version: 20160826183745) do
     t.string   "uname",                               null: false
     t.string   "fname",                               null: false
     t.string   "lname",                               null: false
-    t.string   "guid"
+    t.string   "guid",                                null: false
     t.string   "password"
     t.boolean  "active"
+    t.string   "token",                               null: false
     t.integer  "group_id"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false

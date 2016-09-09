@@ -2,30 +2,35 @@ require 'spec_helper'
 
 RSpec.describe Api::V1::QuestionsController, type: :controller do
   
-  before do
-    user = FactoryGirl.create :user
-    test = FactoryGirl.create_list :test, 5, user: user
-    question = FactoryGirl.create :question, test: test
-    answers = FactoryGirl.create_list :question, 5, question: questions 
+  before(:all) do
+    group      = FactoryGirl.create :group 
+    @user      = FactoryGirl.create :user, group: group
+    tests      = FactoryGirl.create_list :test, 5, user: @user
+    @test      = tests.first
+    @question  = FactoryGirl.create :question, user: @user
+    test_quest = FactoryGirl.create :test_question, test: tests.first, question: @question
+    answers    = FactoryGirl.create_list :answer, 5, question: @question 
   end
-
+  
   describe "POST#get_one" do
-    it "returns a successful 200 response" do
-      post :get_one, {id: @question.id}
+    it "returns a successful listing response" do
+      post :get_one, {params: {id: @question.id}}
       expect(response).to be_success
-      # puts "response  #{response.body.inspect} "
       json = JSON.parse(response.body)
-      expect(json.length).to eq(5)
+      # puts "response  #{response.body.inspect} "
+      expect(json['answers'].length).to eq(5)
     end
   end
 
   describe "POST#create" do
-    it "returns a successful 200 response" do
-      post :create, {answer: {answer: 'Answer', active: true, correct: true, question_id: @question.id}}
+    let(:question) { FactoryGirl.attributes_for :question, user: @user }
+    it "returns a successful save response" do
+      question['test_id'] = @test.id
+      post :create, {params: {question: question}}
       expect(response).to be_success
-      puts "response  #{response.body.inspect} "
       json = JSON.parse(response.body)
-      expect(json.length).to eq(5)
+      expect(json['message'][0..7]).to eq('Question')
     end
   end
+
 end

@@ -1,3 +1,4 @@
+# Chipotle Software (c) 2016  MIT License  
 FactoryGirl.define do
   factory :question do
     question  { 'The question is ' + FFaker::Lorem.words.join(' ') + ' ?'   }
@@ -6,5 +7,6 @@ FactoryGirl.define do
     worth 1
     active false
     qtype true
+    user nil
   end
 end

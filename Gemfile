@@ -21,9 +21,12 @@ gem 'puma'
 # Use Capistrano for deployment
 gem 'capistrano-rails'
 
+group :development do
+  gem 'web-console', '~> 3.0'
+end
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'web-console', '~> 3.0'
   gem 'pry-byebug'
   gem 'rspec'
   gem 'rspec-rails'
