@@ -5,7 +5,5 @@ FactoryGirl.define do
   end
 end
 
-data = [{name: 'Admin'}, {name: 'Teacher group'},{name: 'Student group'}, {name: 'Staff'}]
-result = data.map { |p| FactoryGirl.create(:group, p) }
 
 

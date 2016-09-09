@@ -35,7 +35,7 @@ module V1
       # return render json: params.to_json
       
       result = Question.new.create_question(question_params)
-
+      
       if result
         return render json: {message: 'Question was created succesfully'} 
       else
@@ -89,7 +89,7 @@ module V1
 
       # Never trust parameters from the scary internet, only allow the white list.
       def question_params
-        params.require(:question).permit(:user_id, :question, :explanation, :tags, :active, :qtype, :test_id)
+        params.require(:question).permit(:user_id, :question, :explanation, :tags, :hint, :worth, :active, :qtype, :test_id)
       end
       
       def question

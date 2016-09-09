@@ -2,14 +2,10 @@ module Api
 module V1
   class AnswersController < ApiBaseController
 
-    # before_action :set_post, only: [:edit, :update, :destroy]
-
     # Creates a new Answer Account.
     #
     # Returns a JSON object.
-    def create
-      # return render json: params.to_json
-      
+    def create      
       answer = Answer.new(answer_params)
      
       if answer.save
@@ -62,10 +58,7 @@ module V1
     def answer_params
         params.require(:answer).permit(:answer, :active, :correct, :question_id)
     end
-       
-    def set_answer
-      @answer = Answer.find(params[:id])
-    end
+    
   end
 end
 end

@@ -6,11 +6,12 @@ students   = Group.create! name: 'Students group', description: 'Students group'
 staff      = Group.create! name: 'staff', description: 'staff'
 
 unless User.exists?(uname: 'admin')
-  admin  = User.create! uname: "admin", email: "admin@example.com", password: 'password', fname: 'admin', lname: 'admin', group_id: admin.id, active: true
+  admin  = User.create! uname: "admin", email: "admin@example.com", password:'password', password_confirmation: 'password',fname: 'admin', lname: 'admin', group_id: admin.id, active: true
 end
 
-tchr_1 = User.create! uname: "emily77", email: 'emily@exale.com', password: 'password', fname: 'Emily',lname: 'Mayer', group_id: teachers.id, active: true
-stud_1 = User.create! uname: "rose79", email: 'rose@exale.com', password: 'password', fname: 'Rose',lname: 'Martinez', group_id: students.id, active: true
+tchr_3 = User.create! uname: "emily77", email:'emily@exale.com', password: 'password', password_confirmation: 'password', fname: 'Emily',lname:'Mayer', group_id: teachers.id, active: true
+stud_2 = User.create! uname: "rose79", email:'rose@exale.com', password: 'password', password_confirmation: 'password',fname: 'Rose',lname: 'Martinez', group_id: students.id, active: true
+tchr_1 = User.create! uname: "mmontoya", email:'mmontoya@exale.com', password: 'password', password_confirmation:'password',fname: 'Manuel',lname: 'Montoya', group_id: teachers.id, active: true
 
 test_1  = Test.create! title: 'Test Eins Neerland gesichte',  description: 'Test Eins Description', active: true, user_id: tchr_1.id
 test_2  = Test.create! title: 'Test Zweig Mexikan Neerland gesichte', description: 'Test Zweig Description', active: true, user_id: tchr_1.id

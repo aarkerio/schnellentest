@@ -20,6 +20,11 @@ require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
 
+  before(:all) do
+     data = [{name: 'Admin'}, {name: 'Teacher group'},{name: 'Student group'}, {name: 'Staff'}]
+     result = data.map { |p| FactoryGirl.create(:group, p) }
+  end
+
   # This should return the minimal set of attributes required to create a valid
   # User. As you add validations to User, be sure to
   # adjust the attributes here as well.
