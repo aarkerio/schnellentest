@@ -8,5 +8,7 @@ FactoryGirl.define do
     active false
     qtype true
     user nil
+    lang 'en'
+    status 0
   end
 end

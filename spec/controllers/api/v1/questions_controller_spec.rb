@@ -3,7 +3,7 @@ require 'spec_helper'
 RSpec.describe Api::V1::QuestionsController, type: :controller do
   
   before(:all) do
-    group      = FactoryGirl.create :group 
+    group      = FactoryGirl.create :group
     @user      = FactoryGirl.create :user, group: group
     tests      = FactoryGirl.create_list :test, 5, user: @user
     @test      = tests.first

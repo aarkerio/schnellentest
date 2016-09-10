@@ -1,5 +1,4 @@
 #Chipotle Software (c) 2016
-require 'ffaker'
 
 FactoryGirl.define do
   factory :user, class: User do
@@ -10,7 +9,6 @@ FactoryGirl.define do
     email  { FFaker::Internet.email }
     password { FFaker::Internet.password  }
     association :group, factory: :group
- 
   end
 
 end

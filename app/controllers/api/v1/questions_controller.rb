@@ -62,26 +62,18 @@ module V1
       render 'index'
     end
 
-    # Disable an Account.
+    # Public. Disable an Account.
     #
-    # text  - The guid String.
     #
-    # Examples
-    #
-    #   show('xVpK6SgP2NAhVtA-ygEIww')
-    #   # => Question
-    #
-    # Returns a Question object.
+    # Returns a json response.
     def delete
-        #return render json: params.to_json
-        return fail ActiveRecord::RecordNotFound, 'Question not found'  if params[:id].blank?
-        question = Question.find(params[:id])
+        # question = TestQuestion.find(params[:id])
+        question = TestQuestion.where(test_id: params[:test_id], question_id: params[:id]).first
         result = question.destroy
-
         if result
           return render json: {message: 'Question was removed succesfully.'}
         else
-          return render json: {message: 'Something went wrong. Question was not removed.'}
+          return render json: {message: 'Error: Something went wrong. Question was not removed.'}
         end
       end
 

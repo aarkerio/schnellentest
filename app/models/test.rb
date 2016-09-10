@@ -2,6 +2,7 @@
 
 class Test < ApplicationRecord
   belongs_to :user
+  has_many :test_question
   has_many :question, through: :test_question
 
   validates :title, presence: true

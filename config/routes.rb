@@ -28,11 +28,11 @@ Rails.application.routes.draw do
       delete '/tests/delete/(/:id)'    => 'tests#delete',  as: 'tests_delete'
      
       # QUESTION SECTION
-      post   '/questions/listing/(/:test_id)' => 'questions#listing', as: 'questions_listing'
-      post   '/questions/get_one/'            => 'questions#get_one', as: 'questions_get_one'
-      post   '/questions/create/'             => 'questions#create',  as: 'questions_create'
-      patch  '/questions/update/'             => 'questions#update',  as: 'questions_update'
-      delete '/questions/delete/'             => 'questions#delete',  as: 'questions_delete'   
+      post   '/questions/listing/(/:id)' => 'questions#listing', as: 'questions_listing'
+      post   '/questions/get_one/'       => 'questions#get_one', as: 'questions_get_one'
+      post   '/questions/create/'        => 'questions#create',  as: 'questions_create'
+      patch  '/questions/update/'        => 'questions#update',  as: 'questions_update'
+      delete '/questions/delete/(/:id)/(:test_id)'  => 'questions#delete',  as: 'questions_delete'   
  
       # ANSWER SECTION
       post   '/answers/create/'               => 'answers#create',    as: 'answers_create'
