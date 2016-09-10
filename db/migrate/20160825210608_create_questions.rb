@@ -8,8 +8,6 @@ class CreateQuestions < ActiveRecord::Migration[5.0]
       t.text :hint
       t.text :tags
       t.integer :worth, null: false, default: 5
-      t.boolean :active, null: false, default: true
-      t.boolean :qtype, null: false, default: true  # question type multiple option by default
 
       t.timestamps
     end
