@@ -2,8 +2,7 @@
 
 class Test < ApplicationRecord
   belongs_to :user
-  has_many :test_question
-  has_many :question, through: :test_question 
+  has_many :question, through: :test_question
 
   validates :title, presence: true
 
@@ -18,7 +17,6 @@ class Test < ApplicationRecord
   def get_one(test_id)
     test = Test.includes(:question).where(id: test_id).first
     newhash = nest_questions(test)
-    # logger.debug "88888888 >>>  get_one data   #{newhash.inspect}"
     newhash
   end
 
