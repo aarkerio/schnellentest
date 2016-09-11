@@ -32,8 +32,7 @@ module V1
     #
     # Returns a JSON object.
     def create
-      # return render json: params.to_json
-      
+   
       result = Question.new.create_question(question_params)
       
       if result
@@ -47,7 +46,6 @@ module V1
     #
     # Returns a Question object.
     def update
-      #return render json: Question_params.to_json
       if Question_params[:guid].blank?
         return fail ActiveRecord::RecordNotFound, 'Question not found'
       end
@@ -67,7 +65,6 @@ module V1
     #
     # Returns a json response.
     def delete
-        # question = TestQuestion.find(params[:id])
         question = TestQuestion.where(test_id: params[:test_id], question_id: params[:id]).first
         result = question.destroy
         if result
