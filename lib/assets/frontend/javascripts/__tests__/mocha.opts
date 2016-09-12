@@ -1,0 +1,5 @@
+
+--require __test__/helpers/browser.js
+--require chai
+--reporter nyan
+

@@ -97,9 +97,9 @@
     "jest": "^0.1.40",
     "jest-cli": "^0.10.0",
     "jest-webpack": "^0.2.1",
-    "jsdom": "^8.3.0",
+    "jsdom": "^9.5.0",
     "jshint": "^2.9.1",
-    "mocha": "^2.5.3",
+    "mocha": "^3.0.2",
     "mocha-jsdom": "^1.1.0",
     "sinon": "^1.17.3"
   }
