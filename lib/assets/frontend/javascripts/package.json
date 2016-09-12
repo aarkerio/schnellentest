@@ -43,7 +43,7 @@
     "mocha": "^2.4.5",
     "modal": "^1.2.0",
     "moment": "^2.12.0",
-    "react": "^15.3.0",
+    "react": "^15.3.1",
     "react-addons-css-transition-group": "^15.3.1",
     "react-addons-transition-group": "^15.3.1",
     "react-alert": "^1.0.14",
@@ -65,7 +65,7 @@
     "webpack-dev-server": "^1.15.0"
   },
   "scripts": {
-    "test": "jest --verbose --coverage --bail --onlyChanged --watch",
+    "test": "./node_modules/.bin/mocha -b --compilers js:babel-register -w __tests__/helpers/browser.js  __tests__/components/*.spec.js",
     "dev:hot": "webpack-dev-server --hot --inline --progress --colors --watch --display-error-details --display-cached --content-base ./"
   },
   "engines": {
@@ -82,7 +82,7 @@
     "babel-helper-get-function-arity": "^6.8.0",
     "babel-jest": "^15.0.0",
     "babel-loader": "^6.2.2",
-    "babel-polyfill": "^6.7.4",
+    "babel-polyfill": "^6.13.0",
     "babel-preset-es2015": "^6.14.0",
     "babel-preset-react": "^6.11.1",
     "babel-preset-react-hmre": "^1.1.1",
@@ -115,12 +115,14 @@
     "jshint": "^2.9.1",
     "mocha": "^2.5.3",
     "mocha-jsdom": "^1.1.0",
+    "mocha-webpack": "^0.6.0",
     "react-addons-test-utils": "^15.3.1",
     "react-dom": "^15.3.1",
     "react-hot-loader": "^1.3.0",
     "react-test-renderer": "^15.3.1",
     "riek": "^1.0.3",
     "sinon": "^1.17.5",
+    "webpack": "^1.13.2",
     "webpack-dev-middleware": "^1.6.1"
   }
 }
