@@ -16,7 +16,7 @@ app/assets/stylesheets/.sass-cache/
 # React on Rails
 npm-debug.log
 node_modules
-
+lib/assets/frontend/javascripts/coverage/
 # Generated js bundles
 /app/assets/javascripts/generated/*
 /vendor/assets/bower_components/*
