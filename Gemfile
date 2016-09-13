@@ -23,6 +23,8 @@ gem 'capistrano-rails'
 
 group :development do
   gem 'web-console', '~> 3.0'
+  gem 'capybara-webkit'
+  gem 'poltergeist'
 end
 
 group :test do

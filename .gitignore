@@ -31,6 +31,7 @@ app/assets/frontend/javascripts/built/*.svg
 app/assets/frontend/javascripts/built/*.ttf
 app/assets/frontend/javascripts/built/*.eot
 app/assets/frontend/javascripts/built/*.woff
+lib/assets/frontend/javascripts/.tmp/
 *~
 # emacs temp files
 \#*#
