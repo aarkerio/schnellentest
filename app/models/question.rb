@@ -10,7 +10,6 @@ class Question < ApplicationRecord
   def create_question(params)
     test = Test.find params['test_id']
     create_params = order_params params
-    logger.debug "88888888 >>>  create_params >>>   #{create_params.inspect}"
     test.question.create create_params
   end
 

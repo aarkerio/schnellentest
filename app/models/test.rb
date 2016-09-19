@@ -10,15 +10,14 @@ class Test < ApplicationRecord
   
   def create_test(params)
     create_params = order_params params
-    logger.debug create_params.inspect
+    #logger.debug create_params.inspect
     test = Test.new create_params
     test.save
   end
   
   def get_one(test_id)
     test = Test.includes(:question).where(id: test_id).first
-    newhash = nest_questions(test)
-    newhash
+    nest_questions(test)
   end
 
   private
