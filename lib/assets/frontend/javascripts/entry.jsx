@@ -18,7 +18,7 @@ import QuestionModalNewComponent from './components/QuestionModalNewComponent';
 import AnswersModalComponent     from './components/AnswersModalComponent';
 import NotFound                  from './components/NotFound';
 
-import configureStore from './configureStore';
+import configureStore from './config/configureStore';
 const my_store = configureStore();
 const history  = syncHistoryWithStore(browserHistory, my_store);
 

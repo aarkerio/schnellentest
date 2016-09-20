@@ -54,7 +54,8 @@ class QuestionModalNewComponent extends Component {
     //window.location='/questions/' + this.props.routeParams.test_id;
     // this.props.dispatch(push('/questions/' + this.props.routeParams.test_id));
     // browserHistory.push('/questions/' + this.props.routeParams.test_id);
-    this.props.dispatch(routeActions.push('/questions/' + this.props.routeParams.test_id));
+    //this.props.dispatch(routeActions.push('/questions/' + this.props.routeParams.test_id));
+    this.context.router.push('/questions/' + this.props.routeParams.test_id);
   }
 
   /* Validates form*/
