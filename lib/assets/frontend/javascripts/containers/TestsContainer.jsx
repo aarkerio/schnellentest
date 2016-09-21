@@ -18,8 +18,10 @@ class TestsContainer extends Component {
    * Load default appointment
    **/
   componentWillMount() {
-    let action = TestsActionCreators.fetchTests(cookie.load('user_id'));
-    this.props.dispatch(action);
+    if ( ! this.props.TestsArrayProp.length ) {
+      let action = TestsActionCreators.fetchTests(cookie.load('user_id'));
+      this.props.dispatch(action);
+    }
   }
 
   /**  

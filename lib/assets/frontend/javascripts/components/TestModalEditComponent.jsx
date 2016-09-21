@@ -51,9 +51,11 @@ class TestModalEditComponent extends Component {
 /**
   * Loads default data
   **/
-  componentDidMount() {
-    let action = TestsActionCreators.updateForm(this.props.routeParams.id);
-    this.props.dispatch(action);
+  componentWilMount() {
+    if ( ! this.props.oneTest.length ) {
+      // let action = TestsActionCreators.updateForm(this.props.routeParams.id);
+      // this.props.dispatch(action);
+    }
   }
   
   componentWillReceiveProps(nextProps) {

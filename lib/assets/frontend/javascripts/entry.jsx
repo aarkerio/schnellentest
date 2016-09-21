@@ -14,7 +14,6 @@ import TestsContainer            from './containers/TestsContainer';
 import TestModalEditComponent    from './components/TestModalEditComponent';
 import TestModalNewComponent     from './components/TestModalNewComponent';
 import QuestionsComponent        from './components/QuestionsComponent';
-import QuestionModalNewComponent from './components/QuestionModalNewComponent';
 import AnswersModalComponent     from './components/AnswersModalComponent';
 import NotFound                  from './components/NotFound';
 
@@ -29,7 +28,6 @@ render(
       <Router history={history}>
         <Route name="app" path="/tests/" component={AppContainer} />
         <Route path="/questions/:test_id" component={QuestionsComponent}>
-          <Route path="/questionnew/:test_id" component={QuestionModalNewComponent} />
           <Route path="/answers/:question_id/:test_id" component={AnswersModalComponent} />
         </Route>
         <Route path="/tests" component={TestsContainer}>
