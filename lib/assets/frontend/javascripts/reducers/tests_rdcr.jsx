@@ -1,10 +1,14 @@
-'use strict';
+'use strict'
 
-import { REQUEST_TESTS, RECEIVE_TESTS, RECEIVE_ONE_TEST, RECEIVE_ONE_QUESTION } from '../actions/tests';
+import { REQUEST_TESTS, RECEIVE_TESTS, RECEIVE_ONE_TEST, RECEIVE_ONE_QUESTION } from '../actions/tests'
 
 const initialState = {
     TestsArrayProp: [],
-};
+    OneTestArrayProp: {},
+    OneQuestionArrayProp: [],
+    AnswersArrayProp: [],
+    QuestionsArrayProp: []
+}
 
 const tests_rdcr = (state = initialState, action) => {
   // console.log('>>>>>>>>>>>>> At tests_rdcr: ' + JSON.stringify(action)); 
@@ -21,9 +25,10 @@ const tests_rdcr = (state = initialState, action) => {
       });
 
     case RECEIVE_ONE_TEST:
+      console.log('>>>>>>>>>>>>REDUCER  action.OneTestArrayProp.questions: ' + JSON.stringify(action.OneTestArrayProp.questions));
       return Object.assign({}, state, {
           OneTestArrayProp: action.OneTestArrayProp,
-          QuestionsTestArrayProp: action.OneTestArrayProp.questions
+          QuestionsArrayProp: action.OneTestArrayProp.questions
       });
     
     case RECEIVE_ONE_QUESTION:

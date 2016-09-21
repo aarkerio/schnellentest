@@ -71,7 +71,7 @@ class QuestionsComponent extends Component {
  * Sends the data to create a new appointment
  **/
   handleSubmit(e) {
-    e.preventDefault();
+    e.preventDefault()
 
     let fields = {question: {
       user_id:     cookie.load('user_id'),
@@ -83,17 +83,30 @@ class QuestionsComponent extends Component {
       active:      this.state.active,
       qtype:       this.state.qtype,
       test_id:     this.props.routeParams.test_id
-    }};
+    }}
     
     let isValid = this.validatesForm(fields);
     if ( !isValid['pass'] ) {
       console.log('Question not valid: ' + isValid['message']);
     }
     // save
-    let action = testsActionCreators.createQuestion(fields)
-    this.props.dispatch(action)  // thunk middleware
-    this.setState({showModal: false})
-    this.loadTest()
+    let action = TestsActionCreators.createQuestion(fields)
+    this.props.dispatch(action);  // thunk middleware
+    this.setState({showModal: false});
+    this.clearForm();
+    setTimeout(
+        () => { this.loadTest(); },
+        2000
+      );
+  }
+
+  clearForm(){
+    let change = {};
+    let fields = { question: '',  explanation: '', hint: '', tags: '', worth: 1, active: true, qtype: true };
+    Object.keys(fields).forEach(function(key) {
+      change[key] = fields[key];
+    });
+    this.setState(change);
   }
 
   openModal(){
@@ -130,11 +143,13 @@ class QuestionsComponent extends Component {
   *  Private
   */
   deleteQuestion(question_id) {
-    let action = TestsActionCreators.deleteQuestion(question_id, this.state.test_id)
-    this.props.dispatch(action)
-    this.showAlert()
-    this.loadTest()
-    this.forceUpdate()
+    let action = TestsActionCreators.deleteQuestion(question_id, this.state.test_id);
+    this.props.dispatch(action);
+    this.showAlert();
+    setTimeout(
+        () => { this.loadTest(); },
+        2000
+    );
   }
 
   renderAnswersButton(type, id){
@@ -257,7 +272,7 @@ QuestionsComponent.defaultProps = {
 const mapStateToProps = (state) => {
   return {
     OneTestArrayProp: state.rootReducer.tests_rdcr.OneTestArrayProp,
-    QuestionsArrayProp: state.rootReducer.tests_rdcr.QuestionsTestArrayProp
+    QuestionsArrayProp: state.rootReducer.tests_rdcr.QuestionsArrayProp
   }
 }
 
