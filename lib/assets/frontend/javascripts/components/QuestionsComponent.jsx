@@ -2,13 +2,12 @@
   
 import cookie from 'react-cookie'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 import { render } from 'react-dom'
 import { dialogStyle, modalConfig } from '../config/modals'
+import HeaderComponent  from '../components/HeaderComponent'
 import * as TestsActionCreators from '../actions/tests'
 import React, { Component, PropTypes } from 'react'
 import { Link, browserHistory } from 'react-router'
-import HeaderComponent  from '../components/HeaderComponent'
 import { Button, Modal } from 'react-bootstrap' 
 import AlertContainer from 'react-alert'
 
@@ -18,7 +17,7 @@ class QuestionsComponent extends Component {
       this.state = {
           questions:  [],
           test_id: this.props.routeParams.test_id,
-          showModal:   false, 
+          showModal:   false,
           user_id:     0,    // not valid value
           question:    '',
           explanation: '',
@@ -35,7 +34,8 @@ class QuestionsComponent extends Component {
           theme: 'dark',
           time: 5000,
           transition: 'scale'
-    }
+      }
+      this.openModal = this.openModal.bind(this)
   }
   
   /**
@@ -90,15 +90,14 @@ class QuestionsComponent extends Component {
       console.log('Question not valid: ' + isValid['message']);
     }
     // save
-    let action = testsActionCreators.createQuestion(fields);
-    this.props.dispatch(action);  // thunk middleware
+    let action = testsActionCreators.createQuestion(fields)
+    this.props.dispatch(action)  // thunk middleware
     this.setState({showModal: false})
-    this.loadTest();
+    this.loadTest()
   }
 
-  openModal(value){
-    //let newvalue = !this.state.showModal
-    this.setState({showModal: value})
+  openModal(){
+    this.setState({showModal: true})
   }
 
   /* Validates form*/
@@ -111,7 +110,7 @@ class QuestionsComponent extends Component {
       valid['message']   = 'Question not valid';
     }
 
-    return valid;    
+    return valid
   }
 
   handleChange(name, event) {
@@ -131,11 +130,11 @@ class QuestionsComponent extends Component {
   *  Private
   */
   deleteQuestion(question_id) {
-    let action = TestsActionCreators.deleteQuestion(question_id, this.state.test_id);
-    this.props.dispatch(action);
-    this.showAlert();
-    this.loadTest();
-    this.forceUpdate();
+    let action = TestsActionCreators.deleteQuestion(question_id, this.state.test_id)
+    this.props.dispatch(action)
+    this.showAlert()
+    this.loadTest()
+    this.forceUpdate()
   }
 
   renderAnswersButton(type, id){
@@ -163,7 +162,7 @@ class QuestionsComponent extends Component {
         <HeaderComponent />
         <h1> {this.props.OneTestArrayProp.title} </h1>
         <div>
-          <button type="button" onClick={this.openModal(true)} className="btn btn-default btn-sm">
+          <button type="button" onClick={this.openModal} className="btn btn-default btn-sm">
             <span className="glyphicon glyphicon-plus"></span>
           </button>
         </div>
