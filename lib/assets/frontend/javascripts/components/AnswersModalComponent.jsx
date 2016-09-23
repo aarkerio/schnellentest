@@ -25,7 +25,6 @@ class AnswersModalComponent extends Component {
              };
   }
 
-
   /**
    * Load question data and answers 
    **/
