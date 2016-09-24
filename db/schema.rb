@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 20160910201849) do
     t.text     "hint"
     t.text     "tags"
     t.integer  "worth",       default: 5,    null: false
+    t.integer  "origin",      default: 1,    null: false
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
     t.boolean  "active"
