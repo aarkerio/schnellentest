@@ -5,7 +5,7 @@
 
 # Schellen Test
 
-![vet4pet](https://raw.githubusercontent.com/aarkerio/schnellen/master/app/assets/images/schnellen_logo.png)
+![Schnellen](https://raw.githubusercontent.com/aarkerio/schnellentest/master/app/assets/images/schnellen_logo.png)
 
 Create Tests, in a quick and easy way. Apply them Online and grade them automatically. Share your questions with other teachers!   
 
