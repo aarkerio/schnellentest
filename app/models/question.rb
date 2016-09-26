@@ -13,10 +13,10 @@ class Question < ApplicationRecord
     test.question.create create_params
   end
 
-  def get_one(question_id)
-    question = Question.includes(:answer).where(id: question_id).first
+  def get_one(id)
+    question = Question.includes(:answer).where(id: id).first
     newhash  = order_answers(question)
-    # logger.debug "88888888 >>>  get_one data   #{newhash.inspect}"
+    # logger.debug "19 line >>>  get_one data   #{newhash.inspect}"
     newhash
   end
 

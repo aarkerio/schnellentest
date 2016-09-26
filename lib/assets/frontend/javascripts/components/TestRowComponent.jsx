@@ -16,12 +16,12 @@ class TestRow extends Component {
     }
   }
 
-/**
-  *  Delete Single Test
-  *  Private
-  */
+ /**
+   *  Delete Single Test
+   *  Private
+   */
   deleteTest(test_id) {
-    let action = TestsActionCreators.deleteTest(test_id);
+    let action = TestsActionCreators.deleteRow(test_id, 'tests');
     this.props.dispatch(action);
     console.log(' to delete test_id: >>>>' + test_id);
     window.location='/tests';

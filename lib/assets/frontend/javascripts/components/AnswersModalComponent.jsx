@@ -1,30 +1,28 @@
-'use strict';
-import cookie from 'react-cookie';
-import React, { PropTypes, Component } from 'react';
-import { Link, browserHistory } from 'react-router';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import * as TestsActionCreators from '../actions/tests';
-
-import AnswerRowComponent from './AnswerRowComponent';
-
-import { Button, Modal } from 'react-bootstrap';
-
-// The Set object lets you store unique values of any type
+'use strict'
+import cookie from 'react-cookie'
+import React, { PropTypes, Component } from 'react'
+import { Link, browserHistory } from 'react-router'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import { Button, Modal } from 'react-bootstrap'
+import * as TestsActionCreators from '../actions/tests'
+import { dialogStyle, modalConfig } from '../config/modals'
+import AnswerRowComponent from './AnswerRowComponent'
 
 class AnswersModalComponent extends Component {
   constructor(props) {
-    super(props);
-    this.state = { showModal:    true, 
-                   question_id:  this.props.routeParams.question_id,
-                   test_id:      this.props.routeParams.test_id,
-                   nactive:      true,
-                   ncorrect:     false,
-                   nuser_id:     0,    // not valid values
-                   nanswer:      ''
-             };
+    super(props)
+    console.log('PROPS Answrs>>>>' + JSON.stringify(this.props));
+    this.state = { showModal:   true, 
+                   question_id: this.props.routeParams.question_id,
+                   test_id:     this.props.routeParams.test_id,
+                   nactive:     true,
+                   ncorrect:    false,
+                   nuser_id:    0,    // not valid values
+                   nanswer:     '',
+                   title:       'Question'
+             }
   }
-
 
   /**
    * Load question data and answers 
@@ -33,7 +31,9 @@ class AnswersModalComponent extends Component {
     if ( ! this.props.QuestionArrayProp.length ) {
       let action = TestsActionCreators.fetchOneQuestion( this.state.question_id );
       this.props.dispatch(action);
+      this.setState({title: this.props.QuestionArrayProp.question});
     }
+    console.log('QuestionArrayProp >>> ' + JSON.stringify(this.props.QuestionArrayProp));
   }
 
   handleChange(name, event) {
@@ -68,9 +68,7 @@ class AnswersModalComponent extends Component {
     let action = TestsActionCreators.createAnswer(fields);
     this.props.dispatch(action);  // thunk middleware
     this.setState({nanswer: '', ncorrect: false});
-    // window.location='/answers/' + this.state.test_id;
-    let newcall = TestsActionCreators.fetchOneQuestion( this.state.question_id );
-    this.props.dispatch(newcall);
+    this.loadQuestion();
   }
 
   /* Validates form*/
@@ -81,7 +79,6 @@ class AnswersModalComponent extends Component {
       valid['answer']  = false;
       valid['message'] = 'New answer lenght not valid';
     }
-
     return valid;    
   }
 
@@ -92,35 +89,30 @@ class AnswersModalComponent extends Component {
   }
 
   toggleCheckbox(name, event){
-    let change = !this.state[name];
-    this.setState({name: change});
+    let obj = {}; 
+    obj[name] = !this.state[name];
+    console.log(JSON.stringify(obj))
+    this.setState(obj);
+  }
+  /* Lädt Fragen und Antworten wieder.**/
+  loadQuestion(){
+    let newcall = TestsActionCreators.fetchOneQuestion( this.state.question_id );
+    setTimeout(() => { this.props.dispatch(newcall); }, 2000);
+  }
+
+ /**
+  *  Delete Single Answer
+  *  Private
+  */
+  deleteAnswer(answer_id) {
+    console.log(' In parent !!! : >>>>' + answer_id);
+    let action = TestsActionCreators.deleteRow(answer_id, 'answers');
+    this.props.dispatch(action);
+    this.loadQuestion();
   }
 
   render() {
-    let rand         = ()=> (Math.floor(Math.random() * 20) - 10);
-    const modalStyle = {  position: 'fixed',  zIndex: 1040,   top: 0, bottom: 0, left: 0, right: 0 };
-
-    const backdropStyle = {
-      ...modalStyle,
-      zIndex: 'auto',
-      backgroundColor: '#000',
-      opacity: 0.5
-    };
-
-    const dialogStyle = function() {
-      let top = 50 + rand();
-      let left = 50 + rand();
-      return {
-        position: 'absolute',
-        width: 700,
-        top: top + '%', left: left + '%',
-        transform: `translate(-${top}%, -${left}%)`,
-        border: '1px solid #e5e5e5',
-        backgroundColor: 'white',
-        boxShadow: '0 5px 15px rgba(0,0,0,.5)',
-        padding: 10
-      };
-    };
+    const backdropStyle = {...modalConfig};
 
     return (
         <div id="responsive" className="modal hide fade" tabIndex="-1" >
@@ -130,25 +122,23 @@ class AnswersModalComponent extends Component {
           show={this.state.showModal}
         >
           <Modal.Header>
-             <Modal.Title> Answers for: {}</Modal.Title>
+             <Modal.Title> Answers for: {this.state.title}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
           <div>
             {this.props.AnswersArrayProp.map((answer, i) =>
-              <AnswerRowComponent answer={answer} key={answer.id} keyRow={answer.id} />
+              <AnswerRowComponent answer={answer} key={answer.id} keyRow={answer.id} onChange={this.deleteAnswer.bind(this)} />
             )}
           </div>
-
           <form>
              <label htmlFor="nanswer">Answer:</label>
              <input className="form-control" name="nanswer" value={this.state.nanswer} onChange={this.handleChange.bind(this, 'nanswer')} />
              
              <label htmlFor="ncorrect">This answer is correct:</label>
-             <input type="checkbox" name="correct" defaultChecked={this.state.ncorrect} onChange={this.toggleCheckbox.bind(this, 'ncorrect')} />
+             <input type="checkbox" name="ncorrect" defaultChecked={this.state.ncorrect} onChange={this.toggleCheckbox.bind(this, 'ncorrect')} />
 
              <label htmlFor="nactive">Active:</label>
-             <input type="checkbox" name="nactive" defaultChecked={this.state.nactive} onChange={this.toggleCheckbox.bind(this, 'nactive')} />
-             
+             <input type="checkbox" name="nactive" defaultChecked={this.state.nactive} onChange={this.toggleCheckbox.bind(this, 'nactive')} />          
           </form>
         </Modal.Body>
         <Modal.Footer>

@@ -8,6 +8,7 @@ class CreateQuestions < ActiveRecord::Migration[5.0]
       t.text :hint
       t.text :tags
       t.integer :worth, null: false, default: 5
+      t.integer :origin, null: false, default: 1
 
       t.timestamps
     end

@@ -1,11 +1,10 @@
+# Chipotle Software (c) 2016  MIT License
 module Api
 module V1
   class QuestionsController < ApiBaseController
     #before_action :set_question, only: [:show, :edit, :update, :destroy] 
     
     # Gets all Questions. POST /api/v1/questions/listing/(:guid) route
-    #
-    # guid  - The guid String.
     #
     # Returns a json object.
     def listing
@@ -19,8 +18,6 @@ module V1
     end
 
     # Gets one Question.  POST /api/v1/questions/get_one/ 
-    #
-    # guid  - The guid String.
     #
     # Returns a json object.
     def get_one

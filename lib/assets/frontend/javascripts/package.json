@@ -1,8 +1,7 @@
 {
   "name": "schnell_test",
   "description": "schnell_test",
-  "author": "Manuel Montoya <mmontoya@gmail.com> MIT license",
-  "license": "MIT License",
+  "author": "Manuel Montoya <mmontoya@gmail.com>",
   "repository": {
     "type": "git",
     "url": "https://github.com/aarkerio/schnelltest.git"
@@ -42,12 +41,11 @@
     "lodash.clone": "^4.5.0",
     "lodash.omit": "^4.5.0",
     "matchdep": "^1.0.1",
-    "mocha": "^2.4.5",
     "modal": "^1.2.0",
     "moment": "^2.12.0",
-    "react": "^15.3.1",
-    "react-addons-css-transition-group": "^15.3.1",
-    "react-addons-transition-group": "^15.3.1",
+    "react": "^15.3.2",
+    "react-addons-css-transition-group": "^15.3.0",
+    "react-addons-transition-group": "^15.3.0",
     "react-alert": "^1.0.14",
     "react-bootstrap": "^0.30.2",
     "react-cookie": "^0.4.5",
@@ -64,8 +62,7 @@
     "style-loader": "^0.13.0",
     "url-loader": "^0.5.7",
     "webpack": "^1.12.14",
-    "webpack-dev-server": "^1.15.0",
-    "whatwg-fetch": "^1.0.0"
+    "webpack-dev-server": "^1.15.0"
   },
   "scripts": {
     "test": "export NODE_ENV=test && node ./node_modules/mocha-webpack/bin/mocha-webpack --opts __tests__/mocha-webpack.opts --webpack-config ./webpack.testing.config.js -r __tests__/helpers/browser.js __tests__/components/*.spec.js",
@@ -82,12 +79,10 @@
   },
   "devDependencies": {
     "autoprefixer": "^6.4.1",
-    "babel-core": "^6.14.0",
     "babel-helper-get-function-arity": "^6.8.0",
     "babel-jest": "^15.0.0",
     "babel-loader": "^6.2.5",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
-    "babel-polyfill": "^6.13.0",
     "babel-preset-es2015": "^6.14.0",
     "babel-preset-react": "^6.11.1",
     "babel-preset-react-hmre": "^1.1.1",
@@ -154,16 +149,12 @@
     "postcss-unique-selectors": "^2.0.2",
     "postcss-value-parser": "^3.3.0",
     "postcss-zindex": "^2.1.1",
-    "react-addons-test-utils": "^15.3.1",
-    "react-dom": "^15.3.1",
-    "react-hot-loader": "^1.3.0",
+    "react-addons-test-utils": "^15.3.0",
     "react-test-renderer": "^15.3.1",
     "redux-mock-store": "^1.2.0",
     "riek": "^1.0.3",
     "sinon": "^1.17.6",
     "url-loader": "^0.5.7",
-    "webpack": "^1.13.2",
-    "webpack-dev-middleware": "^1.6.1",
-    "whatwg-fetch": "^1.0.0"
+    "webpack-dev-middleware": "^1.6.1"
   }
 }
