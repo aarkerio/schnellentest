@@ -3,11 +3,11 @@
 [![Dependency Status](https://gemnasium.com/shakacode/react-webpack-rails-tutorial.svg)](https://gemnasium.com/shakacode/react-webpack-rails-tutorial)
 [![Coverage Status](https://coveralls.io/repos/shakacode/react-webpack-rails-tutorial/badge.svg?branch=master&service=github)](https://coveralls.io/github/shakacode/react-webpack-rails-tutorial?branch=master)
 
-# vet4pet
+# Schellen Test
 
-![vet4pet](https://raw.githubusercontent.com/aarkerio/vet4pet/master/app/assets/images/vet4pet_logo.png)
+Create Tests, on a quick ans easy way. Apply them Online and grade them automatically. Share your questions with other teachers!   
 
-A Rails4 + ReactJS vet clinic management solution with an ActionCable RESTful API and OpenEHR e-Health records suppport for the puppies!
+Erstellen Sie Tests, auf schnelle und einfache Weise. Wenden Sie sie online und Klasse sie automatisch. Teilen Sie Ihre Fragen mit anderen Lehrern!
 
 Copyright (c) Chipotle Software 2015-2016
 
