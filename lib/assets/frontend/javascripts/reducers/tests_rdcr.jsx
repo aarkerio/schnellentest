@@ -3,11 +3,11 @@
 import { REQUEST_TESTS, RECEIVE_TESTS, RECEIVE_ONE_TEST, RECEIVE_ONE_QUESTION } from '../actions/tests'
 
 const initialState = {
-    TestsArrayProp: [],
-    OneTestArrayProp: {},
+    TestsArrayProp:       [],
+    OneTestArrayProp:     {},
     OneQuestionArrayProp: [],
-    AnswersArrayProp: [],
-    QuestionsArrayProp: []
+    AnswersArrayProp:     [],
+    QuestionsArrayProp:   []
 }
 
 const tests_rdcr = (state = initialState, action) => {
@@ -16,16 +16,15 @@ const tests_rdcr = (state = initialState, action) => {
     case RECEIVE_TESTS:
       return Object.assign({}, state, {
            TestsArrayProp: action.TestsArrayProp
-      });
+      })
      
     case REQUEST_TESTS:
       return Object.assign({}, state, {
         isFetching: true,
         didInvalidate: false
-      });
+      })
 
     case RECEIVE_ONE_TEST:
-      console.log('>>>>>>>>>>>>REDUCER  action.OneTestArrayProp.questions: ' + JSON.stringify(action.OneTestArrayProp.questions));
       return Object.assign({}, state, {
           OneTestArrayProp: action.OneTestArrayProp,
           QuestionsArrayProp: action.OneTestArrayProp.questions
@@ -40,7 +39,7 @@ const tests_rdcr = (state = initialState, action) => {
     default:
       return state;
   }
-};
+}
 
-export default tests_rdcr;
+export default tests_rdcr
 

@@ -1,28 +1,29 @@
-'use strict';
-import cookie from 'react-cookie';
-import React, { PropTypes, Component } from 'react';
-import { Link, browserHistory } from 'react-router';
+'use strict'
+import cookie from 'react-cookie'
+import React, { PropTypes, Component } from 'react'
+import { Link, browserHistory } from 'react-router'
 import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import * as TestsActionCreators from '../actions/tests';
+import { connect } from 'react-redux'
+import * as TestsActionCreators from '../actions/tests'
 
-import AnswerRowComponent from './AnswerRowComponent';
+import AnswerRowComponent from './AnswerRowComponent'
 
-import { Button, Modal } from 'react-bootstrap';
+import { Button } from 'react-bootstrap'
 
 // The Set object lets you store unique values of any type
 
 class AnswersModalComponent extends Component {
   constructor(props) {
-    super(props);
+    super(props)
+    console.log('PROPS Answrs>>>>' + JSON.stringify(this.props));
     this.state = { showModal:    true, 
-                   question_id:  this.props.routeParams.question_id,
-                   test_id:      this.props.routeParams.test_id,
+                   question_id:  this.props.question_id,
+                   test_id:      this.props.test_id,
                    nactive:      true,
                    ncorrect:     false,
                    nuser_id:     0,    // not valid values
                    nanswer:      ''
-             };
+             }
   }
 
   /**
@@ -31,7 +32,7 @@ class AnswersModalComponent extends Component {
   componentWillMount() {
     if ( ! this.props.QuestionArrayProp.length ) {
       let action = TestsActionCreators.fetchOneQuestion( this.state.question_id );
-      this.props.dispatch(action);
+      this.props.dispatch(action)
     }
   }
 
@@ -80,7 +81,6 @@ class AnswersModalComponent extends Component {
       valid['answer']  = false;
       valid['message'] = 'New answer lenght not valid';
     }
-
     return valid;    
   }
 
@@ -97,14 +97,8 @@ class AnswersModalComponent extends Component {
 
   render() {
     let rand         = ()=> (Math.floor(Math.random() * 20) - 10);
-    const modalStyle = {  position: 'fixed',  zIndex: 1040,   top: 0, bottom: 0, left: 0, right: 0 };
-
-    const backdropStyle = {
-      ...modalStyle,
-      zIndex: 'auto',
-      backgroundColor: '#000',
-      opacity: 0.5
-    };
+    const modalStyle = {  position: 'fixed',  zIndex: 1040,   top: 0, bottom: 0, left: 0, right: 0, zIndex: 'auto', backgroundColor:'#000',opacity: 0.5 };
+    const backdropStyle = {...modalStyle};
 
     const dialogStyle = function() {
       let top = 50 + rand();
@@ -137,7 +131,6 @@ class AnswersModalComponent extends Component {
               <AnswerRowComponent answer={answer} key={answer.id} keyRow={answer.id} />
             )}
           </div>
-
           <form>
              <label htmlFor="nanswer">Answer:</label>
              <input className="form-control" name="nanswer" value={this.state.nanswer} onChange={this.handleChange.bind(this, 'nanswer')} />
@@ -146,8 +139,7 @@ class AnswersModalComponent extends Component {
              <input type="checkbox" name="correct" defaultChecked={this.state.ncorrect} onChange={this.toggleCheckbox.bind(this, 'ncorrect')} />
 
              <label htmlFor="nactive">Active:</label>
-             <input type="checkbox" name="nactive" defaultChecked={this.state.nactive} onChange={this.toggleCheckbox.bind(this, 'nactive')} />
-             
+             <input type="checkbox" name="nactive" defaultChecked={this.state.nactive} onChange={this.toggleCheckbox.bind(this, 'nactive')} />          
           </form>
         </Modal.Body>
         <Modal.Footer>

@@ -8,7 +8,7 @@ import HeaderComponent  from './HeaderComponent'
 import * as TestsActionCreators from '../actions/tests'
 import React, { Component, PropTypes } from 'react'
 import { Link, browserHistory } from 'react-router'
-import { Button, Modal } from 'react-bootstrap' 
+import { Button, Modal } from 'react-bootstrap'
 import AlertContainer from 'react-alert'
 
 class QuestionsComponent extends Component {
@@ -39,7 +39,7 @@ class QuestionsComponent extends Component {
   }
   
   /**
-   * Load test data and questions 
+   * Load test data and questions
    **/
   componentWillMount() {
     if ( ! this.props.OneTestArrayProp.length ) {
@@ -112,6 +112,11 @@ class QuestionsComponent extends Component {
   openModal(){
     this.setState({showModal: true})
   }
+  
+  closeModal(){
+    this.setState({showModal: false})
+    this.clearForm()
+  }
 
   /* Validates form*/
   validatesForm(fields){
@@ -146,21 +151,21 @@ class QuestionsComponent extends Component {
     let action = TestsActionCreators.deleteQuestion(question_id, this.state.test_id);
     this.props.dispatch(action);
     this.showAlert();
-    setTimeout(
-        () => { this.loadTest(); },
-        2000
-    );
+    setTimeout(() => { this.loadTest(); }, 2000);
+  }
+
+  renderAnswersModal(id){
+    console.log('Rendereeeeeeee>>>' + id);
+    return (<AnswersModalComponent test_id={this.state.test_id} question_id={id} />);
   }
 
   renderAnswersButton(type, id){
     if (type) {
       return (
               <div className="right_button"> 
-                <Link to={"/answers/"+id+"/"+this.state.test_id+"/"}>
-                  <button type="button" className="btn btn-default btn-sm" title="Manage answers">
-                    <span className="glyphicon glyphicon-check"></span>
-                  </button>
-                </Link> 
+                <button onClick={this.renderAnswersModal.bind(this, id)} className="btn btn-default btn-sm" title="Manage answers">
+                  <span className="glyphicon glyphicon-check"></span>
+                </button>
               </div>
       );
     } else {
@@ -199,15 +204,15 @@ class QuestionsComponent extends Component {
               </div>
               { this.renderAnswersButton(q.qtype, q.id) }
               <div className="right_button">
-                  <a href="#" onClick={() => {if(confirm('Delete the question?')) {this.deleteQuestion(q.id)};}} className="removable"  title="Delete question">
-                    <i className="glyphicon glyphicon-trash"></i>
-                  </a>
+                <button type="button" onClick={() => {if(confirm('Delete the question?')) {this.deleteQuestion(q.id)};}} className="btn btn-default btn-sm" title="Delete question">
+                  <span className="glyphicon glyphicon-trash"></span>
+                </button>
               </div>
         </div>
         )}
       </div>
       { this.props.children }
-      <div id="responsive" className="modal hide fade" tabIndex="-1" >
+      <div id="questionform" className="modal hide fade" tabIndex="-1" >
           <Modal
             aria-labelledby='modal-label'
             backdropStyle={modalConfig.backdropStyle}
@@ -248,7 +253,7 @@ class QuestionsComponent extends Component {
              </form>
           </Modal.Body>
           <Modal.Footer>
-             <Button onClick={() => browserHistory.push('/questions/'+this.props.routeParams.test_id)}>Cancel</Button>
+             <Button onClick={this.closeModal.bind(this)}>Cancel</Button>
              <Button onClick={this.handleSubmit.bind(this)}>Änderungen speichern</Button>
           </Modal.Footer>
         </Modal>
