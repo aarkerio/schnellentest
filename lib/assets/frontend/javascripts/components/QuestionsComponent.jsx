@@ -154,18 +154,15 @@ class QuestionsComponent extends Component {
     setTimeout(() => { this.loadTest(); }, 2000);
   }
 
-  renderAnswersModal(id){
-    console.log('Rendereeeeeeee>>>' + id);
-    return (<AnswersModalComponent test_id={this.state.test_id} question_id={id} />);
-  }
-
   renderAnswersButton(type, id){
     if (type) {
       return (
               <div className="right_button"> 
-                <button onClick={this.renderAnswersModal.bind(this, id)} className="btn btn-default btn-sm" title="Manage answers">
-                  <span className="glyphicon glyphicon-check"></span>
-                </button>
+                <Link to={"/answers/"+id+"/"+this.state.test_id+"/"}>
+                  <button type="button" className="btn btn-default btn-sm" title="Manage answers">
+                    <span className="glyphicon glyphicon-check"></span>
+                  </button>
+                </Link> 
               </div>
       );
     } else {

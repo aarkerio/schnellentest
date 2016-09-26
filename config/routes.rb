@@ -35,7 +35,10 @@ Rails.application.routes.draw do
       delete '/questions/delete/(/:id)/(:test_id)'  => 'questions#delete',  as: 'questions_delete'   
  
       # ANSWER SECTION
-      post   '/answers/create/'               => 'answers#create',    as: 'answers_create'
+      post   '/answers/create/'           => 'answers#create',    as: 'answers_create'
+      patch  '/answers/toggle/'           => 'answers#toggle',    as: 'answers_toggle'
+      patch  '/answers/update/'           => 'answers#update',    as: 'answers_update'
+      delete '/answers/delete/(/:id)'     => 'answers#delete',    as: 'answers_delete'
 
       # USER SECTION
       patch  '/users/update/'         => 'users#update_user', as: 'users_update'

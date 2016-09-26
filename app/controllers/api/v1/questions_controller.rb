@@ -5,8 +5,6 @@ module V1
     
     # Gets all Questions. POST /api/v1/questions/listing/(:guid) route
     #
-    # guid  - The guid String.
-    #
     # Returns a json object.
     def listing
       #return render json: params.to_json
@@ -19,8 +17,6 @@ module V1
     end
 
     # Gets one Question.  POST /api/v1/questions/get_one/ 
-    #
-    # guid  - The guid String.
     #
     # Returns a json object.
     def get_one

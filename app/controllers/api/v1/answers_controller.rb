@@ -1,7 +1,7 @@
 module Api
 module V1
   class AnswersController < ApiBaseController
-
+    before_action :set_answer, only: [:toggle, :update, :destroy]
     # Creates a new Answer Account.
     #
     # Returns a JSON object.
@@ -19,19 +19,19 @@ module V1
     #
     # Returns a Answer object.
     def update
-      #return render json: Answer_params.to_json
-      if Answer_params[:guid].blank?
-        return fail ActiveRecord::RecordNotFound, 'Answer not found'
-      end
-
-      @answer = Account.new.update_Answer(Answer_params)
-
-      if @answer.class.name == 'Answer'
-          @message = { message: 'Answer updated sucessfully' }
+      if @answer.update_attribute(:answer, params[:answer])
+        return render json: {message: 'Answer was updated succesfully'} 
       else
-          fail Exception, "Error: Answer not updated: #{@answer.inspect}"
+        return render json: {message: 'Error: Answer was not updated succesfully'}
       end
-      render 'index'
+    end
+    # Toggle one field
+    def toggle
+      if @answer.update_attribute(:status,params[:status])
+        return render json: {message: 'Answer was toggled succesfully'} 
+      else
+        return render json: {message: 'Error: Answer was not created succesfully'}
+      end
     end
 
     # Disable an Answer.
@@ -53,6 +53,10 @@ module V1
     end
 
     private
+
+    def set_answer
+      @answer = Answer.find(params[:id])
+    end
 
     # Never trust parameters from the scary internet, only allow the white list.
     def answer_params

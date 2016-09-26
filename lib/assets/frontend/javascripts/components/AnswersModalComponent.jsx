@@ -2,27 +2,25 @@
 import cookie from 'react-cookie'
 import React, { PropTypes, Component } from 'react'
 import { Link, browserHistory } from 'react-router'
-import { bindActionCreators } from 'redux';
+import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { Button, Modal } from 'react-bootstrap'
 import * as TestsActionCreators from '../actions/tests'
-
+import { dialogStyle, modalConfig } from '../config/modals'
 import AnswerRowComponent from './AnswerRowComponent'
-
-import { Button } from 'react-bootstrap'
-
-// The Set object lets you store unique values of any type
 
 class AnswersModalComponent extends Component {
   constructor(props) {
     super(props)
     console.log('PROPS Answrs>>>>' + JSON.stringify(this.props));
-    this.state = { showModal:    true, 
-                   question_id:  this.props.question_id,
-                   test_id:      this.props.test_id,
-                   nactive:      true,
-                   ncorrect:     false,
-                   nuser_id:     0,    // not valid values
-                   nanswer:      ''
+    this.state = { showModal:   true, 
+                   question_id: this.props.routeParams.question_id,
+                   test_id:     this.props.routeParams.test_id,
+                   nactive:     true,
+                   ncorrect:    false,
+                   nuser_id:    0,    // not valid values
+                   nanswer:     '',
+                   title:       'Question'
              }
   }
 
@@ -32,8 +30,10 @@ class AnswersModalComponent extends Component {
   componentWillMount() {
     if ( ! this.props.QuestionArrayProp.length ) {
       let action = TestsActionCreators.fetchOneQuestion( this.state.question_id );
-      this.props.dispatch(action)
+      this.props.dispatch(action);
+      this.setState({title: this.props.QuestionArrayProp.question});
     }
+    console.log('QuestionArrayProp >>> ' + JSON.stringify(this.props.QuestionArrayProp));
   }
 
   handleChange(name, event) {
@@ -69,8 +69,7 @@ class AnswersModalComponent extends Component {
     this.props.dispatch(action);  // thunk middleware
     this.setState({nanswer: '', ncorrect: false});
     // window.location='/answers/' + this.state.test_id;
-    let newcall = TestsActionCreators.fetchOneQuestion( this.state.question_id );
-    this.props.dispatch(newcall);
+    this.loadQuestion();
   }
 
   /* Validates form*/
@@ -95,25 +94,13 @@ class AnswersModalComponent extends Component {
     this.setState({name: change});
   }
 
-  render() {
-    let rand         = ()=> (Math.floor(Math.random() * 20) - 10);
-    const modalStyle = {  position: 'fixed',  zIndex: 1040,   top: 0, bottom: 0, left: 0, right: 0, zIndex: 'auto', backgroundColor:'#000',opacity: 0.5 };
-    const backdropStyle = {...modalStyle};
+  loadQuestion(){
+    let newcall = TestsActionCreators.fetchOneQuestion( this.state.question_id );
+    this.props.dispatch(newcall);
+  }
 
-    const dialogStyle = function() {
-      let top = 50 + rand();
-      let left = 50 + rand();
-      return {
-        position: 'absolute',
-        width: 700,
-        top: top + '%', left: left + '%',
-        transform: `translate(-${top}%, -${left}%)`,
-        border: '1px solid #e5e5e5',
-        backgroundColor: 'white',
-        boxShadow: '0 5px 15px rgba(0,0,0,.5)',
-        padding: 10
-      };
-    };
+  render() {
+    const backdropStyle = {...modalConfig};
 
     return (
         <div id="responsive" className="modal hide fade" tabIndex="-1" >
@@ -123,7 +110,7 @@ class AnswersModalComponent extends Component {
           show={this.state.showModal}
         >
           <Modal.Header>
-             <Modal.Title> Answers for: {}</Modal.Title>
+             <Modal.Title> Answers for: {this.state.title}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
           <div>

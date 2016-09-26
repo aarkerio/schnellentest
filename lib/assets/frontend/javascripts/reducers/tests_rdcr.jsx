@@ -5,7 +5,7 @@ import { REQUEST_TESTS, RECEIVE_TESTS, RECEIVE_ONE_TEST, RECEIVE_ONE_QUESTION } 
 const initialState = {
     TestsArrayProp:       [],
     OneTestArrayProp:     {},
-    OneQuestionArrayProp: [],
+    OneQuestionArrayProp: {},
     AnswersArrayProp:     [],
     QuestionsArrayProp:   []
 }
@@ -31,6 +31,7 @@ const tests_rdcr = (state = initialState, action) => {
       });
     
     case RECEIVE_ONE_QUESTION:
+      console.log('>>>>>>>>>>>>> At tests_rdcr action.OneQuestionArrayProp : ' + JSON.stringify(action.OneQuestionArrayProp));
       return Object.assign({}, state, {
           OneQuestionArrayProp: action.OneQuestionArrayProp,
           AnswersArrayProp: action.OneQuestionArrayProp.answers
