@@ -1,8 +1,10 @@
+# Chipotle Software (c) 2016  MIT License
 module Api
 module V1
   class AnswersController < ApiBaseController
-    before_action :set_answer, only: [:toggle, :update, :destroy]
-    # Creates a new Answer Account.
+    before_action :set_answer, only: [:toggle, :update, :delete]
+
+    # Creates a new Answer.
     #
     # Returns a JSON object.
     def create      
@@ -15,7 +17,7 @@ module V1
       end
     end
 
-    # Creates a new Answer Account.
+    # Updates Answer.
     #
     # Returns a Answer object.
     def update
@@ -25,23 +27,17 @@ module V1
         return render json: {message: 'Error: Answer was not updated succesfully'}
       end
     end
+
     # Toggle one field
     def toggle
-      if @answer.update_attribute(:status,params[:status])
+      if @answer.update_attribute(:status, params[:status])
         return render json: {message: 'Answer was toggled succesfully'} 
       else
         return render json: {message: 'Error: Answer was not created succesfully'}
       end
     end
 
-    # Disable an Answer.
-    #
-    # text  - The guid String.
-    #
-    # Examples
-    #
-    #   show('xVpK6SgP2NAhVtA-ygEIww')
-    #   # => Answer
+    # Disable one Answer.
     #
     # Returns a Answer object.
     def delete

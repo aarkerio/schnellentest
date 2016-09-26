@@ -1,4 +1,4 @@
-# GPLv3 Chipotle Software (c) 2016
+# Chipotle Software (c) 2016 MIT License
 
 class Test < ApplicationRecord
   belongs_to :user
@@ -15,9 +15,8 @@ class Test < ApplicationRecord
     test.save
   end
   
-  def get_one(test_id)
-    test = Test.includes(:question).where(id: test_id).first
-    nest_questions(test)
+  def get_one
+    nest_questions(self)
   end
 
   private

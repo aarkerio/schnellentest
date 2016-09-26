@@ -31,18 +31,7 @@ class AnswerRow extends Component {
        showSource:  false
     }
   }
-
-/**
-  *  Delete Single Answer
-  *  Private
-  */
-  deleteAnswer(answer_id) {
-    let action = AnswersActionCreators.deleteAnswer(answer_id);
-    this.props.dispatch(action);
-    console.log(' to delete answer_id: >>>>' + answer_id);
-    window.location='/tests';
-  }
-   
+     
   changeState(newState) {
     this.setState(newState);
   }
@@ -52,7 +41,6 @@ class AnswerRow extends Component {
   }
 
   handleChange(event){
-    console.log('handleChange event !! >>>' + JSON.stringify(event));
     this.setState({answer: event.answer});
     let action = AnswersActionCreators.updateAnswer(this.state.id, event.answer);
     this.props.dispatch(action);
@@ -71,14 +59,22 @@ class AnswerRow extends Component {
     let newcall = TestsActionCreators.fetchOneQuestion( this.state.question_id );
     this.props.dispatch(newcall);
   }
+
+  deleteAnswer(id) {
+    console.log('handleChange event !! >>>' + JSON.stringify(id));
+    if (typeof this.props.onChange === 'function') {
+      this.props.onChange(id);
+    }
+  }
+
   render() {
     const { answer, keyRow } = this.props;
     let divStyle = {width: '100%', padding: '3px', margin: '2px'  };
-    let text = answer.correct ? ' Correct ': ' Incorrect ';
+    let graded = answer.correct ? {text:'Correct', style: {color:'green',fontWeight:'bold',margin:'8px'}} : {text:'Incorrect', style:{color:'red',fontWeight:'bold',margin:'8px'}};
     return (
       <div key={keyRow} style={divStyle}>
         <a href="#" onClick={() => {this.toggleAnswer(answer.id)}} className="removable" title="Switch Correct/Incorrect"><i className="glyphicon glyphicon-random"></i></a>
-           {text}  
+         <span style={graded.style}>{graded.text}</span>
         <RIEInput
             value={this.state.answer}
             change={this.handleChange.bind(this)}

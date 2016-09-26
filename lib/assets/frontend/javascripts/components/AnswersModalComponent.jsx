@@ -68,7 +68,6 @@ class AnswersModalComponent extends Component {
     let action = TestsActionCreators.createAnswer(fields);
     this.props.dispatch(action);  // thunk middleware
     this.setState({nanswer: '', ncorrect: false});
-    // window.location='/answers/' + this.state.test_id;
     this.loadQuestion();
   }
 
@@ -90,13 +89,26 @@ class AnswersModalComponent extends Component {
   }
 
   toggleCheckbox(name, event){
-    let change = !this.state[name];
-    this.setState({name: change});
+    let obj = {}; 
+    obj[name] = !this.state[name];
+    console.log(JSON.stringify(obj))
+    this.setState(obj);
   }
-
+  /* Lädt Fragen und Antworten wieder.**/
   loadQuestion(){
     let newcall = TestsActionCreators.fetchOneQuestion( this.state.question_id );
-    this.props.dispatch(newcall);
+    setTimeout(() => { this.props.dispatch(newcall); }, 2000);
+  }
+
+ /**
+  *  Delete Single Answer
+  *  Private
+  */
+  deleteAnswer(answer_id) {
+    console.log(' In parent !!! : >>>>' + answer_id);
+    let action = TestsActionCreators.deleteRow(answer_id, 'answers');
+    this.props.dispatch(action);
+    this.loadQuestion();
   }
 
   render() {
@@ -115,7 +127,7 @@ class AnswersModalComponent extends Component {
           <Modal.Body>
           <div>
             {this.props.AnswersArrayProp.map((answer, i) =>
-              <AnswerRowComponent answer={answer} key={answer.id} keyRow={answer.id} />
+              <AnswerRowComponent answer={answer} key={answer.id} keyRow={answer.id} onChange={this.deleteAnswer.bind(this)} />
             )}
           </div>
           <form>
@@ -123,7 +135,7 @@ class AnswersModalComponent extends Component {
              <input className="form-control" name="nanswer" value={this.state.nanswer} onChange={this.handleChange.bind(this, 'nanswer')} />
              
              <label htmlFor="ncorrect">This answer is correct:</label>
-             <input type="checkbox" name="correct" defaultChecked={this.state.ncorrect} onChange={this.toggleCheckbox.bind(this, 'ncorrect')} />
+             <input type="checkbox" name="ncorrect" defaultChecked={this.state.ncorrect} onChange={this.toggleCheckbox.bind(this, 'ncorrect')} />
 
              <label htmlFor="nactive">Active:</label>
              <input type="checkbox" name="nactive" defaultChecked={this.state.nactive} onChange={this.toggleCheckbox.bind(this, 'nactive')} />          

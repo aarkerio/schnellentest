@@ -1,3 +1,4 @@
+# Chipotle Software (c) 2016  MIT License
 module Api
 module V1
   class QuestionsController < ApiBaseController
