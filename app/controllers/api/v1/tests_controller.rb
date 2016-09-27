@@ -17,8 +17,6 @@ module V1
 
     # Gets one Test.  POST /api/v1/tests/get_one/ 
     #
-    # guid  - The guid String.
-    #
     # Returns a json object.
     def get_one
       test_data = @test.get_one

@@ -36,6 +36,7 @@ Rails.application.routes.draw do
  
       # ANSWER SECTION
       post   '/answers/create/'           => 'answers#create',    as: 'answers_create'
+      post   '/answers/get_one/'          => 'answers#get_one',   as: 'answers_get_one'
       patch  '/answers/toggle/'           => 'answers#toggle',    as: 'answers_toggle'
       patch  '/answers/update/'           => 'answers#update',    as: 'answers_update'
       delete '/answers/delete/(/:id)'     => 'answers#delete',    as: 'answers_delete'

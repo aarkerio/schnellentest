@@ -2,7 +2,14 @@
 module Api
 module V1
   class AnswersController < ApiBaseController
-    before_action :set_answer, only: [:toggle, :update, :delete]
+    before_action :set_answer, only: [:toggle, :update, :delete, :get_one]
+
+    # Gets one Answer.  POST /api/v1/answers/get_one/ 
+    #
+    # Returns a json object.
+    def get_one
+      return render json: @answer
+    end
 
     # Creates a new Answer.
     #
@@ -30,10 +37,11 @@ module V1
 
     # Toggle one field
     def toggle
-      if @answer.update_attribute(:status, params[:status])
+      toggle = !@answer.correct
+      if @answer.update_attribute(:correct, toggle)
         return render json: {message: 'Answer was toggled succesfully'} 
       else
-        return render json: {message: 'Error: Answer was not created succesfully'}
+        return render json: {message: 'Error: Answer was not toggled succesfully'}
       end
     end
 
@@ -56,7 +64,7 @@ module V1
 
     # Never trust parameters from the scary internet, only allow the white list.
     def answer_params
-        params.require(:answer).permit(:answer, :active, :correct, :question_id)
+      params.require(:answer).permit(:answer, :active, :correct, :question_id)
     end
     
   end

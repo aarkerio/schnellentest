@@ -18,8 +18,8 @@ class AnswerRow extends Component {
        boolean:     true,
        answer:      this.props.answer.answer,
        id:          this.props.answer.id,
-       correct:     false,
-       active:      true,
+       correct:     this.props.answer.correct,
+       active:      this.props.answer.active,
        text:        '',            //initial prop value
        propName:    '',            //name of the prop to return to the change function
        change:      'handleSubmit', //function which will receive a plain object with a single key, provided in propName
@@ -30,6 +30,7 @@ class AnswerRow extends Component {
        highlight:   false,
        showSource:  false
     }
+    this.toggleAnswer = this.toggleAnswer.bind(this);
   }
      
   changeState(newState) {
@@ -51,17 +52,19 @@ class AnswerRow extends Component {
     this.setState({name: change});
   }
 
-  toggleAnswer(answer_id) {
-    let action = AnswersActionCreators.toogleField('answers', 'correct', answer_id);
-    this.props.dispatch(action);
+  toggleAnswer() {
+    let new_state = !this.state.correct;
+    this.setState({correct: new_state});
+    let action = AnswersActionCreators.toggleField('answers', 'correct', this.state.id);
+    this.props.dispatch(action);    
   }
+  
   loadAnswer(){
-    let newcall = TestsActionCreators.fetchOneQuestion( this.state.question_id );
+    let newcall = AnswersActionCreators.fetchOneAnswer( this.state.question_id );
     this.props.dispatch(newcall);
   }
 
   deleteAnswer(id) {
-    console.log('handleChange event !! >>>' + JSON.stringify(id));
     if (typeof this.props.onChange === 'function') {
       this.props.onChange(id);
     }
@@ -70,10 +73,10 @@ class AnswerRow extends Component {
   render() {
     const { answer, keyRow } = this.props;
     let divStyle = {width: '100%', padding: '3px', margin: '2px'  };
-    let graded = answer.correct ? {text:'Correct', style: {color:'green',fontWeight:'bold',margin:'8px'}} : {text:'Incorrect', style:{color:'red',fontWeight:'bold',margin:'8px'}};
+    let graded = this.state.correct ? {text:'Correct', style: {color:'green',fontWeight:'bold',margin:'8px'}} : {text:'Incorrect', style:{color:'red',fontWeight:'bold',margin:'8px'}};
     return (
       <div key={keyRow} style={divStyle}>
-        <a href="#" onClick={() => {this.toggleAnswer(answer.id)}} className="removable" title="Switch Correct/Incorrect"><i className="glyphicon glyphicon-random"></i></a>
+        <a href="#" onClick={() => {this.toggleAnswer()}} className="removable" title="Switch Correct/Incorrect"><i className="glyphicon glyphicon-random"></i></a>
          <span style={graded.style}>{graded.text}</span>
         <RIEInput
             value={this.state.answer}
