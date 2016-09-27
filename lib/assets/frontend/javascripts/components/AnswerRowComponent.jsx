@@ -63,7 +63,7 @@ class AnswerRow extends Component {
     let newcall = AnswersActionCreators.fetchOneAnswer( this.state.question_id );
     this.props.dispatch(newcall);
   }
-
+  
   deleteAnswer(id) {
     if (typeof this.props.onChange === 'function') {
       this.props.onChange(id);

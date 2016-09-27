@@ -3,14 +3,14 @@
 //  Mocha TEST
 // __tests__/components/QuestionComponent.spec.js
 
-import React from 'react'
+import React from 'react';
 import { Router, Route, browserHistory, IndexRoute, withRouter } from 'react-router';
-import { Provider } from 'react-redux'
-import TestUtils from 'react-addons-test-utils'
-import stubContext from 'react-stub-context'
-import { createStore, applyMiddleware, compose, combineReducers } from 'redux'
-import { expect } from 'chai'
-import { mount, shallow, render } from 'enzyme'
+import { Provider } from 'react-redux';
+import TestUtils from 'react-addons-test-utils';
+import stubContext from 'react-stub-context';
+import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
+import { expect } from 'chai';
+import { mount, shallow, render } from 'enzyme';
 
 import { QuestionsComponent } from '../../components/QuestionsComponent'
 
