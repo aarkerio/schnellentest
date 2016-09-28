@@ -35,6 +35,7 @@ class QuestionsComponent extends Component {
           time: 5000,
           transition: 'scale'
       }
+      console.log("#############  IN COMPONENT ###########################" + JSON.stringify(this.props));
       this.openModal = this.openModal.bind(this)
   }
   

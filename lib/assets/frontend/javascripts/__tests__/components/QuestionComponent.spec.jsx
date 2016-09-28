@@ -3,50 +3,73 @@
 //  Mocha TEST
 // __tests__/components/QuestionComponent.spec.js
 
-import React from 'react';
-import { Router, Route, browserHistory, IndexRoute, withRouter } from 'react-router';
-import { Provider } from 'react-redux';
 import TestUtils from 'react-addons-test-utils';
-import stubContext from 'react-stub-context';
-import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
+import ReactDOM from 'react-dom';
+import React from 'react';
+import { Router, Route, browserHistory, IndexRoute, withRouter, createMemoryHistory } from 'react-router';
+import { Provider } from 'react-redux';
 import { expect } from 'chai';
 import { mount, shallow, render } from 'enzyme';
+import rootReducer from '../../reducers/index';
+import QuestionsComponent from '../../components/QuestionsComponent';
+import sinon from 'sinon';
 
-import { QuestionsComponent } from '../../components/QuestionsComponent'
+import configureStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
 
-function noop() {}
+const middlewares = [thunk]; // add your middlewares like `redux-thunk`
+
+const mockStore = configureStore(rootReducer);
+
+const initialState = {TestsArrayProp: [], OneTestArrayProp: {}, OneQuestionArrayProp: {}, AnswersArrayProp: [], QuestionsArrayProp:   [] }
+
+const store = mockStore(initialState);
+
+// const history  = syncHistoryWithStore(browserHistory, store);   // mix redux and route 
+
+const history = createMemoryHistory("/questions/1");
+
+// Setup routes configuration.
+// JSX would also work, but this way it's more convenient to specify custom route properties (excludes, localized labels, etc..).
+const routes = [{
+        path: "/tests/",
+        component: React.createClass({ render() { return <div>{this.props.children}</div>; }}),
+        childRoutes: [{
+             path: "/questions/:test_id",
+             component: React.createClass({
+                            // Render your component with contextual route props or anything else you need
+                            // If you need to test different combinations of properties, then setup a separate route configuration.
+                            render() { return <QuestionsComponent routes={this.props.routes} />; }
+             })
+        }]
+}];
 
 describe('QuestionsComponent', function () {
 
-  // before(function () {
-    // jQuery = require('jquery')
-  // })
+  beforeEach(function() {
+    // Render the entire route configuration with Breadcrumbs available on a specified route
+    this.component = TestUtils.renderIntoDocument(<Provider store={store}><div><Router routes={routes} history={history} /></div></Provider>);
+    //this.componentNode = ReactDOM.findDOMNode(this.component);
+    //this.breadcrumbNode = ReactDOM.findDOMNode(this.component).querySelector(".breadcrumbs");
+  });
 
-  // it('calls componentDidMount', () => {
-  //   let routeParams = { test_id: 1};
-  //   const wrapper = mount( <QuestionsComponent routeParams={routeParams} /> );
-  //   expect(QuestionsComponent.prototype.componentDidMount.calledOnce).to.equal(true);
-  // });
+  it('calls componentDidMount', () => {
+     console.log('>>>>>>>>>>>>>>starting#########' + JSON.stringify(this.component));
+     // sinon.spy(Ruta.prototype, 'componentDidMount');
+     // const wrapper = mount(Ruta);
+     // console.log();
+     // expect(Ruta.prototype.componentDidMount.calledOnce).to.equal(true);
+   });
 
-  it('QuestionsComponent executes componentWillMount', () => {
-    Router.makeHref = noop;
-    Router.isActive = noop;
-    QuestionsComponent.contextTypes = {   router:  Router };
-    QuestionsComponent.childContextTypes = { history : React.PropTypes.object };
-    QuestionsComponent.prototype.getChildContext = () => ({
-       history : browserHistory
-    });
-    const context = { context: { path: "/questions/1", router: { isActive:  true, test_id: 1 } }, contextTypes: { router: Router  } }
-  
-    const wrapper = shallow(<QuestionsComponent contextTypes={ {router: Router}  } /> );
-    //wrapper.setProps(context);
-    // wrapper.update();
-    //assert.equal(wrapper.prop('routeParams.test_id'), 1); 
-    // expect(wrapper.find(Foo)).to.have.length(3);
-    // const questionsNode = ReactDOM.findDOMNode(questions)
-  
+   // it("contains spec with an expectation", function() {
+   //  expect(mount(<QuestionsComponent />).find('.foo').length).to.equal(1);
+   // });
+
+  //it('QuestionsComponent will render questions', () => { 
+    // const wrapper = mount(<Router routes={routes} history={history} />);
+ 
     // Verify that it's Off by default
     // expect(questionsNode.textContent).toEqual('Off')
- })
+ // })
 })
 

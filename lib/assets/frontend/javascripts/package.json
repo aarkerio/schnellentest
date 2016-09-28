@@ -2,6 +2,7 @@
   "name": "schnell_test",
   "description": "schnell_test",
   "author": "Manuel Montoya <mmontoya@gmail.com>",
+  "License": "MIT License",
   "repository": {
     "type": "git",
     "url": "https://github.com/aarkerio/schnelltest.git"
@@ -65,7 +66,7 @@
     "webpack-dev-server": "^1.15.0"
   },
   "scripts": {
-    "test": "export NODE_ENV=test && node ./node_modules/mocha-webpack/bin/mocha-webpack --opts __tests__/mocha-webpack.opts --webpack-config ./webpack.testing.config.js -r __tests__/helpers/browser.js __tests__/components/*.spec.js",
+    "test": "export NODE_ENV=test && node ./node_modules/mocha-webpack/bin/mocha-webpack --opts __tests__/mocha-webpack.opts --webpack-config ./webpack.testing.config.js -r __tests__/helpers/browser.js __tests__/components/*.spec.jsx",
     "dev:hot": "webpack-dev-server --config ./webpack.devel.config.js --hot --inline --progress --colors --watch --display-error-details --display-cached --content-base ./"
   },
   "engines": {
@@ -150,10 +151,11 @@
     "postcss-value-parser": "^3.3.0",
     "postcss-zindex": "^2.1.1",
     "react-addons-test-utils": "^15.3.0",
+    "react-stub-context": "^0.7.0",
     "react-test-renderer": "^15.3.1",
-    "redux-mock-store": "^1.2.0",
+    "redux-mock-store": "^1.2.1",
     "riek": "^1.0.3",
-    "sinon": "^1.17.6",
+    "sinon": "^2.0.0-pre.3",
     "url-loader": "^0.5.7",
     "webpack-dev-middleware": "^1.6.1"
   }
