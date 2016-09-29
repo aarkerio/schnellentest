@@ -1,4 +1,4 @@
-# GPLv3 Chipotle Software (c) 2016
+#  Chipotle Software (c) 2016   MIT License
 class Question < ApplicationRecord
   belongs_to :user
   has_many   :answer
@@ -16,7 +16,6 @@ class Question < ApplicationRecord
   def get_one(id)
     question = Question.includes(:answer).where(id: id).first
     newhash  = order_answers(question)
-    # logger.debug "19 line >>>  get_one data   #{newhash.inspect}"
     newhash
   end
 

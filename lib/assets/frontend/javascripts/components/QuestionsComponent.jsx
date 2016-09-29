@@ -11,12 +11,13 @@ import { Link, browserHistory } from 'react-router'
 import { Button, Modal } from 'react-bootstrap'
 import AlertContainer from 'react-alert'
 
-class QuestionsComponent extends Component {
+// export for unconnected component (for mocha tests)
+export class QuestionsComponent extends Component {
   constructor(props) {
       super(props);
       this.state = {
-          questions:  [],
-          test_id: this.props.routeParams.test_id,
+          questions:   [],
+          test_id:     this.props.routeParams.test_id,
           showModal:   false,
           user_id:     0,    // not valid value
           question:    '',
@@ -29,10 +30,10 @@ class QuestionsComponent extends Component {
          }
 
       this.alertOptions = {
-          offset: 14,
-          position: 'top left',
-          theme: 'dark',
-          time: 5000,
+          offset:     14,
+          position:   'top left',
+          theme:      'dark',
+          time:       5000,
           transition: 'scale'
       }
       console.log("#############  IN COMPONENT ###########################" + JSON.stringify(this.props));
