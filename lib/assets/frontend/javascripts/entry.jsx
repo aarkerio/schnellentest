@@ -8,14 +8,15 @@ import { Provider } from 'react-redux';
 import { Router, Route, browserHistory, IndexRoute, withRouter } from 'react-router';
 import { syncHistoryWithStore, routeActions } from 'react-router-redux';
 
-import AppContainer           from './containers/AppContainer';
-import TestsContainer         from './containers/TestsContainer';
-import TestModalEditComponent from './components/TestModalEditComponent';
-import TestModalNewComponent  from './components/TestModalNewComponent';
-import QuestionsComponent     from './components/QuestionsComponent';
-import AnswersModalComponent  from './components/AnswersModalComponent';
-import NotFound               from './components/NotFound';
-import configureStore         from './config/configureStore';     // load redux store
+import AppContainer            from './containers/AppContainer';
+import TestsContainer          from './containers/TestsContainer';
+import TestModalEditComponent  from './components/TestModalEditComponent';
+import TestModalNewComponent   from './components/TestModalNewComponent';
+import QuestionsComponent      from './components/QuestionsComponent';
+import AnswersModalComponent   from './components/AnswersModalComponent';
+import QuestionSearchComponent from './components/QuestionSearchComponent';
+import NotFound                from './components/NotFound';
+import configureStore          from './config/configureStore';     // load redux store
 
 const my_store = configureStore();
 const history  = syncHistoryWithStore(browserHistory, my_store);   // mix redux and route 
@@ -29,6 +30,7 @@ render(
           <Route path="/questions/:test_id" component={QuestionsComponent}>
             <Route path="/answers/:question_id/:test_id" component={AnswersModalComponent} />
           </Route>
+          <Route path="/search/:test_id" component={QuestionSearchComponent} />
           <Route path="/tests" component={TestsContainer}>
             <Route path="/tests/:id" component={TestModalEditComponent} />
             <Route path="/testnew" component={TestModalNewComponent} />

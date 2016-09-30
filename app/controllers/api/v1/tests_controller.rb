@@ -2,9 +2,9 @@
 module Api
 module V1
   class TestsController < ApiBaseController
-    before_action :set_test, only: [:get_one, :update, :toggle, :delete] 
+    before_action :set_test, only: [:get_one, :update, :toggle, :delete, :search] 
     
-    # Gets all Tests. POST /api/v1/tests/listing/ route
+    # Gets all Tests. POST /api/v1/tests/listing/
     #
     # Returns a json object.
     def listing
@@ -12,7 +12,6 @@ module V1
       tests = Test.where( user_id: params[:user_id] ) 
       all   = TestSerializer.new.all_test(tests)
       return render json: all.as_json
-      fail ActiveRecord::RecordNotFound, 'Test not found two'  if @test.nil?
     end
 
     # Gets one Test.  POST /api/v1/tests/get_one/ 
@@ -57,8 +56,7 @@ module V1
         return render json: {message: 'Error: Answer was not created succesfully'}
       end
     end
-
-
+    
     # Disable one Answer.
     #
     # Returns a Answer object.
@@ -68,6 +66,14 @@ module V1
       else
         return render json: {message: 'Error :Something went wrong. Answer was not removed.'}
       end
+    end
+
+    # Gets questons by subject. POST /api/v1/tests/search/
+    #
+    # Returns a json object.
+    def search
+      results = @test.search(params[:terms]) 
+      return render json: results.as_json
     end
 
     private

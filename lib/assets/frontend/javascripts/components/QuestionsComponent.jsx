@@ -36,7 +36,6 @@ export class QuestionsComponent extends Component {
           time:       5000,
           transition: 'scale'
       }
-      console.log("#############  IN COMPONENT ###########################" + JSON.stringify(this.props));
       this.openModal = this.openModal.bind(this)
   }
   
@@ -181,9 +180,14 @@ export class QuestionsComponent extends Component {
         <HeaderComponent />
         <h1> {this.props.OneTestArrayProp.title} </h1>
         <div>
-          <button type="button" onClick={this.openModal} className="btn btn-default btn-sm">
+          <button type="button" onClick={this.openModal} className="btn btn-default btn-sm" title="Frage hinzüfugen">
             <span className="glyphicon glyphicon-plus"></span>
           </button>
+          <Link to={"/search/"+this.state.test_id+"/"}>
+            <button type="button" onClick={this.openModal} className="btn btn-default btn-sm" title="Frage dursuchen">
+              <span className="glyphicon glyphicon-zoom-in"></span>
+            </button>
+          </Link>
         </div>
         <div>
           {this.props.QuestionsArrayProp.map((q, i) =>

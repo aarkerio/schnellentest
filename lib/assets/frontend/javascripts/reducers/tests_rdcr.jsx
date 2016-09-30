@@ -1,6 +1,6 @@
 'use strict'
 
-import { REQUEST_TESTS, RECEIVE_TESTS, RECEIVE_ONE_TEST, RECEIVE_ONE_QUESTION } from '../actions/tests'
+import { REQUEST_TESTS, RECEIVE_TESTS, RECEIVE_ONE_TEST, RECEIVE_ONE_QUESTION, SEARCH_QUESTIONS } from '../actions/tests'
 
 const initialState = {
     TestsArrayProp:       [],
@@ -34,6 +34,11 @@ const tests_rdcr = (state = initialState, action) => {
       return Object.assign({}, state, {
           OneQuestionArrayProp: action.OneQuestionArrayProp,
           AnswersArrayProp: action.OneQuestionArrayProp.answers
+      });
+
+    case SEARCH_QUESTIONS:
+      return Object.assign({}, state, {
+        QuestionsArrayProp: action.QuestionsArrayProp
       });
 
     default:

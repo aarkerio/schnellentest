@@ -6,7 +6,6 @@ class Test < ApplicationRecord
   has_many :question, through: :test_question
 
   validates :title, presence: true
-
   
   def create_test(params)
     create_params = order_params params
@@ -14,9 +13,16 @@ class Test < ApplicationRecord
     test = Test.new create_params
     test.save
   end
-  
+
+  # Get one test ans its questions  
   def get_one
     nest_questions(self)
+  end
+  
+  # Returns all questions by subject or tag 
+  def search(terms)
+    sanitized = ActiveRecord::Base.send(:sanitize_sql_array, ["to_tsquery('english', ?)", terms.gsub(/\s/,"+")])
+    Question.where("searchtext @@ #{sanitized}").select(:id, :question, :explanation, :hint)
   end
 
   private

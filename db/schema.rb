@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 20160910201849) do
     t.text     "explanation"
     t.text     "hint"
     t.text     "tags"
+    t.tsvector "searchtext"
     t.integer  "worth",       default: 5,    null: false
     t.integer  "origin",      default: 1,    null: false
     t.datetime "created_at",                 null: false
@@ -46,6 +47,7 @@ ActiveRecord::Schema.define(version: 20160910201849) do
     t.boolean  "qtype"
     t.string   "lang",        default: "en", null: false
     t.integer  "status",      default: 0,    null: false
+    t.index ["searchtext"], name: "ques_idx", using: :gin
     t.index ["user_id"], name: "index_questions_on_user_id", using: :btree
   end
 

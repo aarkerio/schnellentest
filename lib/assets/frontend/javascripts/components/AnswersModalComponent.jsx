@@ -1,8 +1,6 @@
 'use strict'
-import cookie from 'react-cookie'
 import React, { PropTypes, Component } from 'react'
 import { Link, browserHistory } from 'react-router'
-import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Button, Modal } from 'react-bootstrap'
 import * as TestsActionCreators from '../actions/tests'
@@ -33,7 +31,6 @@ class AnswersModalComponent extends Component {
       this.props.dispatch(action);
       this.setState({title: this.props.QuestionArrayProp.question});
     }
-    console.log('QuestionArrayProp >>> ' + JSON.stringify(this.props.QuestionArrayProp));
   }
 
   handleChange(name, event) {

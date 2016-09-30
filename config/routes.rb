@@ -26,7 +26,8 @@ Rails.application.routes.draw do
       patch  '/tests/update/'          => 'tests#update',  as: 'tests_update'
       post   '/tests/create'           => 'tests#create',  as: 'tests_create'
       delete '/tests/delete/(/:id)'    => 'tests#delete',  as: 'tests_delete'
-     
+      post   '/tests/search/'          => 'tests#search',  as: 'tests_search'
+
       # QUESTION SECTION
       post   '/questions/listing/(/:id)' => 'questions#listing', as: 'questions_listing'
       post   '/questions/get_one/'       => 'questions#get_one', as: 'questions_get_one'
