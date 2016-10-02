@@ -2,7 +2,6 @@
 Rails.application.routes.draw do
   root 'groups#welcome'
 
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   devise_for :users
   
   resources :users
@@ -27,13 +26,14 @@ Rails.application.routes.draw do
       post   '/tests/create'           => 'tests#create',  as: 'tests_create'
       delete '/tests/delete/(/:id)'    => 'tests#delete',  as: 'tests_delete'
       post   '/tests/search/'          => 'tests#search',  as: 'tests_search'
+      post   '/tests/linking/'         => 'tests#linking', as: 'tests_linking'
 
       # QUESTION SECTION
       post   '/questions/listing/(/:id)' => 'questions#listing', as: 'questions_listing'
       post   '/questions/get_one/'       => 'questions#get_one', as: 'questions_get_one'
       post   '/questions/create/'        => 'questions#create',  as: 'questions_create'
       patch  '/questions/update/'        => 'questions#update',  as: 'questions_update'
-      delete '/questions/delete/(/:id)/(:test_id)'  => 'questions#delete',  as: 'questions_delete'   
+      delete '/questions/delete/(/:id)/(:test_id)'  => 'questions#delete',  as: 'questions_delete'
  
       # ANSWER SECTION
       post   '/answers/create/'           => 'answers#create',    as: 'answers_create'

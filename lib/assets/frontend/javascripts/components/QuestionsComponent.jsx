@@ -7,7 +7,7 @@ import { dialogStyle, modalConfig } from '../config/modals'
 import HeaderComponent  from './HeaderComponent'
 import * as TestsActionCreators from '../actions/tests'
 import React, { Component, PropTypes } from 'react'
-import { Link, browserHistory } from 'react-router'
+import { Link, browserHistory, withRouter} from 'react-router'
 import { Button, Modal } from 'react-bootstrap'
 import AlertContainer from 'react-alert'
 
@@ -26,7 +26,8 @@ export class QuestionsComponent extends Component {
           tags:        '',
           worth:       1,
           active:      true,
-          qtype:       true
+          qtype:       true,
+          terms:       ''
          }
 
       this.alertOptions = {
@@ -36,7 +37,8 @@ export class QuestionsComponent extends Component {
           time:       5000,
           transition: 'scale'
       }
-      this.openModal = this.openModal.bind(this)
+      this.openModal = this.openModal.bind(this);
+      console.log('This props >>>>>>' + JSON.stringify(this.props));
   }
   
   /**
@@ -108,6 +110,14 @@ export class QuestionsComponent extends Component {
       change[key] = fields[key];
     });
     this.setState(change);
+  }
+
+/**
+ * Sends the data to create a new appointment
+ **/
+  submitSearch(e) {
+    e.preventDefault();
+    this.props.router.replace('/search/'+ this.state.test_id + '/' + this.state.terms);
   }
 
   openModal(){
@@ -183,11 +193,11 @@ export class QuestionsComponent extends Component {
           <button type="button" onClick={this.openModal} className="btn btn-default btn-sm" title="Frage hinzüfugen">
             <span className="glyphicon glyphicon-plus"></span>
           </button>
-          <Link to={"/search/"+this.state.test_id+"/"}>
-            <button type="button" onClick={this.openModal} className="btn btn-default btn-sm" title="Frage dursuchen">
-              <span className="glyphicon glyphicon-zoom-in"></span>
-            </button>
-          </Link>
+          <form>
+            <label htmlFor="terms">Subject:</label>
+            <input className="form-control" name="terms" value={this.state.terms} onChange={this.handleChange.bind(this, 'terms')} />
+            <Button onClick={this.submitSearch.bind(this)}>Search</Button>
+          </form>
         </div>
         <div>
           {this.props.QuestionsArrayProp.map((q, i) =>
@@ -284,5 +294,5 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(QuestionsComponent);
+export default withRouter(connect(mapStateToProps)(QuestionsComponent));
 

@@ -48,6 +48,19 @@ module V1
       end
     end
 
+    # Linking questions with test.
+    #
+    # Returns a JSON object.
+    def linking
+      return  render json: params
+      # result = Question.new.create_question(question_params)
+      # if result
+      #   return render json: {message: 'Question was created succesfully'} 
+      # else
+      #   return render json: {message: 'Error: Question was not created succesfully'}
+      # end
+    end
+
     # Toggle one field
     def toggle
       if @answer.update_attribute(:status, params[:status])
@@ -80,7 +93,8 @@ module V1
 
     # Never trust parameters from the scary internet, only allow the white list.
     def test_params
-      params.require(:test).permit(:user_id, :title, :description, :tags, :active, :shared)
+      params[:test][:question_ids] ||= []
+      params.require(:test).permit(:user_id, :title, :description, :tags, :active, :shared, selected: [])
     end
 
     def serializer

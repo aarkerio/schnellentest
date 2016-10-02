@@ -30,7 +30,7 @@ render(
           <Route path="/questions/:test_id" component={QuestionsComponent}>
             <Route path="/answers/:question_id/:test_id" component={AnswersModalComponent} />
           </Route>
-          <Route path="/search/:test_id" component={QuestionSearchComponent} />
+          <Route path="/search/:test_id/:terms" component={QuestionSearchComponent} />
           <Route path="/tests" component={TestsContainer}>
             <Route path="/tests/:id" component={TestModalEditComponent} />
             <Route path="/testnew" component={TestModalNewComponent} />

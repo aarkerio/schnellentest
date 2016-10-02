@@ -2,7 +2,7 @@
 module Api
 module V1
   class QuestionsController < ApiBaseController
-    #before_action :set_question, only: [:show, :edit, :update, :destroy] 
+    before_action :set_question, only: [:edit, :update, :delete] 
     
     # Gets all Questions. POST /api/v1/questions/listing/(:guid) route
     #
@@ -29,9 +29,7 @@ module V1
     #
     # Returns a JSON object.
     def create
-   
       result = Question.new.create_question(question_params)
-      
       if result
         return render json: {message: 'Question was created succesfully'} 
       else
@@ -43,9 +41,6 @@ module V1
     #
     # Returns a Question object.
     def update
-      if Question_params[:guid].blank?
-        return fail ActiveRecord::RecordNotFound, 'Question not found'
-      end
 
       @question = Account.new.update_Question(Question_params)
 
