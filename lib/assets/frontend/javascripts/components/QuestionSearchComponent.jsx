@@ -41,18 +41,7 @@ class QuestionSearchComponent extends Component {
     e.preventDefault();   
     let action = TestsActionCreators.addQuestions(this.state.test_id, this.state.selected);
     this.props.dispatch(action);  // thunk middleware
-    this.props.router.replace('/questions/'+ this.state.test_id);
-  }
-
-  /* Validates form*/
-  validatesForm(fields){
-    let valid = {pass: true, message: 'Not message yet'};
- 
-    if ( this.state.nanswer.length < 2) {
-      valid['answer']  = false;
-      valid['message'] = 'New answer lenght not valid';
-    }
-    return valid;    
+    // this.context.router.replace('/questions/'+ this.state.test_id);
   }
 
   handleChange(event){

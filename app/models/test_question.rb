@@ -4,7 +4,11 @@ class TestQuestion < ApplicationRecord
   belongs_to :test
   belongs_to :question
 
+  validates :test_id, presence: true 
+  validates :question_id, presence: true
+
   before_create :set_order
+  
 
   private 
 

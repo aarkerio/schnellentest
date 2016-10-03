@@ -2,7 +2,7 @@
 module Api
 module V1
   class TestsController < ApiBaseController
-    before_action :set_test, only: [:get_one, :update, :toggle, :delete, :search] 
+    before_action :set_test, only: [:get_one, :update, :toggle, :delete, :search, :linking] 
     
     # Gets all Tests. POST /api/v1/tests/listing/
     #
@@ -52,13 +52,12 @@ module V1
     #
     # Returns a JSON object.
     def linking
-      return  render json: params
-      # result = Question.new.create_question(question_params)
-      # if result
-      #   return render json: {message: 'Question was created succesfully'} 
-      # else
-      #   return render json: {message: 'Error: Question was not created succesfully'}
-      # end
+      result = @test.link_questions(params[:question_ids])
+      if result
+        return render json: {message: 'Error: Question was not created succesfully'} 
+      else     
+        return render json: {message: 'Question was created succesfully'}
+      end
     end
 
     # Toggle one field
@@ -94,7 +93,7 @@ module V1
     # Never trust parameters from the scary internet, only allow the white list.
     def test_params
       params[:test][:question_ids] ||= []
-      params.require(:test).permit(:user_id, :title, :description, :tags, :active, :shared, selected: [])
+      params.require(:test).permit(:user_id, :title, :description, :tags, :active, :shared, question_ids: [])
     end
 
     def serializer

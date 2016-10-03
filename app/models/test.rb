@@ -25,6 +25,14 @@ class Test < ApplicationRecord
     Question.where("searchtext @@ #{sanitized}").select(:id, :question, :explanation, :hint)
   end
 
+  def link_questions(question_ids) 
+    results = question_ids.map do |qid|
+      # logger.debug " qid >>>>>> #{ qid['question_ids'] } 
+      TestQuestion.find_or_create_by(test_id: id, question_id: qid['question_ids'])
+    end
+    results.include? false
+  end
+
   private
 
   # Private: Order a new test hash.
