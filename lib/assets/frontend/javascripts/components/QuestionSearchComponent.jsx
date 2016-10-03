@@ -52,13 +52,13 @@ class QuestionSearchComponent extends Component {
   toggleCheckbox(question_id, event){
     console.log('question_id >>>> ' + question_id);
     let index = this.state.selected.indexOf(question_id);
-    console.log(' Index >>>> ' + index);
     if (index != -1) {
       this.state.selected.splice( index, 1 );
     } else {
       this.state.selected.push(question_id);
     }
     this.setState({selected:this.state.selected});
+    console.log(' this.state.selected >>>> ' + JSON.stringify(this.state.selected));
   }
 
   submitSearch(e) {
