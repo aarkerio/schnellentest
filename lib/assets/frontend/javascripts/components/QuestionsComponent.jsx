@@ -194,10 +194,9 @@ export class QuestionsComponent extends Component {
   renderReorderButton(id, i, up){
     if (i == 0 && up){ return null}
     if (this.props.QuestionsArrayProp.length == (i+1) && !up){ return null}
-    let text  = up ? 'upload' : 'download';
     let title = up ? 'up' : 'down';
     return (<div className="right_button">
-              <button type="button" onClick={() => {this.newOrder(id, text)}} className="btn btn-default btn-sm" title={"Move question "+title}>
+              <button type="button" onClick={() => {this.newOrder(id, title)}} className="btn btn-default btn-sm" title={"Move question "+title}>
                 <span className={"glyphicon glyphicon-"+title+"load"}></span>
               </button>
             </div>

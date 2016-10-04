@@ -10,11 +10,11 @@ class TestQuestion < ApplicationRecord
   before_create :set_order
 
   def next
-    self.class.where("\"order\" > ? AND test_id = ?", order, test_id).first
+    self.class.where("\"order\" > ? AND test_id = ?", order, test_id).order("\"order\" ASC").first
   end
 
   def previous
-    self.class.where("\"order\" < ? AND test_id = ?", order, test_id).last
+    self.class.where("\"order\" < ? AND test_id = ?", order, test_id).order("\"order\" DESC").first
   end
 
   private 

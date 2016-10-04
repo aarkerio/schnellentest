@@ -2,13 +2,13 @@
 module Api
 module V1
   class TestsController < ApiBaseController
-    before_action :set_test, only: [:get_one, :update, :toggle, :delete, :search, :linking, :reorder] 
+    before_action :set_test, only: [:get_one, :update, :toggle, :delete, :search, :linking, :reorder]
     
     # Gets all Tests. POST /api/v1/tests/listing/
     #
     # Returns a json object.
     def listing
-      tests = Test.where( user_id: params[:user_id] ) 
+      tests = Test.where( user_id: test_params[:user_id] ) 
       all   = TestSerializer.new.all_test(tests)
       return render json: all.as_json
     end
@@ -25,7 +25,9 @@ module V1
     #
     # Returns a json object.
     def reorder
-      result = @test.reorder(question_params)
+      # logger.debug "### params ######>>>>>>>>>   #{params.inspect}"
+      # return logger.debug "### test_params ######>>>>>>>>>   #{test_params.inspect}"
+      result = @test.reorder(test_params)
       if result
         return render json: {message: 'Question was sorted succesfully', error: false} 
       else
@@ -45,22 +47,22 @@ module V1
       end
     end
 
-    # Updates a new Test.POST /api/v1/tests/update 
+    # Updates a new Test. POST /api/v1/tests/update 
     #
     # Returns JSON.
     def update
-      if @test.update_attribute(:answer, params[:answer])
-        return render json: {message: 'Test was updated succesfully', error: false} 
+      if @test.update(test_params)
+        return render json: {message: 'Test was updated succesfully', error: false}
       else
         return render json: {message: 'Error: Test was not updated succesfully', error: true}
       end
     end
 
-    # Linking questions with test.
+    # Linking questions with test. POST /api/v1/tests/linking
     #
     # Returns a JSON object.
     def linking
-      result = @test.link_questions(params[:question_ids])
+      result = @test.link_questions(test_params)
       if result
         return render json: {message: 'Error: Question was not created succesfully', error: true} 
       else     
@@ -68,9 +70,9 @@ module V1
       end
     end
 
-    # Toggle one field
+    # Toggle one field. POST /api/v1/tests/toggle
     def toggle
-      if @test.update_attribute(:status, params[:status])
+      if @test.update_attribute(:status, test_params)
         return render json: {message: 'Test was toggled succesfully', error: false} 
       else
         return render json: {message: 'Error: Test was not created succesfully', error: true}
@@ -81,11 +83,11 @@ module V1
     #
     # Returns a json object.
     def search
-      results = @test.search(params[:terms]) 
+      results = @test.search(test_params) 
       return render json: results
     end
 
-    # Disable one Test.
+    # Disable one Test. DELETE /api/v1/tests/delete
     #
     # Returns a Test object.
     def delete
@@ -99,8 +101,7 @@ module V1
 
     # Never trust parameters from the scary internet, only allow the white list.
     def test_params
-      params[:test][:question_ids] ||= []
-      params.require(:test).permit(:user_id, :title, :description, :tags, :active, :shared, :way, question_ids: [])
+      params.require(:test).permit(:question_id, :id, :user_id, :title, :description, :tags, :active, :shared, :way, {question_ids: []})
     end
 
     def serializer
