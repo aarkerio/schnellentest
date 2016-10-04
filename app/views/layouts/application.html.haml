@@ -15,6 +15,7 @@
       = flash[:error]
 
   #header
+    =render partial: 'site/loginbar'
     %h1 Schnell System 0.1
     %a{ href: '/'} Home
     %a{ href: '/about'} About Us
@@ -22,8 +23,6 @@
     - if user_signed_in?
       %a{ href: '/tests/'} Ihre Prüfungen
       %a{ href: '/user/history'} History
-
-    =render partial: 'site/loginbar'
 
   #main
     =yield

@@ -1,7 +1,7 @@
 'use strict'
 
 import React, { PropTypes, Component } from 'react'
-import { Link, browserHistory } from 'react-router'
+import { Link, browserHistory, withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { Button } from 'react-bootstrap'
 import * as TestsActionCreators from '../actions/tests'
@@ -12,7 +12,8 @@ class QuestionSearchComponent extends Component {
     this.state = {
                  terms:    this.props.routeParams.terms,
                  selected: [],
-                 test_id:  this.props.routeParams.test_id
+                 test_id:  this.props.routeParams.test_id,
+                 title: 'Test title'
              }
   }
 
@@ -41,7 +42,7 @@ class QuestionSearchComponent extends Component {
     e.preventDefault();   
     let action = TestsActionCreators.addQuestions(this.state.test_id, this.state.selected);
     this.props.dispatch(action);  // thunk middleware
-    // this.context.router.replace('/questions/'+ this.state.test_id);
+    this.props.router.replace('/questions/'+ this.state.test_id);
   }
 
   handleChange(event){
@@ -67,22 +68,12 @@ class QuestionSearchComponent extends Component {
     this.props.dispatch(action);
   }
 
- /**
-  *  Delete Single Answer
-  *  Private
-  */
-  deleteAnswer(answer_id) {
-    console.log(' In parent !!! : >>>>' + answer_id);
-    let action = TestsActionCreators.deleteRow(answer_id, 'answers');
-    this.props.dispatch(action);
-  }
-
   render() {
     return (
         <div id="responsive">
-          <h2> Search questions for: {this.state.title}</h2>
+          <h2> Search and add questions for the test: {this.state.title}</h2>
           <div>
-            <Button onClick={() => browserHistory.push('/questions/' + this.state.test_id )}>Go back</Button>
+            <Button onClick={() => this.props.router.replace('/questions/' + this.state.test_id )}>Go back</Button>
           </div>
           <div>
             <form>
@@ -92,15 +83,16 @@ class QuestionSearchComponent extends Component {
             </form>
           </div>
           { this.props.QuestionsArrayProp.length ?  null : <div>No matches</div> }
-          <div>
+          <div className="container_div">
             {this.props.QuestionsArrayProp.map((question, i) =>
-               <div key={i}> Question:    {question.question}  {question.id}   <br />
-                             Explanation: {question.explanation}  <br />
-                             Hint:        {question.explanation}  <br />
-                             Tags:        {question.tags}  <br />
+               <div  className="container_div" key={i}> <b>{i+1}.- Question</b>:    {question.question}  {question.id}   <br />
+                             <b>Explanation</b>: {question.explanation}  <br />
+                             <b>Hint</b>:        {question.explanation}  <br />
+                             <b>Tags</b>:        {question.tags}  <br />
+                             <b>Type</b>:        {question.qtype ? 'Multiple Option' : 'Open Question' }  <br />
                <div>
                  <form>
-                   <input type="checkbox" name="active" value={question.id} checked={this.state.active} title="Add question" onChange={this.toggleCheckbox.bind(this, question.id)} />
+                   Add this question: <input type="checkbox" name="active" value={question.id} checked={this.state.active} title="Add question" onChange={this.toggleCheckbox.bind(this, question.id)} />
                  </form>
                </div>
              </div>
@@ -112,24 +104,23 @@ class QuestionSearchComponent extends Component {
         </div>
      );
   }
-};
+}
 
-// <AnswerRowComponent answer={answer} key={answer.id} keyRow={answer.id} onChange={this.handleSubmit.bind(this)} />
 
 QuestionSearchComponent.propTypes = {
   QuestionsArrayProp: PropTypes.array
-};
+}
 
 QuestionSearchComponent.defaultProps = {
   QuestionsArrayProp: []
-};
+}
 
 const mapStateToProps = (state) => {
   return {
       QuestionsArrayProp: state.rootReducer.tests_rdcr.QuestionsArrayProp
-  };
-};
+  }
+}
 
-// binding React-Redux
-export default connect(mapStateToProps)(QuestionSearchComponent);
+// binding React-Router-Redux
+export default withRouter(connect(mapStateToProps)(QuestionSearchComponent));
 

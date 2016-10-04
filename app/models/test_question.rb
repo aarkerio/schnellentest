@@ -8,7 +8,8 @@ class TestQuestion < ApplicationRecord
   validates :question_id, presence: true
 
   before_create :set_order
-  
+
+  default_scope { order('"order" DESC') }
 
   private 
 

@@ -38,3 +38,9 @@ answer_3 = Answer.create! answer: 'This is the Answer 222', correct: true,  ques
 (1..16).each do |i|
   Question.create! user_id: tchr_1.id, question: ipsum, hint: ipsum, explanation: ipsum, tags: ipsum, worth: 1, active: true, qtype:true
 end
+
+# Test
+# app.get '/'
+# token = app.session[:_csrf_token]
+# app.post '/users/sign_in/', params: {email: 'admin@example.com', password: 'password'}, headers: {'X-CSRF-Token' => token}
+

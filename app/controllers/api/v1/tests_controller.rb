@@ -8,7 +8,6 @@ module V1
     #
     # Returns a json object.
     def listing
-      params = test_params
       tests = Test.where( user_id: params[:user_id] ) 
       all   = TestSerializer.new.all_test(tests)
       return render json: all.as_json
@@ -31,9 +30,9 @@ module V1
       result = Test.new.create_test(test_params)
 
       if result
-        return render json: {message: 'Test was created succesfully'} 
+        return render json: {message: 'Test was created succesfully', error: false} 
       else
-        return render json: {message: 'Error: Test was not created succesfully'}
+        return render json: {message: 'Error: Test was not created succesfully', error: true}
       end
     end
 
@@ -41,10 +40,10 @@ module V1
     #
     # Returns JSON.
     def update
-      if @answer.update_attribute(:answer, params[:answer])
-        return render json: {message: 'Answer was updated succesfully'} 
+      if @test.update_attribute(:answer, params[:answer])
+        return render json: {message: 'Test was updated succesfully', error: false} 
       else
-        return render json: {message: 'Error: Answer was not updated succesfully'}
+        return render json: {message: 'Error: Test was not updated succesfully', error: true}
       end
     end
 
@@ -54,29 +53,18 @@ module V1
     def linking
       result = @test.link_questions(params[:question_ids])
       if result
-        return render json: {message: 'Error: Question was not created succesfully'} 
+        return render json: {message: 'Error: Question was not created succesfully', error: true} 
       else     
-        return render json: {message: 'Question was created succesfully'}
+        return render json: {message: 'Question was created succesfully', error: false}
       end
     end
 
     # Toggle one field
     def toggle
-      if @answer.update_attribute(:status, params[:status])
-        return render json: {message: 'Answer was toggled succesfully'} 
+      if @test.update_attribute(:status, params[:status])
+        return render json: {message: 'Test was toggled succesfully', error: false} 
       else
-        return render json: {message: 'Error: Answer was not created succesfully'}
-      end
-    end
-    
-    # Disable one Answer.
-    #
-    # Returns a Answer object.
-    def delete
-      if @answer.destroy
-        return render json: {message: 'Answer was removed succesfully.'}
-      else
-        return render json: {message: 'Error :Something went wrong. Answer was not removed.'}
+        return render json: {message: 'Error: Test was not created succesfully', error: true}
       end
     end
 
@@ -88,6 +76,16 @@ module V1
       return render json: results.as_json
     end
 
+    # Disable one Test.
+    #
+    # Returns a Test object.
+    def delete
+      if @test.destroy
+        return render json: {message: 'Test was removed succesfully.', error: false}
+      else
+        return render json: {message: 'Error :Something went wrong. Test was not removed.', error: true}
+      end
+    end
     private
 
     # Never trust parameters from the scary internet, only allow the white list.

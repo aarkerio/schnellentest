@@ -67,7 +67,7 @@
   },
   "scripts": {
     "test": "export NODE_ENV=test && node ./node_modules/mocha-webpack/bin/mocha-webpack --opts __tests__/mocha-webpack.opts --webpack-config ./webpack.testing.config.js -r __tests__/helpers/browser.js __tests__/components/*.spec.jsx",
-    "dev:hot": "webpack-dev-server --config ./webpack.devel.config.js --hot --inline --progress --colors --watch --display-error-details --display-cached --content-base ./"
+    "dev:hot": "webpack-dev-server -d --config ./webpack.devel.config.js --hot --inline --progress --colors --watch --display-error-details --display-cached --content-base ./"
   },
   "engines": {
     "node": ">= 0.10"

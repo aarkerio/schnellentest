@@ -2,30 +2,33 @@ html,
 body {height:96%; padding:5px; margin:5px; width:96%;}
 body {display:flex; flex-direction:column;}
 
-/*  It dictates what amount of the available space inside the flex container the item should take up. */
-#main {flex-grow:1;}
-
 .container {
   flex-direction: column;
 }
 
-/* optional */
-#header {min-height:120px; background:#e0e0e0;}
-#main {background:#fff; border: 1px dotted gray;}
-#footer {min-height:50px; background:e0e0e0;}
+#header {min-height:120px; background:#e0e0e0; padding:5px; margin:5px;}
+#main { flex-grow:1; background:#fff; border: 1px dotted gray; padding:5px; margin:5px;}
+#footer {min-height:50px; background: #e0e0e0; padding:5px; margin:5px;}
 
 #logindiv {
  float:right;
  width:19%;
  border: 1px dotted gray;
- margin:6px;
- padding: 6px;
+ margin: 6px;
+ padding:6px;
+}
+
+.question_class{
+  width:100%;
+  border: 1px dotted gray;
+  padding:4px;
+  margin:4px;
 }
 
 .container_div{
-  width:100%;
+  width: 100%;
   margin:  4px;
-  padding: 4px;
+  padding: 8px;
   border: 1px dotted orange;
 }
 
@@ -60,3 +63,5 @@ body {display:flex; flex-direction:column;}
 .left_button{
  float:left;
 }
+
+

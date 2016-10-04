@@ -1,15 +1,15 @@
-'use strict';
+'use strict'
 
-import cookie from 'react-cookie';
-import { connect } from 'react-redux';
-import { render } from 'react-dom';
-import * as TestsActionCreators from '../actions/tests';
-import React, { Component, PropTypes } from 'react';
-import { Link, browserHistory } from 'react-router';
-import HeaderComponent    from '../components/HeaderComponent';
-import TestRowComponent   from '../components/TestRowComponent';
+import cookie from 'react-cookie'
+import { connect } from 'react-redux'
+import { render } from 'react-dom'
+import * as TestsActionCreators from '../actions/tests'
+import React, { Component, PropTypes } from 'react'
+import { Link, browserHistory } from 'react-router'
+import TestRowComponent   from '../components/TestRowComponent'
 
-class TestsContainer extends Component {
+// export for unconnected component (for mocha tests)
+export class TestsContainer extends Component {
   constructor(props) {
       super(props);
   }
@@ -39,7 +39,6 @@ class TestsContainer extends Component {
     
     return (
       <div className="container_div">
-      <HeaderComponent />
       <div><Link to="/testnew">
             <button type="button" className="btn btn-default btn-sm">
               <span className="glyphicon glyphicon-plus"></span>

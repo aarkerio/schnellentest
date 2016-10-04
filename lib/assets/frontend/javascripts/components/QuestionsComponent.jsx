@@ -38,7 +38,7 @@ export class QuestionsComponent extends Component {
           transition: 'scale'
       }
       this.openModal = this.openModal.bind(this);
-      console.log('This props >>>>>>' + JSON.stringify(this.props));
+      //Test mocha:  console.log('This props >>>>>>' + JSON.stringify(this.props));
   }
   
   /**
@@ -194,7 +194,7 @@ export class QuestionsComponent extends Component {
             <span className="glyphicon glyphicon-plus"></span>
           </button>
           <form>
-            <label htmlFor="terms">Subject:</label>
+            <label htmlFor="terms">Search:</label>
             <input className="form-control" name="terms" value={this.state.terms} onChange={this.handleChange.bind(this, 'terms')} />
             <Button onClick={this.submitSearch.bind(this)}>Search</Button>
           </form>
@@ -202,7 +202,7 @@ export class QuestionsComponent extends Component {
         <div>
           {this.props.QuestionsArrayProp.map((q, i) =>
             <div key={i} className="questions_div">
-              <div><b>Question</b>: {q.question}</div>
+              <div><b>{i+1}.- Question</b>: {q.question}</div>
               <div><b>Explanation</b>: {q.explanation}</div>
               <div><b>Hint</b>: {q.hint}</div>
               <div><b>Worth</b>: {q.worth}</div>

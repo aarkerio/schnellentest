@@ -21,8 +21,11 @@ class Test < ApplicationRecord
   
   # Returns all questions by subject or tag 
   def search(terms)
+    # SELECT id, question FROM questions WHERE searchtext @@ 'lorem' AND NOT EXISTS( SELECT question_id FROM tests_questions WHERE test_id=1);
+    # SELECT q.id, q.question FROM questions AS q WHERE q.searchtext @@ 'lorem' AND NOT EXISTS(SELECT q1.id FROM test_questions AS tq, questions AS q1 WHERE tq.question_id=q1.id AND tq.test_id=1);   
     sanitized = ActiveRecord::Base.send(:sanitize_sql_array, ["to_tsquery('english', ?)", terms.gsub(/\s/,"+")])
-    Question.where("searchtext @@ #{sanitized}").select(:id, :question, :explanation, :hint)
+    # logger.debug "sanitized #################>>>  #{sanitized.inspect}"
+    Question.where("searchtext @@ #{sanitized} AND id NOT IN(SELECT question_id AS id FROM test_questions WHERE test_id=#{id})").select(:id, :question, :explanation, :hint, :tags, :qtype).limit(20)
   end
 
   def link_questions(question_ids) 
