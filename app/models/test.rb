@@ -2,7 +2,7 @@
 
 class Test < ApplicationRecord
   belongs_to :user
-  has_many :test_question
+  has_many :test_question, -> { order(:order) }
   has_many :question, through: :test_question
 
   validates :title, presence: true
@@ -16,7 +16,7 @@ class Test < ApplicationRecord
 
   # Get one test ans its questions  
   def get_one
-    nest_questions(self)
+    nest_questions
   end
   
   # Returns all questions by subject or tag 
@@ -53,13 +53,14 @@ class Test < ApplicationRecord
     }
   end
 
-  def nest_questions(test)
+  # Serialize a test
+  def nest_questions()
     all               = Hash.new
-    all[:title]       = test.title
-    all[:description] = test.description
-    all[:id]          = test.id
+    all[:title]       = title
+    all[:description] = description
+    all[:id]          = id
     all[:questions]   = []
-    test.question.each do |q|
+    question.select(:id, :question, :hint, :explanation, :tags, :qtype, :active, :lang).each do |q|
       all[:questions] << q 
     end
     all

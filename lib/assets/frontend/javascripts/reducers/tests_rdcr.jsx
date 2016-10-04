@@ -11,7 +11,7 @@ const initialState = {
 }
 
 const tests_rdcr = (state = initialState, action) => {
-  // console.log('>>>>>>>>>>>>> At tests_rdcr: ' + JSON.stringify(action)); 
+  console.log('>>>>>>>>>>>>> At tests_rdcr: ' + JSON.stringify(action)); 
   switch (action.type) {
     case RECEIVE_TESTS:
       return Object.assign({}, state, {

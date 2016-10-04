@@ -21,14 +21,11 @@ module V1
       return render json: test_data
     end
 
-    # Creates a new Test Account.
+    # Creates a new Test Account. POST /api/v1/tests/create 
     #
     # Returns a JSON object.
     def create
-      # return render json: params.to_json
-      
       result = Test.new.create_test(test_params)
-
       if result
         return render json: {message: 'Test was created succesfully', error: false} 
       else
@@ -36,7 +33,7 @@ module V1
       end
     end
 
-    # Creates a new Test.
+    # Updates a new Test.POST /api/v1/tests/update 
     #
     # Returns JSON.
     def update

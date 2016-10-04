@@ -9,7 +9,7 @@ class TestQuestion < ApplicationRecord
 
   before_create :set_order
 
-  default_scope { order('"order" DESC') }
+  # default_scope { order('order') }
 
   private 
 

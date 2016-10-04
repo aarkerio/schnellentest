@@ -3,8 +3,6 @@ class Question < ApplicationRecord
   belongs_to :user
   has_many   :answer
 
-  default_scope { order('id DESC') }
-
   validates :question, presence: true
 
   def create_question(params)

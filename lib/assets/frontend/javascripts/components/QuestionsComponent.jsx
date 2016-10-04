@@ -202,7 +202,7 @@ export class QuestionsComponent extends Component {
         <div>
           {this.props.QuestionsArrayProp.map((q, i) =>
             <div key={i} className="questions_div">
-              <div><b>{i+1}.- Question</b>: {q.question}</div>
+              <div><b>{i+1}.- Question</b>: {q.question} -- {q.id} </div>
               <div><b>Explanation</b>: {q.explanation}</div>
               <div><b>Hint</b>: {q.hint}</div>
               <div><b>Worth</b>: {q.worth}</div>
