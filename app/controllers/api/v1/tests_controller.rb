@@ -2,7 +2,7 @@
 module Api
 module V1
   class TestsController < ApiBaseController
-    before_action :set_test, only: [:get_one, :update, :toggle, :delete, :search, :linking] 
+    before_action :set_test, only: [:get_one, :update, :toggle, :delete, :search, :linking, :reorder] 
     
     # Gets all Tests. POST /api/v1/tests/listing/
     #
@@ -19,6 +19,18 @@ module V1
     def get_one
       test_data = @test.get_one
       return render json: test_data
+    end
+
+    # Reorder queston in the test.  PATCH /api/v1/questions/reorder 
+    #
+    # Returns a json object.
+    def reorder
+      result = @test.reorder(question_params)
+      if result
+        return render json: {message: 'Question was sorted succesfully', error: false} 
+      else
+        return render json: {message: 'Error: Question was not sorted succesfully', error: true}
+      end
     end
 
     # Creates a new Test Account. POST /api/v1/tests/create 
@@ -70,7 +82,7 @@ module V1
     # Returns a json object.
     def search
       results = @test.search(params[:terms]) 
-      return render json: results.as_json
+      return render json: results
     end
 
     # Disable one Test.
@@ -88,7 +100,7 @@ module V1
     # Never trust parameters from the scary internet, only allow the white list.
     def test_params
       params[:test][:question_ids] ||= []
-      params.require(:test).permit(:user_id, :title, :description, :tags, :active, :shared, question_ids: [])
+      params.require(:test).permit(:user_id, :title, :description, :tags, :active, :shared, :way, question_ids: [])
     end
 
     def serializer

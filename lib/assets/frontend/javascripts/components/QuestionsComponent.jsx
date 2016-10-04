@@ -38,6 +38,7 @@ export class QuestionsComponent extends Component {
           transition: 'scale'
       }
       this.openModal = this.openModal.bind(this);
+      this.newOrder  = this.newOrder.bind(this);
       //Test mocha:  console.log('This props >>>>>>' + JSON.stringify(this.props));
   }
   
@@ -62,8 +63,8 @@ export class QuestionsComponent extends Component {
     return field;
   }
 
-  showAlert(){
-    msg.show('Question removed succesfully', {
+  showAlert(message){
+    msg.show(message, {
       time: 2000,
       type: 'success',
       icon: <img src="/assets/close.png" />
@@ -161,7 +162,7 @@ export class QuestionsComponent extends Component {
   deleteQuestion(question_id) {
     let action = TestsActionCreators.deleteQuestion(question_id, this.state.test_id);
     this.props.dispatch(action);
-    this.showAlert();
+    this.showAlert('Question removed succesfully');
     setTimeout(() => { this.loadTest(); }, 2000);
   }
 
@@ -181,6 +182,26 @@ export class QuestionsComponent extends Component {
         <div>Open question</div>
       );
     }
+  }
+
+  newOrder(id, way){
+    let action = TestsActionCreators.reorderQuestion(this.state.test_id, id, way);
+    this.props.dispatch(action);
+    this.showAlert('Question resorted succesfully');
+    setTimeout(() => { this.loadTest(); }, 2000);
+  }
+  
+  renderReorderButton(id, i, up){
+    if (i == 0 && up){ return null}
+    if (this.props.QuestionsArrayProp.length == (i+1) && !up){ return null}
+    let text  = up ? 'upload' : 'download';
+    let title = up ? 'up' : 'down';
+    return (<div className="right_button">
+              <button type="button" onClick={() => {this.newOrder(id, text)}} className="btn btn-default btn-sm" title={"Move question "+title}>
+                <span className={"glyphicon glyphicon-"+title+"load"}></span>
+              </button>
+            </div>
+    );
   }
 
   render() {
@@ -215,7 +236,10 @@ export class QuestionsComponent extends Component {
                   </button>
                 </Link> 
               </div>
-              { this.renderAnswersButton(q.qtype, q.id) }
+              
+              { this.renderAnswersButton(q.qtype, q.id)  }
+              { this.renderReorderButton(q.id, i, true)  }
+              { this.renderReorderButton(q.id, i, false) }
               <div className="right_button">
                 <button type="button" onClick={() => {if(confirm('Delete the question?')) {this.deleteQuestion(q.id)};}} className="btn btn-default btn-sm" title="Delete question">
                   <span className="glyphicon glyphicon-trash"></span>

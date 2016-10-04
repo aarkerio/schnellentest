@@ -16,7 +16,7 @@ class Test < ApplicationRecord
 
   # Get one test ans its questions  
   def get_one
-    nest_questions
+    serialize_test
   end
   
   # Returns all questions by subject or tag 
@@ -36,6 +36,20 @@ class Test < ApplicationRecord
     results.include? false
   end
 
+  def reorder(params)
+    tq = test_question.where(question_id: params[:question_id].to_i).first
+    if params[:way] == 'down'
+      tq_up = tq.next
+      tq.update_attribute order: tq_up.order
+      tq_up.update_attribute order: tq.order 
+    else
+      tq_down = tq.previous
+      tq.update_attribute order: tq_down.order
+      tq_down.update_attribute order: tq.order 
+    end
+    true
+  end
+
   private
 
   # Private: Order a new test hash.
@@ -53,14 +67,16 @@ class Test < ApplicationRecord
     }
   end
 
-  # Serialize a test
-  def nest_questions()
+  # Private
+  # Serialize a test ans its questions
+  # Returns Hash.
+  def serialize_test
     all               = Hash.new
     all[:title]       = title
     all[:description] = description
     all[:id]          = id
     all[:questions]   = []
-    question.select(:id, :question, :hint, :explanation, :tags, :qtype, :active, :lang).each do |q|
+    question.select(:id, :question, :hint, :explanation, :tags, :qtype, :active, :lang, :worth, :status).each do |q|
       all[:questions] << q 
     end
     all

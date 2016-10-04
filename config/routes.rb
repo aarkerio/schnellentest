@@ -27,6 +27,7 @@ Rails.application.routes.draw do
       delete '/tests/delete/(/:id)'    => 'tests#delete',  as: 'tests_delete'
       post   '/tests/search/'          => 'tests#search',  as: 'tests_search'
       post   '/tests/linking/'         => 'tests#linking', as: 'tests_linking'
+      patch  '/tests/reorder/'         => 'tests#reorder', as: 'tests_reorder'
 
       # QUESTION SECTION
       post   '/questions/listing/(/:id)' => 'questions#listing', as: 'questions_listing'
@@ -34,7 +35,7 @@ Rails.application.routes.draw do
       post   '/questions/create/'        => 'questions#create',  as: 'questions_create'
       patch  '/questions/update/'        => 'questions#update',  as: 'questions_update'
       delete '/questions/delete/(/:id)/(:test_id)'  => 'questions#delete',  as: 'questions_delete'
- 
+
       # ANSWER SECTION
       post   '/answers/create/'           => 'answers#create',    as: 'answers_create'
       post   '/answers/get_one/'          => 'answers#get_one',   as: 'answers_get_one'

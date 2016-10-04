@@ -9,7 +9,13 @@ class TestQuestion < ApplicationRecord
 
   before_create :set_order
 
-  # default_scope { order('order') }
+  def next
+    self.class.where("\"order\" > ? AND test_id = ?", order, test_id).first
+  end
+
+  def previous
+    self.class.where("\"order\" < ? AND test_id = ?", order, test_id).last
+  end
 
   private 
 
