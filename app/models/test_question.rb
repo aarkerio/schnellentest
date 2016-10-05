@@ -27,8 +27,8 @@ class TestQuestion < ApplicationRecord
   # Private.
   # Set sequence on order column
   def set_order
-    test_question = self.test.test_question.order('id DESC').select(:order).first
-    order = (test_question.nil? || test_question.order.nil?)  ?  0  :  test_question.order.to_i + 1
+    test_question = self.class.where("test_id = ?", test_id).order("\"order\" DESC").first
+    order = (test_question.nil? || test_question.order.nil?)  ?  1  :  test_question.order.to_i + 1
     self.order   = order
   end
 end
