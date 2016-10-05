@@ -133,8 +133,6 @@ export class QuestionsComponent extends Component {
   /* Validates form*/
   validatesForm(fields){
     let valid = {pass: true, message: 'Not message yet'};
-    //console.log(JSON.stringify(fields));
-
     if ( !this.state.question.length ) {
       valid['question']  = false;
       valid['message']   = 'Question not valid';
@@ -226,7 +224,7 @@ export class QuestionsComponent extends Component {
               <div><b>Explanation</b>: {q.explanation}</div>
               <div><b>Hint</b>: {q.hint}</div>
               <div><b>Worth</b>: {q.worth}</div>
-              <div><b>Active</b>: {q.active.toString()} </div>
+              <div><b>Active</b>: { q.active ? 'Enabled' : 'Disabled'} </div>
               <div><b>Type</b>: { q.qtype  ?  'Multiple Option' : 'Open question' } </div>
               <div className="right_button"> 
                 <Link to={"/questionedit/"+q.id+"/"}>

@@ -6,7 +6,7 @@ class Test < ApplicationRecord
   has_many :question, through: :test_question
 
   validates :title, presence: true
-
+  
   def create_test(params)
     create_params = order_params params
     #logger.debug create_params.inspect
@@ -29,10 +29,10 @@ class Test < ApplicationRecord
     Question.where("searchtext @@ #{sanitized} AND id NOT IN(SELECT question_id AS id FROM test_questions WHERE test_id=#{id})").select(:id, :question, :explanation, :hint, :tags, :qtype).limit(20)
   end
 
-  def link_questions(question_ids) 
-    results = question_ids.map do |qid|
-      # logger.debug " qid >>>>>> #{ qid['question_ids'] } 
-      TestQuestion.find_or_create_by(test_id: id, question_id: qid['question_ids'])
+  def link_questions(params)
+    # return logger.debug "##### MODEL KKKKKKKKKKKKKK #### >>>>>> #{ params.inspect }"
+    results = params[:question_ids].map do |qid|
+      TestQuestion.find_or_create_by(test_id: id, question_id: qid['id'])
     end
     results.include? false
   end

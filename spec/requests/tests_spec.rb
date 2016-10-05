@@ -84,13 +84,13 @@ RSpec.describe "/api/v1/tests", type: :request do
       question2  = FactoryGirl.create :question, question: "#{lexem} Geography"
       question3  = FactoryGirl.create :question, question: "Capitals from #{lexem}"
  
-      post "/api/v1/tests/search", params: {id: test.id, terms: lexem}, headers: { "Accept" => "application/json" },  as: :json
+      post "/api/v1/tests/search", params: {id: test.id, test: {id: test.id, terms: lexem}}, headers: { "Accept" => "application/json" },  as: :json
 
       json = JSON.parse(response.body)
       # puts "response >>>  #{json}"
       expect(response.status).to eq 200
       expect(json.length).to eq 2
-      expect(json.second['question']).to match("#{lexem} Geography")
+      expect(json.second['question']).to match("Capitals from #{lexem}")
     end
   end
 

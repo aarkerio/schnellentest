@@ -73,7 +73,7 @@ module V1
     # Toggle one field. POST /api/v1/tests/toggle
     def toggle
       if @test.update_attribute(:status, test_params)
-        return render json: {message: 'Test was toggled succesfully', error: false} 
+        return render json: {message: 'Test was toggled succesfully', error: false}
       else
         return render json: {message: 'Error: Test was not created succesfully', error: true}
       end
@@ -101,7 +101,8 @@ module V1
 
     # Never trust parameters from the scary internet, only allow the white list.
     def test_params
-      params.require(:test).permit(:question_id, :id, :user_id, :title, :description, :tags, :active, :shared, :way, {question_ids: []})
+      params[:test][:question_ids] ||= []
+      params.require(:test).permit(:id, :user_id, :title, :description, :tags, :active, :shared, :way, :terms, {question_ids: [:id]})
     end
 
     def serializer

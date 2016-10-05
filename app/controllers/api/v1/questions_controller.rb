@@ -3,20 +3,7 @@ module Api
 module V1
   class QuestionsController < ApiBaseController
     before_action :set_question, only: [:edit, :update, :delete]
-    
-    # Gets all Questions. POST /api/v1/questions/listing/(:guid) route
-    #
-    # Returns a json object.
-    def listing
-      #return render json: params.to_json
-      fail ActiveRecord::RecordNotFound, 'Question not found one'  if params[:guid].blank?
-      
-      questions = Question.where( user_id: params[:guid] )   
-      all   = QuestionSerializer.new.all_question(questions)
-      return render json: all.as_json
-      fail ActiveRecord::RecordNotFound, 'Question not found two'  if @question.nil?
-    end
-    
+        
     # Gets one Question.  POST /api/v1/questions/get_one/ 
     #
     # Returns a json object.
@@ -57,9 +44,9 @@ module V1
       question = TestQuestion.where(test_id: params[:test_id], question_id: params[:id]).first
       result = question.destroy
       if result
-          return render json: {message: 'Question was removed succesfully.'}
+        return render json: {message: 'Question was removed succesfully.', error: false}
       else
-         return render json: {message: 'Error: Something went wrong. Question was not removed.'}
+        return render json: {message: 'Error: Something went wrong. Question was not removed.', error: true}
       end
     end
 
@@ -67,7 +54,7 @@ module V1
 
     # Never trust parameters from the scary internet, only allow the white list.
     def question_params
-      params.require(:question).permit(:user_id, :question, :explanation, :tags, :hint, :worth, :active, :qtype, :test_id)
+      params.require(:question).permit(:id, :user_id, :question, :explanation, :tags, :hint, :worth, :active, :qtype, :test_id)
     end
       
     def question

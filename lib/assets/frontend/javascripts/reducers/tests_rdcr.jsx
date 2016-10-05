@@ -7,7 +7,8 @@ const initialState = {
     OneTestArrayProp:     {},
     OneQuestionArrayProp: {},
     AnswersArrayProp:     [],
-    QuestionsArrayProp:   []
+    QuestionsArrayProp:   [],
+    SearchArrayProp:      []
 }
 
 const tests_rdcr = (state = initialState, action) => {
@@ -38,7 +39,7 @@ const tests_rdcr = (state = initialState, action) => {
 
     case SEARCH_QUESTIONS:
       return Object.assign({}, state, {
-        QuestionsArrayProp: action.QuestionsArrayProp
+        SearchArrayProp: action.SearchArrayProp
       });
 
     default:

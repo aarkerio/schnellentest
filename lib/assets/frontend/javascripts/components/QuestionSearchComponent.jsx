@@ -18,7 +18,7 @@ class QuestionSearchComponent extends Component {
   }
 
   componentWillMount() {
-    if ( ! this.props.QuestionsArrayProp.length ) {
+    if ( ! this.props.SearchArrayProp.length ) {
       let action = TestsActionCreators.searchQuestions( this.props.routeParams.test_id, this.props.routeParams.terms );
       this.props.dispatch(action);
     }
@@ -82,9 +82,9 @@ class QuestionSearchComponent extends Component {
               <Button onClick={this.submitSearch.bind(this)}>Search</Button>
             </form>
           </div>
-          { this.props.QuestionsArrayProp.length ?  null : <div>No matches</div> }
+          { this.props.SearchArrayProp.length ?  null : <div>No matches</div> }
           <div className="container_div">
-            {this.props.QuestionsArrayProp.map((question, i) =>
+            {this.props.SearchArrayProp.map((question, i) =>
                <div  className="container_div" key={i}> <b>{i+1}.- Question</b>:    {question.question}  {question.id}   <br />
                              <b>Explanation</b>: {question.explanation}  <br />
                              <b>Hint</b>:        {question.explanation}  <br />
@@ -108,16 +108,16 @@ class QuestionSearchComponent extends Component {
 
 
 QuestionSearchComponent.propTypes = {
-  QuestionsArrayProp: PropTypes.array
+  SearchArrayProp: PropTypes.array
 }
 
 QuestionSearchComponent.defaultProps = {
-  QuestionsArrayProp: []
+  SearchArrayProp: []
 }
 
 const mapStateToProps = (state) => {
   return {
-      QuestionsArrayProp: state.rootReducer.tests_rdcr.QuestionsArrayProp
+      SearchArrayProp: state.rootReducer.tests_rdcr.SearchArrayProp
   }
 }
 

@@ -16,6 +16,11 @@ class TestQuestion < ApplicationRecord
   def previous
     self.class.where("\"order\" < ? AND test_id = ?", order, test_id).order("\"order\" DESC").first
   end
+  
+  def unlink(params)
+    tq = TestQuestion.where(test_id: params[:test_id], question_id: params[:id]).first
+    tq.destroy
+  end
 
   private 
 
