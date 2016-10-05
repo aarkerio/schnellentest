@@ -27,9 +27,9 @@ q1 = Question.create! question_1
 q2 = Question.create! question_2
 q3 = Question.create! question_3
 
-tq1 = TestQuestion.create! test_id: test_1.id, question_id: q1.id, order: 1
-tq2 = TestQuestion.create! test_id: test_1.id, question_id: q2.id, order: 2
-tq3 = TestQuestion.create! test_id: test_1.id, question_id: q3.id, order: 3
+tq1 = TestQuestion.create! test_id: test_1.id, question_id: q1.id
+tq2 = TestQuestion.create! test_id: test_1.id, question_id: q2.id
+tq3 = TestQuestion.create! test_id: test_1.id, question_id: q3.id
 
 answer_1 = Answer.create! answer: 'This is the Answer 1111', correct: true,  question_id: q1.id
 answer_2 = Answer.create! answer: 'This is the Answer 222', correct: true,  question_id: q1.id

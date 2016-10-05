@@ -102,7 +102,7 @@ module V1
     # Never trust parameters from the scary internet, only allow the white list.
     def test_params
       params[:test][:question_ids] ||= []
-      params.require(:test).permit(:id, :user_id, :title, :description, :tags, :active, :shared, :way, :terms, {question_ids: [:id]})
+      params.require(:test).permit(:id, :question_id, :user_id, :title, :description, :tags, :active, :shared, :way, :terms, {question_ids: [:id]})
     end
 
     def serializer

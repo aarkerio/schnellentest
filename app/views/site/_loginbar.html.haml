@@ -12,7 +12,7 @@
           = link_to 'Or register', new_user_registration_path
   -else
     %p
-      = "Hi! #{cookies[:fullname]}"
+      = "Guten Tag Lehrer! #{cookies[:fullname]}"
     #floatleft
       = button_to 'Edit profile', edit_user_registration_path, method: :get
     #floatright

@@ -39,6 +39,7 @@ class Test < ApplicationRecord
 
   def reorder(params)
     tq = test_question.where(question_id: params[:question_id].to_i).first
+    logger.debug "##### tq KKKKKKKKKKKKKK #### >>>>>> #{ tq.inspect }"
     if params[:way] == 'down'
       tq_up = tq.next
       order = tq_up.order 
