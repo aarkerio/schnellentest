@@ -72,7 +72,7 @@ export class QuestionsComponent extends Component {
   }
 
 /**
- * Sends the data to create a new appointment
+ * Sends the data to create a new question
  **/
   handleSubmit(e) {
     e.preventDefault()

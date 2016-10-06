@@ -6,7 +6,7 @@ class Test < ApplicationRecord
   has_many :question, through: :test_question
 
   validates :title, presence: true
-  
+
   def create_test(params)
     create_params = order_params params
     #logger.debug create_params.inspect
@@ -14,18 +14,17 @@ class Test < ApplicationRecord
     test.save
   end
 
-  # Get one test ans its questions  
+  # Get one test ans its questions
   def get_one
     serialize_test
   end
-  
-  # Returns all questions by subject or tag 
+
+  # Returns all questions by subject or tag
   def search(params)
-    terms = params[:terms] 
+    terms = params[:terms]
     # SELECT id, question FROM questions WHERE searchtext @@ 'lorem' AND NOT EXISTS( SELECT question_id FROM tests_questions WHERE test_id=1);
-    # SELECT q.id, q.question FROM questions AS q WHERE q.searchtext @@ 'lorem' AND NOT EXISTS(SELECT q1.id FROM test_questions AS tq, questions AS q1 WHERE tq.question_id=q1.id AND tq.test_id=1);   
+    # SELECT q.id, q.question FROM questions AS q WHERE q.searchtext @@ 'lorem' AND NOT EXISTS(SELECT q1.id FROM test_questions AS tq, questions AS q1 WHERE tq.question_id=q1.id AND tq.test_id=1); 
     sanitized = ActiveRecord::Base.send(:sanitize_sql_array, ["to_tsquery('english', ?)", terms.gsub(/\s/,"+")])
-    # logger.debug "sanitized #################>>>  #{sanitized.inspect}"
     Question.where("searchtext @@ #{sanitized} AND id NOT IN(SELECT question_id AS id FROM test_questions WHERE test_id=#{id})").select(:id, :question, :explanation, :hint, :tags, :qtype).limit(20)
   end
 
@@ -39,12 +38,12 @@ class Test < ApplicationRecord
 
   def reorder(params)
     tq = test_question.where(question_id: params[:question_id].to_i).first
-    logger.debug "##### tq KKKKKKKKKKKKKK #### >>>>>> #{ tq.inspect }"
+    # logger.debug "##### tq KKKKKKKKKKKKKK #### >>>>>> #{ tq.inspect }"
     if params[:way] == 'down'
       tq_up = tq.next
-      order = tq_up.order 
+      order = tq_up.order
       tq_up.update_attribute(:order, tq.order)
-      tq.update_attribute(:order, order) 
+      tq.update_attribute(:order, order)
     else
       tq_down = tq.previous
       order = tq_down.order
@@ -76,12 +75,15 @@ class Test < ApplicationRecord
   # Returns Hash.
   def serialize_test
     all               = Hash.new
+    all[:id]          = id
     all[:title]       = title
     all[:description] = description
-    all[:id]          = id
+    all[:tags]        = tags
+    all[:active]      = active
+    all[:shared]      = shared
     all[:questions]   = []
     question.select(:id, :question, :hint, :explanation, :tags, :qtype, :active, :lang, :worth, :status).each do |q|
-      all[:questions] << q 
+      all[:questions] << q
     end
     all
   end

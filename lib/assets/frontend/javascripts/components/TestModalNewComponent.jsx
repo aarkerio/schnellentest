@@ -1,4 +1,5 @@
 'use strict';
+
 import cookie from 'react-cookie';
 import React, { PropTypes, Component } from 'react';
 import { Link, browserHistory } from 'react-router';
@@ -7,18 +8,14 @@ import { connect } from 'react-redux';
 import * as testsActionCreators from '../actions/tests';
 import { Button, Modal } from 'react-bootstrap';
 
-import Moment from 'moment';
-
-var Globalize = require('globalize');
-
 class TestModalNewComponent extends Component {
   constructor(props) {
     super(props);
-    this.state = { showModal:      true, 
-                   user_id:        0,    // not valid values 
+    this.state = { showModal:      true,
+                   user_id:        0,
                    description:    'Brief description',
-                   tags:           '',
-                   title:          'Some title', 
+                   tags:           'France, Revolution, History',
+                   title:          'Some title',
                    active:         true,
                    shared:         false
              };
@@ -34,17 +31,17 @@ class TestModalNewComponent extends Component {
          user_id:     cookie.load('user_id'),
          title:       this.state.title,
          description: this.state.description,
-         tags:        this.state.tags, 
+         tags:        this.state.tags,
          active:      this.state.active,
          shared:      this.state.shared
     }};
-    
+
     let isValid = this.validatesForm(fields);
 
     if ( !isValid['pass'] ) {
       console.log('Field not valid: ' + isValid['message']);
     }
-    let action = testsActionCreators.createTest(fields);
+    let action = testsActionCreators.createOrUpdateTest(fields, 'create');
     this.props.dispatch(action);  // thunk middleware
     window.location='/tests';
   }
@@ -121,13 +118,13 @@ class TestModalNewComponent extends Component {
 
              <label htmlFor="tags">Tags:</label>
              <input className="form-control" name="tags" value={this.state.tags} onChange={this.handleChange.bind(this, 'tags')} />
-          
+
              <label htmlFor="active">Active:</label>
              <input type="checkbox" name="active" defaultChecked={this.state.active} onChange={this.toggleCheckbox.bind(this, 'active')} />
-             
+
              <label htmlFor="shared">Share:</label>
              <input type="checkbox" name="shared" defaultChecked={this.state.shared} onChange={this.toggleCheckbox.bind(this, 'shared')} />
-             
+
             </form>
             </Modal.Body>
           <Modal.Footer>
@@ -145,7 +142,5 @@ TestModalNewComponent.propTypes = {
     dispatch: PropTypes.func
 };
 
-
 // binding React-Redux
 export default connect()(TestModalNewComponent);
-

@@ -3,17 +3,17 @@ module Api
 module V1
   class TestsController < ApiBaseController
     before_action :set_test, only: [:get_one, :update, :toggle, :delete, :search, :linking, :reorder]
-    
+
     # Gets all Tests. POST /api/v1/tests/listing/
     #
     # Returns a json object.
     def listing
-      tests = Test.where( user_id: test_params[:user_id] ) 
+      tests = Test.where( user_id: test_params[:user_id] )
       all   = TestSerializer.new.all_test(tests)
       return render json: all.as_json
     end
 
-    # Gets one Test.  POST /api/v1/tests/get_one/ 
+    # Gets one Test.  POST /api/v1/tests/get_one/
     #
     # Returns a json object.
     def get_one
@@ -21,33 +21,31 @@ module V1
       return render json: test_data
     end
 
-    # Reorder queston in the test.  PATCH /api/v1/questions/reorder 
+    # Reorder queston in the test.  PATCH /api/v1/questions/reorder
     #
     # Returns a json object.
     def reorder
-      # logger.debug "### params ######>>>>>>>>>   #{params.inspect}"
-      # return logger.debug "### test_params ######>>>>>>>>>   #{test_params.inspect}"
       result = @test.reorder(test_params)
       if result
-        return render json: {message: 'Question was sorted succesfully', error: false} 
+        return render json: {message: 'Question was sorted succesfully', error: false}
       else
         return render json: {message: 'Error: Question was not sorted succesfully', error: true}
       end
     end
 
-    # Creates a new Test Account. POST /api/v1/tests/create 
+    # Creates a new Test Account. POST /api/v1/tests/create
     #
     # Returns a JSON object.
     def create
       result = Test.new.create_test(test_params)
       if result
-        return render json: {message: 'Test was created succesfully', error: false} 
+        return render json: {message: 'Test was created succesfully', error: false}
       else
         return render json: {message: 'Error: Test was not created succesfully', error: true}
       end
     end
 
-    # Updates a new Test. POST /api/v1/tests/update 
+    # Updates a new Test. POST /api/v1/tests/update
     #
     # Returns JSON.
     def update

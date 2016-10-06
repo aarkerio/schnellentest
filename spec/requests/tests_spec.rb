@@ -2,7 +2,7 @@ require 'spec_helper'
 
 RSpec.describe "/api/v1/tests", type: :request do
 
-  before(:all) do
+  before(:each) do
     Answer.delete_all
     TestQuestion.delete_all
     Question.delete_all
@@ -10,7 +10,7 @@ RSpec.describe "/api/v1/tests", type: :request do
 
   describe "POST /listing/" do
     it ".returns all the tests" do
-      user = FactoryGirl.create :user
+      user  = FactoryGirl.create :user
       test1 = FactoryGirl.create :test, title: "Math test", user: user
       test2 = FactoryGirl.create :test, title: "Other Math test", user: user
       post "/api/v1/tests/listing", params: {user_id: user.id, active: true}, headers: { "Accept" => "application/json" },  as: :json
@@ -108,6 +108,26 @@ RSpec.describe "/api/v1/tests", type: :request do
       json = JSON.parse(response.body)
       # puts "response >>>  #{json}"
       expect(response.status).to eq 200
+      expect(json['error']).to eq false
+    end
+  end
+
+  describe "PATCH /reorder/" do
+
+    it ".link questions with the current test" do
+         user        = FactoryGirl.create :user
+    test        = FactoryGirl.create :test, user: user
+    question1   = FactoryGirl.create :question
+    question2   = FactoryGirl.create :question
+    question3   = FactoryGirl.create :question
+    test_quest1 = FactoryGirl.create :test_question, test: test, question: question1, order: 1
+    test_quest2 = FactoryGirl.create :test_question, test: test, question: question2, order: 2
+    test_quest3 = FactoryGirl.create :test_question, test: test, question: question3, order: 3
+
+      patch "/api/v1/tests/reorder", params: {id: test.id, test:{question_id: question1.id, id: test.id, way: 'down'}}, headers: { "Accept" => "application/json" },  as: :json
+
+      json = JSON.parse(response.body)
+      # puts "response >>>  #{json}"
       expect(json['error']).to eq false
     end
   end

@@ -20,7 +20,7 @@ import HeaderComponent         from './components/HeaderComponent';
 import configureStore          from './config/configureStore';     // load redux store
 
 const my_store = configureStore();
-const history  = syncHistoryWithStore(browserHistory, my_store);   // mix redux and route 
+const history  = syncHistoryWithStore(browserHistory, my_store);   // mix redux and route
 
 render(
     <Provider store={my_store}>
@@ -35,6 +35,7 @@ render(
           <Route path="/tests" component={TestsContainer}>
             <Route path="/tests/:id" component={TestModalEditComponent} />
             <Route path="/testnew" component={TestModalNewComponent} />
+            <Route path="/testedit/:id" component={TestModalEditComponent} />
           </Route>
           <Route path="*" component={NotFound} status={404} />
         </Router>

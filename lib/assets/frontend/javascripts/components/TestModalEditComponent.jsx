@@ -1,108 +1,76 @@
 'use strict';
 
+import cookie from 'react-cookie';
 import React, { PropTypes, Component } from 'react';
 import { Link, browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as TestsActionCreators from '../actions/tests';
+import * as testsActionCreators from '../actions/tests';
 import { Button, Modal } from 'react-bootstrap';
-
-var moment = require('moment');
-var Globalize = require('globalize');
-
-Globalize.load( 
-   require("cldr-data/main/en/ca-gregorian.json"),
-   require("cldr-data/main/en/numbers.json")
-);
-
-Globalize.locale('en');
-
-var globalizeLocalizer = require('react-widgets/lib/localizers/globalize');
-globalizeLocalizer(Globalize);
-
-// import Moment from 'moment';
-import DateTimePicker from 'react-widgets/lib/DateTimePicker';
-
-import Select from 'react-select';
-require('react-select/less/default.less');
-require('react-widgets/dist/css/react-widgets.css');
 
 class TestModalEditComponent extends Component {
   constructor(props) {
     super(props);
-    this.state = { showModal:      true, 
-                   id:             0,
-                   date:           moment(), 
-                   pet_id:         0, 
-                   owner_id:       0,
-                   reminder:       false,
-                   reason:         '', 
-                   doctor_id:      0,
-                   active:         true,
-                   owner_name:     '',
-                   pet_name:       '',
-                   doc_name:       '',
-                   owners_options: [],
-                   pets_options:   [],
-                   docs_options:   []
+    this.state = { showModal:   true,
+                   id:          this.props.params.id,
+                   user_id:     0,
+                   description: 'Brief description',
+                   tags:        '',
+                   title:       'Some title',
+                   active:      true,
+                   shared:      true
              };
   }
 
 /**
-  * Loads default data
-  **/
-  componentWilMount() {
-    if ( ! this.props.oneTest.length ) {
-      // let action = TestsActionCreators.updateForm(this.props.routeParams.id);
-      // this.props.dispatch(action);
-    }
-  }
-  
-  componentWillReceiveProps(nextProps) {
-    let owner  = typeof nextProps.oneTest.appo !== typeof undefined ? true : false;
-    if (owner == false)  { return; }   
-    if ( nextProps.oneTest.appo.owner_id  !=  this.state.owner_id ) {
-      let action = TestsActionCreators.updateForm(this.props.routeParams.id);
-      this.props.dispatch(action);
-      console.log('WWWW  NOT THE SAME nextPros  >>' + JSON.stringify(nextProps));
-      this.setState({
-                   id:        nextProps.oneTest.appo.id,
-                   date:      moment(nextProps.oneTest.appo.date), 
-                   pet_id:    nextProps.oneTest.appo.pet_id, 
-                   owner_id:  nextProps.oneTest.appo.owner_id, 
-                   reminder:  nextProps.oneTest.appo.reminder,
-                   reason:    nextProps.oneTest.appo.reason, 
-                   doctor_id: nextProps.oneTest.appo.doctor_id,
-                   active:    nextProps.oneTest.appo.active,
-                   owner_name:nextProps.oneTest.appo.owner_name,
-                   pet_name:  nextProps.oneTest.appo.pet_name,
-                   doc_name:  nextProps.oneTest.appo.doc_name,
-                   owners_options: nextProps.oneTest.owners,
-                   pets_options: nextProps.oneTest.pets,
-                   docs_options: nextProps.oneTest.docs
-                 });
-    }
+ *  Load question data and answers
+ **/
+  componentWillMount() {
+    let action = testsActionCreators.fetchOneTest( this.state.id );
+    this.props.dispatch(action);
+    this.setState({title:       this.props.OneTestArrayProp.title,
+                   description: this.props.OneTestArrayProp.description,
+                   tags:        this.props.OneTestArrayProp.tags,
+                   active:      this.props.OneTestArrayProp.active,
+                   shared:      this.props.OneTestArrayProp.shared
+    });
+    console.log('this.props.OneTestArrayProp:  >>>> ' + JSON.stringify(this.props.OneTestArrayProp));
   }
 
 /**
-  * Send data to update appointment
+ *  Sends the data to create a new appointment
  **/
   handleSubmit(e) {
     e.preventDefault();
-    let fields = { id:        this.state.id,
-                   date:      this.state.date, 
-                   pet_id:    this.state.pet_id, 
-                   owner_id:  this.state.owner_id, 
-                   reminder:  this.state.reminder,
-                   reason:    this.state.reason, 
-                   doctor_id: this.state.doctor_id,
-                   active:    this.state.active };
-    let action = TestsActionCreators.updateTest(fields);
-    this.props.dispatch(action);  // thunk middlew
 
-    browserHistory.push('/appointments')
-    // this.props.dispatch(createTest);
-    console.log( ">>>>>> Sending data >>>>>>> " + JSON.stringify(fields));
+    let fields = {test: {
+         title:       this.state.title,
+         description: this.state.description,
+         tags:        this.state.tags,
+         active:      this.state.active,
+         shared:      this.state.shared
+    }};
+
+    let isValid = this.validatesForm(fields);
+
+    if ( !isValid['pass'] ) {
+      console.log('Field not valid: ' + isValid['message']);
+    }
+    let action = testsActionCreators.createOrUpdateTest(fields, 'update');
+    this.props.dispatch(action);  // thunk middleware
+    window.location='/tests';
+  }
+
+  /* Validates form*/
+  validatesForm(fields){
+    let valid = {pass: true, message: 'Not message yet'};
+
+    if ( fields['title'] == 0 ) {
+      valid['pass']    = false;
+      valid['message'] = 'Title not valid';
+    }
+
+    return valid;
   }
 
   handleChange(name, event) {
@@ -111,83 +79,27 @@ class TestModalEditComponent extends Component {
     this.setState(change);
   }
 
-  handleClick(event) {
-    let newvalue = this.state.ffreminder == true ? false : true;
-    this.setState({reminder: newvalue});
+  toggleCheckbox(name, event) {
+    let change = !this.state[name];
+    this.setState({name: change});
   }
 
-  getOwnersOptions(input, callback) {
-    let self = this;
-    setTimeout(function() {
-        callback(null, {
-            options: self.state.owners_options,
-            // CAREFUL! Only set this to true when there are no more options,
-            // or more specific queries will not be sent to the server.
-            complete: true
-        });
-    }, 500);
-  }
-  
- /*
-  * Load pets 
-  */
-  changeOwner(value) {
-    this.setState({owner_id: value['value']});
-    let action = TestsActionCreators.getPets(value['value'], true);
-    this.props.dispatch(action);
+  changeTitle(value) {
+    this.setState({title: value['value']});
   }
 
-  getPetsOptions(input, callback) {
-    let self = this;
-    let action = TestsActionCreators.getPets(this.state.owner_id, true);
-    this.props.dispatch(action);
-    setTimeout(function() {
-        callback(null, {
-            options: self.state.pets_options,
-            complete: true
-        });
-    }, 300);
+  changeDescription(value) {
+    this.setState({description: value['value']});
   }
 
-  changePet(value) {
-    this.setState({pet_id: value['value']});
-  }
-
-  getDocsOptions(input, callback) {
-    let self = this;
-    let action = TestsActionCreators.getPets(this.state.doctor_id, true);
-    this.props.dispatch(action);
-    setTimeout(function() {
-        callback(null, {
-            options: self.state.docs_options,
-            complete: true
-        });
-    }, 300);
-  }
-
-  changeDoc(value) {
-    this.setState({doctor_id: value['value']});
-  }
   render() {
     let rand = ()=> (Math.floor(Math.random() * 20) - 10);
-
-    const modalStyle = {
-      position: 'fixed',
-      zIndex: 1040,
-      top: 0, bottom: 0, left: 0, right: 0
-    };
-
-    const backdropStyle = {
-      ...modalStyle,
-      zIndex: 'auto',
-      backgroundColor: '#000',
-      opacity: 0.5
-    };
+    const modalStyle = { position: 'fixed', zIndex: 1040, top: 0, bottom: 0, left: 0, right: 0, zIndex: 'auto', backgroundColor: '#000', opacity: 0.5 };
+    const backdropStyle = { ...modalStyle };
 
     const dialogStyle = function() {
       let top = 50 + rand();
       let left = 50 + rand();
-
       return {
         position: 'absolute',
         width: 400,
@@ -202,39 +114,36 @@ class TestModalEditComponent extends Component {
 
     return (
         <div id="responsive" className="modal hide fade" tabIndex="-1" >
-          <Modal aria-labelledby='modal-label'
-            style={modalStyle}
-            backdropStyle={backdropStyle}
-            show={this.state.showModal}
-          >
+        <Modal
+          aria-labelledby='modal-label'
+          backdropStyle={backdropStyle}
+          show={this.state.showModal}
+        >
           <Modal.Header>
-             <Modal.Title>Modal Überschrift  </Modal.Title>
+             <Modal.Title> Modal Überschrift </Modal.Title>
           </Modal.Header>
-            <Modal.Body>
-           <form>        
-             <label htmlFor="owner">Eigentümer:  </label>
-             <Select name="owners" options={this.state.owners_options} value={this.state.owner_id} onChange={this.changeOwner.bind(this)} />
-            
-             <label htmlFor="pet">Kosename (haustier):</label>
-				     <Select ref="petSelect" autofocus options={this.props.pets_options} name="selected-pet" value={this.state.pet_id} onChange={this.changePet.bind(this)} searchable={true} />
+          <Modal.Body>
+           <form>
+             <label htmlFor="title">Title:</label>
+             <input className="form-control" name="title" value={this.state.title} onChange={this.handleChange.bind(this, 'title')} />
 
+             <label htmlFor="description">Bezeichnung:</label>
+             <input className="form-control" name="description" value={this.state.description} onChange={this.handleChange.bind(this, 'description')} />
 
-             <label htmlFor="doc_name">Doc:</label>
-             <Select.Async name="docs" loadOptions={this.getDocsOptions.bind(this)} value={this.state.doctor_id} onChange={this.changeDoc.bind(this)} />
+             <label htmlFor="tags">Tags:</label>
+             <input className="form-control" name="tags" value={this.state.tags} onChange={this.handleChange.bind(this, 'tags')} />
 
-             <label htmlFor="reason">Vernunft:</label>
-             <input className="form-control" name="reason" value={this.state.reason} onChange={this.handleChange.bind(this, 'reason')} />
+             <label htmlFor="active">Active:</label>
+             <input type="checkbox" name="active" defaultChecked={this.state.active} onChange={this.toggleCheckbox.bind(this, 'active')} />
 
-             <label htmlFor="date">Datum:</label>
-             <DateTimePicker value={new Date(this.state.date)} onChange={this.handleChange.bind(this, 'date')} />
+             <label htmlFor="shared">Share:</label>
+             <input type="checkbox" name="shared" defaultChecked={this.state.shared} onChange={this.toggleCheckbox.bind(this, 'shared')} />
 
-             <label htmlFor="reminder">Erinner:</label>
-             <input type="checkbox" name="reminder" checked={this.state.reminder} onChange={this.handleClick.bind(this, 'reminder')} />
             </form>
             </Modal.Body>
           <Modal.Footer>
              <Button onClick={() => browserHistory.push('/tests')}>Close</Button>
-             <Button bsStyle="primary" onClick={this.handleSubmit.bind(this)}>Änderungen speichern</Button>
+             <Button onClick={this.handleSubmit.bind(this)}>Änderungen speichern</Button>
           </Modal.Footer>
         </Modal>
       </div>
@@ -243,16 +152,21 @@ class TestModalEditComponent extends Component {
 };
 
 TestModalEditComponent.propTypes = {
-    oneTest: PropTypes.any,
-    dispatch: PropTypes.func
+  backdropStyle: PropTypes.string,
+  OneTestArrayProp: PropTypes.object,
+  dispatch: PropTypes.func
 };
 
-function mapStateToProps(state) {
+TestModalEditComponent.defaultProps = {
+  OneTestArrayProp: {}
+};
+
+const mapStateToProps = (state) => {
   return {
-      oneTest: state.rootReducer.appo_rdcer.oneTest
-  }
+    OneTestArrayProp: state.rootReducer.tests_rdcr.OneTestArrayProp
+  };
 };
 
+// binding React-Redux
 export default connect(mapStateToProps)(TestModalEditComponent);
-
 

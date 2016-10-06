@@ -31,7 +31,7 @@ class TestRow extends Component {
     const { test, keyRow } = this.props;
     return (
       <tr key={keyRow}>
-        <td style={{width: '35px', padding:0, textAlign: 'center'}}> <Link to={"/test/"+test.id+"/"}><i className="glyphicon glyphicon-pencil"></i></Link></td>
+        <td style={{width: '35px', padding:0, textAlign: 'center'}}> <Link to={"/testedit/"+test.id+"/"}><i className="glyphicon glyphicon-pencil"></i></Link></td>
         <td style={{width: '35px', padding:0, textAlign: 'center'}}> <Link to={"/questions/"+test.id+"/"}> <i className="glyphicon glyphicon-apple"></i></Link></td>
         <td style={{width: '35px', padding:0}}> {test.title}   </td>
         <td style={{width: '35px', padding:0}}> {test.description}    </td>

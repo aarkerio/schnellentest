@@ -9,9 +9,8 @@ import AnswerRowComponent from './AnswerRowComponent'
 
 class AnswersModalComponent extends Component {
   constructor(props) {
-    super(props)
-    console.log('PROPS Answrs>>>>' + JSON.stringify(this.props));
-    this.state = { showModal:   true, 
+    super(props);
+    this.state = { showModal:   true,
                    question_id: this.props.routeParams.question_id,
                    test_id:     this.props.routeParams.test_id,
                    nactive:     true,
@@ -23,7 +22,7 @@ class AnswersModalComponent extends Component {
   }
 
   /**
-   * Load question data and answers 
+   * Load question data and answers
    **/
   componentWillMount() {
     if ( ! this.props.QuestionArrayProp.length ) {
@@ -130,17 +129,17 @@ class AnswersModalComponent extends Component {
           <form>
              <label htmlFor="nanswer">Answer:</label>
              <input className="form-control" name="nanswer" value={this.state.nanswer} onChange={this.handleChange.bind(this, 'nanswer')} />
-             
+
              <label htmlFor="ncorrect">This answer is correct:</label>
              <input type="checkbox" name="ncorrect" defaultChecked={this.state.ncorrect} onChange={this.toggleCheckbox.bind(this, 'ncorrect')} />
 
              <label htmlFor="nactive">Active:</label>
-             <input type="checkbox" name="nactive" defaultChecked={this.state.nactive} onChange={this.toggleCheckbox.bind(this, 'nactive')} />          
+             <input type="checkbox" name="nactive" defaultChecked={this.state.nactive} onChange={this.toggleCheckbox.bind(this, 'nactive')} />
           </form>
         </Modal.Body>
         <Modal.Footer>
-             <Button onClick={() => browserHistory.push('/questions/' + this.state.test_id )}>Close</Button>
-             <Button onClick={this.handleSubmit.bind(this)}>Änderungen speichern</Button>
+          <Button onClick={() => browserHistory.push('/questions/' + this.state.test_id )}>Close</Button>
+          <Button onClick={this.handleSubmit.bind(this)}>Änderungen speichern</Button>
         </Modal.Footer>
       </Modal>
     </div>
@@ -169,5 +168,4 @@ const mapStateToProps = (state) => {
 
 // binding React-Redux
 export default connect(mapStateToProps)(AnswersModalComponent);
-
 

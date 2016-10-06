@@ -7,7 +7,7 @@ FactoryGirl.define do
     tags         {  FFaker::Lorem.words.join(' ')  }
     active       true
     shared       false
-    user         nil
+    user
   end
 end
 
