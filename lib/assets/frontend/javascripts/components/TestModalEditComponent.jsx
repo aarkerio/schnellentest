@@ -33,7 +33,7 @@ class TestModalEditComponent extends Component {
                    tags:        this.props.OneTestArrayProp.tags,
                    active:      this.props.OneTestArrayProp.active,
                    shared:      this.props.OneTestArrayProp.shared
-    });
+                  });
     console.log('this.props.OneTestArrayProp:  >>>> ' + JSON.stringify(this.props.OneTestArrayProp));
   }
 
@@ -50,7 +50,8 @@ class TestModalEditComponent extends Component {
          active:      this.state.active,
          shared:      this.state.shared
     }};
-
+    console.log('this.fields .:  >>>> ' + JSON.stringify(fields));
+    return;
     let isValid = this.validatesForm(fields);
 
     if ( !isValid['pass'] ) {

@@ -41,7 +41,7 @@ export class QuestionsComponent extends Component {
       this.newOrder  = this.newOrder.bind(this);
       //Test mocha:  console.log('This props >>>>>>' + JSON.stringify(this.props));
   }
-  
+
   /**
    * Load test data and questions
    **/
@@ -50,14 +50,14 @@ export class QuestionsComponent extends Component {
       this.loadTest();
     }
   }
-  
+
   loadTest() {
     let action = TestsActionCreators.fetchOneTest( this.props.routeParams.test_id );
     this.props.dispatch(action);
   }
 
   /**
-   * Order tests method   
+   * Order tests method
    */
   orderList(field, order) {
     return field;
@@ -79,7 +79,7 @@ export class QuestionsComponent extends Component {
 
     let fields = {question: {
       user_id:     cookie.load('user_id'),
-      question:    this.state.question, 
+      question:    this.state.question,
       explanation: this.state.explanation,
       hint:        this.state.hint,
       tags:        this.state.tags,
@@ -87,8 +87,8 @@ export class QuestionsComponent extends Component {
       active:      this.state.active,
       qtype:       this.state.qtype,
       test_id:     this.props.routeParams.test_id
-    }}
-    
+    }};
+
     let isValid = this.validatesForm(fields);
     if ( !isValid['pass'] ) {
       console.log('Question not valid: ' + isValid['message']);

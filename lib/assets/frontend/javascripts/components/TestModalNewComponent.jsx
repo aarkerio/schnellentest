@@ -35,6 +35,8 @@ class TestModalNewComponent extends Component {
          active:      this.state.active,
          shared:      this.state.shared
     }};
+    console.log('Fields.:  >>>> ' + JSON.stringify(fields));
+    return;
 
     let isValid = this.validatesForm(fields);
 
