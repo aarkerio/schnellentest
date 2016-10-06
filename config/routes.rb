@@ -3,9 +3,9 @@ Rails.application.routes.draw do
   root 'groups#welcome'
 
   devise_for :users
-  
+
   resources :users
-  
+
   resources :groups do
     collection do
       get 'welcome'

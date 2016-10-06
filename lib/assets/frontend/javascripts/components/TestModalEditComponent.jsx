@@ -13,28 +13,32 @@ class TestModalEditComponent extends Component {
     super(props);
     this.state = { showModal:   true,
                    id:          this.props.params.id,
-                   user_id:     0,
-                   description: 'Brief description',
+                   description: '',
                    tags:        '',
-                   title:       'Some title',
+                   title:       '',
                    active:      true,
                    shared:      true
              };
+    let action = testsActionCreators.fetchOneTest( this.props.params.id );
+    this.props.dispatch(action);
+    this.setValues = this.setValues.bind(this);
   }
 
-/**
- *  Load question data and answers
- **/
-  componentWillMount() {
-    let action = testsActionCreators.fetchOneTest( this.state.id );
-    this.props.dispatch(action);
-    this.setState({title:       this.props.OneTestArrayProp.title,
-                   description: this.props.OneTestArrayProp.description,
-                   tags:        this.props.OneTestArrayProp.tags,
-                   active:      this.props.OneTestArrayProp.active,
-                   shared:      this.props.OneTestArrayProp.shared
-                  });
-    console.log('this.props.OneTestArrayProp:  >>>> ' + JSON.stringify(this.props.OneTestArrayProp));
+  componentDidMount() {
+    let self = this;
+    setTimeout(function(){ self.setValues(); }, 2000);
+  }
+
+  setValues(){
+    let new_values = {title:       this.props.OneTestArrayProp.title,
+                      description: this.props.OneTestArrayProp.description,
+                      tags:        this.props.OneTestArrayProp.tags,
+                      active:      this.props.OneTestArrayProp.active,
+                      shared:      this.props.OneTestArrayProp.shared,
+                      response:    1
+                     };
+    this.setState(new_values);
+    this.forceUpdate();
   }
 
 /**
@@ -43,15 +47,15 @@ class TestModalEditComponent extends Component {
   handleSubmit(e) {
     e.preventDefault();
 
-    let fields = {test: {
-         title:       this.state.title,
-         description: this.state.description,
-         tags:        this.state.tags,
-         active:      this.state.active,
-         shared:      this.state.shared
-    }};
-    console.log('this.fields .:  >>>> ' + JSON.stringify(fields));
-    return;
+    let fields = {
+      id:          this.state.id,
+      title:       this.state.title,
+      description: this.state.description,
+      tags:        this.state.tags,
+      active:      this.state.active,
+      shared:      this.state.shared
+    };
+
     let isValid = this.validatesForm(fields);
 
     if ( !isValid['pass'] ) {
@@ -81,16 +85,9 @@ class TestModalEditComponent extends Component {
   }
 
   toggleCheckbox(name, event) {
-    let change = !this.state[name];
-    this.setState({name: change});
-  }
-
-  changeTitle(value) {
-    this.setState({title: value['value']});
-  }
-
-  changeDescription(value) {
-    this.setState({description: value['value']});
+    let change = {};
+    change[name] = !this.state[name];
+    this.setState(change);
   }
 
   render() {
@@ -112,6 +109,7 @@ class TestModalEditComponent extends Component {
         padding: 20
       };
     };
+
 
     return (
         <div id="responsive" className="modal hide fade" tabIndex="-1" >
@@ -135,15 +133,15 @@ class TestModalEditComponent extends Component {
              <input className="form-control" name="tags" value={this.state.tags} onChange={this.handleChange.bind(this, 'tags')} />
 
              <label htmlFor="active">Active:</label>
-             <input type="checkbox" name="active" defaultChecked={this.state.active} onChange={this.toggleCheckbox.bind(this, 'active')} />
+             <input type="checkbox" name="active" checked={this.state.active} onChange={this.toggleCheckbox.bind(this, 'active')} />
 
              <label htmlFor="shared">Share:</label>
-             <input type="checkbox" name="shared" defaultChecked={this.state.shared} onChange={this.toggleCheckbox.bind(this, 'shared')} />
+             <input type="checkbox" name="shared" checked={this.state.shared} onChange={this.toggleCheckbox.bind(this, 'shared')} />
 
             </form>
             </Modal.Body>
           <Modal.Footer>
-             <Button onClick={() => browserHistory.push('/tests')}>Close</Button>
+             <Button onClick={() => window.location='/tests'}>Close</Button>
              <Button onClick={this.handleSubmit.bind(this)}>Änderungen speichern</Button>
           </Modal.Footer>
         </Modal>

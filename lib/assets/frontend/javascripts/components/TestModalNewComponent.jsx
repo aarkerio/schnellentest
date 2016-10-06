@@ -27,16 +27,14 @@ class TestModalNewComponent extends Component {
   handleSubmit(e) {
     e.preventDefault();
 
-    let fields = {test: {
+    let fields = {
          user_id:     cookie.load('user_id'),
          title:       this.state.title,
          description: this.state.description,
          tags:        this.state.tags,
          active:      this.state.active,
          shared:      this.state.shared
-    }};
-    console.log('Fields.:  >>>> ' + JSON.stringify(fields));
-    return;
+    };
 
     let isValid = this.validatesForm(fields);
 
@@ -68,16 +66,9 @@ class TestModalNewComponent extends Component {
   }
 
   toggleCheckbox(name, event) {
-    let change = !this.state[name];
-    this.setState({name: change});
-  }
-
-  changeTitle(value) {
-    this.setState({title: value['value']});
-  }
-
-  changeDescription(value) {
-    this.setState({description: value['value']});
+    let change = {};
+    change[name] = !this.state[name];
+    this.setState(change);
   }
 
   render() {
@@ -122,10 +113,10 @@ class TestModalNewComponent extends Component {
              <input className="form-control" name="tags" value={this.state.tags} onChange={this.handleChange.bind(this, 'tags')} />
 
              <label htmlFor="active">Active:</label>
-             <input type="checkbox" name="active" defaultChecked={this.state.active} onChange={this.toggleCheckbox.bind(this, 'active')} />
+             <input type="checkbox" name="active" checked={this.state.active} onChange={this.toggleCheckbox.bind(this, 'active')} />
 
-             <label htmlFor="shared">Share:</label>
-             <input type="checkbox" name="shared" defaultChecked={this.state.shared} onChange={this.toggleCheckbox.bind(this, 'shared')} />
+             <label htmlFor="shared">Share this test with other teachers:</label>
+             <input type="checkbox" name="shared" checked={this.state.shared} onChange={this.toggleCheckbox.bind(this, 'shared')} />
 
             </form>
             </Modal.Body>
