@@ -16,7 +16,7 @@ RSpec.describe "/api/v1/tests", type: :request do
       post "/api/v1/tests/listing", params: {user_id: user.id, active: true}, headers: { "Accept" => "application/json" },  as: :json
 
       json = JSON.parse(response.body)
-      # puts "response >>>  #{json.second} "  
+      # puts "response >>>  #{json.second} "
       expect(json.length).to eq(2)
       expect(response.status).to eq 200
       expect(json.second['title']).to match("Other Math test")
@@ -40,7 +40,7 @@ RSpec.describe "/api/v1/tests", type: :request do
   describe "POST /create/" do
     it ".creates a test" do
       user = FactoryGirl.create :user
-      test = FactoryGirl.attributes_for :test 
+      test = FactoryGirl.attributes_for :test
       post "/api/v1/tests/create", params: test, headers: { "Accept" => "application/json" },  as: :json
 
       json = JSON.parse(response.body)
@@ -50,7 +50,7 @@ RSpec.describe "/api/v1/tests", type: :request do
     end
     it ".not creates a tests" do
       user = FactoryGirl.create :user
-      test = FactoryGirl.attributes_for :test, title: nil 
+      test = FactoryGirl.attributes_for :test, title: nil
       post "/api/v1/tests/create", params: test, headers: { "Accept" => "application/json" },  as: :json
 
       json = JSON.parse(response.body)
@@ -60,12 +60,11 @@ RSpec.describe "/api/v1/tests", type: :request do
     end
   end
 
-  describe "POST /create/" do
+  describe "PATCH /update/" do
     it ".updates a test" do
-      fail "needs flamethrower : not yet done" 
       user = FactoryGirl.create :user
-      test = FactoryGirl.attributes_for :test 
-      post "/api/v1/tests/create", params: test, headers: { "Accept" => "application/json" },  as: :json
+      test = FactoryGirl.attributes_for :test
+      patch '/api/v1/tests/update', params: test, headers: { "Accept" => "application/json" },  as: :json
 
       json = JSON.parse(response.body)
       #puts "response >>>  #{json} "

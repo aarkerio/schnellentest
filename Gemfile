@@ -28,6 +28,7 @@ group :development do
 end
 
 group :test do
+  gem 'rubocop'
   gem 'database_cleaner'
 end
 

@@ -3,7 +3,6 @@
 import cookie from 'react-cookie';
 import React, { PropTypes, Component } from 'react';
 import { Link, browserHistory } from 'react-router';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as testsActionCreators from '../actions/tests';
 import { Button, Modal } from 'react-bootstrap';
@@ -38,11 +37,10 @@ class TestModalEditComponent extends Component {
                       response:    1
                      };
     this.setState(new_values);
-    this.forceUpdate();
   }
 
 /**
- *  Sends the data to create a new appointment
+ *  Sends the data to Rails
  **/
   handleSubmit(e) {
     e.preventDefault();
