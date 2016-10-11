@@ -68,7 +68,7 @@ RSpec.describe '/api/v1/tests', type: :request do
       expect(response.status).to eq 200
       expect(json['error']).to match(false)
     end
- end
+  end
 
   describe 'POST /search/' do
     it '.search for questions not already in the test' do

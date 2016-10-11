@@ -82,7 +82,7 @@ module V1
     # Returns a json object.
     def search
       results = @test.search(test_params)
-      return render json: results
+      return render json: {results: results, total: results.total_entries}
     end
 
     # Disable one Test. DELETE /api/v1/tests/delete

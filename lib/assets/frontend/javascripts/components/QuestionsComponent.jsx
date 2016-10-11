@@ -37,8 +37,8 @@ export class QuestionsComponent extends Component {
           time:       5000,
           transition: 'scale'
       }
-      this.openModal = this.openModal.bind(this);
-      this.newOrder  = this.newOrder.bind(this);
+      this.openModal    = this.openModal.bind(this);
+      this.newOrder     = this.newOrder.bind(this);
       //Test mocha:  console.log('This props >>>>>>' + JSON.stringify(this.props));
   }
 
@@ -113,18 +113,10 @@ export class QuestionsComponent extends Component {
     this.setState(change);
   }
 
-/**
- * Sends the data to create a new appointment
- **/
-  submitSearch(e) {
-    e.preventDefault();
-    this.props.router.replace('/search/'+ this.state.test_id + '/' + this.state.terms);
-  }
-
   openModal(){
     this.setState({showModal: true})
   }
-  
+
   closeModal(){
     this.setState({showModal: false})
     this.clearForm()
@@ -148,9 +140,9 @@ export class QuestionsComponent extends Component {
   }
 
   toggleCheckbox(name, event) {
-     let obj = {}; 
-     obj[name] = !this.state[name];
-     this.setState(obj);
+    let obj = {};
+    obj[name] = !this.state[name];
+    this.setState(obj);
   }
 
  /**
@@ -167,12 +159,12 @@ export class QuestionsComponent extends Component {
   renderAnswersButton(type, id){
     if (type) {
       return (
-              <div className="right_button"> 
+              <div className="right_button">
                 <Link to={"/answers/"+id+"/"+this.state.test_id+"/"}>
                   <button type="button" className="btn btn-default btn-sm" title="Manage answers">
                     <span className="glyphicon glyphicon-check"></span>
                   </button>
-                </Link> 
+                </Link>
               </div>
       );
     } else {
@@ -188,7 +180,7 @@ export class QuestionsComponent extends Component {
     this.showAlert('Question resorted succesfully');
     setTimeout(() => { this.loadTest(); }, 2000);
   }
-  
+
   renderReorderButton(id, i, up){
     if (i == 0 && up){ return null}
     if (this.props.QuestionsArrayProp.length == (i+1) && !up){ return null}
@@ -199,6 +191,13 @@ export class QuestionsComponent extends Component {
               </button>
             </div>
     );
+  }
+/**
+ * Sends the data to create a new appointment
+ **/
+  submitSearch(e) {
+    e.preventDefault();
+    this.props.router.replace('/search/'+ this.state.test_id + '/' + this.state.terms);
   }
 
   render() {
@@ -226,14 +225,14 @@ export class QuestionsComponent extends Component {
               <div><b>Worth</b>: {q.worth}</div>
               <div><b>Active</b>: { q.active ? 'Enabled' : 'Disabled'} </div>
               <div><b>Type</b>: { q.qtype  ?  'Multiple Option' : 'Open question' } </div>
-              <div className="right_button"> 
+              <div className="right_button">
                 <Link to={"/questionedit/"+q.id+"/"}>
                   <button type="button" className="btn btn-default btn-sm" title="Edit question">
                     <span className="glyphicon glyphicon-pencil"></span>
                   </button>
-                </Link> 
+                </Link>
               </div>
-              
+
               { this.renderAnswersButton(q.qtype, q.id)  }
               { this.renderReorderButton(q.id, i, true)  }
               { this.renderReorderButton(q.id, i, false) }

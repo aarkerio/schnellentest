@@ -37,9 +37,9 @@ const tests_rdcr = (state = initialState, action) => {
       });
 
     case SEARCH_QUESTIONS:
-      console.log('ACTION.:  >>>> ' + JSON.stringify(action));
       return Object.assign({}, state, {
-        SearchArrayProp: action.SearchArrayProp
+        SearchArrayProp: action.SearchArrayProp.results,
+        TotalNumberProp: action.SearchArrayProp.total
       });
 
     default:
