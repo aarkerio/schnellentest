@@ -3,6 +3,8 @@
 import React, { PropTypes, Component } from 'react'
 import { Link, browserHistory, withRouter } from 'react-router'
 import { connect } from 'react-redux'
+import ReactPaginate from 'react-paginate'
+
 import { Button } from 'react-bootstrap'
 import * as TestsActionCreators from '../actions/tests'
 
@@ -12,16 +14,24 @@ class QuestionSearchComponent extends Component {
     this.state = {
                  terms:    this.props.routeParams.terms,
                  selected: [],
+                 data: [],
+                 offset: 0,
                  test_id:  this.props.routeParams.test_id,
-                 title: 'Test title'
+                 title: 'Test title',
+                 page: 1
              }
+    this.loadQuestions = this.loadQuestions.bind(this);
   }
 
   componentWillMount() {
     if ( ! this.props.SearchArrayProp.length ) {
-      let action = TestsActionCreators.searchQuestions( this.props.routeParams.test_id, this.props.routeParams.terms );
-      this.props.dispatch(action);
+      this.loadQuestions();
     }
+  }
+
+  loadQuestions(){
+    let action = TestsActionCreators.searchQuestions( this.state.test_id, this.state.terms, this.state.page);
+    this.props.dispatch(action);
   }
 
   handleChange(name, event) {
@@ -39,7 +49,7 @@ class QuestionSearchComponent extends Component {
  * Sends the data to create a new appointment
  **/
   handleSubmit(e) {
-    e.preventDefault();   
+    e.preventDefault();
     let action = TestsActionCreators.addQuestions(this.state.test_id, this.state.selected);
     this.props.dispatch(action);  // thunk middleware
     this.props.router.replace('/questions/'+ this.state.test_id);
@@ -47,11 +57,9 @@ class QuestionSearchComponent extends Component {
 
   handleChange(event){
     this.setState({terms:event.target.value});
-
   }
 
   toggleCheckbox(question_id, event){
-    console.log('question_id >>>> ' + question_id);
     let index = this.state.selected.indexOf(question_id);
     if (index != -1) {
       this.state.selected.splice( index, 1 );
@@ -59,7 +67,6 @@ class QuestionSearchComponent extends Component {
       this.state.selected.push(question_id);
     }
     this.setState({selected:this.state.selected});
-    console.log(' this.state.selected >>>> ' + JSON.stringify(this.state.selected));
   }
 
   submitSearch(e) {
@@ -69,6 +76,7 @@ class QuestionSearchComponent extends Component {
   }
 
   render() {
+
     return (
         <div id="responsive">
           <h2> Search and add questions for the test: {this.state.title}</h2>
@@ -100,6 +108,19 @@ class QuestionSearchComponent extends Component {
           </div>
           <div>
             { this.state.selected.length ? <Button onClick={this.handleSubmit.bind(this)}>Save questions</Button> : null }
+          </div>
+          <div>
+            <ReactPaginate previousLabel={"previous"}
+                nextLabel={"next"}
+                breakLabel={<a href="">...</a>}
+                breakClassName={"break-me"}
+                pageNum={this.state.pageNum}
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={5}
+                clickCallback={this.loadQuestions}
+                containerClassName={"pagination"}
+                subContainerClassName={"pages pagination"}
+                activeClassName={"active"} />
           </div>
         </div>
      );
