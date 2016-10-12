@@ -86,7 +86,7 @@ class QuestionSearchComponent extends Component {
     let total_rows = parseInt(this.props.TotalNumberProp);
     if ( total_rows < 1) { return }
     let current = this.state.page;
-    let page  = 1, left = false, right = false, rows  = [];
+    let page  = this.state.per_page, left = false, right = false, rows  = [];
     let first_r = 0;
     for(let x = 0;  x < total_rows; x += this.state.per_page){
       if (page > 9) {
