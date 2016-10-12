@@ -88,7 +88,8 @@ class QuestionSearchComponent extends Component {
     let current = this.state.page;
     let page  = this.state.per_page, left = false, right = false, rows  = [];
     let first_r = 0;
-    for(let x = 0;  x < total_rows; x += this.state.per_page){
+    let x  = this.state.page < 10 ? 0 : this.state.page
+    for(x;  x < total_rows; x += this.state.per_page){
       if (page > 9) {
         rows.push(page);
         right = true;
@@ -98,7 +99,7 @@ class QuestionSearchComponent extends Component {
       rows.push(page);
       page++;
     }
-    if (this.state.page != 1 && page > 10) {
+    if (this.state.page != 1 ) {
         left = true;
         first_r  = this.state.page - 1;
     }
