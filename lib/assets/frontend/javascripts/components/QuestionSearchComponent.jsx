@@ -18,10 +18,10 @@ class QuestionSearchComponent extends Component {
                  test_id:  this.props.routeParams.test_id,
                  title: 'Test title',
                  page: 1,
-                 rows_per_page: 10
+                 per_page: 3
              }
     this.loadQuestions   = this.loadQuestions.bind(this);
-    this.initPageNumbers = this.initPageNumbers.bind(this);
+    this.pagination      = this.pagination.bind(this);
     this.getPage         = this.getPage.bind(this);
   }
 
@@ -32,7 +32,7 @@ class QuestionSearchComponent extends Component {
   }
 
   loadQuestions(){
-    let action   = TestsActionCreators.searchQuestions(this.state.test_id, this.state.terms, this.state.page);
+    let action   = TestsActionCreators.searchQuestions(this.state.test_id, this.state.terms, this.state.page, this.state.per_page);
     this.props.dispatch(action);
   }
 
@@ -73,8 +73,7 @@ class QuestionSearchComponent extends Component {
 
   submitSearch(e) {
     e.preventDefault();
-    let action = TestsActionCreators.searchQuestions(this.state.test_id, this.state.terms);
-    this.props.dispatch(action);
+    this.loadQuestions();
   }
 
   getPage(page) {
@@ -83,20 +82,40 @@ class QuestionSearchComponent extends Component {
     setTimeout(function(){ self.loadQuestions() ; }, 1000);
   }
 
-  initPageNumbers(){
+  pagination(){
     let total_rows = parseInt(this.props.TotalNumberProp);
-    let page       = 1;
-    let myClass    = '';
-    let rows       = [];
-    for(var x = 0;  x < total_rows; x += this.state.rows_per_page){
+    if ( total_rows < 1) { return }
+    let current = this.state.page;
+    let page  = 1, left = false, right = false, rows  = [];
+    let first_r = 0;
+    for(let x = 0;  x < total_rows; x += this.state.per_page){
+      if (page > 9) {
+        rows.push(page);
+        right = true;
+        break;
+      }
+
       rows.push(page);
       page++;
     }
-    return rows;
+    if (this.state.page != 1 && page > 10) {
+        left = true;
+        first_r  = this.state.page - 1;
+    }
+    let last_r   = rows[rows.length - 1] + 1;
+
+    return (
+            <ul className="pagination">
+              { left ? <li key={first_r}><a href={"#"+first_r} onClick={() => this.getPage(first_r)}> &lt;&lt; </a></li> : null }
+              {rows.map((r) =>
+                <li key={r}><a href={"#"+r} onClick={() => this.getPage(r)}>{r}</a></li>
+              ) }
+              { right ? <li key={last_r}><a href={"#"+last_r} onClick={() => this.getPage(last_r)}> &gt;&gt; </a></li> : null }
+            </ul>
+           )
   }
 
   render() {
-    let rows = this.initPageNumbers();
     return (
         <div id="responsive">
           <h2> Search and add questions for the test: {this.state.title}</h2>
@@ -130,11 +149,7 @@ class QuestionSearchComponent extends Component {
             { this.state.selected.length ? <Button onClick={this.handleSubmit.bind(this)}>Save questions</Button> : null }
           </div>
           <div>
-            <ul className="pagination">
-              {rows.map((r) =>
-                <li key={r}><a href={"#"+r} onClick={() => this.getPage(r)}>{r}</a></li>
-              ) }
-            </ul>
+           { this.pagination() }
           </div>
         </div>
      );

@@ -95,12 +95,13 @@ module V1
         return render json: { message: 'Error :Something went wrong. Test was not removed.', error: true }
       end
     end
+
     private
 
     # Never trust parameters from the scary internet, only allow the white list.
     def test_params
       params[:test][:question_ids] ||= []
-      params.require(:test).permit(:id, :question_id, :user_id, :title, :description, :tags, :active, :shared, :way, :terms, :page, {question_ids: [:id]})
+      params.require(:test).permit(:id, :question_id, :user_id, :title, :description, :tags, :active, :shared, :way, :terms, :page, :per_page, {question_ids: [:id]})
     end
 
     def serializer

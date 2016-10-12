@@ -5,8 +5,6 @@ class Question < ApplicationRecord
 
   validates :question, presence: true
 
-  self.per_page = 10
-
   def create_question(params)
     test = Test.find params['test_id']
     create_params = order_params params
