@@ -3,3 +3,4 @@
 --require babel-core/register
 --require jsdom-global/register
 
+__tests__/components/*.spec.js
