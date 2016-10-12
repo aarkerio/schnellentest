@@ -21,6 +21,7 @@ lib/assets/frontend/javascripts/coverage/
 /app/assets/javascripts/generated/*
 /vendor/assets/bower_components/*
 lib/assets/frontend/javascripts/node_modules/
+lib/assets/frontend/javascripts/.tmp
 app/assets/javascripts/*.woff2
 app/assets/javascripts/*.svg
 app/assets/javascripts/*.ttf
