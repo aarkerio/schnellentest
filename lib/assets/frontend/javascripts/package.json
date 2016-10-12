@@ -14,7 +14,6 @@
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-0": "^6.5.0",
     "babel-runtime": "^6.11.6",
-    "bootstrap-webpack": "0.0.5",
     "cldr": "^3.4.1",
     "cldr-data": "^28.0.4",
     "cldrjs": "^0.4.4",
@@ -121,13 +120,12 @@
     "ignore-styles": "^5.0.1",
     "imports-loader": "^0.6.5",
     "jquery": "^2.2.4",
-    "jsdom": "9.5.0",
+    "jsdom": "^9.5.0",
     "jsdom-global": "2.1.0",
     "jshint": "^2.9.1",
     "less": "^2.7.1",
     "less-loader": "^2.2.3",
     "mocha": "^2.5.3",
-    "mocha-jsdom": "^1.1.0",
     "mocha-webpack": "^0.6.0",
     "net": "^1.0.2",
     "postcss-calc": "^5.3.1",
@@ -162,10 +160,13 @@
     "redux-mock-store": "^1.2.1",
     "riek": "^1.0.3",
     "sinon": "^2.0.0-pre.3",
+    "sinon-browser-only": "^1.12.1",
     "tls": "0.0.1",
     "url-loader": "^0.5.7",
+    "uxhr": "^1.0.6",
     "webpack-dev-middleware": "^1.6.1",
     "webpack-node-externals": "^1.5.4",
-    "xdr": "^0.5.2"
+    "xdr": "^0.5.2",
+    "xhr": "^2.2.2"
   }
 }
