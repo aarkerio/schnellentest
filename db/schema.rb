@@ -27,7 +27,9 @@ ActiveRecord::Schema.define(version: 20161015182026) do
 
   create_table "archives", force: :cascade do |t|
     t.integer  "user_id"
-    t.text     "notes"
+    t.string   "notes"
+    t.string   "sumcheck"
+    t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_archives_on_user_id", using: :btree

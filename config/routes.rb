@@ -3,9 +3,8 @@ Rails.application.routes.draw do
   root 'groups#welcome'
 
   devise_for :users
-
   resources :users
-
+  resources :archives
   resources :groups do
     collection do
       get 'welcome'
@@ -13,7 +12,6 @@ Rails.application.routes.draw do
   end
 
   get '/tests/' => 'tests#index', as: 'tests_index'
-  get '/archives/' => 'archives#index', as: 'archives_index'
 
   namespace :api, defaults: {format: :json} do
     namespace :v1 do

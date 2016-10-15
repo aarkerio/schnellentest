@@ -1,6 +1,42 @@
-%h1 Listing tests
+%h1 Listing Archives
 
-#reactroot
+= form_for @archive, {action: :create, multipart: true} do |f|
+  - if @archive.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@archive.errors.count, "error")} prohibited this archive from being saved:"
+      %ul
+        - @archive.errors.full_messages.each do |msg|
+          %li= msg
 
-= javascript_include_tag 'http://localhost:8080/build/bundle.js'
+  .field
+    = f.label :file
+    = f.file_field :file
+
+  .field
+    = f.label :notes
+    = f.text_field :notes
+
+  .actions
+    = f.submit 'Datei hochladen'
+
+%table
+  %thead
+    %tr
+      %th Name
+      %th Notes
+      %th Uploaded
+      %th
+      %th
+      %th
+
+  %tbody
+    - @archives.each do |archive|
+      %tr
+        %td= archive.file
+        %td= archive.notes
+        %td= archive.created_at
+        %td= link_to 'Edit', edit_archive_path(archive)
+        %td= link_to 'Destroy', archive, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
 
