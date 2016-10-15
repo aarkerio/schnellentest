@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   end
 
   get '/tests/' => 'tests#index', as: 'tests_index'
+  get '/archives/' => 'archives#index', as: 'archives_index'
 
   namespace :api, defaults: {format: :json} do
     namespace :v1 do

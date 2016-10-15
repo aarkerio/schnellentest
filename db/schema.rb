@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160910201849) do
+ActiveRecord::Schema.define(version: 20161015182026) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,14 @@ ActiveRecord::Schema.define(version: 20160910201849) do
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
     t.index ["question_id"], name: "index_answers_on_question_id", using: :btree
+  end
+
+  create_table "archives", force: :cascade do |t|
+    t.integer  "user_id"
+    t.text     "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_archives_on_user_id", using: :btree
   end
 
   create_table "groups", force: :cascade do |t|
@@ -100,6 +108,7 @@ ActiveRecord::Schema.define(version: 20160910201849) do
   end
 
   add_foreign_key "answers", "questions"
+  add_foreign_key "archives", "users"
   add_foreign_key "questions", "users"
   add_foreign_key "test_questions", "questions"
   add_foreign_key "test_questions", "tests"

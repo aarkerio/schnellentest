@@ -81,6 +81,10 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    carrierwave (1.0.0.beta)
+      activemodel (>= 4.0.0)
+      activesupport (>= 4.0.0)
+      mime-types (>= 1.16)
     cliver (0.3.2)
     coderay (1.1.1)
     concord (0.1.5)
@@ -341,6 +345,7 @@ DEPENDENCIES
   better_errors
   bullet
   capistrano-rails
+  carrierwave (>= 1.0.0.beta, < 2.0)
   database_cleaner
   devise
   factory_girl

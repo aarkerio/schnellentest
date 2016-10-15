@@ -1,5 +1,5 @@
 'use strict'
-  
+
 import cookie from 'react-cookie'
 import { connect } from 'react-redux'
 import { render } from 'react-dom'
@@ -264,7 +264,7 @@ export class QuestionsComponent extends Component {
 
               <label htmlFor="hint">Hint:</label>
               <input className="form-control" name="hint" value={this.state.hint} onChange={this.handleChange.bind(this, 'hint')} />
-          
+
               <label htmlFor="tags">Tags:</label>
               <input className="form-control" name="tags" value={this.state.tags} onChange={this.handleChange.bind(this, 'tags')} />
 
@@ -315,4 +315,5 @@ const mapStateToProps = (state) => {
 }
 
 export default withRouter(connect(mapStateToProps)(QuestionsComponent));
+
 

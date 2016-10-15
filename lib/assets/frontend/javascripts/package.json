@@ -37,7 +37,7 @@
     "json-loader": "^0.5.4",
     "less": "^2.7.1",
     "less-loader": "^2.2.3",
-    "lodash": "^4.15.0",
+    "lodash": "^4.16.4",
     "lodash.clone": "^4.5.0",
     "lodash.omit": "^4.5.0",
     "matchdep": "^1.0.1",

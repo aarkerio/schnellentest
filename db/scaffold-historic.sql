@@ -8,10 +8,10 @@
 -- bin/rails g scaffold User fname:string lname:string uname:string passwd:string active:boolean group:references
 
 -- Test Model
--- bin/rails g scaffold Test user:references title:string description:text active:boolean shared:boolean 
+-- bin/rails g scaffold Test user:references title:string description:text active:boolean shared:boolean
 
 -- Question Model
--- bin/rails g scaffold Question user:references question:text hint:text explanation:text worth:integer active:boolean type:boolean 
+-- bin/rails g scaffold Question user:references question:text hint:text explanation:text worth:integer active:boolean type:boolean
 
 COMMENT ON TABLE questions IS 'Questions in tests, hasMany Answer';
 COMMENT ON COLUMN questions.hint IS 'Optional hint to student';
@@ -33,7 +33,7 @@ COMMENT ON COLUMN questions.order IS 'Order in test';
 
 
 --  Tests student results
-CREATE TABLE results ( 
+CREATE TABLE results (
   "id" serial NOT NULL UNIQUE,
   "user_id" int NOT NULL REFERENCES users(id) ON DELETE CASCADE,    -- student id
   "question_id" int NOT NULL REFERENCES questions(id) ON DELETE CASCADE,
