@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   devise_for :users
   resources :users
-  resources :archives
+  resources :annals
   resources :groups do
     collection do
       get 'welcome'

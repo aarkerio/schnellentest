@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161015215651) do
+ActiveRecord::Schema.define(version: 20161016013052) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "annals", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "notes"
+    t.string   "sumcheck"
+    t.string   "file"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_annals_on_user_id", using: :btree
+  end
 
   create_table "answers", force: :cascade do |t|
     t.text     "answer",                      null: false
@@ -23,16 +33,6 @@ ActiveRecord::Schema.define(version: 20161015215651) do
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
     t.index ["question_id"], name: "index_answers_on_question_id", using: :btree
-  end
-
-  create_table "archives", force: :cascade do |t|
-    t.integer  "user_id"
-    t.string   "notes"
-    t.string   "sumcheck"
-    t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_archives_on_user_id", using: :btree
   end
 
   create_table "groups", force: :cascade do |t|
@@ -109,8 +109,8 @@ ActiveRecord::Schema.define(version: 20161015215651) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
+  add_foreign_key "annals", "users"
   add_foreign_key "answers", "questions"
-  add_foreign_key "archives", "users"
   add_foreign_key "questions", "users"
   add_foreign_key "test_questions", "questions"
   add_foreign_key "test_questions", "tests"
