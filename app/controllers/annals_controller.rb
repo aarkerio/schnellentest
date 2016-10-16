@@ -22,9 +22,10 @@ class AnnalsController < ApplicationController
 
   # POST /annals
   def create
-    # logger.debug "####  Params #################>>>  #{params.inspect}"
     new_params = annal_params
     new_params[:user_id] = current_user.id
+    new_params[:oname]   = new_params[:file].original_filename
+    logger.debug "####  Panew_params #################>>>  #{new_params.inspect}"
     @annal = Annal.new new_params
     respond_to do |format|
       if @annal.save

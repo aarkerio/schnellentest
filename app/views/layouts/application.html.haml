@@ -4,15 +4,11 @@
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
     %title ::Schnell::
     = stylesheet_link_tag 'mainstyles'
+    = javascript_include_tag 'http://localhost:8080/build/styles.js'
     = csrf_meta_tags
 
 %body
-  - if flash[:notice]
-    .alert-message.warning
-      = flash[:notice]
-  - if flash[:error]
-    .alert-message.error
-      = flash[:error]
+  - flash_messages
 
   #header
     =render partial: 'site/loginbar'
@@ -33,3 +29,4 @@
     %span.copy Copyright Chipotle Software &copy; 2015-2016
     %a{ href: '/site/about'} Read more
 
+  = javascript_include_tag 'http://localhost:8080/build/bundle.js'

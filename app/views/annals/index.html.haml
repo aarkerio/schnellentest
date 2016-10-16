@@ -19,13 +19,14 @@
   .actions
     = f.submit 'Datei hochladen'
 
-%table
+%table{class: 'table'}
   %thead
     %tr
-      %th Name
       %th Notes
       %th md5
-      %th Uploaded
+      %th Original Name
+      %th Uploaded Date
+      %th Download
       %th
       %th
       %th
@@ -33,12 +34,13 @@
   %tbody
     - @annals.each do |annal|
       %tr
-        %td= link_to annal.file_identifier, "/annals/#{annal.id}/download_file"
         %td= annal.notes
         %td= annal.sumcheck
+        %td= annal.oname
         %td= annal.created_at
+        %td= link_to 'Download', "/annals/#{annal.id}/download_file"
         %td= link_to 'Edit', edit_annal_path(annal)
-        %td= link_to 'Destroy', annal, method: :delete, data: { :confirm => 'Are you sure?' }
+        %td= link_to 'Delete', url_for(action: :destroy, id: annal.id), method: :delete, data: {confirm: "Are you sure?"}
 
 %br
 
