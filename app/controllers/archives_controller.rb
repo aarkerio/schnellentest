@@ -15,10 +15,20 @@ class ArchivesController < ApplicationController
 
   # POST /archives
   def create
-    @archive = Archive.new
-    result = @archive.add_new(params, current_user.id)
-
-    redirect_to archives_path, notice: 'Archive was successfully created.'
+    new_params = Archive.order_params params, current_user.id
+    #return render text: new_params
+    logger.debug "####  new_params #################>>>  #{new_params.inspect}"
+    @archive = Archive.new new_params
+    respond_to do |format|
+      if @archive.save
+        format.html { redirect_to archives_path, notice: 'Archive was successfully created.' }
+        format.json { render :index, status: :ok, location: @archive }
+      else
+        @archives = Archive.all.order('id DESC')
+        format.html { render :index }
+        format.json { render json: @archive.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   # PATCH/PUT /archives/1

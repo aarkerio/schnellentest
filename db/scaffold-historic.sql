@@ -24,6 +24,9 @@ COMMENT ON COLUMN questions.order IS 'Order in test';
 -- Answer Model
 -- bin/rails g model Answer user:references answer:text correct:boolean question:references
 
+-- Answer Archive
+-- bin/rails g model Archive user:references notes:string sumcheck:string file:string
+
 -- Classroom Model
 -- bin/rails g model Answer user:references answer:text correct:boolean question:references
 

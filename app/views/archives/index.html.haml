@@ -32,7 +32,7 @@
   %tbody
     - @archives.each do |archive|
       %tr
-        %td= archive.file
+        %td= archive.name
         %td= archive.notes
         %td= archive.created_at
         %td= link_to 'Edit', edit_archive_path(archive)

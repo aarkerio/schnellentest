@@ -1,6 +1,8 @@
 FactoryGirl.define do
   factory :archive do
     user nil
-    notes "MyText"
+    notes "MyString"
+    sumcheck "MyString"
+    file "MyString"
   end
 end
