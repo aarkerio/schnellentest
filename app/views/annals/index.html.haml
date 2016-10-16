@@ -1,0 +1,44 @@
+%h1 Listing Archives
+
+= form_for @annal, {action: :create, multipart: true} do |f|
+  - if @annal.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@annal.errors.count, "error")} prohibited this annal from being saved:"
+      %ul
+        - @annal.errors.full_messages.each do |msg|
+          %li= raw msg
+
+  .field
+    = f.label :file
+    = f.file_field :file
+
+  .field
+    = f.label :notes
+    = f.text_field :notes
+
+  .actions
+    = f.submit 'Datei hochladen'
+
+%table
+  %thead
+    %tr
+      %th Name
+      %th Notes
+      %th md5
+      %th Uploaded
+      %th
+      %th
+      %th
+
+  %tbody
+    - @annals.each do |annal|
+      %tr
+        %td= link_to annal.file_identifier, "/annals/#{annal.id}/download_file"
+        %td= annal.notes
+        %td= annal.sumcheck
+        %td= annal.created_at
+        %td= link_to 'Edit', edit_annal_path(annal)
+        %td= link_to 'Destroy', annal, method: :delete, data: { :confirm => 'Are you sure?' }
+
+%br
+

@@ -6,16 +6,16 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  
+
   has_secure_token  # For API calls
 
   belongs_to :group
 
   before_create :generate_guid   # access_token
   before_create :set_active
-  
+
   has_many :tests, dependent: :destroy
-  
+
   validates :guid, uniqueness: true
   validates :email, presence: true, uniqueness: true
   validates :uname, presence: true, uniqueness: true

@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :archive do
+  factory :annal do
     user nil
     notes "MyString"
     sumcheck "MyString"

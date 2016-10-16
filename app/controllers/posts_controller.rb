@@ -32,7 +32,7 @@ class PostsController < ApplicationController
         CommentsChannel.broadcast(@post)
         format.json { render :show, status: :created, location: @post }
       else
-        format.html { render :new }
+        format.html { render :index }
         format.json { render json: @post.errors, status: :unprocessable_entity }
       end
     end

@@ -4,7 +4,13 @@ Rails.application.routes.draw do
 
   devise_for :users
   resources :users
-  resources :archives
+
+  resources :annals do
+    member do
+      get 'download_file'
+    end
+  end
+
   resources :groups do
     collection do
       get 'welcome'
