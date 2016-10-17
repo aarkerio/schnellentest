@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161016154230) do
+ActiveRecord::Schema.define(version: 20161017182935) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,17 @@ ActiveRecord::Schema.define(version: 20161016154230) do
     t.string   "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+  end
+
+  create_table "imports", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "notes"
+    t.string   "file"
+    t.string   "tags"
+    t.string   "string"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_imports_on_user_id", using: :btree
   end
 
   create_table "questions", force: :cascade do |t|
@@ -112,6 +123,7 @@ ActiveRecord::Schema.define(version: 20161016154230) do
 
   add_foreign_key "annals", "users"
   add_foreign_key "answers", "questions"
+  add_foreign_key "imports", "users"
   add_foreign_key "questions", "users"
   add_foreign_key "test_questions", "questions"
   add_foreign_key "test_questions", "tests"

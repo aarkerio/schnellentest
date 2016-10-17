@@ -13,14 +13,24 @@
   #header
     =render partial: 'site/loginbar'
     %h1 Schnell System 0.1
-    %a{ href: '/'} Home
-    %a{ href: '/about'} About Us
-    %a{ href: '/map'} Map
-    - if user_signed_in?
-      %a{ href: '/tests/'} Ihre Prüfungen
-      %a{ href: '/annals/'} Archives
-      %a{ href: '/user/history'} History
-
+    %nav{ class: 'navbar navbar-default' }
+      %div{ class: 'container-fluid' }
+        %div{ class: 'navbar-header' }
+          = link_to 'SchnellenSite', '/aboutus', class:"navbar-brand"
+        %ul{ class: "nav navbar-nav" }
+          %li
+            = link_to 'Home', '/'
+          - if user_signed_in?
+            %li
+              = link_to 'Tests', '/tests'
+            %li
+              = link_to 'Archives', '/annals'
+            %li
+              = link_to 'Imports', '/imports'
+            %li
+              = link_to 'Users', '/users'
+          %li
+            = link_to 'Map', '/map'
   #main
     =yield
 

@@ -28,8 +28,11 @@ COMMENT ON COLUMN questions.order IS 'Order in test';
 -- bin/rails g model Annal user:references notes:string sumcheck:string file:string
 
 --  Model
--- bin/rails g model Answer user:references answer:text correct:boolean question:references
+-- bin/rails g model Import user:references notes:string file:string tags: string
 
+
+
+----- ######## FUTURE #########################
 --  Model
 -- bin/rails g model Result user:references classroom:references test:references question:references answer:references answertxt:text correct:boolean
 

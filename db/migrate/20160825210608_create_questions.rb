@@ -4,7 +4,7 @@ class CreateQuestions < ActiveRecord::Migration[5.0]
     create_table :questions do |t|
       t.references :user, foreign_key: true
       t.text :question, null: false
-      t.text :explanation 
+      t.text :explanation
       t.text :hint
       t.text :tags
       t.column :searchtext, 'tsvector'
@@ -20,9 +20,9 @@ class CreateQuestions < ActiveRecord::Migration[5.0]
           CREATE TEXT SEARCH DICTIONARY schnellen_en (template = snowball,language = english);
         SQL
         execute <<-SQL
-          CREATE TEXT SEARCH CONFIGURATION public.schnellen_en ( COPY = pg_catalog.english ); 
+          CREATE TEXT SEARCH CONFIGURATION public.schnellen_en ( COPY = pg_catalog.english );
         SQL
-      
+
         # execute <<-SQL
         #  CREATE INDEX questions_idx ON questions USING gin(to_tsvector('public.schnellen_en', question || ' ' || explanation || ' ' || hint || ' ' || tags  ));
         # SQL

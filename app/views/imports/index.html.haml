@@ -1,0 +1,44 @@
+%h1 Listing Imports
+
+= form_for @import, {action: :create, multipart: true} do |f|
+  - if @import.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@import.errors.count, "error")} prohibited this import from being saved:"
+      %ul
+        - @import.errors.full_messages.each do |msg|
+          %li= raw msg
+
+  .field
+    = f.label :file
+    = f.file_field :file
+
+  .field
+    = f.label :notes
+    = f.text_field :notes
+
+  .actions
+    = f.submit 'Datei hochladen'
+
+%table{class: 'table'}
+  %thead
+    %tr
+      %th Notes
+      %th Original Name
+      %th Uploaded Date
+      %th Download
+      %th
+      %th
+      %th
+
+  %tbody
+    - @imports.each do |import|
+      %tr
+        %td= import.notes
+        %td= import.oname
+        %td= import.created_at
+        %td= link_to 'Download', "/imports/#{import.id}/download_file"
+        %td= link_to 'Edit', edit_import_path(import)
+        %td= link_to 'Delete', url_for(action: :destroy, id: import.id), method: :delete, data: {confirm: "Are you sure?"}
+
+%br
+

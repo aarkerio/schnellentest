@@ -11,6 +11,12 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :imports do
+    member do
+      get 'download_file'
+    end
+  end
+
   resources :groups do
     collection do
       get 'welcome'
