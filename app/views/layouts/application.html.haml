@@ -11,8 +11,6 @@
   - flash_messages
 
   #header
-    =render partial: 'site/loginbar'
-    %h1 Schnell System 0.1
     %nav{ class: 'navbar navbar-default' }
       %div{ class: 'container-fluid' }
         %div{ class: 'navbar-header' }
@@ -31,6 +29,7 @@
               = link_to 'Users', '/users'
           %li
             = link_to 'Map', '/map'
+        =render partial: 'site/loginbar'
   #main
     =yield
 

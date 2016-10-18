@@ -4,6 +4,7 @@ class CreateImports < ActiveRecord::Migration[5.0]
       t.references :user, foreign_key: true
       t.string :notes
       t.string :file
+      t.string :oname
       t.string :tags
       t.string :string
 

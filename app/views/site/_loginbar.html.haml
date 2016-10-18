@@ -1,19 +1,22 @@
-#logindiv
+%ul{ class: "nav navbar-nav navbar-right" }
   -unless user_signed_in?
-    .loginform
-      = form_tag session_path(:user) do
-        = text_field_tag 'user[email]'
-        = password_field_tag 'user[password]'
-        = check_box_tag 'user[remember_me]'
-        = label_tag 'user[remember_me]', 'Remember me'
-        %button Sign in
-        %div
-          = link_to "Forgot your password?", new_password_path(:user)
-          = link_to 'Or register', new_user_registration_path
+    %li
+      %a{ href: edit_user_registration_path }
+        %span.glyphicon.glyphicon-user
+        Sign Up
+    %li
+      %a{ href: new_user_session_path }
+        %span.glyphicon.glyphicon-log-in
+        Log in
   -else
-    %p
+    %li
       = "Guten Tag Lehrer! #{cookies[:fullname]}"
-    #floatleft
-      = button_to 'Edit profile', edit_user_registration_path, method: :get
-    #floatright
-      = button_to 'Logout', destroy_user_session_path, method: :delete
+    %li
+      %a{ href: edit_user_registration_path }
+        %span.glyphicon.glyphicon-apple
+        Edit Profile
+    %li
+      %a{ href: destroy_user_session_path }
+        %span.glyphicon.glyphicon-log-out
+        Logout
+

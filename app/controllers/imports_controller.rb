@@ -23,6 +23,7 @@ class ImportsController < ApplicationController
   def create
     new_params = import_params
     new_params[:user_id] = current_user.id
+    result = Import.new.import_json new_params
     new_params[:oname]   = new_params[:file].original_filename
     logger.debug "####  Panew_params #################>>>  #{new_params.inspect}"
     @import = Import.new new_params

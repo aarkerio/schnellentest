@@ -4,22 +4,20 @@ class Import < ApplicationRecord
 
   mount_uploader :file, JsonFileUploader
 
-  validate :sumcheck_uniqueness
+ def import_json(params)
+   self.oname = params[:file].original_filename
+   insert_questions(file_name)
+   save!
+ end
 
-  before_validation :set_md5
+ private
 
-  private
+ def insert_questions(file_name)
+   file = File.read('vendor/assets/tests/biologia_1.json')
+   file = File.read(file_name)
+   data_hash = JSON.parse(file)
 
-  def set_md5
-    checksum = Digest::MD5.file("#{file.file.file}").hexdigest
-    self.sumcheck = checksum
-  end
+ end
 
-  def sumcheck_uniqueness
-    logger.debug "####  sumcheck #################>>>  #{sumcheck.inspect}"
-    if Annal.exists?(sumcheck: sumcheck)
-      errors.add(:duplicated, "The file already was upload, checksum: <a href=\"/annals/checksum/#{sumcheck.to_s}\">Download</a>")
-    end
-  end
-
+ # .gsub(/\n/, '\\n').gsub(/\r/, "\\r").gsub(/\t/, "\\t").gsub(/\f/, "\\f")
 end
