@@ -22,17 +22,15 @@ class ImportsController < ApplicationController
   # POST /imports
   def create
     new_params = import_params
+    new_params[:oname]   = new_params[:file].original_filename
     new_params[:user_id] = current_user.id
-    result = Import.new.import_json new_params
-    respond_to do |format|
-      if @import.save
-        format.html { redirect_to imports_path, notice: 'The file was successfully uploaded.' }
-        format.json { render :index, status: :ok, location: @import }
-      else
-        @imports = Import.all.order('id DESC')
-        format.html { render :index }
-        format.json { render json: @import.errors, status: :unprocessable_entity }
-      end
+    import = Import.create new_params
+    if import.id
+      import.import_json
+      redirect_to imports_path, notice: 'The file was successfully uploaded.'
+    else
+      @imports = Import.all.order('id DESC')
+      render :index
     end
   end
 

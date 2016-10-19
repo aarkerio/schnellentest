@@ -45,11 +45,8 @@ ActiveRecord::Schema.define(version: 20161017182935) do
 
   create_table "imports", force: :cascade do |t|
     t.integer  "user_id"
-    t.string   "notes"
     t.string   "file"
     t.string   "oname"
-    t.string   "tags"
-    t.string   "string"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_imports_on_user_id", using: :btree
