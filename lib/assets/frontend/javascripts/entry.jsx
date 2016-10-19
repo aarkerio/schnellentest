@@ -1,4 +1,5 @@
 'use strict';
+
 import 'babel-polyfill';
 
 import React, { PropTypes } from 'react';
@@ -22,7 +23,8 @@ import configureStore          from './config/configureStore';     // load redux
 const my_store = configureStore();
 const history  = syncHistoryWithStore(browserHistory, my_store);   // mix redux and route
 
-render(
+if ( document.getElementById('reactroot')) {
+  render(
     <Provider store={my_store}>
       <div>
         { /* Tell the Router to use our enhanced history */ }
@@ -39,8 +41,9 @@ render(
           </Route>
           <Route path="*" component={NotFound} status={404} />
         </Router>
-    </div>
-  </Provider>,
-  document.getElementById('reactroot')
-);
+      </div>
+    </Provider>,
+    document.getElementById('reactroot')
+  );
+}
 

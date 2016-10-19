@@ -1,3 +1,8 @@
+/* Hauptart für Schnellen */
+
+$font-stack:    Helvetica, sans-serif;
+$primary-color: #333;
+
 html,
 body {height:96%; padding:5px; margin:5px; width:96%;}
 body {display:flex; flex-direction:column;}
@@ -63,5 +68,9 @@ body {display:flex; flex-direction:column;}
 .left_button{
  float:left;
 }
+
+
+
+
 
 
