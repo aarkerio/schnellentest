@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(version: 20161017182935) do
     t.integer  "user_id"
     t.string   "notes"
     t.string   "file"
+    t.string   "oname"
     t.string   "tags"
     t.string   "string"
     t.datetime "created_at", null: false
@@ -88,6 +89,7 @@ ActiveRecord::Schema.define(version: 20161017182935) do
     t.string   "title",                      null: false
     t.string   "tags"
     t.text     "description"
+    t.integer  "level",       default: 1,    null: false
     t.boolean  "active",      default: true
     t.boolean  "shared",      default: true
     t.datetime "created_at",                 null: false

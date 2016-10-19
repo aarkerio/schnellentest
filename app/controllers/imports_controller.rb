@@ -24,9 +24,6 @@ class ImportsController < ApplicationController
     new_params = import_params
     new_params[:user_id] = current_user.id
     result = Import.new.import_json new_params
-    new_params[:oname]   = new_params[:file].original_filename
-    logger.debug "####  Panew_params #################>>>  #{new_params.inspect}"
-    @import = Import.new new_params
     respond_to do |format|
       if @import.save
         format.html { redirect_to imports_path, notice: 'The file was successfully uploaded.' }
