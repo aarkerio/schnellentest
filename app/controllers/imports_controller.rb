@@ -6,7 +6,7 @@ class ImportsController < ApplicationController
   # GET /imports
   def index
     @import  = Import.new
-    @imports = Import.all.order('id DESC')
+    @imports = Import.paginate(page: params[:page]).order('id DESC')
   end
 
   # GET /imports/1/edit

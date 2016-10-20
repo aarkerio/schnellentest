@@ -2,18 +2,19 @@
 class Import < ApplicationRecord
   belongs_to :user
 
+  self.per_page = 4
+
   mount_uploader :file, JsonFileUploader
 
   def import_json
     json = nil
     tmp = file.to_s
-    logger.debug "####  erorr with TMP file #######>>>  #{tmp}"
-    #begin
+    begin
       File.open(file.to_s, "r:bom|utf-8"){|f|   json = JSON.parse(f.read) }
-    #rescue
+    rescue
       logger.debug "####  erorr with file #######>>>  #{tmp}"
-    #  return false
-    #end
+      return false
+    end
     new_test json
   end
 

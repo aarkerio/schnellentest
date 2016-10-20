@@ -2,6 +2,8 @@
 class Annal < ApplicationRecord
   belongs_to :user
 
+  self.per_page = 20
+
   mount_uploader :file, FileUploader
 
   validate :sumcheck_uniqueness

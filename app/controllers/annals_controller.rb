@@ -6,7 +6,7 @@ class AnnalsController < ApplicationController
   # GET /annals
   def index
     @annal  = Annal.new
-    @annals = Annal.all.order('id DESC')
+    @annals = Annal.paginate(page: params[:page]).order('id DESC')
   end
 
   # GET /annals/1/edit
