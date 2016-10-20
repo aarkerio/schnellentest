@@ -26,8 +26,8 @@ class ImportsController < ApplicationController
     new_params[:user_id] = current_user.id
     import = Import.create new_params
     if import.id
-      import.import_json
-      redirect_to imports_path, notice: 'The file was successfully uploaded.'
+      questions = import.import_json
+      redirect_to imports_path, notice: "The file was successfully uploaded. #{questions} questions were added."
     else
       @imports = Import.all.order('id DESC')
       render :index
