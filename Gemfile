@@ -8,6 +8,7 @@ gem 'pg'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 gem 'devise'
+gem 'omniauth-facebook'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
@@ -24,6 +25,7 @@ gem 'will_paginate', '~> 3.1.0'
 gem 'carrierwave', '>= 1.0.0.beta', '< 2.0'
 gem 'json', '< 2'
 gem 'json_pure', '< 2'
+
 group :development do
   gem 'web-console', '~> 3.0'
 #  gem 'capybara-webkit'
