@@ -2,7 +2,12 @@
 Rails.application.routes.draw do
   root 'groups#welcome'
 
-  devise_for :users
+  devise_for :users, path: '/', controllers: {omniauth_callbacks: 'callbacks', registrations: 'registrations'}
+
+  devise_scope :user do
+    delete 'sign_out', :to => 'devise/sessions#destroy', :as => :destroy_user_session
+  end
+
   resources :users
 
   resources :annals do

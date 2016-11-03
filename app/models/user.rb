@@ -3,9 +3,8 @@ class User < ApplicationRecord
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
-
+  devise :database_authenticatable, :registerable, :recoverable,
+         :rememberable, :validatable, :omniauthable, :omniauth_providers => [:facebook]
 
   has_secure_token  # For API calls
 
@@ -32,6 +31,46 @@ class User < ApplicationRecord
   def get_guid!(token)
     token == self.guid
   end
+
+  ## omni auth FB starts
+  def apply_omniauth(omniauth)
+    self.username = omniauth['info']['nickname'] if username.blank?
+    self.email = omniauth['info']['email'] if email.blank?
+
+    authentications.build(:provider     => omniauth['provider'],
+                          :uid          => omniauth['uid'],
+                          :token        => omniauth['credentials'].token,
+                          :token_secret => omniauth['credentials'].secret)
+  end
+
+  def password_required?
+    (authentications.empty? || !password.blank?) && super
+  end
+
+  def update_with_password(params, *options)
+    if encrypted_password.blank?
+      update_attributes(params, *options)
+    else
+      super
+    end
+  end
+
+  def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
+    user = User.where(uid: auth.uid).first
+    user = User.where(email: auth.info.email).first if user.nil?
+    if user
+      user.update_attribute(:uid, auth.uid) if user.uid.nil?
+    else
+      Rails.logger.info auth
+      user = User.new(uid: auth.uid,
+                      name: auth.info.name,
+                      email: auth.info.email,
+                      password: Devise.friendly_token[0,20] )
+      user.save
+    end
+    user
+  end
+  ## omni auth FB ends
 
   private
 
