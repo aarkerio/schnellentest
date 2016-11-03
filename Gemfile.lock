@@ -381,6 +381,7 @@ DEPENDENCIES
   json_pure (< 2)
   jwt
   mutant-rspec
+  omniauth
   omniauth-facebook
   pg
   poltergeist

@@ -1,3 +1,11 @@
+<script>
+
+if(window.opener) {
+   window.opener.location.reload(true);
+   window.close()
+}
+
+</script>
 <%- if controller_name != 'sessions' %>
   <%= link_to "Log in", new_session_path(resource_name) %><br />
 <% end -%>
@@ -20,6 +28,6 @@
 
 <%- if devise_mapping.omniauthable? %>
   <%- resource_class.omniauth_providers.each do |provider| %>
-    <%= link_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", user_facebook_omniauth_authorize_path %><br />
+    <%= link_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", user_facebook_omniauth_authorize_path, :class => "popup", :"data-width" => 600, :"data-height" => 400 %><br />
   <% end -%>
 <% end -%>
