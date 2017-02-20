@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(version: 20161017182935) do
     t.string   "oname"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "notes"
     t.index ["user_id"], name: "index_imports_on_user_id", using: :btree
   end
 

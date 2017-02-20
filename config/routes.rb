@@ -1,5 +1,6 @@
 # Chipotle Software (c) 2016 MIT License
 Rails.application.routes.draw do
+  resources :images
   root 'groups#welcome'
 
   devise_for :users, controllers: {omniauth_callbacks: 'callbacks', registrations: 'registrations'}

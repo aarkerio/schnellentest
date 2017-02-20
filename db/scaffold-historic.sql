@@ -133,5 +133,6 @@ CREATE TABLE user_vclassrooms (
    UNIQUE ("user_id", "vclassroom_id", "kind")
 );
 
+-- bin/rails g model Image user:references file:text active:boolean
 
 
