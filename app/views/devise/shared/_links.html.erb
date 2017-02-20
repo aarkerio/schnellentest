@@ -31,3 +31,5 @@ if(window.opener) {
     <%= link_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", user_facebook_omniauth_authorize_path, :class => "popup", :"data-width" => 600, :"data-height" => 400 %><br />
   <% end -%>
 <% end -%>
+
+http://localhost:3000/auth/facebook/callback?response_type=code&scope=email&user_birthday&read_stream&state=a0c2f23561e8375f117d502fc7817e934c125216c9f0605f

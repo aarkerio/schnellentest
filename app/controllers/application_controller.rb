@@ -11,11 +11,22 @@ class ApplicationController < ActionController::Base
 
   before_action :authenticate_user!, except: [:welcome, :about]
 
+  rescue_from StandardError, with: :render_resource_error if Rails.env.production? || Rails.env.staging?
+
   protected
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:uname, :fname, :lname])
     devise_parameter_sanitizer.permit(:account_update, keys: [:uname, :fname, :lname])
   end
+
+  def render_resource_error(error)
+    logger.error error.message
+    logger.error error.backtrace.join("\n")
+
+    notify_airbrake(error)
+    render 'errors/internal_server_error', status: :internal_server_error
+  end
+
 
 end
