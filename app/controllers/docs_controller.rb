@@ -1,3 +1,5 @@
+# coding: utf-8
+# frozen_string_literal: true
 class DocsController < ApplicationController
   before_action :set_doc, only: [:show, :edit, :update, :destroy]
 
@@ -53,6 +55,6 @@ class DocsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def doc_params
-      params.require(:doc).permit(:name, :description, :file, :hash, :user_id)
+      params.require(:doc).permit(:name, :description, :file, :user_id)
     end
 end

@@ -22,6 +22,8 @@
             %li
               = link_to 'Tests', '/tests'
             %li
+              = link_to 'Docs', '/docs'
+            %li
               = link_to 'Archives', '/annals'
             %li
               = link_to 'Imports', '/imports'
@@ -29,6 +31,7 @@
               = link_to 'Users', '/users'
           %li
             = link_to 'Map', '/map'
+
         =render partial: 'site/loginbar'
   #main
     =yield
@@ -37,5 +40,5 @@
     %br
     %span.copy Copyright Chipotle Software &copy; 2015-2017
     %a{ href: '/site/about'} Read more
-
-  = javascript_include_tag 'http://localhost:8080/build/bundle.js'
+  - js_bundle = Rails.env.development? ? 'http://localhost:8080/build/bundle.js' : '/assets/bundle.js'
+  = javascript_include_tag js_bundle

@@ -1,4 +1,5 @@
-# Chipotle Software (c) 2016   MIT License 
+# coding: utf-8
+# frozen_string_literal: true
 class CreateTestQuestions < ActiveRecord::Migration[5.0]
   def change
     create_table :test_questions do |t|

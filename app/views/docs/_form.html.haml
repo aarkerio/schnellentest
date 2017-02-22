@@ -14,12 +14,6 @@
     = f.text_area :description
   .field
     = f.label :file
-    = f.text_field :file
-  .field
-    = f.label :hash
-    = f.text_field :hash
-  .field
-    = f.label :user
-    = f.text_field :user
+    = f.file_field :file
   .actions
     = f.submit 'Save'

@@ -31,7 +31,7 @@ COMMENT ON COLUMN questions.order IS 'Order in test';
 -- bin/rails g model Import user:references notes:string file:string tags: string
 
 -- Doc uploads
---bin/bundle exec bin/rails g scaffold Doc name:string description:text file:string hash:string user:references
+--bin/bundle exec bin/rails g scaffold Doc name:string description:text file:string hash:string user:references content:text json:text
 
 ----- ######## FUTURE #########################
 --  Model
