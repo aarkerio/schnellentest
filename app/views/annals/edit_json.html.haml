@@ -1,0 +1,24 @@
+%h1 Listing Archives
+
+= form_for @annal, {action: :create, multipart: true} do |f|
+  - if @annal.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@annal.errors.count, "error")} prohibited this annal from being saved:"
+      %ul
+        - @annal.errors.full_messages.each do |msg|
+          %li= raw msg
+
+  .field
+    = f.label :json
+    = f.text_field :json
+
+  .field
+    = f.label :content
+    = f.text_field :content
+
+  .field
+    = f.label :notes
+    = f.text_field :notes
+
+  .actions
+    = f.submit 'Speichern'

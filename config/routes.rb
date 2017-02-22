@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   resources :annals do
     member do
       get 'download_file'
+      get 'edit_json'
+      post 'process'
     end
   end
 

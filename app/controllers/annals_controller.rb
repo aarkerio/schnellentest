@@ -1,12 +1,22 @@
 # Chipotle Software 2016 (c) MIT License
 class AnnalsController < ApplicationController
 
-  before_action :set_annal, only: [:show, :edit, :update, :destroy, :download_file]
+  before_action :set_annal, only: [:show, :edit, :update, :destroy, :download_file, :edit_json, :process]
 
   # GET /annals
   def index
     @annal  = Annal.new
     @annals = Annal.paginate(page: params[:page]).order('id DESC')
+  end
+
+  # GET/ edit_json member
+  def edit_json
+    @annal
+  end
+
+  # POST /process member
+  def process
+    @annal.process
   end
 
   # GET /annals/1/edit
