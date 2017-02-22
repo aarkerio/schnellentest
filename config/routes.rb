@@ -1,5 +1,6 @@
 # Chipotle Software (c) 2016 MIT License
 Rails.application.routes.draw do
+  resources :docs
   resources :images
   root 'groups#welcome'
 

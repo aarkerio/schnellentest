@@ -14,10 +14,11 @@ gem 'omniauth-facebook'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 gem 'sass-rails'
-gem 'haml-rails'
+gem 'hamlit'
+gem 'hamlit-rails'
 gem 'jwt'       # JSON Web Token
 
-# Use Unicorn as the app server
+# Use Puma as the app server
 gem 'puma'
 
 # Use Capistrano for deployment

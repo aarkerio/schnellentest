@@ -1,0 +1,29 @@
+%h1 Listing docs
+
+%table
+  %thead
+    %tr
+      %th Name
+      %th Description
+      %th File
+      %th Hash
+      %th User
+      %th
+      %th
+      %th
+
+  %tbody
+    - @docs.each do |doc|
+      %tr
+        %td= doc.name
+        %td= doc.description
+        %td= doc.file
+        %td= doc.hash
+        %td= doc.user
+        %td= link_to 'Show', doc
+        %td= link_to 'Edit', edit_doc_path(doc)
+        %td= link_to 'Destroy', doc, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Doc', new_doc_path
