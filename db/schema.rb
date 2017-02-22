@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161017182935) do
+ActiveRecord::Schema.define(version: 20170222011647) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,8 @@ ActiveRecord::Schema.define(version: 20161017182935) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "oname",      null: false
+    t.text     "content"
+    t.text     "json"
     t.index ["user_id"], name: "index_annals_on_user_id", using: :btree
   end
 
@@ -36,11 +38,33 @@ ActiveRecord::Schema.define(version: 20161017182935) do
     t.index ["question_id"], name: "index_answers_on_question_id", using: :btree
   end
 
+  create_table "docs", force: :cascade do |t|
+    t.string   "name"
+    t.text     "description"
+    t.string   "file"
+    t.string   "dochash"
+    t.integer  "user_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.text     "content"
+    t.text     "json"
+    t.index ["user_id"], name: "index_docs_on_user_id", using: :btree
+  end
+
   create_table "groups", force: :cascade do |t|
     t.string   "name"
     t.string   "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+  end
+
+  create_table "images", force: :cascade do |t|
+    t.integer  "user_id"
+    t.text     "file"
+    t.boolean  "active"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_images_on_user_id", using: :btree
   end
 
   create_table "imports", force: :cascade do |t|
@@ -49,6 +73,7 @@ ActiveRecord::Schema.define(version: 20161017182935) do
     t.string   "oname"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "notes"
     t.index ["user_id"], name: "index_imports_on_user_id", using: :btree
   end
 
@@ -122,6 +147,8 @@ ActiveRecord::Schema.define(version: 20161017182935) do
 
   add_foreign_key "annals", "users"
   add_foreign_key "answers", "questions"
+  add_foreign_key "docs", "users"
+  add_foreign_key "images", "users"
   add_foreign_key "imports", "users"
   add_foreign_key "questions", "users"
   add_foreign_key "test_questions", "questions"

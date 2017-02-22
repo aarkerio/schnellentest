@@ -30,12 +30,12 @@ COMMENT ON COLUMN questions.order IS 'Order in test';
 --  Model
 -- bin/rails g model Import user:references notes:string file:string tags: string
 
-
+-- Doc uploads
+--bin/bundle exec bin/rails g scaffold Doc name:string description:text file:string hash:string user:references content:text json:text
 
 ----- ######## FUTURE #########################
 --  Model
 -- bin/rails g model Result user:references classroom:references test:references question:references answer:references answertxt:text correct:boolean
-
 
 --  Tests student results
 CREATE TABLE results (
@@ -56,9 +56,9 @@ COMMENT ON COLUMN results.answer IS 'Answer to open questions';
 COMMENT ON COLUMN results.correct IS 'Answer to open questions: correct or wrong';
 
 --  Tests student results
-CREATE TABLE "tests_students" ( 
+CREATE TABLE "tests_students" (
   "id" serial NOT NULL UNIQUE,
-  "user_id" int NOT NULL,   
+  "user_id" int NOT NULL,
   "test_id" int NOT NULL,
   "vclassroom_id" int NOT NULL,
   "checked" smallint NOT NULL DEFAULT 0,
@@ -133,5 +133,6 @@ CREATE TABLE user_vclassrooms (
    UNIQUE ("user_id", "vclassroom_id", "kind")
 );
 
+-- bin/rails g model Image user:references file:text active:boolean
 
 

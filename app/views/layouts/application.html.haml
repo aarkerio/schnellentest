@@ -29,13 +29,14 @@
               = link_to 'Users', '/users'
           %li
             = link_to 'Map', '/map'
+
         =render partial: 'site/loginbar'
   #main
     =yield
 
   #footer
     %br
-    %span.copy Copyright Chipotle Software &copy; 2015-2016
+    %span.copy Copyright Chipotle Software &copy; 2015-2017
     %a{ href: '/site/about'} Read more
-
-  = javascript_include_tag 'http://localhost:8080/build/bundle.js'
+  - js_bundle = Rails.env.development? ? 'http://localhost:8080/build/bundle.js' : '/assets/bundle.js'
+  = javascript_include_tag js_bundle

@@ -1,5 +1,6 @@
+# coding: utf-8
+# frozen_string_literal: true
 # Chipotle Software (c) 2016 MIT License
-
 class Test < ApplicationRecord
   belongs_to :user
   has_many :test_question, -> { order(:order) }
@@ -29,7 +30,6 @@ class Test < ApplicationRecord
   end
 
   def link_questions(params)
-    # return logger.debug "##### MODEL KKKKKKKKKKKKKK #### >>>>>> #{ params.inspect }"
     results = params[:question_ids].map do |qid|
       TestQuestion.find_or_create_by(test_id: id, question_id: qid['id'])
     end

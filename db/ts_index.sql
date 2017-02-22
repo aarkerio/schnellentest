@@ -1,5 +1,5 @@
 -- Multi-Table Full Text Search setup
- 
+
 -- Spanish
 -- Three steps to create Text Full Search
 -- This create a dictionary to create several kind of tokens : emails, number, lexems
@@ -23,18 +23,18 @@ CREATE TRIGGER ts_searchtext AFTER INSERT OR UPDATE ON questions FOR EACH ROW EX
 
 SELECT id, question FROM questions where searchtext @@ to_tsquery('amend');
 
-INSERT INTO questions (user_id, question, 
+INSERT INTO questions (user_id, question,
 explanation,
 hint,
 tags,
 worth,
 origin,
-created_at, 
-updated_at, 
-active, 
+created_at,
+updated_at,
+active,
 qtype,
 lang,
-status) 
+status)
 VALUES (1,'lorem ipsum doloret amend',
 'lorem ipsum doloret amend', 
 'lorem ipsum doloret amend',
