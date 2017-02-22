@@ -13,7 +13,7 @@ export class TestsContainer extends Component {
   constructor(props) {
       super(props);
   }
-      
+
   /**
    * Load default appointment
    **/
@@ -24,8 +24,8 @@ export class TestsContainer extends Component {
     }
   }
 
-  /**  
-   * Order tests method   
+  /**
+   * Order tests method
    */
   orderList(field, order) {
     return field;
@@ -36,7 +36,7 @@ export class TestsContainer extends Component {
     this.props.TestsArrayProp.forEach(function(test) {
        rows.push(<TestRowComponent test={test} key={test.id} keyRow={test.id} />);
     });
-    
+
     return (
       <div className="container_div">
       <div><Link to="/testnew">
