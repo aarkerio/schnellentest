@@ -1,6 +1,6 @@
-# Chipotle Software (c) 2016 MIT License
+# coding: utf-8
+# frozen_string_literal: true
 Rails.application.routes.draw do
-  resources :docs
   resources :images
   root 'groups#welcome'
 
