@@ -1,4 +1,6 @@
-# GPLv3 Chipotle Software (c) 2016
+# coding: utf-8
+# frozen_string_literal: true
+# GPLv3 Chipotle Software (c) 2016-2017
 class User < ApplicationRecord
 
   # Include default devise modules. Others available are:
@@ -32,7 +34,7 @@ class User < ApplicationRecord
     token == self.guid
   end
 
-  ## omni auth FB starts
+  ## Class methods. Omni auth FB starts
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
       user.email = auth.info.email
