@@ -1,16 +1,16 @@
-'use strict';
+'use strict'
 
-import React, { PropTypes, Component } from 'react';
-import { Link, browserHistory } from 'react-router';
+import React, { PropTypes, Component } from 'react'
+import { Link, browserHistory } from 'react-router'
 
-require('bootstrap');
-require('bootstrap-webpack');
+//require('bootstrap')
+//require('bootstrap-webpack')
 
 class HeaderComponent extends Component {
   constructor(props) {
     super(props);
   }
-  
+
   render() {
     return (
       <div>
@@ -24,4 +24,5 @@ class HeaderComponent extends Component {
       )
   }
 }
-export default HeaderComponent;
+export default HeaderComponent
+

@@ -1,5 +1,9 @@
-#  Chipotle Software (c) 2016   MIT License
+# coding: utf-8
+# frozen_string_literal: true
+#  Chipotle Software (c) 2016-2017 MIT License
 class Annal < ApplicationRecord
+  include Chipotle::FileReader
+
   belongs_to :user
 
   self.per_page = 20
@@ -18,7 +22,6 @@ class Annal < ApplicationRecord
   end
 
   def sumcheck_uniqueness
-    logger.debug "####  sumcheck #################>>>  #{sumcheck.inspect}"
     if Annal.exists?(sumcheck: sumcheck)
       errors.add(:duplicated, "The file already was upload, checksum: <a href=\"/annals/checksum/#{sumcheck.to_s}\">Download</a>")
     end

@@ -4,14 +4,14 @@ import React, { PropTypes, Component } from 'react';
 import { Link, browserHistory, withRouter } from 'react-router';
 import HeaderComponent from '../components/HeaderComponent';
 
-require('bootstrap');
-require('bootstrap-webpack');
+// require('bootstrap');
+// require('bootstrap-webpack');
 
 class AppContainer extends Component {
   constructor(props) {
     super(props);
   }
-  
+
   render() {
     return (
       <div className="someClass">
