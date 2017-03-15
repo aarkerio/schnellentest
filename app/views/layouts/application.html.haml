@@ -3,7 +3,8 @@
   %head
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
     %title ::Schnell Test::
-    = javascript_include_tag 'http://localhost:8080/build/styles.js'
+    = javascript_include_tag Rails.env.development? ? 'http://localhost:8080/build/styles.js'  : '/assets/styles.js'
+    = javascript_include_tag Rails.env.development? ? 'http://localhost:8080/build/styles.css' : '/assets/styles.css'
     = javascript_include_tag 'application'
     = csrf_meta_tags
 

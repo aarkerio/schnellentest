@@ -145,6 +145,7 @@
     "postcss-discard-overridden": "^0.1.1",
     "postcss-discard-unused": "^2.2.1",
     "postcss-filter-plugins": "^2.0.1",
+    "postcss-loader": "^1.3.3",
     "postcss-merge-idents": "^2.1.7",
     "postcss-merge-longhand": "^2.0.1",
     "postcss-merge-rules": "^2.0.10",
