@@ -2,17 +2,16 @@
 # frozen_string_literal: true
 Rails.application.routes.draw do
   resources :images
+
   root 'groups#welcome'
 
-  devise_for :users, controllers: {omniauth_callbacks: 'callbacks', registrations: 'registrations'}
-
-  resources :users
+  devise_for :users
 
   resources :annals do
     member do
       get 'download_file'
       get 'edit_json'
-      post 'process'
+      post 'elaboration'
     end
   end
 
@@ -69,7 +68,4 @@ Rails.application.routes.draw do
     end
   end
 
-  authenticated :user do
-    get '*path', to: 'tests#index'
-  end
 end

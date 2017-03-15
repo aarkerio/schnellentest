@@ -1,4 +1,4 @@
-# Chipotle Software 2016 (c) MIT License
+# Chipotle Software 2016-2017 (c) MIT License
 class AnnalsController < ApplicationController
 
   before_action :set_annal, only: [:show, :edit, :update, :destroy, :download_file, :edit_json, :process]
@@ -14,13 +14,17 @@ class AnnalsController < ApplicationController
     @annal
   end
 
-  # POST /process member
-  def process
-    @annal.process
+  # POST /elaboration member
+  def elaboration
+     @annal.process
   end
 
   # GET /annals/1/edit
   def edit
+  end
+
+  # GET /annals/1
+  def show
   end
 
   # GET /annals/download_file/1

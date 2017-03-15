@@ -38,19 +38,6 @@ ActiveRecord::Schema.define(version: 20170222011647) do
     t.index ["question_id"], name: "index_answers_on_question_id", using: :btree
   end
 
-  create_table "docs", force: :cascade do |t|
-    t.string   "name"
-    t.text     "description"
-    t.string   "file"
-    t.string   "dochash"
-    t.integer  "user_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.text     "content"
-    t.text     "json"
-    t.index ["user_id"], name: "index_docs_on_user_id", using: :btree
-  end
-
   create_table "groups", force: :cascade do |t|
     t.string   "name"
     t.string   "description"
@@ -71,9 +58,9 @@ ActiveRecord::Schema.define(version: 20170222011647) do
     t.integer  "user_id"
     t.string   "file"
     t.string   "oname"
+    t.string   "notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string   "notes"
     t.index ["user_id"], name: "index_imports_on_user_id", using: :btree
   end
 
@@ -90,6 +77,8 @@ ActiveRecord::Schema.define(version: 20170222011647) do
     t.datetime "updated_at",                 null: false
     t.boolean  "active"
     t.boolean  "qtype"
+    t.boolean  "spellcheck"
+    t.boolean  "copyright"
     t.string   "lang",        default: "en", null: false
     t.integer  "status",      default: 0,    null: false
     t.index ["searchtext"], name: "ques_idx", using: :gin
@@ -124,6 +113,7 @@ ActiveRecord::Schema.define(version: 20170222011647) do
     t.string   "fname",                               null: false
     t.string   "lname",                               null: false
     t.string   "guid",                                null: false
+    t.string   "uid"
     t.string   "password"
     t.boolean  "active"
     t.string   "token",                               null: false
@@ -147,7 +137,6 @@ ActiveRecord::Schema.define(version: 20170222011647) do
 
   add_foreign_key "annals", "users"
   add_foreign_key "answers", "questions"
-  add_foreign_key "docs", "users"
   add_foreign_key "images", "users"
   add_foreign_key "imports", "users"
   add_foreign_key "questions", "users"

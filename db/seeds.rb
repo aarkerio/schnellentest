@@ -44,7 +44,3 @@ end
 # app.get '/'
 # token = app.session[:_csrf_token]
 # app.post '/users/sign_in/', params: {email: 'admin@example.com', password: 'password'}, headers: {'X-CSRF-Token' => token}
-
-Homie is a young startup company that provides Real State related services. I was part of a group of five developers and together we made a financial risk analysis tool using Rails 5, MongoDB, RabbitMQ, ReactJS and a little of R language to use a Random Forest.
-
-In this project I worked with peope from the financial and data science fields to generate a Risk Score to be used to grant loans for people and companies. Was a fun project and we used capybara-webkit to test the features because we found Jest to brittle and not as mature as rspec.

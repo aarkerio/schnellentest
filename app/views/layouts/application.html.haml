@@ -21,13 +21,13 @@
             = link_to 'Home', '/'
           - if user_signed_in?
             %li
-              = link_to 'Tests', '/tests'
+              = link_to 'Tests', tests_path
             %li
-              = link_to 'Archives', '/annals'
+              = link_to 'Archives', annals_path
             %li
               = link_to 'Imports', '/imports'
             %li
-              = link_to 'Users', '/users'
+              = link_to 'Users', users_path
           %li
             = link_to 'Map', '/map'
 

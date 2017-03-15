@@ -1,8 +1,7 @@
 # coding: utf-8
 # frozen_string_literal: true
-#  Chipotle Software (c) 2016-2017 MIT License
 class Annal < ApplicationRecord
-  include Chipotle::FileReader
+  # include Chipotle::FileReader
 
   belongs_to :user
 
