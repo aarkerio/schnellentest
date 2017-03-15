@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   root 'groups#welcome'
 
   devise_for :users
+  resources :users
 
   resources :annals do
     member do

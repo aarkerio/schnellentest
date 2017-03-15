@@ -1,4 +1,4 @@
-# Chipotle Software 2016-2017 (c)  MIT License 
+# Chipotle Software 2016-2017 (c)  MIT License
 
 admin      = Group.create! name: 'Admin', description: 'Admin'
 teachers   = Group.create! name: 'Teacher group', description: 'Teacher group'
@@ -6,7 +6,7 @@ students   = Group.create! name: 'Students group', description: 'Students group'
 staff      = Group.create! name: 'staff', description: 'staff'
 
 unless User.exists?(uname: 'admin')
-  admin  = User.create! uname: "admin", email: "admin@example.com", password:'password', password_confirmation: 'password',fname: 'admin', lname: 'admin', group_id: admin.id, active: true
+  admin  = User.create! uname: 'admin', email: 'admin@example.com', password:'password', password_confirmation: 'password',fname: 'admin', lname: 'admin', group_id: admin.id, active: true
 end
 
 tchr_3 = User.create_with(uname: "emily77",email:'emily@exale.com', password: 'password', password_confirmation: 'password', fname: 'Emily',lname:'Mayer', group_id: teachers.id, active: true).find_or_create_by(uname: "emily77")
