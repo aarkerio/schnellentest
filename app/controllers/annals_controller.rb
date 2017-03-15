@@ -39,15 +39,14 @@ class AnnalsController < ApplicationController
     new_params = annal_params
     new_params[:user_id] = current_user.id
     new_params[:oname]   = new_params[:file].original_filename
-    logger.debug "####  Panew_params #################>>>  #{new_params.inspect}"
     @annal = Annal.new new_params
     respond_to do |format|
       if @annal.save
-        FileProcessWorker.perform_async(@anal.id)
+        # FileProcessWorker.perform_async(@annal.id)
         format.html { redirect_to annals_path, notice: 'The file was successfully uploaded.' }
         format.json { render :index, status: :ok, location: @annal }
       else
-        @annals = Annal.all.order('id DESC')
+        @annals = Annal.paginate(page: params[:page]).order('id DESC')
         format.html { render :index }
         format.json { render json: @annal.errors, status: :unprocessable_entity }
       end

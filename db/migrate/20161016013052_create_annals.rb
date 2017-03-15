@@ -5,6 +5,7 @@ class CreateAnnals < ActiveRecord::Migration[5.0]
       t.string :notes
       t.string :sumcheck
       t.string :file
+      t.boolean :done, default: false
 
       t.timestamps
     end

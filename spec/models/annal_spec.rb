@@ -4,7 +4,8 @@ require 'spec_helper'
 
 RSpec.describe Annal, type: :model do
 
-  let(:ha) { FactoryGirl.create :annal }
+  let(:user)  { FactoryGirl.create :user }
+  let(:annal) { FactoryGirl.create :annal, user: user }
 
   context 'convert PDF to text' do
     describe '#saves the searched_links field' do

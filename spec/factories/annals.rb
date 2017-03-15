@@ -4,5 +4,10 @@ FactoryGirl.define do
     notes "MyString"
     sumcheck "MyString"
     file "MyString"
+    oname 'some_file.pdf'
+    content 'somex text'
+    json  '{some json}'
+    spellcheck false
+    copyright false
   end
 end

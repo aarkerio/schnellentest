@@ -20,9 +20,10 @@ ActiveRecord::Schema.define(version: 20170222011647) do
     t.string   "notes"
     t.string   "sumcheck"
     t.string   "file"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string   "oname",      null: false
+    t.boolean  "done",       default: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.string   "oname",                      null: false
     t.text     "content"
     t.text     "json"
     t.index ["user_id"], name: "index_annals_on_user_id", using: :btree

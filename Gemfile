@@ -11,12 +11,12 @@ gem 'devise'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'sidekiq'
-# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-gem 'turbolinks'
 gem 'sass-rails'
 gem 'hamlit'
 gem 'hamlit-rails'
 gem 'jwt'       # JSON Web Token
+gem 'pdf-reader'
+gem 'doc_ripper'
 
 # Use Puma as the app server
 gem 'puma'
@@ -24,7 +24,7 @@ gem 'puma'
 # Use Capistrano for deployment
 gem 'capistrano-rails'
 gem 'will_paginate', '~> 3.1.0'
-gem 'carrierwave', '>= 1.0.0.beta', '< 2.0'
+gem 'carrierwave', '~> 1.0'
 gem 'json', '< 2'
 gem 'json_pure', '< 2'
 

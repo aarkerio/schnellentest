@@ -2,6 +2,6 @@ class FileProcessWorker
   include Sidekiq::Worker
 
   def perform(*args)
-    # Do something
+    logger.debug "####  var #################>>>  FileProcessWorkerFileProcessWorkerFileProcessWorkerFileProcessWorker"
   end
 end

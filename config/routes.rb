@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     member do
       get 'download_file'
       get 'edit_json'
-      post 'elaboration'
+      get 'elaboration'
     end
   end
 
