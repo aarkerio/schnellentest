@@ -1,7 +1,7 @@
 module Api
 module V1
   class AuthController  < ::ActionController::Base
-   
+
   # Public.
   # Returns: JWT response or error message
   def authenticate

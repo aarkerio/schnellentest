@@ -4,7 +4,7 @@ module V1
   class AnswersController < ApiBaseController
     before_action :set_answer, only: [:toggle, :update, :delete, :get_one]
 
-    # Gets one Answer.  POST /api/v1/answers/get_one/ 
+    # Gets one Answer.  POST /api/v1/answers/get_one/
     #
     # Returns a json object.
     def get_one
@@ -14,9 +14,9 @@ module V1
     # Creates a new Answer.
     #
     # Returns a JSON object.
-    def create      
+    def create
       answer = Answer.new(answer_params)
-     
+
       if answer.save
         return render json: {message: 'Answer was created succesfully'} 
       else

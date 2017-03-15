@@ -10,7 +10,7 @@ gem 'pg'
 gem 'devise'
 gem 'omniauth'
 gem 'omniauth-facebook'
-
+gem 'sidekiq'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 gem 'sass-rails'
@@ -34,11 +34,6 @@ group :development do
   gem 'poltergeist'
 end
 
-group :test do
-  gem 'rubocop'
-  gem 'database_cleaner'
-end
-
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'pry-byebug'
@@ -55,5 +50,7 @@ group :development, :test do
   gem 'spring-commands-rspec'
   gem 'guard-rspec'
   gem 'mutant-rspec'
+  gem 'rubocop'
+  gem 'database_cleaner'
 end
 

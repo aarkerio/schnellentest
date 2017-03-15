@@ -43,6 +43,7 @@ class AnnalsController < ApplicationController
     @annal = Annal.new new_params
     respond_to do |format|
       if @annal.save
+        FileProcessWorker.perform_async(@anal.id)
         format.html { redirect_to annals_path, notice: 'The file was successfully uploaded.' }
         format.json { render :index, status: :ok, location: @annal }
       else
