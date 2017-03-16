@@ -12,6 +12,9 @@ RSpec.configure do |config|
   config.mock_with :rspec
   config.include Requests::JsonHelpers, type: :request
 
+  config.include Devise::Test::ControllerHelpers, type: :controller
+  config.include Devise::Test::ControllerHelpers, type: :view
+
   config.before(:suite) do
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with(:transaction)
