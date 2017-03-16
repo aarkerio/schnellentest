@@ -36,6 +36,7 @@ app/assets/frontend/javascripts/built/*.woff
 lib/assets/frontend/javascripts/.tmp/
 vendor/assets/tests/*.*
 vendor/assets/tests/
+public/
 *~
 # emacs temp files
 \#*#

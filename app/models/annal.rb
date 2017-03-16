@@ -1,6 +1,5 @@
 # coding: utf-8
 # frozen_string_literal: true
-#  Chipotle Software (c) 2016-2017 MIT License
 class Annal < ApplicationRecord
   include Chipotle::FileReader
 
@@ -13,6 +12,8 @@ class Annal < ApplicationRecord
   validate :sumcheck_uniqueness
 
   before_validation :set_md5
+
+  after_create :process
 
   private
 
@@ -27,4 +28,11 @@ class Annal < ApplicationRecord
     end
   end
 
+  private
+
+  def process
+    text = convert_file(file.file.file)
+    logger.debug "####  TEXT #################>>>  #{text.inspect}"
+    update_attribute 'content', text
+  end
 end

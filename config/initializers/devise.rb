@@ -272,10 +272,10 @@ Devise.setup do |config|
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
 
-  Warden::Manager.after_authentication do |user, auth, opts|
-    auth.cookies[:username]  = {value: user.uname, expires: 2.weeks.from_now}
-    auth.cookies[:fullname]  = {value:"#{user.fname} #{user.lname}", expires: 2.weeks.from_now}
-    auth.cookies[:user_id]   = {value: user.id, expires: 2.weeks.from_now}
-  end  # warden ends 
+  # Warden::Manager.after_authentication do |user, auth, opts|
+  #  auth.cookies[:username]  = {value: user.uname, expires: 2.weeks.from_now}
+  #  auth.cookies[:fullname]  = {value:"#{user.fname} #{user.lname}", expires: 2.weeks.from_now}
+  #  auth.cookies[:user_id]   = {value: user.id, expires: 2.weeks.from_now}
+  # end  # warden ends
 
 end

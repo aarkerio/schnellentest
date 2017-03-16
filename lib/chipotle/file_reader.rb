@@ -1,14 +1,15 @@
 # coding: utf-8
 # frozen_string_literal: true
 require 'pdf-reader'
+require 'doc_ripper'
 
 module Chipotle
   module FileReader
-    def convert_file(path)
-      file = Read.file(path)
+    def convert_file(file)
+      DocRipper::rip(file)
     end
 
-    def pdf_to_txt(file)
+    def pdf_to_json(file)
       # credits to :
       # 	https://github.com/yob/pdf-reader/blob/master/examples/text.rb
       # usage example:
@@ -32,8 +33,8 @@ module Chipotle
       txt
     end
 
-    def doc_to_txt(file)
-
+    def doc_to_json(file)
+      return
     end
   end
 end

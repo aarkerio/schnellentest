@@ -1,4 +1,4 @@
-# Chipotle Software 2016 (c) MIT License
+# Chipotle Software 2016-2017 (c) MIT License
 class AnnalsController < ApplicationController
 
   before_action :set_annal, only: [:show, :edit, :update, :destroy, :download_file, :edit_json, :process]
@@ -14,13 +14,17 @@ class AnnalsController < ApplicationController
     @annal
   end
 
-  # POST /process member
-  def process
-    @annal.process
+  # POST /elaboration member
+  def elaboration
+     @annal.process
   end
 
   # GET /annals/1/edit
   def edit
+  end
+
+  # GET /annals/1
+  def show
   end
 
   # GET /annals/download_file/1
@@ -35,14 +39,14 @@ class AnnalsController < ApplicationController
     new_params = annal_params
     new_params[:user_id] = current_user.id
     new_params[:oname]   = new_params[:file].original_filename
-    logger.debug "####  Panew_params #################>>>  #{new_params.inspect}"
     @annal = Annal.new new_params
     respond_to do |format|
       if @annal.save
+        # FileProcessWorker.perform_async(@annal.id)
         format.html { redirect_to annals_path, notice: 'The file was successfully uploaded.' }
         format.json { render :index, status: :ok, location: @annal }
       else
-        @annals = Annal.all.order('id DESC')
+        @annals = Annal.paginate(page: params[:page]).order('id DESC')
         format.html { render :index }
         format.json { render json: @annal.errors, status: :unprocessable_entity }
       end

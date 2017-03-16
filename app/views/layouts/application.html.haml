@@ -3,7 +3,8 @@
   %head
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
     %title ::Schnell Test::
-    = javascript_include_tag 'http://localhost:8080/build/styles.js'
+    = javascript_include_tag Rails.env.development? ? 'http://localhost:8080/build/styles.js'  : '/assets/styles.js'
+    = stylesheet_link_tag Rails.env.development? ? 'http://localhost:8080/build/styles.css' : '/assets/styles.css'
     = javascript_include_tag 'application'
     = csrf_meta_tags
 
@@ -20,13 +21,13 @@
             = link_to 'Home', '/'
           - if user_signed_in?
             %li
-              = link_to 'Tests', '/tests'
+              = link_to 'Tests', tests_index_path
             %li
-              = link_to 'Archives', '/annals'
+              = link_to 'Archives', annals_path
             %li
               = link_to 'Imports', '/imports'
             %li
-              = link_to 'Users', '/users'
+              = link_to 'Users', users_path
           %li
             = link_to 'Map', '/map'
 

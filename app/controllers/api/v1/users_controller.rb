@@ -1,24 +1,25 @@
+# Chipotle Software (c) 2016-2017  MIT License
 module Api
 module V1
-  class UsersController < BaseController
+  class UsersController < ApiBaseController
 
-      # Shows a user. /users/getinfo route
-      #
-      # text  - The guid String.
-      #
-      # Returns a User object.
-      def index
+    # Shows a user. /users/getinfo route
+    #
+    # text  - The guid String.
+    #
+    # Returns a User object.
+    def index
         #return render json: params.to_json
         fail ActiveRecord::RecordNotFound, 'User not found one'  if params[:guid].blank?
         @user  = Account.get_user(params[:guid])
 
         fail ActiveRecord::RecordNotFound, 'User not found two'  if @user.nil?
-      end
+    end
 
-      # Creates a new user Account.
-      #
-      # Returns a User object.
-      def create_user
+    # Creates a new user Account.
+    #
+    # Returns a User object.
+    def create_user
         #return render json: user_params.to_json
         @user = Account.new.create_user(user_params)
         if @user.class.name == 'User'
@@ -27,12 +28,12 @@ module V1
           fail Exception, "User not created: #{@user.inspect}"
         end
         render 'index'
-      end
+    end
 
-      # Creates a new user Account.
-      #
-      # Returns a User object.
-      def update_user
+    # Creates a new user Account.
+    #
+    # Returns a User object.
+    def update_user
         #return render json: user_params.to_json
         if user_params[:guid].blank?
           return fail ActiveRecord::RecordNotFound, 'User not found'
