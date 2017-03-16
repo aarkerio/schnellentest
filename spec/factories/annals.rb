@@ -1,13 +1,6 @@
 FactoryGirl.define do
   factory :annal do
-    user nil
-    notes "MyString"
-    sumcheck "MyString"
-    file "MyString"
-    oname 'some_file.pdf'
-    content 'somex text'
-    json  '{some json}'
-    spellcheck false
-    copyright false
+    notes "Some notes"
+    file Rack::Test::UploadedFile.new(File.open(File.join(Rails.root, '/spec/support/files/some_file.pdf')))
   end
 end

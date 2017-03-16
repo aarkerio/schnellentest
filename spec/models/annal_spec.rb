@@ -5,14 +5,16 @@ require 'spec_helper'
 RSpec.describe Annal, type: :model do
 
   let(:user)  { FactoryGirl.create :user }
-  let(:annal) { FactoryGirl.create :annal, user: user }
 
-  context 'convert PDF to text' do
-    describe '#saves the searched_links field' do
-      let(:params) { ReportResponses.params_links ha.id.to_s }
-      it 'parse and save JSON links response' do
-        ha.update_report params
-        expect(ha.report.searched_links.first[:urls].to_s).to eql(params[:resultados].first[:urls])
+  context 'Save and file' do
+    let(:annal) { FactoryGirl.build :annal, user: user }
+    let(:annal) { FactoryGirl.build :annal, user: user }
+    describe '#saves and converts pdf to text' do
+      it 'saves PDF to text' do
+        result = annal.save
+        p "####  RESULT #################>>>  #{result.inspect}"
+        expect(result).to be false
+        #expect(annal.content).to eql("Inside file\n\n\f")
       end
     end
   end

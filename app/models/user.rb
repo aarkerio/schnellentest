@@ -10,7 +10,7 @@ class User < ApplicationRecord
 
   has_secure_token  # For API calls
 
-  belongs_to :group
+  belongs_to :group, dependent: :destroy
 
   before_create :generate_guid   # access_token
   before_create :set_active

@@ -1,4 +1,6 @@
-#Chipotle Software (c) 2016
+# coding: utf-8
+# frozen_string_literal: true
+#Chipotle Software (c) 2016-2017
 
 FactoryGirl.define do
   factory :user, class: User do
@@ -12,5 +14,3 @@ FactoryGirl.define do
   end
 
 end
-
-

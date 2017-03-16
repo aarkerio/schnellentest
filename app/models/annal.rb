@@ -19,7 +19,6 @@ class Annal < ApplicationRecord
 
   def set_md5
     checksum = Digest::MD5.file("#{file.file.file}").hexdigest
-    logger.debug "####  FILE #################>>>  #{file.inspect}"
     self.sumcheck = checksum
   end
 
