@@ -13,8 +13,8 @@ RSpec.configure do |config|
   config.include Requests::JsonHelpers, type: :request
 
   config.before(:suite) do
-    DatabaseCleaner.strategy = :truncation, {:only => %w[annals]}
-    DatabaseCleaner.clean_with(:truncation)
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.clean_with(:transaction)
   end
 
   config.before(:each) do

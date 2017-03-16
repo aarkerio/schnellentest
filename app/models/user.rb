@@ -42,7 +42,8 @@ class User < ApplicationRecord
 
   def set_active
     self.active   = true
-    self.group_id = 2
+    group = Group.find_by_name 'Admin'
+    self.group_id = group.id
   end
 
   # To update a table with already existent users
