@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-RSpec.describe Api::V1::QuestionsController, type: :controller do
-  
+RSpec.describe Api::V1::QuestionsController, type: :request do
+
   before(:each) do
     group       = FactoryGirl.create :group
     @user       = FactoryGirl.create :user, group: group
@@ -9,9 +9,9 @@ RSpec.describe Api::V1::QuestionsController, type: :controller do
     @test       = tests.first
     @question   = FactoryGirl.create :question, user: @user
     test_quest = FactoryGirl.create :test_question, test: @test, question: @question
-    answers     = FactoryGirl.create_list :answer, 5, question: @question 
+    answers     = FactoryGirl.create_list :answer, 5, question: @question
   end
-  
+
   describe "POST#get_one" do
     it "returns a successful listing response" do
       post :get_one, {params: {id: @question.id}}

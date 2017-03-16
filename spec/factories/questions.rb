@@ -1,4 +1,6 @@
-# Chipotle Software (c) 2016  MIT License  
+# coding: utf-8
+# frozen_string_literal: true
+# Chipotle Software (c) 2016-2017  MIT License
 FactoryGirl.define do
   factory :question do
     question  { 'The question is ' + FFaker::Lorem.words.join(' ') + ' ?'   }
@@ -10,5 +12,6 @@ FactoryGirl.define do
     user nil
     lang 'en'
     status 0
+    association :test, factory: :test
   end
 end
