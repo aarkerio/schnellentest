@@ -9,11 +9,11 @@ class Annal < ApplicationRecord
 
   mount_uploader :file, FileUploader
 
-  validate :sumcheck_uniqueness
+  validates :sumcheck, uniqueness: {message: :no_unique }
 
   before_validation :set_md5
 
-  after_create :process
+  after_commit :process, on: :create
 
   private
 
@@ -23,16 +23,13 @@ class Annal < ApplicationRecord
   end
 
   def sumcheck_uniqueness
-    if Annal.exists?(sumcheck: sumcheck)
-      errors.add(:duplicated, "The file already was upload, checksum: <a href=\"/annals/checksum/#{sumcheck.to_s}\">Download</a>")
-    end
+    "The file already was upload, checksum: <a href=\"/annals/checksum/#{sumcheck.to_s}\">Download</a>"
   end
 
   private
 
   def process
     text = convert_file(file.file.file)
-    logger.debug "####  TEXT #################>>>  #{text.inspect}"
-    update_attribute 'content', text
+    update_columns( content: text, json: text )
   end
 end

@@ -83,4 +83,19 @@ body {
  float:left;
 }
 
+textarea.edit_text_area {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
 
+	width: 100%;
+  height:400px;
+}
+
+div.scroller {
+  overflow-y: scroll;
+  height:400px;
+  padding:14px;
+  margin:10px;
+  border: 1px dotted gray;
+}

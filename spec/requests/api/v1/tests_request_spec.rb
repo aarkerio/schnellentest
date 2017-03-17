@@ -26,4 +26,23 @@ RSpec.describe Api::V1::TestsController, type: :request do
     end
   end
 
+  describe "PATCH#reorder" do
+    let(:test)  { FactoryGirl.create :test, user: user }
+    let(:question_1) { FactoryGirl.create :question, question: 'Frage Eins' }
+    let(:question_2) { FactoryGirl.create :question, question: 'Frage Zweig' }
+    let(:question_3) { FactoryGirl.create :question, question: 'Frage Drei' }
+    let(:test_question) { FactoryGirl.create :test_question, test: test.id, question: [question_1.id, question_2.id, question_3.id,] }
+    it "returns a successful 200 response for reorder action" do
+      patch api_v1_tests_reorder_path, {params: {test: {id: test.id}}}
+
+      {id: test.id, test:{
+                       question_id: question_id,
+                       id: test.id,
+                       way: 'up' }}
+      expect(response).to be_success
+      json = JSON.parse(response.body)
+      expect(json['title']).to eq(test.title)
+    end
+  end
+
 end

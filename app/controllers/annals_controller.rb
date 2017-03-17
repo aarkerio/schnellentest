@@ -1,7 +1,7 @@
 # Chipotle Software 2016-2017 (c) MIT License
 class AnnalsController < ApplicationController
 
-  before_action :set_annal, only: [:show, :edit, :update, :destroy, :download_file, :edit_json, :process]
+  before_action :set_annal, only: [:show, :edit, :update, :destroy, :download_file, :edit_json, :elaboration]
 
   # GET /annals
   def index
@@ -16,7 +16,7 @@ class AnnalsController < ApplicationController
 
   # POST /elaboration member
   def elaboration
-     @annal.process
+
   end
 
   # GET /annals/1/edit
@@ -55,15 +55,12 @@ class AnnalsController < ApplicationController
 
   # PATCH/PUT /annals/1
   def update
-    respond_to do |format|
-      if @annal.update(annal_params)
-        format.html { redirect_to @annal, notice: 'Annal was successfully updated.' }
-        format.json { render :show, status: :ok, location: @annal }
-      else
-        format.html { render :edit }
-        format.json { render json: @annal.errors, status: :unprocessable_entity }
-      end
-    end
+    message = if @annal.update(annal_params)
+                { status: :ok, code: 200}
+              else
+                { errors: @annal.errors, status: :unprocessable_entity }
+              end
+    return render json: message
   end
 
   # DELETE /annals/1
@@ -84,6 +81,6 @@ class AnnalsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def annal_params
-    params.require(:annal).permit(:file, :notes)
+    params.require(:annal).permit(:file, :notes, :json, :done)
   end
 end

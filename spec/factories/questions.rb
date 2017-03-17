@@ -12,6 +12,5 @@ FactoryGirl.define do
     user nil
     lang 'en'
     status 0
-    association :test, factory: :test
   end
 end
