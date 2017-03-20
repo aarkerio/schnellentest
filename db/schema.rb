@@ -98,14 +98,15 @@ ActiveRecord::Schema.define(version: 20170222011647) do
 
   create_table "tests", force: :cascade do |t|
     t.integer  "user_id"
-    t.string   "title",                      null: false
+    t.string   "title",                       null: false
     t.string   "tags"
     t.text     "description"
-    t.integer  "level",       default: 1,    null: false
-    t.boolean  "active",      default: true
-    t.boolean  "shared",      default: true
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.text     "instructions"
+    t.integer  "level",        default: 1,    null: false
+    t.boolean  "active",       default: true
+    t.boolean  "shared",       default: true
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.index ["user_id"], name: "index_tests_on_user_id", using: :btree
   end
 

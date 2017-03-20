@@ -89,7 +89,7 @@ textarea.edit_text_area {
 	box-sizing: border-box;
 
 	width: 100%;
-  height:400px;
+  height:600px;
 }
 
 div.scroller {
@@ -98,4 +98,8 @@ div.scroller {
   padding:14px;
   margin:10px;
   border: 1px dotted gray;
+}
+
+div.hidden_div{
+  display: none;
 }

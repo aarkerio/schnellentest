@@ -1,3 +1,7 @@
+
+%div{ class: 'hidden_div', id: 'ajax_div' }
+  = image_tag('ajax_load.gif')
+
 %p#notice Edit File
 
 = form_for @annal, remote: true do |f|
@@ -9,7 +13,7 @@
           %li= msg
 
   .actions
-    = f.submit 'Save'
+    = f.button 'Save', id: 'ajax_button'
 
   .field
     = f.label :json

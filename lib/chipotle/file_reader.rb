@@ -41,6 +41,7 @@ module Chipotle
     def json_string
       %{ { "title": "Some title",
         "description": "Some description",
+        "instructions": "",
         "level": "1",
         "lang": "es",
         "tags": ["tag_one", "tag_two"],
