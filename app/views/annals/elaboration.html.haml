@@ -1,10 +1,10 @@
 
+%p#notice Edit File
+
 %div{ class: 'hidden_div', id: 'ajax_div' }
   = image_tag('ajax_load.gif')
 
-%p#notice Edit File
-
-= form_for @annal, remote: true do |f|
+= form_for @annal, contoller: 'annals', action: 'update', id: @annal.id, remote: true, html: {id: 'annal_form'} do |f|
   - if @annal.errors.any?
     #error_explanation
       %h2= "#{pluralize(@annal.errors.count, "error")} prohibited this annl from being saved:"
@@ -13,7 +13,7 @@
           %li= msg
 
   .actions
-    = f.button 'Save', id: 'ajax_button'
+    = f.button 'Save', type: 'button', id: 'ajax_button', remote: true
 
   .field
     = f.label :json
