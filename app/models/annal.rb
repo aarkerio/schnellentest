@@ -30,6 +30,7 @@ class Annal < ApplicationRecord
 
   def process
     text = convert_file(file.file.file)
-    update_columns( content: text, json: text )
+    new_json = json_string + text
+    update_columns( content: text, json: new_json )
   end
 end

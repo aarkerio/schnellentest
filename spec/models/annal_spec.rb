@@ -13,7 +13,7 @@ RSpec.describe Annal, type: :model do
         annal.save
         annal.reload
         expect(annal.content).to eql("Inside a PDF file\n\n\f")
-        expect(annal.json).to eql("Inside a PDF file\n\n\f")
+        expect(annal.json[0..23]).to eql(' { "title": "Some title"')
       end
     end
   end
@@ -25,7 +25,7 @@ RSpec.describe Annal, type: :model do
          annal.save
          annal.reload
          expect(annal.content).to eql("Inside DOCX file\n")
-         expect(annal.json).to eql("Inside DOCX file\n")
+         expect(annal.json[0..23]).to eql(' { "title": "Some title"')
       end
     end
   end

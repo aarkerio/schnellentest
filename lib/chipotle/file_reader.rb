@@ -36,6 +36,30 @@ module Chipotle
     def doc_to_json(file)
       return
     end
+
+    # Just an initial string to save work
+    def json_string
+      %{ { "title": "Some title",
+        "description": "Some description",
+        "level": "1",
+        "lang": "es",
+        "tags": ["tag_one", "tag_two"],
+        "status": "1",
+        "questions": [
+          {
+            "status": "1",
+            "qtype" : "1",
+            "hint" : "Some hint",
+            "explanation": "",
+            "question": "Some question",
+            "answers": [
+               { "answer": "Answer one", "correct": "false" },
+               { "answer": "Answer two", "correct": "true" }
+            ]
+         }
+        ] }
+      }
+    end
   end
 end
 
