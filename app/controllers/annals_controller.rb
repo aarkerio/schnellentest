@@ -1,7 +1,9 @@
 # Chipotle Software 2016-2017 (c) MIT License
 class AnnalsController < ApplicationController
 
-  before_action :set_annal, only: [:show, :edit, :update, :destroy, :download_file, :edit_json, :elaboration]
+  before_action :set_annal, only: [:show, :edit, :update, :destroy, :download_file, :edit_json, :elaboration, :test, :export]
+
+  before_action :check_annal , only: [:test, :export]
 
   # GET /annals
   def index
@@ -25,6 +27,26 @@ class AnnalsController < ApplicationController
 
   # GET /annals/1
   def show
+  end
+
+  # POST /annals/1/test
+  def test
+    message = @annal.test(annal_params)
+                { status: :ok, code: 200, message: 'Succesfully tested, all looks fine'}
+              else
+                { errors: @annal.errors, message: 'Error', status: :unprocessable_entity }
+              end
+    return render json: message
+  end
+
+  # POST /annals/1/export
+  def export
+    message = if @annal.export
+                { status: :ok, code: 200, message: 'Succesfully exported, thank you'}
+              else
+                { errors: @annal.errors, status: :unprocessable_entity }
+              end
+    return render json: message
   end
 
   # GET /annals/download_file/1
@@ -56,7 +78,7 @@ class AnnalsController < ApplicationController
   # PATCH/PUT /annals/1
   def update
     message = if @annal.update(annal_params)
-                { status: :ok, code: 200}
+                { status: :ok, code: 200, message: 'Succesfully saved'}
               else
                 { errors: @annal.errors, status: :unprocessable_entity }
               end
@@ -83,4 +105,10 @@ class AnnalsController < ApplicationController
   def annal_params
     params.require(:annal).permit(:file, :notes, :json, :done)
   end
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_annal
+    render json: { status: :ok, code: 200, message: 'File already in a test'} if @annal.done
+  end
+
 end

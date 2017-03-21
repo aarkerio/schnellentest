@@ -1,4 +1,4 @@
-#  Chipotle Software (c) 2016   MIT License
+#  Chipotle Software (c) 2016-2017   MIT License
 class Question < ApplicationRecord
   belongs_to :user
   has_many   :answer

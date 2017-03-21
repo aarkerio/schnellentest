@@ -17,8 +17,7 @@ test_1  = Test.create! title: 'Test Eins Neerland gesichte',  description: 'Test
 test_2  = Test.create! title: 'Test Zweig Mexikan Neerland gesichte', description: 'Test Zweig Description', active: true, user_id: tchr_1.id
 test_3  = Test.create! title: 'Test Drei brasilianische Wirtschaft',  description: 'Test Drei Description', active: true, user_id: tchr_1.id
 
-ipsum = 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr'
-
+ipsum = %(Lorem ipsum dolor sit amet consetetur sadipscing elitr)
 question_1 = { user_id: tchr_1.id, question: ipsum, hint: ipsum, explanation: ipsum, tags: ipsum, worth: 1, active: true, qtype:true }
 question_2 = { user_id: tchr_1.id, question: ipsum, hint: ipsum, explanation: ipsum, tags: ipsum, worth: 1, active: true, qtype:true }
 question_3 = { user_id: tchr_1.id, question: ipsum, hint: ipsum, explanation: ipsum, tags: ipsum, worth: 1, active: true, qtype:true }
