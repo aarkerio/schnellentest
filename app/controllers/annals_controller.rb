@@ -108,7 +108,7 @@ class AnnalsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_annal
-    return render json: { status: :ok, code: 200, message: 'File already in a test'} if @annal.done
+    render json: { status: :ok, code: 200, message: 'File already in a test'} if @annal.done
   end
 
 end
