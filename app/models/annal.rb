@@ -15,6 +15,16 @@ class Annal < ApplicationRecord
 
   after_commit :process, on: :create
 
+  # Checks if the json will be saved
+  def test
+    
+  end
+
+  # Saves the json into test model
+  def export
+    Test.create
+  end
+
   private
 
   def set_md5
@@ -25,8 +35,6 @@ class Annal < ApplicationRecord
   def sumcheck_uniqueness
     "The file already was upload, checksum: <a href=\"/annals/checksum/#{sumcheck.to_s}\">Download</a>"
   end
-
-  private
 
   def process
     text = convert_file(file.file.file)

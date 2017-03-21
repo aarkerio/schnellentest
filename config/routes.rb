@@ -13,6 +13,8 @@ Rails.application.routes.draw do
       get 'download_file'
       get 'edit_json'
       get 'elaboration'
+      post 'test'
+      post 'export'
     end
   end
 

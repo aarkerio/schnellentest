@@ -4,6 +4,8 @@
 %div{ class: 'hidden_div', id: 'ajax_div' }
   = image_tag('ajax_load.gif')
 
+%div{ class: 'message_div', id: 'msg_div' }
+
 = form_for @annal, contoller: 'annals', action: 'update', id: @annal.id, remote: true, html: {id: 'annal_form'} do |f|
   - if @annal.errors.any?
     #error_explanation
@@ -11,9 +13,15 @@
       %ul
         - @annal.errors.full_messages.each do |msg|
           %li= msg
+  = f.hidden_field :id
+  .actions
+    = f.button 'Save', type: 'button', id: 'save_ajax_button', remote: true, class: 'btn-save'
 
   .actions
-    = f.button 'Save', type: 'button', id: 'ajax_button', remote: true
+    = f.button 'Test', type: 'button', id: 'test_ajax_button', remote: true, class: 'btn-test'
+
+  .actions
+    = f.button 'Export', type: 'button', id: 'export_ajax_button', remote: true, class: 'btn-export'
 
   .field
     = f.label :json
