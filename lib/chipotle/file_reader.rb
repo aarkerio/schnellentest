@@ -9,32 +9,10 @@ module Chipotle
       DocRipper::rip(file)
     end
 
-    def pdf_to_json(file)
-      # credits to :
-      # 	https://github.com/yob/pdf-reader/blob/master/examples/text.rb
-      # usage example:
-      # 	ruby pdf2txt.rb /path-to-file/file1.pdf [/path-to-file/file2.pdf..]
-
-	    PDF::Reader.open(filename) do |reader|
-	        logger.info "Converting : #{filename}"
-	        pageno = 0
-	        txt = reader.pages.map do |page|
-	      	  begin
-	      		  logger.debug "####  var #################>>>  Converting Page #{pageno}/#{reader.page_count}\r"
-	      		  page.text
-	      	  rescue
-	      		  logger.info "Page #{pageno}/#{reader.page_count} Failed to convert"
-	      		  ''
-	      	  end
-	        end # pages map
-
-	        logger.info " >>>>> Writing text to disk"
-	    end # reader
-      txt
-    end
-
-    def doc_to_json(file)
-      return
+    # Converts json string to hash
+    def json_to_test(json)
+      hash = JSON.parse(json_string)
+      logger.debug "####  NEW HASH #################>>>  #{hash.inspect}"
     end
 
     # Just an initial string to save work
@@ -44,7 +22,7 @@ module Chipotle
         "instructions": "",
         "level": "1",
         "lang": "es",
-        "tags": ["tag_one", "tag_two"],
+        "tags": "tag_one, tag_two",
         "status": "1",
         "questions": [
           {

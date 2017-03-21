@@ -92,7 +92,7 @@ textarea.edit_text_area {
   height:600px;
 }
 
-div.scroller {
+.scroller {
   overflow-y: scroll;
   height:400px;
   padding:14px;
@@ -100,89 +100,105 @@ div.scroller {
   border: 1px dotted gray;
 }
 
-div.hidden_div{
+.hidden_div{
   display: none;
 }
 
-.btn-save { 
-  color: #ffffff; 
-  background-color: #611BBD; 
+.horizontal_container{
+  width: 100%;
+  padding: 5px;
+  margin: 8px;
+}
+
+.block_div{
+  width: 20%;
+  float: left;
+}
+
+.message_div{
+  font-weight: bold;
+  padding: 3px;
+}
+
+/* My Bootstrap buttons*/
+
+.btn-save {
+  color: #fff !important;
+  background-color: #611BBD;
   border-color: #130269;
 }
 
-.btn-save:hover, 
-.btn-save:focus, 
-.btn-save:active, 
-.btn-save.active, 
-.open .dropdown-toggle.btn-save { 
-  color: #ffffff; 
-  background-color: #49247A; 
-  border-color: #130269; 
-} 
- 
-.btn-save:active, 
-.btn-save.active, 
-.open .dropdown-toggle.btn-save { 
-  background-image: none; 
-} 
+.btn-save:hover,
+.btn-save:focus,
+.btn-save:active,
+.btn-save.active,
+.open .dropdown-toggle.btn-save {
+  color: #fff;
+  background-color: #49247A;
+  border-color: #130269;
+}
 
-.btn-save.disabled, 
-.btn-save[disabled], 
-fieldset[disabled] .btn-save, 
-.btn-save.disabled:hover, 
-.btn-save[disabled]:hover, 
-fieldset[disabled] .btn-save:hover, 
+.btn-save:active,
+.btn-save.active,
+.open .dropdown-toggle.btn-save {
+  background-image: none;
+}
+
+.btn-save.disabled,
+.btn-save[disabled],
+fieldset[disabled] .btn-save,
+.btn-save.disabled:hover,
+.btn-save[disabled]:hover,
+fieldset[disabled] .btn-save:hover,
 .btn-save.disabled:focus,
 .btn-save[disabled]:focus,
-fieldset[disabled] .btn-save:focus, 
+fieldset[disabled] .btn-save:focus,
 .btn-save.disabled:active,
 .btn-save[disabled]:active,
-fieldset[disabled] .btn-save:active, 
+fieldset[disabled] .btn-save:active,
 .btn-save.disabled.active,
-.btn-save[disabled].active, 
-fieldset[disabled] .btn-save.active { 
-  background-color: #611BBD; 
+.btn-save[disabled].active,
+fieldset[disabled] .btn-save.active {
+  background-color: #611BBD;
   border-color: #130269;
 }
 
 .btn-save .badge {
-  color: #611BBD;
+  color: #fff;
   background-color: #ffffff;
 }
 
+.btn-test {
+  color: #fff !important;
+  background-color: #DB25B1;
+  border-color: #8C1DCC;
+}
 
+.btn-test:hover,
+.btn-test:focus,
+.btn-test:active,
+.btn-test.active,
+.open .dropdown-toggle.btn-test {
+  color: #fff;
+  background-color: #49247A;
+  border-color: #8C1DCC;
+}
 
-.btn-test { 
-  color: #ffffff; 
-  background-color: #DB25B1; 
-  border-color: #8C1DCC; 
-} 
- 
-.btn-test:hover, 
-.btn-test:focus, 
-.btn-test:active, 
-.btn-test.active, 
-.open .dropdown-toggle.btn-test { 
-  color: #ffffff; 
-  background-color: #49247A; 
-  border-color: #8C1DCC; 
-} 
- 
-.btn-test:active, 
-.btn-test.active, 
-.open .dropdown-toggle.btn-test { 
-  background-image: none; 
-} 
- 
-.btn-test.disabled, 
-.btn-test[disabled], 
-fieldset[disabled] .btn-test, 
-.btn-test.disabled:hover, 
-.btn-test[disabled]:hover, 
-fieldset[disabled] .btn-test:hover, 
-.btn-test.disabled:focus, 
-.btn-test[disabled]:focus, 
-fieldset[disabled] .btn-test:focus, 
+.btn-test:active,
+.btn-test.active,
+.open .dropdown-toggle.btn-test {
+  background-image: none;
+}
+
+.btn-test.disabled,
+.btn-test[disabled],
+fieldset[disabled] .btn-test,
+.btn-test.disabled:hover,
+.btn-test[disabled]:hover,
+fieldset[disabled] .btn-test:hover,
+.btn-test.disabled:focus,
+.btn-test[disabled]:focus,
+fieldset[disabled] .btn-test:focus,
 .btn-test.disabled:active,
 .btn-test[disabled]:active,
 fieldset[disabled] .btn-test:active,
@@ -193,15 +209,11 @@ fieldset[disabled] .btn-test.active {
   border-color: #8C1DCC;
 }
 
-.btn-test .badge {
-  color: #DB25B1;
-  background-color: #ffffff;
-}
-
-
+/** Export button */
 .btn-export {
   background-color: #0088cc;
   border-color: #0088cc;
+  color: #fff !important;
 }
 .btn-export:hover,
 .btn-export:focus,
@@ -209,20 +221,5 @@ fieldset[disabled] .btn-test.active {
 .btn-export.active {
   background-color: #0077b3;
   border-color: #006699;
-}
-.btn-export.disabled:hover,
-.btn-export.disabled:focus,
-.btn-export.disabled:active,
-.btn-export.disabled.active,
-.btn-export[disabled]:hover,
-.btn-export[disabled]:focus,
-.btn-export[disabled]:active,
-.btn-export[disabled].active,
-fieldset[disabled] .btn-export:hover,
-fieldset[disabled] .btn-export:focus,
-fieldset[disabled] .btn-export:active,
-fieldset[disabled] .btn-export.active {
-  background-color: #0088cc;
-  border-color: #0088cc;
 }
 

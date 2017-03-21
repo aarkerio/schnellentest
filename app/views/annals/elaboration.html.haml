@@ -1,10 +1,10 @@
 
 %p#notice Edit File
 
-%div{ class: 'hidden_div', id: 'ajax_div' }
+.hidden_div#ajax_div
   = image_tag('ajax_load.gif')
 
-%div{ class: 'message_div', id: 'msg_div' }
+.message_div#msg_div
 
 = form_for @annal, contoller: 'annals', action: 'update', id: @annal.id, remote: true, html: {id: 'annal_form'} do |f|
   - if @annal.errors.any?
@@ -14,20 +14,23 @@
         - @annal.errors.full_messages.each do |msg|
           %li= msg
   = f.hidden_field :id
-  .actions
-    = f.button 'Save', type: 'button', id: 'save_ajax_button', remote: true, class: 'btn-save'
 
-  .actions
-    = f.button 'Test', type: 'button', id: 'test_ajax_button', remote: true, class: 'btn-test'
+  .horizontal_container
+    .block_div
+      = f.button 'Save', type: 'button', id: 'save_ajax_button', remote: true, class: 'btn btn-save'
 
-  .actions
-    = f.button 'Export', type: 'button', id: 'export_ajax_button', remote: true, class: 'btn-export'
+    .block_div
+      = f.button 'Test', type: 'button', id: 'test_ajax_button', remote: true, class: 'btn btn-test'
+
+    -unless @annal.done
+      .block_div
+        = f.button 'Export', type: 'button', id: 'export_ajax_button', remote: true, class: 'btn btn-export'
 
   .field
     = f.label :json
     = f.text_area :json, class: 'edit_text_area'
 
 .h3 Original Text
-.div.scroller
+.scroller
   =  simple_format @annal.content
 

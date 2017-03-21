@@ -70,7 +70,7 @@ ActiveRecord::Schema.define(version: 20170222011647) do
     t.text     "question",                   null: false
     t.text     "explanation"
     t.text     "hint"
-    t.text     "tags"
+    t.string   "tags"
     t.tsvector "searchtext"
     t.integer  "worth",       default: 5,    null: false
     t.integer  "origin",      default: 1,    null: false
@@ -100,6 +100,7 @@ ActiveRecord::Schema.define(version: 20170222011647) do
     t.integer  "user_id"
     t.string   "title",                       null: false
     t.string   "tags"
+    t.string   "origin"
     t.text     "description"
     t.text     "instructions"
     t.integer  "level",        default: 1,    null: false

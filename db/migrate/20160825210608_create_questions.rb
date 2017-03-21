@@ -7,7 +7,7 @@ class CreateQuestions < ActiveRecord::Migration[5.0]
       t.text :question, null: false
       t.text :explanation
       t.text :hint
-      t.text :tags
+      t.string :tags
       t.column :searchtext, 'tsvector'
       t.integer :worth, null: false, default: 5
       t.integer :origin, null: false, default: 1
