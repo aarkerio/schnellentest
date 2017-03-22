@@ -15,7 +15,7 @@ module DummyResponses
                     "hint" : "First Some hint",
                     "explanation": "",
                     "question": "First Some question",
-                    "answer": [
+                    "answers": [
                       { "answer": "Answer one", "correct": "false" },
                       { "answer": "Answer two", "correct": "true" }
                     ]
@@ -26,7 +26,7 @@ module DummyResponses
                     "hint" : "Second Some hint",
                     "explanation": "",
                     "question": "Second Some question",
-                    "answer": [
+                    "answers": [
                       { "answer": "Second Answer one", "correct": "false" },
                       { "answer": "Answer two", "correct": "true" }
                     ]
