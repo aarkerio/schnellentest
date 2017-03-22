@@ -2,7 +2,6 @@
 # frozen_string_literal: true
 class Annal < ApplicationRecord
   include Chipotle::FileReader
-  include Chipotle::ApiErrors
 
   belongs_to :user
 
@@ -17,15 +16,13 @@ class Annal < ApplicationRecord
   after_commit :process, on: :create
 
   # Checks if the json will be properly saved
-  def test(params)
-    return 3 if done
+  def verify_test(params)
+    return 4 if done
     begin
-      test_hash = json_to_test params[:json]
-      test = Test.new test_hash
-      test.valid?
+      verify_json params[:json]
     rescue  => e
       logger.debug "## Test Exception ###>>>  #{e.inspect}"
-      false
+      1 # general error
     end
   end
 

@@ -50,5 +50,6 @@ group :development, :test do
   gem 'mutant-rspec'
   gem 'rubocop'
   gem 'database_cleaner'
+  gem 'simplecov'
 end
 

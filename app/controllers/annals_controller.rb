@@ -1,5 +1,6 @@
 # Chipotle Software 2016-2017 (c) MIT License
 class AnnalsController < ApplicationController
+  include Chipotle::ApiErrors
 
   before_action :set_annal, only: [:show, :edit, :update, :destroy, :download_file, :edit_json, :elaboration, :test, :export]
 
@@ -28,8 +29,8 @@ class AnnalsController < ApplicationController
 
   # POST /annals/1/test
   def test
-    message = if @annal.test(annal_params)
-                { status: :ok, code: 200, message: 'Succesfully tested, all looks fine'}
+    message = if @annal.verify_test(annal_params)
+                { errors: 0, code: 200, message: 'Succesfully tested, all looks fine', status: :ok}
               else
                 { errors: @annal.errors, message: 'Error', status: :unprocessable_entity }
               end

@@ -48,9 +48,8 @@ RSpec.describe Annal, type: :model do
     let(:params) { DummyResponses.json_test }
     describe '#validates checksum' do
       it 'fails to test JSON' do
-         p params
-         result = annal.test params
-         expect(result).to eql true
+        result = annal.verify_test params
+        expect(result).to eql 6
       end
     end
   end

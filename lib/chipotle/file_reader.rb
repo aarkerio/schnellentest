@@ -10,22 +10,21 @@ module Chipotle
     end
 
     # Converts json string to hash
-    def json_to_test(json)
-      valid = true
-      logger.debug "####  PRE JSON #################>>>  #{json.inspect}"
+    def verify_json(json)
+      message = 6
       hash = JSON.parse(json_string)
-      logger.debug "####  NEW HASH #################>>>  #{hash.inspect}"
-      return 6 unless is_test_valid? hash
+      return 7 unless is_test_valid? hash
 
-      # {"title"=>"Some title", "description"=>"Some description", "instructions"=>"", "level"=>"1", "lang"=>"es", "tags"=>"tag_one, tag_two", "status"=>"1",
-      # "questions"=>[{"status"=>"1", "qtype"=>"1", "hint"=>"Some hint", "explanation"=>"", "question"=>"Some question",
-      # "answers"=>[{"answer"=>"Answer one", "correct"=>"false"}, {"answer"=>"Answer two", "correct"=>"true"}]}]}
-      hash["questions"].each do |q|
-       logger.debug "####  QUESTION #################>>>  #{q.inspect}"
-       question = Question.new q
-       return 7 unless question.valid?
+      hash['questions'].each do |q|
+       question_fields = q.slice 'status', 'qtype', 'hint', 'explanation', 'question'
+       question = Question.new question_fields
+       return 8 unless question.valid?
+       q['answers'].each do |ans|
+         question.answer.new ans
+       end
+       return 9 unless question.valid?
       end
-      valid
+      message
     end
 
     def is_test_valid?(hash)
@@ -41,18 +40,6 @@ module Chipotle
       test.valid?
     end
 
-    def is_question_valid?(question)
-      attrs = {
-        title:        hash['title'],
-        description:  hash['description'],
-        instructions: hash['instructions'],
-        level:        hash['level'],
-        lang:         hash['lang'],
-        tags:         hash['tags']
-      }
-      test = Question.new attrs
-      test.valid?
-    end
     # Just an initial string to save work
     def json_string
       %{ { "title": "Some title",
