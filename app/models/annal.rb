@@ -18,6 +18,7 @@ class Annal < ApplicationRecord
 
   # Checks if the json will be properly saved
   def test(params)
+    return 3 if done
     begin
       test_hash = json_to_test params[:json]
       test = Test.new test_hash
@@ -30,6 +31,7 @@ class Annal < ApplicationRecord
 
   # Saves the json into test model
   def export
+    return 3 if done
     Test.create
   end
 

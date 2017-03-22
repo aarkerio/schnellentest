@@ -44,11 +44,13 @@ RSpec.describe Annal, type: :model do
   end
 
   context 'Tests a JSON string to be saved' do
-    let(:annal) { FactoryGirl.build :annal, :docx_file, user: user }
-    let(:json_string) { DummyResponses.json_test }
+    let(:annal)  { FactoryGirl.build :annal, :docx_file, user: user }
+    let(:params) { DummyResponses.json_test }
     describe '#validates checksum' do
       it 'fails to test JSON' do
-         result = annal.test json_string
+  
+         p params
+         result = annal.test params
          expect(result).to eql true
       end
     end

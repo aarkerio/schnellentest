@@ -3,8 +3,6 @@ class AnnalsController < ApplicationController
 
   before_action :set_annal, only: [:show, :edit, :update, :destroy, :download_file, :edit_json, :elaboration, :test, :export]
 
-  before_action :check_annal , only: [:test, :export]
-
   # GET /annals
   def index
     @annal  = Annal.new
@@ -104,11 +102,6 @@ class AnnalsController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def annal_params
     params.require(:annal).permit(:file, :notes, :json, :done)
-  end
-
-  # Use callbacks to share common setup or constraints between actions.
-  def set_annal
-    render json: { status: :ok, code: 200, message: 'File already in a test'} if @annal.done
   end
 
 end

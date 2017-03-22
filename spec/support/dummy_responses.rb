@@ -2,11 +2,11 @@
 module DummyResponses
   def self.json_test
     json = %{
-             { "title": "ENGLISH PLACEMENT TEST",
+             { "title": "English Test",
                "description": "Some description",
                "instructions": "",
                "level": "1",
-               "lang": "es",
+               "lang": "en",
                "tags": "tag_one ,tag_two",
                "status": "1",
                "questions": [
@@ -15,8 +15,8 @@ module DummyResponses
                     "qtype" : "1",
                     "hint" : "Some hint",
                     "explanation": "",
-                    "question": "Some question",
-                    "answers": [
+                    "question": "First Some question",
+                    "answer": [
                       { "answer": "Answer one", "correct": "false" },
                       { "answer": "Answer two", "correct": "true" }
                     ]
@@ -27,7 +27,7 @@ module DummyResponses
                     "hint" : "Second Some hint",
                     "explanation": "",
                     "question": "Second Some question",
-                    "answers": [
+                    "answer": [
                       { "answer": "Answer one", "correct": "false" },
                       { "answer": "Answer two", "correct": "true" }
                     ]

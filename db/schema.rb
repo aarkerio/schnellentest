@@ -100,6 +100,7 @@ ActiveRecord::Schema.define(version: 20170222011647) do
     t.integer  "user_id"
     t.string   "title",                       null: false
     t.string   "tags"
+    t.string   "lang"
     t.string   "origin"
     t.text     "description"
     t.text     "instructions"

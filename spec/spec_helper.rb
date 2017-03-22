@@ -10,6 +10,7 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
 RSpec.configure do |config|
   config.mock_with :rspec
+  config.color = true
   config.include Requests::JsonHelpers, type: :request
 
   config.include Devise::Test::ControllerHelpers, type: :controller
