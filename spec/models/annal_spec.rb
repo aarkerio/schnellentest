@@ -43,13 +43,46 @@ RSpec.describe Annal, type: :model do
     end
   end
 
-  context 'Tests a JSON string to be saved' do
+  context 'Tests a test JSON string to be saved' do
     let(:annal)  { FactoryGirl.build :annal, :docx_file, user: user }
-    let(:params) { DummyResponses.json_test }
-    describe '#validates checksum' do
+    let(:params) { DummyResponses.json_test(false, true) }
+    describe '#validates test JSON' do
       it 'fails to test JSON' do
         result = annal.verify_test params
-        expect(result).to eql 6
+        expect(result).to eql 7
+      end
+    end
+  end
+
+  context 'Tests a JSON answer string to be saved' do
+    let(:annal)  { FactoryGirl.build :annal, :docx_file, user: user }
+    let(:params) { DummyResponses.json_test(false, false, false, true) }
+    describe '#validates JSON answers' do
+      it 'fails to questions JSON' do
+        result = annal.verify_test params
+        expect(result).to eql 9
+      end
+    end
+  end
+
+  context 'Tests a JSON string to be saved' do
+    let(:annal)  { FactoryGirl.build :annal, :docx_file, user: user }
+    let(:params) { DummyResponses.json_test(false, false, true) }
+    describe '#validates JSON questions' do
+      it 'fails to questions JSON' do
+        result = annal.verify_test params
+        expect(result).to eql 8
+      end
+    end
+  end
+
+  context 'Tests general JSON string to be saved' do
+    let(:annal)  { FactoryGirl.build :annal, :docx_file, user: user }
+    let(:params) { DummyResponses.json_test(true) }
+    describe '#validates JSON' do
+      it 'fails to test JSON' do
+        result = annal.verify_test params
+        expect(result).to eql 1
       end
     end
   end

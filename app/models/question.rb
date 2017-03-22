@@ -5,6 +5,8 @@ class Question < ApplicationRecord
   has_many   :answer
 
   validates :question, presence: true
+  validates :qtype, presence: true
+  validates :lang, presence: true
 
   accepts_nested_attributes_for :answer
 

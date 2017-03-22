@@ -1,6 +1,5 @@
-# frozen_string_literal: true
 module DummyResponses
-  def self.json_test
+  def self.json_test(wrong_json=false, test=false, question=false, answer=false)
     json = %{
              { "title": "English Test",
                "description": "Some description",
@@ -35,6 +34,11 @@ module DummyResponses
                 ]
              }
             }
+
+    json << "add some garbage in the string to test the JSON parser" if wrong_json
+    json.slice! "English Test"                                       if test
+    json.slice! "First Some question"                                if question
+    json.slice! "Answer one"                                         if answer
 
     ActionController::Parameters.new json: json
   end

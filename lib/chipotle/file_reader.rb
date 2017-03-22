@@ -12,11 +12,16 @@ module Chipotle
     # Converts json string to hash
     def verify_json(json)
       message = 6
-      hash = JSON.parse(json_string)
+      logger.debug "####  JSON #################>>>  #{json.inspect}"
+      hash = JSON.parse(json)
+      logger.debug "####  HASH>>> #################>>>  #{hash.inspect}"
       return 7 unless is_test_valid? hash
 
       hash['questions'].each do |q|
-       question_fields = q.slice 'status', 'qtype', 'hint', 'explanation', 'question'
+        logger.debug "####  Q 20 #################>>>  #{q.inspect}"
+        valid_keys = ['status', 'qtype', 'hint', 'explanation', 'question']
+        question_fields = q.slice(*valid_keys)
+        logger.debug "####  Jquestion_fields #################>>>  #{question_fields.inspect}"
        question = Question.new question_fields
        return 8 unless question.valid?
        q['answers'].each do |ans|

@@ -1,7 +1,9 @@
 ENV['RAILS_ENV'] ||= 'test'
 require 'simplecov'
-SimpleCov.start
-
+SimpleCov.start 'rails' do
+  add_group 'API Controllers' , 'app/controllers/api'
+end
+SimpleCov.coverage_dir('./spec/support/coverage')
 require File.expand_path("../../config/environment", __FILE__)
 require 'rails/all'
 require 'rspec/rails'
