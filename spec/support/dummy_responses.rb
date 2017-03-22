@@ -13,7 +13,7 @@ module DummyResponses
                   {
                     "status": "1",
                     "qtype" : "1",
-                    "hint" : "Some hint",
+                    "hint" : "First Some hint",
                     "explanation": "",
                     "question": "First Some question",
                     "answer": [
@@ -28,7 +28,7 @@ module DummyResponses
                     "explanation": "",
                     "question": "Second Some question",
                     "answer": [
-                      { "answer": "Answer one", "correct": "false" },
+                      { "answer": "Second Answer one", "correct": "false" },
                       { "answer": "Answer two", "correct": "true" }
                     ]
                   }

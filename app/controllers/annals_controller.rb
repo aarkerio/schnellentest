@@ -14,9 +14,8 @@ class AnnalsController < ApplicationController
     @annal
   end
 
-  # POST /elaboration member
+  # POST /annals/1/elaboration member
   def elaboration
-
   end
 
   # GET /annals/1/edit
@@ -29,7 +28,7 @@ class AnnalsController < ApplicationController
 
   # POST /annals/1/test
   def test
-    message = @annal.test(annal_params)
+    message = if @annal.test(annal_params)
                 { status: :ok, code: 200, message: 'Succesfully tested, all looks fine'}
               else
                 { errors: @annal.errors, message: 'Error', status: :unprocessable_entity }

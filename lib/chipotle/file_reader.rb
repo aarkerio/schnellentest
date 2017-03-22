@@ -12,6 +12,7 @@ module Chipotle
     # Converts json string to hash
     def json_to_test(json)
       valid = true
+      logger.debug "####  PRE JSON #################>>>  #{json.inspect}"
       hash = JSON.parse(json_string)
       logger.debug "####  NEW HASH #################>>>  #{hash.inspect}"
       return 6 unless is_test_valid? hash
