@@ -9,11 +9,11 @@ module Chipotle
       DocRipper::rip(file)
     end
 
-    # Converts json string to hash
+    # Converts json string to hash and verify it
     def verify_json(json)
       message = 6
       hash = JSON.parse(json)
-      return 7 unless is_test_valid? hash
+      return 7   unless is_test_valid? hash
 
       hash['questions'].each do |q|
         valid_keys = ['status', 'qtype', 'hint', 'explanation', 'question']
@@ -28,7 +28,26 @@ module Chipotle
       message
     end
 
-    def is_test_valid?(hash)
+    # From json to test
+    def json_to_test(json)
+      message = 6
+      hash = JSON.parse(json)
+      return 7   unless is_test_valid? hash
+
+      hash['questions'].each do |q|
+        valid_keys = ['status', 'qtype', 'hint', 'explanation', 'question']
+        question_fields = q.slice(*valid_keys)
+        question = Question.new question_fields
+        return 8 unless question.valid?
+        q['answers'].each do |ans|
+          new_answer = question.answer.new ans
+          return 9 unless new_answer.valid?
+        end
+      end
+      message
+    end
+
+    def is_test_valid?(hash, build=false)
       attrs = {
         title:        hash['title'],
         description:  hash['description'],
@@ -37,6 +56,7 @@ module Chipotle
         lang:         hash['lang'],
         tags:         hash['tags']
       }
+      return attrs  if build
       test = Test.new attrs
       test.valid?
     end

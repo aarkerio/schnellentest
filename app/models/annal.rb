@@ -29,7 +29,7 @@ class Annal < ApplicationRecord
   # Saves the json into test model
   def export
     return 3 if done
-    Test.create
+    json_to_test params[:json]
   end
 
   private
