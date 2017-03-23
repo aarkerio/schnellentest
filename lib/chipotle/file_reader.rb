@@ -1,6 +1,5 @@
 # coding: utf-8
 # frozen_string_literal: true
-require 'pdf-reader'
 require 'doc_ripper'
 
 module Chipotle
@@ -61,7 +60,7 @@ module Chipotle
       test.valid?
     end
 
-    # Just an initial string to save work
+    # Just an initial string as template
     def json_string
       %{ { "title": "Some title",
         "description": "Some description",
