@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170222011647) do
+ActiveRecord::Schema.define(version: 20170404232007) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,6 +37,18 @@ ActiveRecord::Schema.define(version: 20170222011647) do
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
     t.index ["question_id"], name: "index_answers_on_question_id", using: :btree
+  end
+
+  create_table "composite_answers", force: :cascade do |t|
+    t.integer  "question_id"
+    t.integer  "user_id"
+    t.string   "first_column"
+    t.string   "second_column"
+    t.string   "correct_column"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.index ["question_id"], name: "index_composite_answers_on_question_id", using: :btree
+    t.index ["user_id"], name: "index_composite_answers_on_user_id", using: :btree
   end
 
   create_table "groups", force: :cascade do |t|
@@ -100,7 +112,6 @@ ActiveRecord::Schema.define(version: 20170222011647) do
     t.integer  "user_id"
     t.string   "title",                       null: false
     t.string   "tags"
-    t.string   "lang"
     t.string   "origin"
     t.text     "description"
     t.text     "instructions"
@@ -141,6 +152,8 @@ ActiveRecord::Schema.define(version: 20170222011647) do
 
   add_foreign_key "annals", "users"
   add_foreign_key "answers", "questions"
+  add_foreign_key "composite_answers", "questions"
+  add_foreign_key "composite_answers", "users"
   add_foreign_key "images", "users"
   add_foreign_key "imports", "users"
   add_foreign_key "questions", "users"
