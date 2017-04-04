@@ -35,13 +35,20 @@
 
   %tbody
     - @annals.each do |annal|
+      - if annal.done
+        =  done_img = 'icon_done.png'
+        =  alt = 'Done'
+      - else
+        =  done_img = 'icon_pending.png'
+        =  alt = 'Pending'
+
       %tr
         %td= annal.notes
         %td= annal.sumcheck
         %td= annal.oname
         %td= annal.created_at
         %td= link_to 'Process', "/annals/#{annal.id}/elaboration"
-        %td= annal.done
+        %td= image_tag done_img, alt: alt, title: alt
         %td= link_to 'Download', "/annals/#{annal.id}/download_file"
         %td= link_to 'Edit', edit_annal_path(annal)
         %td= link_to 'Delete', url_for(action: :destroy, id: annal.id), method: :delete, data: {confirm: "Are you sure?"}

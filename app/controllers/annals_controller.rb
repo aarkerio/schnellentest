@@ -29,7 +29,6 @@ class AnnalsController < ApplicationController
 
   # POST /annals/1/test
   def test
-    code_message = if @annal.verify_test(annal_params)
     message = if code_message == 6
                 { errors: false, code: 200, message: Chipotle::ApiErrorserror_code(code_message), status: :ok}
               else

@@ -22,7 +22,10 @@ COMMENT ON COLUMN questions.order IS 'Order in test';
 -- bin/rails g model TestQuestion test:references question:references order:integer
 
 -- Answer Model
--- bin/rails g model Answer user:references answer:text correct:boolean question:references
+-- bin/rails g model Answer  question:references user:references answer:text correct:boolean
+
+-- CompositeAnswer Model
+-- bin/rails g model CompositeAnswer question:references user:references first_column:string second_column:string correct_column:string
 
 -- Archive Model
 -- bin/rails g model Annal user:references notes:string sumcheck:string file:string
