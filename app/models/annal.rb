@@ -16,20 +16,14 @@ class Annal < ApplicationRecord
   after_commit :process, on: :create
 
   # Checks if the json will be properly saved
-  def verify_test(params)
+  def verify_or_save(params, save=false)
     return 4 if done
     begin
-      verify_json params[:json]
+      verify_or_save_json(params[:json], save)
     rescue  => e
       logger.debug "## Test Exception ###>>>  #{e.inspect}"
       1 # general error
     end
-  end
-
-  # Saves the json into test model
-  def export
-    return 3 if done
-    json_to_test params[:json]
   end
 
   private
@@ -45,7 +39,7 @@ class Annal < ApplicationRecord
 
   def process
     text = convert_file(file.file.file)
-    new_json = json_string + text
+    new_json = json_string(sumcheck) + text
     update_columns( content: text, json: new_json )
   end
 end

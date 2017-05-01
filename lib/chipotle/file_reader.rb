@@ -4,69 +4,64 @@ require 'doc_ripper'
 
 module Chipotle
   module FileReader
+    # Extract text from .pdf or .docx file
     def convert_file(file)
       DocRipper::rip(file)
     end
 
-    # Converts json string to hash and verify it
-    def verify_json(json)
+    # Converts json string to hash and verify it, if true save it
+    def verify_or_save_json(json, save=false)
       message = 6
+      action = save ? :save! : :valid?
       hash = JSON.parse(json)
-      return 7   unless is_test_valid? hash
-
+      return 7   unless test_valid?(create_test_attrs(hash), action)
       hash['questions'].each do |q|
         valid_keys = ['status', 'qtype', 'hint', 'explanation', 'question']
         question_fields = q.slice(*valid_keys)
         question = Question.new question_fields
-        return 8 unless question.valid?
-        q['answers'].each do |ans|
-          new_answer = question.answer.new ans
-          return 9 unless new_answer.valid?
+        return 8 unless question.public_send action
+        if question_fields['qtype'] == 1
+          q['answers'].each do |ans|
+            new_answer = question.answer.new ans
+            return 9 unless new_answer.public_send action
+          end
+        elsif question_fields['qtype'] == 3
+          q['answers'].each do |com_answer|
+            new_answer = question.composite_answer.new com_answer
+            return 10 unless new_answer.public_send action
+          end
         end
       end
       message
     end
 
-    # From json to test
-    def json_to_test(json)
-      message = 6
-      hash = JSON.parse(json)
-      return 7   unless is_test_valid? hash
-
-      hash['questions'].each do |q|
-        valid_keys = ['status', 'qtype', 'hint', 'explanation', 'question']
-        question_fields = q.slice(*valid_keys)
-        question = Question.new question_fields
-        return 8 unless question.valid?
-        q['answers'].each do |ans|
-          new_answer = question.answer.new ans
-          return 9 unless new_answer.valid?
-        end
-      end
-      message
+    # test is valid?
+    def test_valid?(attrs, action)
+      test = Test.new attrs
+      test.public_send action
     end
 
-    def is_test_valid?(hash, build=false)
-      attrs = {
+    # it Selects only the fields that we need
+    def create_test_attrs(hash)
+      {
         title:        hash['title'],
         description:  hash['description'],
         instructions: hash['instructions'],
         level:        hash['level'],
         lang:         hash['lang'],
-        tags:         hash['tags']
+        tags:         hash['tags'],
+        origin:       hash['origin']
       }
-      return attrs  if build
-      test = Test.new attrs
-      test.valid?
     end
 
     # Just an initial string as template
-    def json_string
+    def json_string(origin)
       %{ { "title": "Some title",
         "description": "Some description",
         "instructions": "",
         "level": "1",
-        "lang": "es",
+        "lang": "en",
+        "origin": "#{origin}",
         "tags": "tag_one, tag_two",
         "status": "1",
         "questions": [

@@ -10,7 +10,6 @@ class Test < ApplicationRecord
 
   def create_test(params)
     create_params = order_params params
-    #logger.debug create_params.inspect
     test = Test.new create_params
     test.save
   end
@@ -38,7 +37,6 @@ class Test < ApplicationRecord
 
   def reorder(params)
     tq = test_question.where(question_id: params[:question_id].to_i).first
-    # logger.debug "##### tq KKKKKKKKKKKKKK #### >>>>>> #{ tq.inspect }"
     if params[:way] == 'down'
       tq_up = tq.next
       order = tq_up.order

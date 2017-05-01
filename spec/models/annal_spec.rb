@@ -30,7 +30,7 @@ RSpec.describe Annal, type: :model do
     end
   end
 
-  context 'Validation file' do
+  context 'Validation file fails because duplicated checksum' do
     let(:annal_1) { FactoryGirl.build :annal, user: user }
     let(:annal_2) { FactoryGirl.build :annal, user: user }
     describe '#validates checksum' do
@@ -38,51 +38,72 @@ RSpec.describe Annal, type: :model do
         annal_1.save
         result = annal_2.save
         expect(result).to be false
-        #expect(annal.content).to eql("Inside file\n\n\f")
       end
     end
   end
 
-  context 'Tests a test JSON string to be saved' do
+  context 'New JSON test quiz string fails to be saved because wrong formed test' do
     let(:annal)  { FactoryGirl.build :annal, :docx_file, user: user }
     let(:params) { DummyResponses.json_test(false, true) }
     describe '#validates test JSON' do
-      it 'fails to test JSON' do
-        result = annal.verify_test params
+      it 'fails to validates JSON' do
+        result = annal.verify_or_save params
         expect(result).to eql 7
       end
     end
   end
 
-  context 'Tests a JSON answer string to be saved' do
-    let(:annal)  { FactoryGirl.build :annal, :docx_file, user: user }
-    let(:params) { DummyResponses.json_test(false, false, false, true) }
-    describe '#validates JSON answers' do
-      it 'fails to questions JSON' do
-        result = annal.verify_test params
-        expect(result).to eql 9
-      end
-    end
-  end
-
-  context 'Tests a JSON string to be saved' do
+  context 'JSON string fails to be saved because wrong formed question' do
     let(:annal)  { FactoryGirl.build :annal, :docx_file, user: user }
     let(:params) { DummyResponses.json_test(false, false, true) }
     describe '#validates JSON questions' do
       it 'fails to questions JSON' do
-        result = annal.verify_test params
+        result = annal.verify_or_save params
         expect(result).to eql 8
       end
     end
   end
 
-  context 'Tests general JSON string to be saved' do
+  context 'JSON answer string to be saved fails to be saved because wrong formed answer' do
+    let(:annal)  { FactoryGirl.build :annal, :docx_file, user: user }
+    let(:params) { DummyResponses.json_test(false, false, false, true) }
+    describe '#validates JSON answers' do
+      it 'fails to questions JSON' do
+        result = annal.verify_or_save params
+        expect(result).to eql 9
+      end
+    end
+  end
+
+  context 'JSON string fails because is not JSON valid' do
     let(:annal)  { FactoryGirl.build :annal, :docx_file, user: user }
     let(:params) { DummyResponses.json_test(true) }
     describe '#validates JSON' do
       it 'fails to test JSON' do
-        result = annal.verify_test params
+        result = annal.verify_or_save params
         expect(result).to eql 1
+      end
+    end
+  end
+
+  context 'New quiz test is verified but not saved succesfully' do
+    let(:annal)  { FactoryGirl.build :annal, :docx_file, user: user }
+    let(:params) { DummyResponses.json_test }
+    describe '#validates JSON string whitout problem' do
+      it 'JSON is OK' do
+        result = annal.verify_or_save params
+        expect(result).to eql 6
+      end
+    end
+  end
+
+  context 'New quiz test is saved succesfully' do
+    let(:annal)  { FactoryGirl.build :annal, :docx_file, user: user }
+    let(:params) { DummyResponses.json_test }
+    describe '#saves JSON string whitout problem' do
+      it 'JSON is OK, new test created' do
+        result = annal.verify_or_save(params, true)
+        expect(result).to eql 6
       end
     end
   end

@@ -25,6 +25,9 @@
     .block_div
       = f.button 'Test', type: 'button', id: 'test_ajax_button', remote: true, class: 'btn btn-test'
 
+    .block_div
+      = f.button 'Download file', type: 'button', id: 'test_ajax_button', remote: true, class: 'btn btn-test'
+
     -unless @annal.done
       .block_div
         = f.button 'Export', type: 'button', id: 'export_ajax_button', remote: true, class: 'btn btn-export'

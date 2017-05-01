@@ -6,6 +6,7 @@ class CreateCompositeAnswers < ActiveRecord::Migration[5.0]
       t.string :first_column
       t.string :second_column
       t.string :correct_column
+      t.string :name_column
 
       t.timestamps
     end
