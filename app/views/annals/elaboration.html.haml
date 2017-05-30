@@ -20,7 +20,7 @@
       = f.button 'Save', type: 'button', id: 'save_ajax_button', remote: true, class: 'btn btn-save'
 
     .block_div
-      = select_tag 'add_question_select', options_for_select([['Multiple Option',1], ['Composite Option',2], ['Open',3]]), remote: true, class: 'form-control'
+      = select_tag 'add_question_select', options_for_select([['Multiple Option',1], ['Composite Option',2], ['Open',3]]), remote: true, class: 'btn btn-primary dropdown-toggle'
 
     .block_div
       = f.button 'Test', type: 'button', id: 'test_ajax_button', remote: true, class: 'btn btn-test'
