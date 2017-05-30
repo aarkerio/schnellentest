@@ -5,7 +5,7 @@ import { Router, Route, Link } from 'react-router';
 import { connect } from 'react-redux';
 import * as AnswersActionCreators from '../actions/tests';
 
-// Inline edition 
+// Inline edition
 import { RIEToggle, RIEInput, RIETextArea, RIENumber, RIETags } from 'riek';
 
 class AnswerRow extends Component {
@@ -32,7 +32,7 @@ class AnswerRow extends Component {
     }
     this.toggleAnswer = this.toggleAnswer.bind(this);
   }
-     
+
   changeState(newState) {
     this.setState(newState);
   }
@@ -56,14 +56,14 @@ class AnswerRow extends Component {
     let new_state = !this.state.correct;
     this.setState({correct: new_state});
     let action = AnswersActionCreators.toggleField('answers', 'correct', this.state.id);
-    this.props.dispatch(action);    
+    this.props.dispatch(action);
   }
-  
+
   loadAnswer(){
     let newcall = AnswersActionCreators.fetchOneAnswer( this.state.question_id );
     this.props.dispatch(newcall);
   }
-  
+
   deleteAnswer(id) {
     if (typeof this.props.onChange === 'function') {
       this.props.onChange(id);
@@ -85,7 +85,7 @@ class AnswerRow extends Component {
             validate={this.isStringAcceptable}
             classLoading="loading"
             classInvalid="invalid" />
-             
+
 
         <a href="#" onClick={() => {if(confirm('Delete answer?')) {this.deleteAnswer(answer.id)};}} className="removable"><i className="glyphicon glyphicon-trash"></i></a>
       </div>
