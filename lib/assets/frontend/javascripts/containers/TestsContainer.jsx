@@ -4,9 +4,10 @@ import cookie from 'react-cookie'
 import { connect } from 'react-redux'
 import { render } from 'react-dom'
 import * as TestsActionCreators from '../actions/tests'
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import { Link, browserHistory } from 'react-router'
 import TestRowComponent   from '../components/TestRowComponent'
+import PropTypes from 'prop-types';
 
 // export for unconnected component (for mocha tests)
 export class TestsContainer extends Component {

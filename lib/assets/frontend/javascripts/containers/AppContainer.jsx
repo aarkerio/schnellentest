@@ -1,8 +1,9 @@
 'use strict';
 
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
 import { Link, browserHistory, withRouter } from 'react-router';
 import HeaderComponent from '../components/HeaderComponent';
+import PropTypes from 'prop-types';
 
 // require('bootstrap');
 // require('bootstrap-webpack');

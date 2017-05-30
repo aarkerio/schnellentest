@@ -1,7 +1,8 @@
 'use strict';
 
 import cookie from 'react-cookie';
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import * as testsActionCreators from '../actions/tests';
@@ -149,9 +150,9 @@ class TestModalEditComponent extends Component {
 };
 
 TestModalEditComponent.propTypes = {
-  backdropStyle: PropTypes.string,
+  backdropStyle:    PropTypes.string,
   OneTestArrayProp: PropTypes.object,
-  dispatch: PropTypes.func
+  dispatch:         PropTypes.func
 };
 
 TestModalEditComponent.defaultProps = {

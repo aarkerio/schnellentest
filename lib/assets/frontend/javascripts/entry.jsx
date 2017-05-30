@@ -1,13 +1,13 @@
-'use strict';
+'use strict'
 
-import 'babel-polyfill';
+import 'babel-polyfill'
 
-import React, { PropTypes } from 'react';
-import { render } from 'react-dom';
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
-import { Router, Route, browserHistory, IndexRoute, withRouter } from 'react-router';
-import { syncHistoryWithStore, routeActions } from 'react-router-redux';
+import React from 'react'
+import { render } from 'react-dom'
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
+import { Router, Route, browserHistory, IndexRoute, withRouter } from 'react-router'
+import { syncHistoryWithStore, routeActions } from 'react-router-redux'
 
 import AppContainer            from './containers/AppContainer';
 import TestsContainer          from './containers/TestsContainer';

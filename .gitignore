@@ -47,4 +47,5 @@ spec/support/coverage/
 .tmp-globalize-webpack/
 *.hot-update.js
 *.hot-update.json
+lib/assets/frontend/javascripts/yarn-error.log
 

@@ -6,7 +6,8 @@ import { render } from 'react-dom'
 import { dialogStyle, modalConfig } from '../config/modals'
 import HeaderComponent  from './HeaderComponent'
 import * as TestsActionCreators from '../actions/tests'
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Link, browserHistory, withRouter} from 'react-router'
 import { Button, Modal } from 'react-bootstrap'
 import AlertContainer from 'react-alert'
@@ -297,9 +298,9 @@ export class QuestionsComponent extends Component {
 }
 
 QuestionsComponent.propTypes = {
-  OneTestArrayProp: PropTypes.object,
+  OneTestArrayProp:   PropTypes.object,
   QuestionsArrayProp: PropTypes.array,
-  dispatch: PropTypes.func
+  dispatch:           PropTypes.func
 }
 
 QuestionsComponent.defaultProps = {

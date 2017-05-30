@@ -1,11 +1,12 @@
 'use strict'
-import React, { PropTypes, Component } from 'react'
+import React, { Component } from 'react'
 import { Link, browserHistory } from 'react-router'
 import { connect } from 'react-redux'
 import { Button, Modal } from 'react-bootstrap'
 import * as TestsActionCreators from '../actions/tests'
 import { dialogStyle, modalConfig } from '../config/modals'
 import AnswerRowComponent from './AnswerRowComponent'
+import PropTypes from 'prop-types';
 
 class AnswersModalComponent extends Component {
   constructor(props) {
@@ -50,12 +51,12 @@ class AnswersModalComponent extends Component {
     e.preventDefault();
 
     let fields = { answer: {
-      answer:      this.state.nanswer, 
+      answer:      this.state.nanswer,
       correct:     this.state.ncorrect,
       active:      this.state.nactive,
       question_id: this.state.question_id
     }};
-    
+
     let isValid = this.validatesForm(fields);
 
     if ( !isValid['pass'] ) {
@@ -70,12 +71,12 @@ class AnswersModalComponent extends Component {
   /* Validates form*/
   validatesForm(fields){
     let valid = {pass: true, message: 'Not message yet'};
- 
+
     if ( this.state.nanswer.length < 2) {
       valid['answer']  = false;
       valid['message'] = 'New answer lenght not valid';
     }
-    return valid;    
+    return valid;
   }
 
   handleChange(name, event){
@@ -85,7 +86,7 @@ class AnswersModalComponent extends Component {
   }
 
   toggleCheckbox(name, event){
-    let obj = {}; 
+    let obj = {};
     obj[name] = !this.state[name];
     console.log(JSON.stringify(obj))
     this.setState(obj);

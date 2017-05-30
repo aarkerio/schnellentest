@@ -11,7 +11,7 @@ class DataList extends Component {
                      options: []
       }
     },
-  
+
     changeList: function(e) {
       console.log('>>>>>>>>>>>>>>>>>>>>>>>>>In changeList');
       var tmp = this.getData(e);
@@ -71,8 +71,8 @@ class DataList extends Component {
 }
 
 DataList.propTypes: {
-      value:      React.PropTypes.string,
-      onChange:   React.PropTypes.func
+      value:      PropTypes.string,
+      onChange:   PropTypes.func
     }
 
  DataList.defaultProps = {
