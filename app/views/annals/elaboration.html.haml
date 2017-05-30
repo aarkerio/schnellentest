@@ -6,7 +6,7 @@
 
 .message_div#msg_div
 
-= form_for @annal, contoller: 'annals', action: 'update', id: @annal.id, remote: true, html: {id: 'annal_form'} do |f|
+= form_for @annal, controller: 'annals', action: 'update', id: @annal.id, remote: true, html: {id: 'annal_form'} do |f|
   - if @annal.errors.any?
     #error_explanation
       %h2= "#{pluralize(@annal.errors.count, "error")} prohibited this annl from being saved:"
@@ -20,7 +20,7 @@
       = f.button 'Save', type: 'button', id: 'save_ajax_button', remote: true, class: 'btn btn-save'
 
     .block_div
-      = f.button 'Add question', type: 'button', id: 'add_question_button', remote: true, class: 'btn btn-save'
+      = select_tag 'add_question_select', options_for_select([['Multiple Option',1], ['Composite Option',2], ['Open',3]]), remote: true, class: 'form-control'
 
     .block_div
       = f.button 'Test', type: 'button', id: 'test_ajax_button', remote: true, class: 'btn btn-test'
@@ -37,6 +37,7 @@
     = f.text_area :json, class: 'edit_text_area'
 
 .h3 Original Text
+
 .scroller
   =  simple_format @annal.content
 

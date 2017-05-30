@@ -15,145 +15,144 @@ ActiveRecord::Schema.define(version: 20170404232007) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "annals", force: :cascade do |t|
-    t.integer  "user_id"
-    t.string   "notes"
-    t.string   "sumcheck"
-    t.string   "file"
-    t.boolean  "done",       default: false
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.string   "oname",                      null: false
-    t.text     "content"
-    t.text     "json"
-    t.index ["user_id"], name: "index_annals_on_user_id", using: :btree
-  end
-
-  create_table "answers", force: :cascade do |t|
-    t.text     "answer",                      null: false
-    t.boolean  "correct",                     null: false
-    t.boolean  "active",      default: false
-    t.integer  "question_id"
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
-    t.index ["question_id"], name: "index_answers_on_question_id", using: :btree
-  end
-
-  create_table "composite_answers", force: :cascade do |t|
-    t.integer  "question_id"
-    t.integer  "user_id"
-    t.string   "first_column"
-    t.string   "second_column"
-    t.string   "correct_column"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-    t.index ["question_id"], name: "index_composite_answers_on_question_id", using: :btree
-    t.index ["user_id"], name: "index_composite_answers_on_user_id", using: :btree
-  end
-
-  create_table "groups", force: :cascade do |t|
-    t.string   "name"
-    t.string   "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-  end
-
-  create_table "images", force: :cascade do |t|
-    t.integer  "user_id"
-    t.text     "file"
-    t.boolean  "active"
+  create_table "annals", id: :serial, force: :cascade do |t|
+    t.integer "user_id"
+    t.string "notes"
+    t.string "sumcheck"
+    t.string "file"
+    t.boolean "done", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_images_on_user_id", using: :btree
+    t.string "oname", null: false
+    t.text "content"
+    t.text "json"
+    t.index ["user_id"], name: "index_annals_on_user_id"
   end
 
-  create_table "imports", force: :cascade do |t|
-    t.integer  "user_id"
-    t.string   "file"
-    t.string   "oname"
-    t.string   "notes"
+  create_table "answers", id: :serial, force: :cascade do |t|
+    t.text "answer", null: false
+    t.boolean "correct", null: false
+    t.boolean "active", default: false
+    t.integer "question_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_imports_on_user_id", using: :btree
+    t.index ["question_id"], name: "index_answers_on_question_id"
   end
 
-  create_table "questions", force: :cascade do |t|
-    t.integer  "user_id"
-    t.text     "question",                   null: false
-    t.text     "explanation"
-    t.text     "hint"
-    t.string   "tags"
+  create_table "composite_answers", id: :serial, force: :cascade do |t|
+    t.integer "question_id"
+    t.string "first_column"
+    t.string "second_column"
+    t.string "correct_column"
+    t.string "name_column"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["question_id"], name: "index_composite_answers_on_question_id"
+  end
+
+  create_table "groups", id: :serial, force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "images", id: :serial, force: :cascade do |t|
+    t.integer "user_id"
+    t.text "file"
+    t.boolean "active"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_images_on_user_id"
+  end
+
+  create_table "imports", id: :serial, force: :cascade do |t|
+    t.integer "user_id"
+    t.string "file"
+    t.string "oname"
+    t.string "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_imports_on_user_id"
+  end
+
+  create_table "questions", id: :serial, force: :cascade do |t|
+    t.integer "user_id"
+    t.text "question", null: false
+    t.text "explanation"
+    t.text "hint"
+    t.string "tags"
     t.tsvector "searchtext"
-    t.integer  "worth",       default: 5,    null: false
-    t.integer  "origin",      default: 1,    null: false
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.boolean  "active"
-    t.boolean  "qtype"
-    t.boolean  "spellcheck"
-    t.boolean  "copyright"
-    t.string   "lang",        default: "en", null: false
-    t.integer  "status",      default: 0,    null: false
+    t.integer "worth", default: 5, null: false
+    t.integer "origin", default: 1, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "active"
+    t.integer "qtype"
+    t.boolean "spellcheck"
+    t.boolean "copyright"
+    t.string "lang", default: "en", null: false
+    t.integer "status", default: 0, null: false
     t.index ["searchtext"], name: "ques_idx", using: :gin
-    t.index ["user_id"], name: "index_questions_on_user_id", using: :btree
+    t.index ["user_id"], name: "index_questions_on_user_id"
   end
 
-  create_table "test_questions", force: :cascade do |t|
-    t.integer  "test_id"
-    t.integer  "question_id"
-    t.integer  "order"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.index ["question_id"], name: "index_test_questions_on_question_id", using: :btree
-    t.index ["test_id"], name: "index_test_questions_on_test_id", using: :btree
+  create_table "test_questions", id: :serial, force: :cascade do |t|
+    t.integer "test_id"
+    t.integer "question_id"
+    t.integer "order"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["question_id"], name: "index_test_questions_on_question_id"
+    t.index ["test_id"], name: "index_test_questions_on_test_id"
   end
 
-  create_table "tests", force: :cascade do |t|
-    t.integer  "user_id"
-    t.string   "title",                       null: false
-    t.string   "tags"
-    t.string   "origin"
-    t.text     "description"
-    t.text     "instructions"
-    t.integer  "level",        default: 1,    null: false
-    t.boolean  "active",       default: true
-    t.boolean  "shared",       default: true
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
-    t.index ["user_id"], name: "index_tests_on_user_id", using: :btree
+  create_table "tests", id: :serial, force: :cascade do |t|
+    t.integer "user_id"
+    t.string "title", null: false
+    t.string "tags"
+    t.string "lang"
+    t.string "origin"
+    t.text "description"
+    t.text "instructions"
+    t.integer "level", default: 1, null: false
+    t.boolean "active", default: true
+    t.boolean "shared", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_tests_on_user_id"
   end
 
-  create_table "users", force: :cascade do |t|
-    t.string   "uname",                               null: false
-    t.string   "fname",                               null: false
-    t.string   "lname",                               null: false
-    t.string   "guid",                                null: false
-    t.string   "uid"
-    t.string   "password"
-    t.boolean  "active"
-    t.string   "token",                               null: false
-    t.integer  "group_id"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
-    t.string   "reset_password_token"
+  create_table "users", id: :serial, force: :cascade do |t|
+    t.string "uname", null: false
+    t.string "fname", null: false
+    t.string "lname", null: false
+    t.string "guid", null: false
+    t.string "uid"
+    t.string "password"
+    t.boolean "active"
+    t.string "token", null: false
+    t.integer "group_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer "sign_in_count", default: 0, null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.inet     "current_sign_in_ip"
-    t.inet     "last_sign_in_ip"
-    t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
-    t.index ["group_id"], name: "index_users_on_group_id", using: :btree
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+    t.inet "current_sign_in_ip"
+    t.inet "last_sign_in_ip"
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["group_id"], name: "index_users_on_group_id"
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "annals", "users"
   add_foreign_key "answers", "questions"
   add_foreign_key "composite_answers", "questions"
-  add_foreign_key "composite_answers", "users"
   add_foreign_key "images", "users"
   add_foreign_key "imports", "users"
   add_foreign_key "questions", "users"
