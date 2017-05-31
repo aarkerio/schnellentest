@@ -64,11 +64,12 @@ RSpec.describe Annal, type: :model do
     end
   end
 
-  context 'JSON answer string to be saved fails to be saved because wrong formed answer' do
+  context 'JSON answer string to be saved fails because wrong formed answer' do
     let(:annal)  { FactoryGirl.build :annal, :docx_file, user: user }
     let(:params) { DummyResponses.json_test(false, false, false, true) }
     describe '#validates JSON answers' do
       it 'fails to questions JSON' do
+        # p " PARAMS >>>>   #{params.inspect}"
         result = annal.verify_or_save params
         expect(result).to eql 9
       end
@@ -86,11 +87,12 @@ RSpec.describe Annal, type: :model do
     end
   end
 
-  context 'New quiz test is verified but not saved succesfully' do
+  context 'New quiz test is verified succesfully but not saved ' do
     let(:annal)  { FactoryGirl.build :annal, :docx_file, user: user }
     let(:params) { DummyResponses.json_test }
     describe '#validates JSON string whitout problem' do
       it 'JSON is OK' do
+        p " PARAMS >>>>  #{params.inspect}"
         result = annal.verify_or_save params
         expect(result).to eql 6
       end

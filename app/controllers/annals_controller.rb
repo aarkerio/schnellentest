@@ -29,7 +29,7 @@ class AnnalsController < ApplicationController
 
   # POST /annals/1/test
   def test
-    message = if code_message == 6
+    message = if @annal.verify_or_save(annal_params)
                 { errors: false, code: 200, message: Chipotle::ApiErrorserror_code(code_message), status: :ok}
               else
                 { errors: true, message: Chipotle::ApiErrorserror_code(code_message), status: :unprocessable_entity }
@@ -39,7 +39,7 @@ class AnnalsController < ApplicationController
 
   # POST /annals/1/export
   def export
-    message = if @annal.json_to_test(annal_params)
+    message = if @annal.json_to_test(annal_params, true)
                 { status: :ok, code: 200, message: 'Succesfully exported, thank you'}
               else
                 { errors: @annal.errors, status: :unprocessable_entity }

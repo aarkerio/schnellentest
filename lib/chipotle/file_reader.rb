@@ -14,19 +14,24 @@ module Chipotle
       message = 6
       action = save ? :save! : :valid?
       hash = JSON.parse(json)
+      p ">>>> JSON HASHED >>> #{hash.inspect}"
       return 7   unless test_valid?(create_test_attrs(hash), action)
       hash['questions'].each do |q|
         valid_keys = ['status', 'qtype', 'hint', 'explanation', 'question']
         question_fields = q.slice(*valid_keys)
         question = Question.new question_fields
-        return 8 unless question.public_send action
-        if question_fields['qtype'] == 1
+        p " >>> question >>>>> #{question.inspect} "
+        return 8 unless question.public_send action  # question validation fails
+        case question_fields['qtype']
+        when "1"
           q['answers'].each do |ans|
+            ans[:question_id] = question.id
             new_answer = question.answer.new ans
             return 9 unless new_answer.public_send action
           end
-        elsif question_fields['qtype'] == 3
+        when "3"
           q['answers'].each do |com_answer|
+            com_answer[:question_id] = question.id
             new_answer = question.composite_answer.new com_answer
             return 10 unless new_answer.public_send action
           end
