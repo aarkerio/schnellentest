@@ -3,11 +3,11 @@
 [![Dependency Status](https://gemnasium.com/shakacode/react-webpack-rails-tutorial.svg)](https://gemnasium.com/shakacode/react-webpack-rails-tutorial)
 [![Coverage Status](https://coveralls.io/repos/shakacode/react-webpack-rails-tutorial/badge.svg?branch=master&service=github)](https://coveralls.io/github/shakacode/react-webpack-rails-tutorial?branch=master)
 
-# Schellen Test
+# Schnellen Test
 
 ![schnellentest](https://raw.githubusercontent.com/aarkerio/schnellentest/master/app/assets/images/schnellen_logo.png)
 
-Create Tests, in a quick and easy way. Apply them Online and grade them automatically. Share your questions with other teachers!
+Create Tests, in a quick and easy way. Apply them online and grade them automatically. Share your questions with other teachers!
 
 Erstellen Sie Tests, auf schnelle und einfache Weise. Wenden Sie sie online und Klasse sie automatisch. Teilen Sie Ihre Fragen mit anderen Lehrern!
 
