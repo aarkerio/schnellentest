@@ -36,11 +36,11 @@
   %tbody
     - @annals.each do |annal|
       - if annal.done
-        =  done_img = 'icon_done.png'
-        =  alt = 'Done'
+        -  done_img = 'icon_done.png'
+        -  alt = 'Done'
       - else
-        =  done_img = 'icon_pending.png'
-        =  alt = 'Pending'
+        -  done_img = 'icon_pending.png'
+        -  alt = 'Pending'
 
       %tr
         %td= annal.notes

@@ -29,22 +29,24 @@ class AnnalsController < ApplicationController
 
   # POST /annals/1/test
   def test
-    message = if @annal.verify_or_save(annal_params)
-                { errors: false, code: 200, message: Chipotle::ApiErrorserror_code(code_message), status: :ok}
-              else
-                { errors: true, message: Chipotle::ApiErrorserror_code(code_message), status: :unprocessable_entity }
-              end
-    return render json: message
+    code_message = @annal.verify_or_save(annal_params)
+    api_message = if code_message == 6
+                    { errors: false, code: 200, message: Chipotle::ApiErrors.error_code(code_message), status: :ok}
+                  else
+                    { errors: true, message: Chipotle::ApiErrors.error_code(code_message), status: :unprocessable_entity }
+                  end
+    return render json: api_message
   end
 
   # POST /annals/1/export
   def export
-    message = if @annal.json_to_test(annal_params, true)
-                { status: :ok, code: 200, message: 'Succesfully exported, thank you'}
-              else
-                { errors: @annal.errors, status: :unprocessable_entity }
-              end
-    return render json: message
+    code_message = @annal.json_to_test(annal_params, true)
+    api_message = if code_message == 6
+                    { errors: false, code: 200, message: Chipotle::ApiErrors.error_code(code_message), status: :ok}
+                  else
+                    { errors: true, message: Chipotle::ApiErrors::error_code(code_message), status: :unprocessable_entity }
+                  end
+    return render json: api_message
   end
 
   # GET /annals/download_file/1

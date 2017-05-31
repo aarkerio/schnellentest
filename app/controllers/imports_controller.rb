@@ -1,4 +1,4 @@
-# Chipotle Software 2016 (c) MIT License
+# Chipotle Software 2016-2017 (c) MIT License
 class ImportsController < ApplicationController
 
   before_action :set_import, only: [:show, :edit, :update, :destroy, :download_file]
@@ -19,6 +19,7 @@ class ImportsController < ApplicationController
               :disposition => 'attachment',
               :url_based_filename => false)
   end
+
   # POST /imports
   def create
     new_params = import_params

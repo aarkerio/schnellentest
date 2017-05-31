@@ -1,5 +1,5 @@
 
-%p#notice Edit File
+%p#notice Process and export a file
 
 .hidden_div#ajax_div
   = image_tag('ajax_load.gif')
@@ -26,7 +26,7 @@
       = f.button 'Test', type: 'button', id: 'test_ajax_button', remote: true, class: 'btn btn-test'
 
     .block_div
-      = f.button 'Download file', type: 'button', id: 'test_ajax_button', remote: true, class: 'btn btn-test'
+      = f.button 'Download file', type: 'button', id: 'download_ajax_button', remote: true, class: 'btn btn-test', 'data-arg1': @annal.id
 
     -unless @annal.done
       .block_div

@@ -1,3 +1,6 @@
+# coding: utf-8
+# frozen_string_literal: true
+# Chipotle Software (c) 2016-2017   GPLv3
 module Chipotle
 module ApiErrors
 
@@ -14,18 +17,18 @@ module ApiErrors
     json
   end
 
-  def error_code(code)
-    erros ={
-           code:1,  message: 'General error, please contact the admin',
-           code:2,  message: 'Record not found',
-           code:3,  message: 'User not authorized',
-           code:4,  message: 'File already saved',
-           code:5,  message: 'Invalid data',
-           code:6,  message: 'Succesfully tested, all looks fine',
-           code:7,  message: 'Error: there is a problem with the test fields',
-           code:8,  message: 'Error: there is a problem with a question field',
-           code:9,  message: 'Error: there is a problem with an answer field',
-           code:10, message: 'Error: there is a problem with a multicolumn answer field'
+  def self.error_code(code)
+    errors = {
+           1  =>  'General error, please contact the admin',
+           2  =>  'Record not found',
+           3  =>  'User not authorized',
+           4  =>  'File already saved',
+           5  =>  'Invalid data',
+           6  =>  'Succesfully tested, all looks fine',
+           7  =>  'Error: there is a problem with the test fields',
+           8  =>  'Error: there is a problem with a question field',
+           9  =>  'Error: there is a problem with an answer field',
+           10 => 'Error: there is a problem with a multicolumn answer field'
     }
     errors[code]
   end
