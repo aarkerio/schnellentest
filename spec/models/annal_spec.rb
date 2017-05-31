@@ -92,7 +92,6 @@ RSpec.describe Annal, type: :model do
     let(:params) { DummyResponses.json_test }
     describe '#validates JSON string whitout problem' do
       it 'JSON is OK' do
-        p " PARAMS >>>>  #{params.inspect}"
         result = annal.verify_or_save params
         expect(result).to eql 6
       end
