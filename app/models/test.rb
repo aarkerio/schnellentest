@@ -3,9 +3,9 @@
 # Chipotle Software (c) 2016 MIT License
 class Test < ApplicationRecord
   belongs_to :user
-  has_many :test_question, -> { order(:order) }
-  has_many :question, through: :test_question
-
+  # has_many :test_question, -> { order(:order) }
+  # has_many :question, through: :test_question
+  has_and_belongs_to_many :question
   validates :title, presence: true
 
   def create_test(params)

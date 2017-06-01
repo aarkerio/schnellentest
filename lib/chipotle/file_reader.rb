@@ -12,16 +12,19 @@ module Chipotle
 
     # Converts json string to hash and verify it, if true save it
     def verify_or_save_json(json, save=false)
-      message = 6
-      action = save ? :save! : :valid?
-      hash = JSON.parse(json)
-      return 7   unless test_valid?(create_test_attrs(hash), action)
+      message = save ? 11 : 6
+      action  = save ? :save! : :valid?
+      hash    = JSON.parse(json)
+      attrs   = create_test_attrs(hash)
+      test    = Test.new attrs
+      #return 7  unless test.public_send action
       hash['questions'].each do |q|
         valid_keys = ['status', 'qtype', 'hint', 'explanation', 'question']
         question_fields = q.slice(*valid_keys)
+        question_fields[:lang] = hash["lang"]
         question = Question.new question_fields
-        return 8 unless question.public_send action  # question validation fails
-        case question_fields['qtype']
+        return 8 unless test.question.public_send action  # question validation fails
+        case question_fields["qtype"]
         when "1"
           q['answers'].each do |ans|
             new_answer = question.answer.new ans
@@ -30,19 +33,12 @@ module Chipotle
           end
         when "3"
           q['answers'].each do |com_answer|
-            com_answer[:question_id] = question.id
             new_answer = question.composite_answer.new com_answer
             return 10 unless new_answer.public_send action
           end
         end
       end
       message
-    end
-
-    # test is valid?
-    def test_valid?(attrs, action)
-      test = Test.new attrs
-      test.public_send action
     end
 
     # it Selects only the fields that we need

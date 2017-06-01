@@ -1,6 +1,6 @@
 # Chipotle Software 2016-2017 (c) MIT License
 class AnnalsController < ApplicationController
-  include Chipotle::ApiErrors
+  include Chipotle::ApiMessages
 
   before_action :set_annal, only: [:show, :edit, :update, :destroy, :download_file, :edit_json, :elaboration, :test, :export]
 
@@ -31,20 +31,20 @@ class AnnalsController < ApplicationController
   def test
     code_message = @annal.verify_or_save(annal_params)
     api_message = if code_message == 6
-                    { errors: false, code: 200, message: Chipotle::ApiErrors.error_code(code_message), status: :ok}
+                    { errors: false, code: 200, message: Chipotle::ApiMessages.message_code(code_message), status: :ok}
                   else
-                    { errors: true, message: Chipotle::ApiErrors.error_code(code_message), status: :unprocessable_entity }
+                    { errors: true, message: Chipotle::ApiMessages.message_code(code_message), status: :unprocessable_entity }
                   end
     return render json: api_message
   end
 
   # POST /annals/1/export
   def export
-    code_message = @annal.json_to_test(annal_params, true)
+    code_message = @annal.verify_or_save(annal_params, true)
     api_message = if code_message == 6
-                    { errors: false, code: 200, message: Chipotle::ApiErrors.error_code(code_message), status: :ok}
+                    { errors: false, code: 200, message: Chipotle::ApiMessages.message_code(code_message), status: :ok}
                   else
-                    { errors: true, message: Chipotle::ApiErrors::error_code(code_message), status: :unprocessable_entity }
+                    { errors: true, message: Chipotle::ApiMessages.message_code(code_message), status: :unprocessable_entity }
                   end
     return render json: api_message
   end
