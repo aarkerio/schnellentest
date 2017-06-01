@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170404232007) do
+ActiveRecord::Schema.define(version: 20170601212900) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,16 +76,6 @@ ActiveRecord::Schema.define(version: 20170404232007) do
     t.index ["user_id"], name: "index_imports_on_user_id"
   end
 
-  create_table "question_tests", id: :serial, force: :cascade do |t|
-    t.integer "test_id"
-    t.integer "question_id"
-    t.integer "order"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["question_id"], name: "index_question_tests_on_question_id"
-    t.index ["test_id"], name: "index_question_tests_on_test_id"
-  end
-
   create_table "questions", id: :serial, force: :cascade do |t|
     t.integer "user_id"
     t.text "question", null: false
@@ -105,6 +95,11 @@ ActiveRecord::Schema.define(version: 20170404232007) do
     t.integer "status", default: 0, null: false
     t.index ["searchtext"], name: "ques_idx", using: :gin
     t.index ["user_id"], name: "index_questions_on_user_id"
+  end
+
+  create_table "questions_tests", id: false, force: :cascade do |t|
+    t.bigint "question_id", null: false
+    t.bigint "test_id", null: false
   end
 
   create_table "tests", id: :serial, force: :cascade do |t|
