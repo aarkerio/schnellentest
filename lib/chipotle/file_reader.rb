@@ -17,7 +17,7 @@ module Chipotle
       hash    = JSON.parse(json)
       attrs   = create_test_attrs(hash)
       test    = Test.new attrs
-      #return 7  unless test.public_send action
+      return 7  unless test.public_send action
       hash['questions'].each do |q|
         valid_keys = ['status', 'qtype', 'hint', 'explanation', 'question']
         question_fields = q.slice(*valid_keys)

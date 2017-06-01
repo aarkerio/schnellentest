@@ -23,13 +23,9 @@ question_1 = { user_id: tchr_1.id, question: ipsum, hint: ipsum, explanation: ip
 question_2 = { user_id: tchr_1.id, question: ipsum, hint: ipsum, explanation: ipsum, tags: ipsum, worth: 1, active: true, qtype: 1 }
 question_3 = { user_id: tchr_1.id, question: ipsum, hint: ipsum, explanation: ipsum, tags: ipsum, worth: 1, active: true, qtype: 1 }
 
-q1 = Question.create! question_1
-q2 = Question.create! question_2
-q3 = Question.create! question_3
-
-tq1 = QuestionTest.create! test_id: test_1.id, question_id: q1.id
-tq2 = QuestionTest.create! test_id: test_1.id, question_id: q2.id
-tq3 = QuestionTest.create! test_id: test_1.id, question_id: q3.id
+tq1 = test_1.question.create! question_1
+tq2 = test_1.question.create! test_id: test_1.id, question_id: q2.id
+tq3 = test_1.question.create! test_id: test_1.id, question_id: q3.id
 
 answer_1 = Answer.create! answer: 'This is the Answer 1111', correct: true,  question_id: q1.id
 answer_2 = Answer.create! answer: 'This is the Answer 222', correct: true,  question_id: q1.id
