@@ -1,10 +1,10 @@
-# GPLv3 Chipotle Software (c) 2016
+# GPLv3 Chipotle Software (c) 2016-2017
 
-class TestQuestion < ApplicationRecord
+class QuestionTest < ApplicationRecord
   belongs_to :test
   belongs_to :question
 
-  validates :test_id, presence: true 
+  validates :test_id, presence: true
   validates :question_id, presence: true
 
   before_create :set_order
@@ -16,13 +16,13 @@ class TestQuestion < ApplicationRecord
   def previous
     self.class.where("\"order\" < ? AND test_id = ?", order, test_id).order("\"order\" DESC").first
   end
-  
+
   def unlink(params)
     tq = TestQuestion.where(test_id: params[:test_id], question_id: params[:id]).first
     tq.destroy
   end
 
-  private 
+  private
 
   # Private.
   # Set sequence on order column

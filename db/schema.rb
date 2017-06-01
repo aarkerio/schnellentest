@@ -76,6 +76,16 @@ ActiveRecord::Schema.define(version: 20170404232007) do
     t.index ["user_id"], name: "index_imports_on_user_id"
   end
 
+  create_table "question_tests", id: :serial, force: :cascade do |t|
+    t.integer "test_id"
+    t.integer "question_id"
+    t.integer "order"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["question_id"], name: "index_question_tests_on_question_id"
+    t.index ["test_id"], name: "index_question_tests_on_test_id"
+  end
+
   create_table "questions", id: :serial, force: :cascade do |t|
     t.integer "user_id"
     t.text "question", null: false
@@ -95,16 +105,6 @@ ActiveRecord::Schema.define(version: 20170404232007) do
     t.integer "status", default: 0, null: false
     t.index ["searchtext"], name: "ques_idx", using: :gin
     t.index ["user_id"], name: "index_questions_on_user_id"
-  end
-
-  create_table "test_questions", id: :serial, force: :cascade do |t|
-    t.integer "test_id"
-    t.integer "question_id"
-    t.integer "order"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["question_id"], name: "index_test_questions_on_question_id"
-    t.index ["test_id"], name: "index_test_questions_on_test_id"
   end
 
   create_table "tests", id: :serial, force: :cascade do |t|
@@ -156,8 +156,6 @@ ActiveRecord::Schema.define(version: 20170404232007) do
   add_foreign_key "images", "users"
   add_foreign_key "imports", "users"
   add_foreign_key "questions", "users"
-  add_foreign_key "test_questions", "questions"
-  add_foreign_key "test_questions", "tests"
   add_foreign_key "tests", "users"
   add_foreign_key "users", "groups"
 end
