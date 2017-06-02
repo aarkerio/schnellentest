@@ -47,26 +47,25 @@ module Chipotle
     def save_json(json, user_id)
       message = 11
       hash    = JSON.parse(json)
-      attrs   = create_test_attrs(hash, params['user_id'])
+      attrs   = create_test_attrs(hash, user_id)
       test    = Test.new(attrs)
       return 7  unless test.save!
-      logger.debug "####  HHHHHHHH 25 #################>>>  #{test.inspect}"
       hash['questions'].each do |q|
         valid_keys = ['status', 'qtype', 'hint', 'explanation', 'question']
         question_fields = q.slice(*valid_keys)
-        question_fields[:lang] = hash["lang"]
-        return 8 unless test.questions.create  # question validation fails
+        question_fields[:lang] = hash['lang']
+        question = test.questions.new question_fields
+        return 8 unless question.save!    # question validation fails
         case question_fields["qtype"]
         when "1"
           q['answers'].each do |ans|
             new_answer = question.answer.new ans
-            result = new_answer.public_send action
-            return 9 unless new_answer.public_send action
+            return 9 unless new_answer.save!
           end
         when "3"
           q['answers'].each do |com_answer|
             new_answer = question.composite_answer.new com_answer
-            return 10 unless new_answer.public_send action
+            return 10 unless new_answer.save!
           end
         end
       end

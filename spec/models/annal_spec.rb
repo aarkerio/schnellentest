@@ -47,7 +47,7 @@ RSpec.describe Annal, type: :model do
     let(:params) { DummyResponses.json_test(false, true) }
     describe '#validates test JSON' do
       it 'fails to validates JSON' do
-        result = annal.verify_or_save params
+        result = annal.verify_or_save(params, user.id)
         expect(result).to eql 7
       end
     end
@@ -58,7 +58,7 @@ RSpec.describe Annal, type: :model do
     let(:params) { DummyResponses.json_test(false, false, true) }
     describe '#validates JSON questions' do
       it 'fails to questions JSON' do
-        result = annal.verify_or_save params
+        result = annal.verify_or_save(params, user.id)
         expect(result).to eql 8
       end
     end
@@ -70,7 +70,7 @@ RSpec.describe Annal, type: :model do
     describe '#validates JSON answers' do
       it 'fails to questions JSON' do
         # p " PARAMS >>>>   #{params.inspect}"
-        result = annal.verify_or_save params
+        result = annal.verify_or_save(params, user.id)
         expect(result).to eql 9
       end
     end
@@ -81,7 +81,7 @@ RSpec.describe Annal, type: :model do
     let(:params) { DummyResponses.json_test(true) }
     describe '#validates JSON' do
       it 'fails to test JSON' do
-        result = annal.verify_or_save params
+        result = annal.verify_or_save(params, user.id)
         expect(result).to eql 1
       end
     end
@@ -92,7 +92,7 @@ RSpec.describe Annal, type: :model do
     let(:params) { DummyResponses.json_test }
     describe '#validates JSON string whitout problem' do
       it 'JSON is OK' do
-        result = annal.verify_or_save params
+        result = annal.verify_or_save(params, user.id)
         expect(result).to eql 6
       end
     end
@@ -103,8 +103,8 @@ RSpec.describe Annal, type: :model do
     let(:params) { DummyResponses.json_test }
     describe '#saves JSON string whitout problem' do
       it 'JSON is OK, new test created' do
-        result = annal.verify_or_save(params, true)
-        expect(result).to eql 6
+        result = annal.verify_or_save(params, user.id, true)
+        expect(result).to eql 11
       end
     end
   end
