@@ -20,8 +20,6 @@
     "cldr-data": "^28.0.4",
     "cldrjs": "^0.4.4",
     "commonjs": "0.0.1",
-    "cookie": "^0.2.3",
-    "cookies": "^0.5.1",
     "core-js": "^2.4.1",
     "css-loader": "^0.23.1",
     "es6-promise": "^3.3.0",
@@ -52,7 +50,6 @@
     "react-addons-transition-group": "^15.3.0",
     "react-alert": "^2.0.1",
     "react-bootstrap": "^0.31.0",
-    "react-cookie": "^0.4.9",
     "react-dom": "^15.0.0",
     "react-redux": "^5.0.5",
     "react-router": "^3.0.2",
@@ -67,6 +64,7 @@
     "resolve-url-loader": "^2.0.0",
     "sass-loader": "^6.0.2",
     "style-loader": "^0.13.2",
+    "universal-cookie": "^2.0.8",
     "url-loader": "^0.5.8"
   },
   "scripts": {

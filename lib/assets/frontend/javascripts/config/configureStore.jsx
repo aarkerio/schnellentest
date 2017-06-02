@@ -7,14 +7,15 @@ import rootReducer from '../reducers/index';
 
 import { routerReducer } from 'react-router-redux';
 
- let config = {
+let config = {
     apiKey: "AIzaSyChwqJStEFV_jHxtWcsNTFvoDzi2DLDDRE",
     authDomain: "schnellentest.firebaseapp.com",
     databaseURL: "https://schnellentest.firebaseio.com",
     storageBucket: "",
     messagingSenderId: "254335011558"
-  };
-  // firebase.initializeApp(config);
+};
+
+ // firebase.initializeApp(config);
 
 export default function configureStore(initialState) {
 

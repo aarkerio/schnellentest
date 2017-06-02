@@ -1683,16 +1683,6 @@ cookie@0.3.1, cookie@^0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.3.1.tgz#e7e0a1f9ef43b4c8ba925c5c5a96e806d16873bb"
 
-cookie@^0.2.3:
-  version "0.2.4"
-  resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.2.4.tgz#a8c155aa7b9b2cf2c4d32ebc7b9a0aa288ccc6bd"
-
-cookies@^0.5.1:
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/cookies/-/cookies-0.5.1.tgz#2560c304fe8f8cbd002e08b9599d2e7479d37298"
-  dependencies:
-    keygrip "~1.0.0"
-
 core-js@^1.0.0:
   version "1.2.7"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-1.2.7.tgz#652294c14651db28fa93bd2d5ff2983a4f08c636"
@@ -3745,10 +3735,6 @@ keycode@^2.1.2:
   version "2.1.9"
   resolved "https://registry.yarnpkg.com/keycode/-/keycode-2.1.9.tgz#964a23c54e4889405b4861a5c9f0480d45141dfa"
 
-keygrip@~1.0.0:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/keygrip/-/keygrip-1.0.1.tgz#b02fa4816eef21a8c4b35ca9e52921ffc89a30e9"
-
 kind-of@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-2.0.1.tgz#018ec7a4ce7e3a86cb9141be519d24c8faa981b5"
@@ -5287,12 +5273,6 @@ react-bootstrap@^0.31.0:
     uncontrollable "^4.1.0"
     warning "^3.0.0"
 
-react-cookie@^0.4.9:
-  version "0.4.9"
-  resolved "https://registry.yarnpkg.com/react-cookie/-/react-cookie-0.4.9.tgz#21a0fcc9c6265aa86bba6d174122acb3851b8736"
-  dependencies:
-    cookie "^0.3.1"
-
 react-deep-force-update@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/react-deep-force-update/-/react-deep-force-update-1.0.1.tgz#f911b5be1d2a6fe387507dd6e9a767aa2924b4c7"
@@ -6596,6 +6576,13 @@ unist-util-remove-position@^1.0.0:
 unist-util-visit@^1.1.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/unist-util-visit/-/unist-util-visit-1.1.1.tgz#e917a3b137658b335cb4420c7da2e74d928e4e94"
+
+universal-cookie@^2.0.8:
+  version "2.0.8"
+  resolved "https://registry.yarnpkg.com/universal-cookie/-/universal-cookie-2.0.8.tgz#e9ab9a2a665bcd847917caee5b1a4c17598eabb9"
+  dependencies:
+    cookie "^0.3.1"
+    object-assign "^4.1.0"
 
 unpipe@~1.0.0:
   version "1.0.0"

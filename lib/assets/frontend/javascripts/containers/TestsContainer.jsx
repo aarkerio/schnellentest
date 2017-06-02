@@ -1,28 +1,32 @@
 'use strict'
 
-import cookie from 'react-cookie'
 import { connect } from 'react-redux'
 import { render } from 'react-dom'
 import * as TestsActionCreators from '../actions/tests'
 import React, { Component } from 'react'
 import { Link, browserHistory } from 'react-router'
 import TestRowComponent   from '../components/TestRowComponent'
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
+import Cookies from 'universal-cookie'
 
 // export for unconnected component (for mocha tests)
 export class TestsContainer extends Component {
+
   constructor(props) {
       super(props);
+      this.state = {
+         user_id: this.props.cookies.get('user_id')
+      };
   }
 
   /**
-   * Load default appointment
+   * Load tests
    **/
   componentWillMount() {
-    if ( ! this.props.TestsArrayProp.length ) {
-      let action = TestsActionCreators.fetchTests(cookie.load('user_id'));
-      this.props.dispatch(action);
-    }
+     if ( ! this.props.TestsArrayProp.length ) {
+       let action = TestsActionCreators.fetchTests(this.state.user_id);
+       this.props.dispatch(action);
+     }
   }
 
   /**
@@ -70,12 +74,14 @@ export class TestsContainer extends Component {
 
 TestsContainer.propTypes = {
   TestsArrayProp: PropTypes.array,
-  dispatch: PropTypes.func
+  dispatch:       PropTypes.func,
+  cookies:        PropTypes.object
 };
 
- TestsContainer.defaultProps = {
-      TestsArrayProp:  []
- };
+TestsContainer.defaultProps = {
+    TestsArrayProp:  [],
+    cookies: new Cookies
+};
 
 const mapStateToProps = (state) => {
   return {

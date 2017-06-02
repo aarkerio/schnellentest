@@ -1,6 +1,7 @@
 !!!
 %html
   %head
+    = favicon_link_tag 'images/favicon.ico'
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
     %title ::Schnell Test::
     = javascript_include_tag Rails.env.development? ? 'http://localhost:8080/build/styles.js'  : '/assets/styles.js'

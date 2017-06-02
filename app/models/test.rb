@@ -82,7 +82,7 @@ class Test < ApplicationRecord
     all[:active]      = active
     all[:shared]      = shared
     all[:questions]   = []
-    question.select(:id, :question, :hint, :explanation, :tags, :qtype, :active, :lang, :worth, :status).each do |q|
+    questions.select(:id, :question, :hint, :explanation, :tags, :qtype, :active, :lang, :worth, :status).each do |q|
       all[:questions] << q
     end
     all

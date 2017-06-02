@@ -1,6 +1,5 @@
 'use strict';
 
-import cookie from 'react-cookie';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link, browserHistory } from 'react-router';

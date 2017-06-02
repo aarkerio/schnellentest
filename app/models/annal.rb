@@ -19,9 +19,11 @@ class Annal < ApplicationRecord
   def verify_or_save(params, user_id, save=false)
     return 4 if done
     begin
-      verify_or_save_json(params[:json], user_id, save)
+      message = verify_or_save_json(params[:json], user_id, save)
+      self.update_attribute(:done, true)  if message == 11
+      message
     rescue  => e
-      logger.debug "## Test Exception ###>>>  #{e.inspect}"
+      logger.debug "## Test Exception on verify or save ###>>>  #{e.inspect}"
       1 # general error
     end
   end

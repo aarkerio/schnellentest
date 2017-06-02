@@ -105,6 +105,8 @@ RSpec.describe Annal, type: :model do
       it 'JSON is OK, new test created' do
         result = annal.verify_or_save(params, user.id, true)
         expect(result).to eql 11
+        annal.reload
+        expect(annal.done).to eql true
       end
     end
   end

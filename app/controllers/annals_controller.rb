@@ -41,7 +41,7 @@ class AnnalsController < ApplicationController
   # POST /annals/1/export
   def export
     code_message = @annal.verify_or_save(annal_params, current_user.id, true)
-    api_message = if code_message == 6
+    api_message = if code_message == 11
                     { errors: false, code: 200, message: Chipotle::ApiMessages.message_code(code_message), status: :ok}
                   else
                     { errors: true, message: Chipotle::ApiMessages.message_code(code_message), status: :unprocessable_entity }

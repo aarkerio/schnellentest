@@ -1,24 +1,25 @@
 'use strict';
 
-import cookie from 'react-cookie';
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Link, browserHistory } from 'react-router';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import * as testsActionCreators from '../actions/tests';
-import { Button, Modal } from 'react-bootstrap';
+import Cookies from 'universal-cookie'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { Link, browserHistory } from 'react-router'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import * as testsActionCreators from '../actions/tests'
+import { Button, Modal } from 'react-bootstrap'
 
 class TestModalNewComponent extends Component {
   constructor(props) {
     super(props);
-    this.state = { showModal:      true,
-                   user_id:        0,
-                   description:    'Brief description',
-                   tags:           'France, Revolution, History',
-                   title:          'Some title',
-                   active:         true,
-                   shared:         false
+    this.state = { showModal:   true,
+                   user_id:     0,
+                   description: 'Brief description',
+                   tags:        'France, Revolution, History',
+                   title:       'Some title',
+                   active:      true,
+                   shared:      false,
+                   user_id:     this.props.cookies.get('user_id')
              };
   }
 
@@ -29,7 +30,7 @@ class TestModalNewComponent extends Component {
     e.preventDefault();
 
     let fields = {
-         user_id:     cookie.load('user_id'),
+         user_id:     this.state.user_id,
          title:       this.state.title,
          description: this.state.description,
          tags:        this.state.tags,
@@ -133,8 +134,14 @@ class TestModalNewComponent extends Component {
 
 TestModalNewComponent.propTypes = {
     backdropStyle: PropTypes.string,
-    dispatch:      PropTypes.func
+    dispatch:      PropTypes.func,
+    cookies:       PropTypes.object
 };
+
+TestModalNewComponent.defaultProps = {
+    cookies: new Cookies
+};
+
 
 // binding React-Redux
 export default connect()(TestModalNewComponent);

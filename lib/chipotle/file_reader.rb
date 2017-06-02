@@ -49,7 +49,7 @@ module Chipotle
       hash    = JSON.parse(json)
       attrs   = create_test_attrs(hash, user_id)
       test    = Test.new(attrs)
-      return 7  unless test.save!
+      return 7  unless test.save!   # test validation fails
       hash['questions'].each do |q|
         valid_keys = ['status', 'qtype', 'hint', 'explanation', 'question']
         question_fields = q.slice(*valid_keys)
@@ -62,12 +62,12 @@ module Chipotle
         when "1"
           q['answers'].each do |ans|
             new_answer = question.answer.new ans
-            return 9 unless new_answer.save!
+            return 9 unless new_answer.save!  # answer validation fails
           end
         when "3"
           q['answers'].each do |com_answer|
             new_answer = question.composite_answer.new com_answer
-            return 10 unless new_answer.save!
+            return 10 unless new_answer.save!  # answer validation fails
           end
         end
       end

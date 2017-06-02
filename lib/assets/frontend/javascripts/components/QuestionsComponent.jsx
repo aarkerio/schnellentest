@@ -1,6 +1,6 @@
 'use strict'
 
-import cookie from 'react-cookie'
+import Cookies from 'universal-cookie'
 import { connect } from 'react-redux'
 import { render } from 'react-dom'
 import { dialogStyle, modalConfig } from '../config/modals'
@@ -43,6 +43,10 @@ export class QuestionsComponent extends Component {
       //Test mocha:  console.log('This props >>>>>>' + JSON.stringify(this.props));
   }
 
+  static propTypes = {
+      cookies: new Cookies()
+  };
+
   /**
    * Load test data and questions
    **/
@@ -79,7 +83,7 @@ export class QuestionsComponent extends Component {
     e.preventDefault()
 
     let fields = {question: {
-      user_id:     cookie.load('user_id'),
+      user_id:     this.props.cookies.get('user_id'),
       question:    this.state.question,
       explanation: this.state.explanation,
       hint:        this.state.hint,
