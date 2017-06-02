@@ -53,9 +53,11 @@ module Chipotle
       hash['questions'].each do |q|
         valid_keys = ['status', 'qtype', 'hint', 'explanation', 'question']
         question_fields = q.slice(*valid_keys)
-        question_fields[:lang] = hash['lang']
-        question = test.questions.new question_fields
+        question_fields[:lang]    = hash['lang']
+        question_fields[:user_id] = user_id
+        question = Question.new question_fields
         return 8 unless question.save!    # question validation fails
+        test.question_tests.create! question_id: question.id
         case question_fields["qtype"]
         when "1"
           q['answers'].each do |ans|

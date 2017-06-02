@@ -5,7 +5,9 @@ class Test < ApplicationRecord
 
   belongs_to :user
 
-  has_and_belongs_to_many :questions, -> { order(:order) }
+  has_many :question_tests, -> { order(:order) }
+  has_many :questions, through: :question_tests
+
   validates :title, presence: true
 
   def create_test(params)

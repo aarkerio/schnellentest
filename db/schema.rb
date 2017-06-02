@@ -76,6 +76,12 @@ ActiveRecord::Schema.define(version: 20170601212900) do
     t.index ["user_id"], name: "index_imports_on_user_id"
   end
 
+  create_table "question_tests", id: false, force: :cascade do |t|
+    t.bigint "question_id", null: false
+    t.bigint "test_id", null: false
+    t.integer "order", null: false
+  end
+
   create_table "questions", id: :serial, force: :cascade do |t|
     t.integer "user_id"
     t.text "question", null: false
@@ -95,11 +101,6 @@ ActiveRecord::Schema.define(version: 20170601212900) do
     t.integer "status", default: 0, null: false
     t.index ["searchtext"], name: "ques_idx", using: :gin
     t.index ["user_id"], name: "index_questions_on_user_id"
-  end
-
-  create_table "questions_tests", id: false, force: :cascade do |t|
-    t.bigint "question_id", null: false
-    t.bigint "test_id", null: false
   end
 
   create_table "tests", id: :serial, force: :cascade do |t|
