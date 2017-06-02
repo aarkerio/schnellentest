@@ -10,20 +10,52 @@ module Chipotle
       DocRipper::rip(file)
     end
 
+    def verify_or_save_json(json, user_id, save)
+      if save
+        save_json(json, user_id)
+      else
+        verify_json(json, user_id)
+      end
+    end
+
     # Converts json string to hash and verify it, if true save it
-    def verify_or_save_json(json, save=false)
-      message = save ? 11 : 6
-      action  = save ? :save! : :valid?
+    def verify_json(json, user_id)
+      message = 6
       hash    = JSON.parse(json)
-      attrs   = create_test_attrs(hash)
-      test    = Test.new attrs
-      return 7  unless test.public_send action
+      attrs   = create_test_attrs(hash, user_id)
+      return 7  unless Test.new(attrs).valid?
       hash['questions'].each do |q|
         valid_keys = ['status', 'qtype', 'hint', 'explanation', 'question']
         question_fields = q.slice(*valid_keys)
         question_fields[:lang] = hash["lang"]
-        question = Question.new question_fields
-        return 8 unless test.question.public_send action  # question validation fails
+        return 8 unless Question.new(question_fields).valid?  # question validation fails
+        case question_fields["qtype"]
+        when "1"
+          q['answers'].each do |ans|
+            return 9 unless Answer.new(ans).valid?
+          end
+        when "3"
+          q['answers'].each do |com_answer|
+            return 10 unless CompositeAnswer.new(com_answer).valid?
+          end
+        end
+      end
+      message
+    end
+
+    # Save JSON -> new test
+    def save_json(json, user_id)
+      message = 11
+      hash    = JSON.parse(json)
+      attrs   = create_test_attrs(hash, params['user_id'])
+      test    = Test.new(attrs)
+      return 7  unless test.save!
+      logger.debug "####  HHHHHHHH 25 #################>>>  #{test.inspect}"
+      hash['questions'].each do |q|
+        valid_keys = ['status', 'qtype', 'hint', 'explanation', 'question']
+        question_fields = q.slice(*valid_keys)
+        question_fields[:lang] = hash["lang"]
+        return 8 unless test.questions.create  # question validation fails
         case question_fields["qtype"]
         when "1"
           q['answers'].each do |ans|
@@ -42,7 +74,7 @@ module Chipotle
     end
 
     # it Selects only the fields that we need
-    def create_test_attrs(hash)
+    def create_test_attrs(hash, user_id)
       {
         title:        hash['title'],
         description:  hash['description'],
@@ -50,7 +82,8 @@ module Chipotle
         level:        hash['level'],
         lang:         hash['lang'],
         tags:         hash['tags'],
-        origin:       hash['origin']
+        origin:       hash['origin'],
+        user_id:      user_id
       }
     end
 

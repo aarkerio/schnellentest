@@ -2,10 +2,10 @@
 # frozen_string_literal: true
 # Chipotle Software (c) 2016 MIT License
 class Test < ApplicationRecord
+
   belongs_to :user
-  # has_many :test_question, -> { order(:order) }
-  # has_many :question, through: :test_question
-  has_and_belongs_to_many :questions
+
+  has_and_belongs_to_many :questions, -> { order(:order) }
   validates :title, presence: true
 
   def create_test(params)
