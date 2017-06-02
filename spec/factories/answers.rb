@@ -1,4 +1,4 @@
-# Chipotle Software (c) 2016   MIT License 
+# Chipotle Software (c) 2016-2017   MIT License
 FactoryGirl.define do
   factory :answer do
     answer { 'Die Antwort ist ' + FFaker::Lorem.words.join(' ')   }

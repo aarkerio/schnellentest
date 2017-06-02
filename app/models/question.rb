@@ -13,7 +13,9 @@ class Question < ApplicationRecord
   def create_question(params)
     test = Test.find params['test_id']
     create_params = order_params params
-    test.question.create create_params
+    question = Question.new(create_params)
+    question.save!
+    test.question_tests.create! question_id: question.id
   end
 
   def get_one(id)

@@ -2,19 +2,16 @@ require 'spec_helper'
 
 RSpec.describe Api::V1::QuestionsController, type: :request do
 
-  before(:each) do
-    group       = FactoryGirl.create :group
-    @user       = FactoryGirl.create :user, group: group
-    tests       = FactoryGirl.create_list :test, 5, user: @user
-    @test       = tests.first
-    @question   = FactoryGirl.create :question, user: @user
-    test_quest = FactoryGirl.create :test_question, test: @test, question: @question
-    answers     = FactoryGirl.create_list :answer, 5, question: @question
-  end
+  let(:group)      { FactoryGirl.create :group }
+  let(:user)       { FactoryGirl.create :user, group: group }
+  let(:test)       { FactoryGirl.create :test, user: user}
+  let(:question)   { FactoryGirl.create :question, user: user }
+  let(:quest_test) { FactoryGirl.create :question_tests, test: test, question: question }
+  let!(:answers)   { FactoryGirl.create_list :answer, 5, question: question }
 
   describe "POST#get_one" do
     it "returns a successful listing response" do
-      post :get_one, {params: {id: @question.id}}
+      post api_v1_questions_get_one_path, {params: {id: question.id}}
       expect(response).to be_success
       json = JSON.parse(response.body)
       # puts "response  #{response.body.inspect} "
@@ -23,10 +20,11 @@ RSpec.describe Api::V1::QuestionsController, type: :request do
   end
 
   describe "POST#create" do
-    let(:question) { FactoryGirl.attributes_for :question, user: @user }
+    let(:question_1) { FactoryGirl.attributes_for :question, user: user }
     it "returns a successful save response" do
-      question['test_id'] = @test.id
-      post :create, {params: {question: question}}
+      question_1['test_id'] = test.id
+      question_1['user_id'] = user.id
+      post api_v1_questions_create_path, {params: {question: question_1}}
       expect(response).to be_success
       json = JSON.parse(response.body)
       expect(json['message'][0..7]).to eq('Question')
@@ -34,8 +32,9 @@ RSpec.describe Api::V1::QuestionsController, type: :request do
   end
 
   describe "DELETE#delete" do
+    let(:quest_test_1) { FactoryGirl.create :question_tests, test: test, question: question }
     it "returns a successful remove response" do
-      delete :delete, {params: {id: @question.id, test_id: @test.id}}
+      delete api_v1_questions_delete_path, {params: {id: quest_test_1.question_id, test_id: quest_test_1.test_id}}
       expect(response).to be_success
       json = JSON.parse(response.body)
       expect(json['message'][0..7]).to eq('Question')
@@ -43,3 +42,4 @@ RSpec.describe Api::V1::QuestionsController, type: :request do
   end
 
 end
+
