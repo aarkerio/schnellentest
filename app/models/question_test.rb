@@ -9,16 +9,16 @@ class QuestionTest < ApplicationRecord
 
   before_create :set_order
 
-  def next
-    self.class.where("\"order\" > ? AND test_id = ?", order, test_id).order("\"order\" ASC").first
-  end
-
   def previous
     self.class.where("\"order\" < ? AND test_id = ?", order, test_id).order("\"order\" DESC").first
   end
 
+  def next
+    self.class.where("\"order\" > ? AND test_id = ?", order, test_id).order("\"order\" ASC").first
+  end
+
   def unlink(params)
-    tq = TestQuestion.where(test_id: params[:test_id], question_id: params[:id]).first
+    tq = QuestionTest.where(test_id: params[:test_id], question_id: params[:id]).first
     tq.destroy
   end
 
@@ -27,8 +27,8 @@ class QuestionTest < ApplicationRecord
   # Private.
   # Set sequence on order column
   def set_order
-    test_question = self.class.where("test_id = ?", test_id).order("\"order\" DESC").first
-    order = (test_question.nil? || test_question.order.nil?)  ?  1  :  test_question.order.to_i + 1
+    question_test = self.class.where("test_id = ?", test_id).order("\"order\" DESC").first
+    order = (question_test.nil? || question_test.order.nil?)  ?  1  :  question_test.order.to_i + 1
     self.order   = order
   end
 end

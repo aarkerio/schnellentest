@@ -38,17 +38,18 @@ class Test < ApplicationRecord
   end
 
   def reorder(params)
-    tq = test_question.where(question_id: params[:question_id].to_i).first
+    qt = question_tests.where(question_id: params[:question_id].to_i).first
+    p "   ########   QT >>>>>>>>>  #{qt.inspect}"
     if params[:way] == 'down'
-      tq_up = tq.next
-      order = tq_up.order
-      tq_up.update_attribute(:order, tq.order)
-      tq.update_attribute(:order, order)
+      qt_up = qt.next
+      order = qt_up.order
+      qt_up.update_attribute(:order, qt.order)
+      qt.update_attribute(:order, order)
     else
-      tq_down = tq.previous
-      order = tq_down.order
-      tq_down.update_attribute(:order, tq.order)
-      tq.update_attribute(:order, order)
+      qt_go_down = qt.next
+      order = qt_go_down.order.to_i
+      qt_go_down.update_attribute(:order, qt.order.to_i)
+      qt.update_attribute(:order, order)
     end
     true
   end

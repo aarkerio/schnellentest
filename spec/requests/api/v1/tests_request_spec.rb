@@ -27,21 +27,40 @@ RSpec.describe Api::V1::TestsController, type: :request do
   end
 
   describe "PATCH#reorder" do
-    let(:test)  { FactoryGirl.create :test, user: user }
-    let(:question_1) { FactoryGirl.create :question, question: 'Frage Eins' }
-    let(:question_2) { FactoryGirl.create :question, question: 'Frage Zweig' }
-    let(:question_3) { FactoryGirl.create :question, question: 'Frage Drei' }
-    let(:test_question) { FactoryGirl.create :test_question, test: test.id, question: [question_1.id, question_2.id, question_3.id,] }
-    it "returns a successful 200 response for reorder action" do
-      patch api_v1_tests_reorder_path, {params: {test: {id: test.id}}}
-
-      {id: test.id, test:{
-                       question_id: question_id,
-                       id: test.id,
-                       way: 'up' }}
+    let(:test)             { FactoryGirl.create :test, user: user }
+    let(:question_test_1)  { FactoryGirl.create :question_with_test, question: 'Frage Eins',  user: user, test: test }
+    let(:question_test_2)  { FactoryGirl.create :question_with_test, question: 'Frage Zweig', user: user, test: test }
+    let(:question_test_3)  { FactoryGirl.create :question_with_test, question: 'Frage Drei',  user: user, test: test }
+    it "move the question up and successful 200" do
+      question_test_1
+      question_test_2
+      question_test_3
+      qt = test.question_tests.where( question_id: question_test_2.id).first
+      start_order = qt.order.to_i
+      patch api_v1_tests_reorder_path, {params: {id: test.id, test:{
+                                                 question_id: question_test_2.id,
+                                                 way: 'up' }} }
+      finish_order = qt.reload.order.to_i
       expect(response).to be_success
       json = JSON.parse(response.body)
-      expect(json['title']).to eq(test.title)
+      expect(json['message']).to eq('Question was sorted succesfully')
+      expect(start_order).to be < finish_order
+    end
+
+    it "move the question down and successful 200" do
+      question_test_1
+      question_test_2
+      question_test_3
+      qt = test.question_tests.where( question_id: question_test_2.id).first
+      start_order = qt.order.to_i
+      patch api_v1_tests_reorder_path, {params: {id: test.id, test:{
+                                                 question_id: question_test_2.id,
+                                                 way: 'down' }} }
+      finish_order = qt.reload.order.to_i
+      expect(response).to be_success
+      json = JSON.parse(response.body)
+      expect(json['message']).to eq('Question was sorted succesfully')
+      expect(start_order).to be < finish_order
     end
   end
 

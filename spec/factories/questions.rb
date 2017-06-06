@@ -8,9 +8,19 @@ FactoryGirl.define do
     explanation { 'Explanation ' + FFaker::Lorem.words.join(' ')   }
     worth 1
     active false
-    qtype true
+    qtype 1
     user nil
     lang 'en'
     status 0
+    factory :question_with_test do
+       transient do
+         test nil
+       end
+
+       after(:create) do |question, evaluator|
+         create(:question_tests, question: question, test: evaluator.test)
+       end
+     end
   end
+
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170601212900) do
+ActiveRecord::Schema.define(version: 20170606194920) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,7 +76,7 @@ ActiveRecord::Schema.define(version: 20170601212900) do
     t.index ["user_id"], name: "index_imports_on_user_id"
   end
 
-  create_table "question_tests", id: false, force: :cascade do |t|
+  create_table "question_tests", force: :cascade do |t|
     t.bigint "question_id", null: false
     t.bigint "test_id", null: false
     t.integer "order", null: false

@@ -21,7 +21,7 @@ module V1
       return render json: test_data
     end
 
-    # Reorder queston in the test.  PATCH /api/v1/questions/reorder
+    # Reorder questions in the test.  PATCH /api/v1/questions/reorder
     #
     # Returns a json object.
     def reorder
