@@ -304,12 +304,14 @@ export class QuestionsComponent extends Component {
 QuestionsComponent.propTypes = {
   OneTestArrayProp:   PropTypes.object,
   QuestionsArrayProp: PropTypes.array,
-  dispatch:           PropTypes.func
+  dispatch:           PropTypes.func,
+  cookies:            PropTypes.object
 }
 
 QuestionsComponent.defaultProps = {
   OneTestArrayProp:  {},
-  QuestionsArrayProp: []
+  QuestionsArrayProp: [],
+  cookies: new Cookies
 }
 
 const mapStateToProps = (state) => {
