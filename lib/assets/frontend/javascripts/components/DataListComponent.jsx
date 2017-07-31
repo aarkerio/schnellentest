@@ -1,9 +1,11 @@
-// Chipotle Software (c) 2016  MIT License
+// Chipotle Software (c) 2016-2017
+
+import PropTypes from 'prop-types'
 
 class DataList extends Component {
   constructor(props) {
     super(props);
-    this.state   = { showModal: true,
+    this.state = { showModal: true,
                      childSelectValue: undefined,
                      getOptions: [],
                      url: '/appointments/get_data',
@@ -11,7 +13,6 @@ class DataList extends Component {
                      options: []
       }
     },
-
     changeList: function(e) {
       console.log('>>>>>>>>>>>>>>>>>>>>>>>>>In changeList');
       var tmp = this.getData(e);
@@ -71,20 +72,19 @@ class DataList extends Component {
 }
 
 DataList.propTypes: {
-      value:      PropTypes.string,
-      onChange:   PropTypes.func
-    }
+  value:      PropTypes.string,
+  onChange:   PropTypes.func
+}
 
- DataList.defaultProps = {
-      apposArrayProp:  []
- };
+DataList.defaultProps = {
+  apposArrayProp:  []
+}
 
 const mapStateToProps = (state) => {
   return {
     appo: state.rootReducer.appointments_rdcer.apposArrayProp
   }
-};
+}
 
-export default connect(mapStateToProps)(DataListComponent);
-
+export default connect(mapStateToProps)(DataListComponent)
 

@@ -13,10 +13,10 @@ import Cookies from 'universal-cookie'
 export class TestsContainer extends Component {
 
   constructor(props) {
-      super(props);
+      super(props)
       this.state = {
          user_id: this.props.cookies.get('user_id')
-      };
+      }
   }
 
   /**
@@ -24,8 +24,8 @@ export class TestsContainer extends Component {
    **/
   componentWillMount() {
      if ( ! this.props.TestsArrayProp.length ) {
-       let action = TestsActionCreators.fetchTests(this.state.user_id);
-       this.props.dispatch(action);
+       let action = TestsActionCreators.fetchTests(this.state.user_id)
+       this.props.dispatch(action)
      }
   }
 
@@ -39,7 +39,7 @@ export class TestsContainer extends Component {
   render() {
     let rows = [];
     this.props.TestsArrayProp.forEach(function(test) {
-       rows.push(<TestRowComponent test={test} key={test.id} keyRow={test.id} />);
+       rows.push(<TestRowComponent test={test} key={test.id} keyRow={test.id} />)
     });
 
     return (
@@ -76,18 +76,18 @@ TestsContainer.propTypes = {
   TestsArrayProp: PropTypes.array,
   dispatch:       PropTypes.func,
   cookies:        PropTypes.object
-};
+}
 
 TestsContainer.defaultProps = {
     TestsArrayProp:  [],
     cookies: new Cookies
-};
+}
 
 const mapStateToProps = (state) => {
   return {
     TestsArrayProp: state.rootReducer.tests_rdcr.TestsArrayProp
   }
-};
+}
 
-export default connect(mapStateToProps)(TestsContainer);
+export default connect(mapStateToProps)(TestsContainer)
 
