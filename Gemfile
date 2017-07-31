@@ -18,6 +18,7 @@ gem 'doc_ripper'
 
 # Use Puma as the app server
 gem 'puma'
+gem 'draper'  # presenters
 
 # Use Capistrano for deployment
 gem 'capistrano-rails'
