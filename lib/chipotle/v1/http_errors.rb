@@ -1,3 +1,6 @@
+# coding: utf-8
+# frozen_string_literal: true
+# Chipotle Software (c) 2016-2017 MIT License
 module Chipotle
     module V1
       module HttpErrors

@@ -37,29 +37,31 @@ export class TestsContainer extends Component {
   }
 
   render() {
-    let rows = [];
+    let rows = []
     this.props.TestsArrayProp.forEach(function(test) {
        rows.push(<TestRowComponent test={test} key={test.id} keyRow={test.id} />)
-    });
+    })
 
     return (
       <div className="container_div">
-      <div><Link to="/testnew">
+      <div>
+        <Link to="/testnew">
             <button type="button" className="btn btn-default btn-sm">
               <span className="glyphicon glyphicon-plus"></span>
             </button>
-         </Link></div>
+        </Link>
+      </div>
       <table className="table_class">
         <thead>
           <tr>
-             <th style={{width: '35px', padding:0}} key='kedit'>Edit</th>
-             <th style={{width: '35px', padding:0}} key='kquestions'>Questions</th>
-             <th style={{width: '35px', padding:0}} key='ktitle'><a href="#" onClick={this.orderList.bind(this, 'title', 'asc')}>Title</a></th>
-             <th style={{width: '35px', padding:0}} key='kdesc'>Description</th>
-             <th style={{width: '35px', padding:0}} key='kdate'><a href="#" onClick={this.orderList.bind(this, 'date', 'asc')}>Created</a></th>
-             <th style={{width: '35px', padding:0}} key='kacrive'>Active</th>
-             <th style={{width: '35px', padding:0}} key='kshared'>Shared</th>
-             <th style={{width: '35px', padding:0}} key='kdel'>Delete</th>
+             <th style={{width: '35px', textAlign:'center', padding:0}} key='kedit'>Edit</th>
+             <th style={{width: '35px', textAlign:'center', padding:0}} key='kquestions'>Questions</th>
+             <th style={{width: '35px', textAlign:'center', padding:0}} key='ktitle'><a href="#" onClick={this.orderList.bind(this, 'title', 'asc')}>Title</a></th>
+             <th style={{width: '35px', textAlign:'center', padding:0}} key='kdesc'>Description</th>
+             <th style={{width: '35px', textAlign:'center', padding:0}} key='kdate'><a href="#" onClick={this.orderList.bind(this, 'date', 'asc')}>Created</a></th>
+             <th style={{width: '35px', textAlign:'center', padding:0}} key='kacrive'>Active</th>
+             <th style={{width: '35px', textAlign:'center', padding:0}} key='kshared'>Shared</th>
+             <th style={{width: '35px', textAlign:'center', padding:0}} key='kdel'>Delete</th>
            </tr>
          </thead>
          <tbody>

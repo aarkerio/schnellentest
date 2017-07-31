@@ -1,6 +1,6 @@
 # coding: utf-8
 # frozen_string_literal: true
-# Chipotle Software (c) 2016-2017   GPLv3
+# Chipotle Software (c) 2016-2017 MIT License
 module Chipotle
 module ApiMessages
 
