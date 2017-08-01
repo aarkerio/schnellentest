@@ -1,6 +1,6 @@
 # coding: utf-8
 # frozen_string_literal: true
-# Chipotle Software (c) 2016-2017   GPL v3
+# Chipotle Software (c) 2016-2017  MIT License
 require 'doc_ripper'
 
 module Chipotle
@@ -58,7 +58,7 @@ module Chipotle
         question = Question.new question_fields
         return 8 unless question.save!    # question validation fails
         test.question_tests.create! question_id: question.id
-        case question_fields["qtype"]
+        case question_fields['qtype']
         when "1"
           q['answers'].each do |ans|
             new_answer = question.answer.new ans
@@ -106,8 +106,8 @@ module Chipotle
             "explanation": "",
             "question": "Some question",
             "answers": [
-               { "answer": "Answer one", "correct": "false" },
-               { "answer": "Answer two", "correct": "true" }
+               { "answer": "", "correct": "false" },
+               { "answer": "", "correct": "false" }
             ]
          }
         ] }

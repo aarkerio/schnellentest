@@ -1,5 +1,6 @@
 # coding: utf-8
 # frozen_string_literal: true
+# Chipotle Software 2016-2017 (c) MIT License
 require 'spec_helper'
 
 RSpec.describe Annal, type: :model do

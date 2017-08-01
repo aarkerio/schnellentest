@@ -80,6 +80,8 @@ ActiveRecord::Schema.define(version: 20170606194920) do
     t.bigint "question_id", null: false
     t.bigint "test_id", null: false
     t.integer "order", null: false
+    t.index ["question_id", "test_id"], name: "index_question_tests_on_question_id_and_test_id"
+    t.index ["test_id"], name: "index_question_tests_on_test_id"
   end
 
   create_table "questions", id: :serial, force: :cascade do |t|
