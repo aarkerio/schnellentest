@@ -32,6 +32,7 @@ module Chipotle
         question_fields[:lang] = hash['lang']
         return 8 unless Question.new(question_fields).valid?  # question validation fails
         if question_fields['qtype'].to_i < 5
+          next unless q.key? 'answers'
           q['answers'].each do |ans|
             logger.debug "####  var #################>>>  #{1.inspect}"
             return 9 unless Answer.new(ans).valid?
