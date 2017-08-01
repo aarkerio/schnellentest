@@ -1,11 +1,11 @@
 'use strict';
 
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import { Router, Route, Link } from 'react-router'
 import { connect } from 'react-redux'
 import * as TestsActionCreators from '../actions/tests'
 import { browserHistory } from 'react-router'
+import PropTypes from 'prop-types'
 
 class TestRow extends Component {
   constructor(props) {

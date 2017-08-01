@@ -6,7 +6,7 @@ import { Button, Modal } from 'react-bootstrap'
 import * as TestsActionCreators from '../actions/tests'
 import { dialogStyle, modalConfig } from '../config/modals'
 import AnswerRowComponent from './AnswerRowComponent'
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 
 class AnswersModalComponent extends Component {
   constructor(props) {

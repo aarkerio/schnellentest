@@ -19,7 +19,7 @@ const tests_rdcr = (state = initialState, action) => {
       return Object.assign({}, state, {
            TestsArrayProp: action.TestsArrayProp
       });
-     
+
     case REQUEST_TESTS:
       return Object.assign({}, state, {
         isFetching: true,
@@ -31,7 +31,7 @@ const tests_rdcr = (state = initialState, action) => {
           OneTestArrayProp: action.OneTestArrayProp,
           QuestionsTestArrayProp: action.OneTestArrayProp.questions
       });
-    
+
     case RECEIVE_ONE_QUESTION:
       return Object.assign({}, state, {
           OneQuestionArrayProp: action.OneQuestionArrayProp,

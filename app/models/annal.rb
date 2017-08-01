@@ -1,5 +1,6 @@
 # coding: utf-8
 # frozen_string_literal: true
+# Chipotle Software 2016-2017 (c) MIT License
 class Annal < ApplicationRecord
   include Chipotle::FileReader
 

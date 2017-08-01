@@ -1,6 +1,6 @@
 # coding: utf-8
 # frozen_string_literal: true
-# Chipotle Software (c) 2016-2017   GPL v3
+# Chipotle Software (c) 2016-2017  MIT License
 require 'doc_ripper'
 
 module Chipotle
@@ -19,6 +19,8 @@ module Chipotle
     end
 
     # Converts json string to hash and verify it, if true save it
+    # qtype column:   1: multiple option, 2: open, 3: true/false, 4: fullfill, 5: composite questions
+    # TODO: type 3 and 4  types question
     def verify_json(json, user_id)
       message = 6
       hash    = JSON.parse(json)
@@ -27,14 +29,15 @@ module Chipotle
       hash['questions'].each do |q|
         valid_keys = ['status', 'qtype', 'hint', 'explanation', 'question']
         question_fields = q.slice(*valid_keys)
-        question_fields[:lang] = hash["lang"]
+        question_fields[:lang] = hash['lang']
         return 8 unless Question.new(question_fields).valid?  # question validation fails
-        case question_fields["qtype"]
-        when "1"
+        if question_fields['qtype'].to_i < 5
+          next unless q.key? 'answers'
           q['answers'].each do |ans|
+            logger.debug "####  var #################>>>  #{1.inspect}"
             return 9 unless Answer.new(ans).valid?
           end
-        when "3"
+        else   # Composite, multiple columns
           q['answers'].each do |com_answer|
             return 10 unless CompositeAnswer.new(com_answer).valid?
           end
@@ -58,7 +61,7 @@ module Chipotle
         question = Question.new question_fields
         return 8 unless question.save!    # question validation fails
         test.question_tests.create! question_id: question.id
-        case question_fields["qtype"]
+        case question_fields['qtype']
         when "1"
           q['answers'].each do |ans|
             new_answer = question.answer.new ans
@@ -106,8 +109,8 @@ module Chipotle
             "explanation": "",
             "question": "Some question",
             "answers": [
-               { "answer": "Answer one", "correct": "false" },
-               { "answer": "Answer two", "correct": "true" }
+               { "answer": "", "correct": "false" },
+               { "answer": "", "correct": "false" }
             ]
          }
         ] }

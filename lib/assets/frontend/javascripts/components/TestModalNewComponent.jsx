@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 import Cookies from 'universal-cookie'
 import React, { Component } from 'react'
@@ -20,7 +20,7 @@ class TestModalNewComponent extends Component {
                    active:      true,
                    shared:      false,
                    user_id:     this.props.cookies.get('user_id')
-             };
+             }
   }
 
 /**
