@@ -65,11 +65,11 @@ module DummyResponses
              }
             }
 
-    json << "add some garbage in the string to test the JSON parser" if wrong_json
-    json.slice! "English Test"                                       if test
-    json.slice! "First Some question"                                if question
-    json.slice! "Answer one"                                         if answer && !composite_answer
-    json.slice! "Colombia"                                           if answer && composite_answer
+    json << "add some garbage into the string to test the JSON parser" if wrong_json
+    json.slice! "English Test"                                         if test
+    json.slice! "First Some question"                                  if question
+    json.slice! "Answer one"                                           if answer && !composite_answer
+    json.slice! "Colombia"                                             if answer && composite_answer
     ActionController::Parameters.new json: json
   end
 

@@ -3,6 +3,8 @@
 # Chipotle Software 2016-2017 (c) MIT License
 require 'spec_helper'
 
+# Tip: build_stubbed is faster than build and reduces dependency on DB.
+
 RSpec.describe Annal, type: :model do
 
   let(:user)  { FactoryGirl.create :user}
@@ -66,11 +68,10 @@ RSpec.describe Annal, type: :model do
   end
 
   context 'JSON answer string to be saved fails because wrong formed answer' do
-    let(:annal)  { FactoryGirl.build :annal, :docx_file, user: user }
+    let(:annal)  { FactoryGirl.build_stubbed :annal, :docx_file, user: user }
     let(:params) { DummyResponses.json_test(false, false, false, true) }
     describe '#validates JSON answers' do
       it 'fails to questions JSON' do
-        # p " PARAMS >>>>   #{params.inspect}"
         result = annal.verify_or_save(params, user.id)
         expect(result).to eql 9
       end
@@ -78,7 +79,7 @@ RSpec.describe Annal, type: :model do
   end
 
   context 'JSON string fails because is not JSON valid' do
-    let(:annal)  { FactoryGirl.build :annal, :docx_file, user: user }
+    let(:annal)  { FactoryGirl.build_stubbed :annal, :docx_file, user: user }
     let(:params) { DummyResponses.json_test(true) }
     describe '#validates JSON' do
       it 'fails to test JSON' do
@@ -89,7 +90,7 @@ RSpec.describe Annal, type: :model do
   end
 
   context 'New quiz test is verified succesfully but not saved ' do
-    let(:annal)  { FactoryGirl.build :annal, :docx_file, user: user }
+    let(:annal)  { FactoryGirl.build_stubbed :annal, :docx_file, user: user }
     let(:params) { DummyResponses.json_test }
     describe '#validates JSON string whitout problem' do
       it 'JSON is OK' do

@@ -10,6 +10,8 @@ class Question < ApplicationRecord
 
   accepts_nested_attributes_for :answer
 
+  # qtype column:   1: multiple option, 2: open, 3: true/false, 4: fullfill, 5: composite questions
+
   def create_question(params)
     test = Test.find params['test_id']
     create_params = order_params params
