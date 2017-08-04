@@ -38,7 +38,7 @@ class TestRow extends Component {
         <td style={{width: '35px', padding:0, textAlign: 'center'}}> {test.created}    </td>
         <td style={{width: '35px', padding:0, textAlign: 'center'}}> {test.active} </td>
         <td style={{width: '35px', padding:0, textAlign: 'center'}}> {test.shared}  </td>
-        <td style={{width: '35px', padding:0, textAlign: 'center'}}> <a href={"/tests/"+test.id+"/print"}> <i className="glyphicon glyphicon-print" alt="drucken"></i></a></td>
+        <td style={{width: '35px', padding:0, textAlign: 'center'}}> <a href={"/tests/"+test.id+"/print.pdf"}> <i className="glyphicon glyphicon-print" alt="drucken"></i></a></td>
         <td style={{width: '35px', padding:0, textAlign:'center'}}>
           <a href="#" onClick={() => {if(confirm('Delete the item?')) {this.deleteTest(test.id)};}} className="removable"><i className="glyphicon glyphicon-trash"></i></a>
         </td>

@@ -18,12 +18,10 @@ class Annal < ApplicationRecord
 
   # Checks if the json will be properly saved
   def verify_or_save(params, user_id, save=false)
-    logger.debug "## XXXXXXXXXXXXXXXXXXXXXXXXX : ###>>> message.inspect"
     return 4 if done
-    logger.debug "## HHHHHHHHHHHHe : ###>>> message.inspect"
+
     begin
       message = verify_or_save_json(params[:json], user_id, save)
-      logger.debug "## message : ###>>>  #{message.inspect}"
       self.update_attribute(:done, true)  if message == 11
       message
     rescue  => e
