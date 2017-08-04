@@ -20,7 +20,7 @@ module Chipotle
 
     # Converts json string to hash and verify it, if true save it
     # qtype column:   1: multiple option, 2: open, 3: true/false, 4: fullfill, 5: composite questions
-    # TODO: type 3 and 4  types question
+    # TODO: qtype 3 and 4  qtypes question
     def verify_json(json, user_id)
       message = 6
       hash    = JSON.parse(json)
@@ -31,10 +31,11 @@ module Chipotle
         question_fields = q.slice(*valid_keys)
         question_fields[:lang] = hash['lang']
         return 8 unless Question.new(question_fields).valid?  # question validation fails
+        logger.debug "####  question_fields #################>>>  #{question_fields.inspect}"
         if question_fields['qtype'].to_i < 5
           next unless q.key? 'answers'
           q['answers'].each do |ans|
-            logger.debug "####  var #################>>>  #{1.inspect}"
+            logger.debug "####  answer #################>>>  #{ans.inspect}"
             return 9 unless Answer.new(ans).valid?
           end
         else   # Composite, multiple columns
@@ -46,7 +47,7 @@ module Chipotle
       message
     end
 
-    # Save JSON -> new test
+    # Save JSON -> create a new test
     def save_json(json, user_id)
       message = 11
       hash    = JSON.parse(json)
@@ -61,13 +62,13 @@ module Chipotle
         question = Question.new question_fields
         return 8 unless question.save!    # question validation fails
         test.question_tests.create! question_id: question.id
-        case question_fields['qtype']
-        when "1"
+        if question_fields['qtype'].to_i < 5
+          next unless q.key? 'answers'
           q['answers'].each do |ans|
             new_answer = question.answer.new ans
             return 9 unless new_answer.save!  # answer validation fails
           end
-        when "3"
+        else
           q['answers'].each do |com_answer|
             new_answer = question.composite_answer.new com_answer
             return 10 unless new_answer.save!  # answer validation fails

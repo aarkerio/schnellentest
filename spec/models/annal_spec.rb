@@ -92,7 +92,7 @@ RSpec.describe Annal, type: :model do
   context 'New quiz test is verified succesfully but not saved ' do
     let(:annal)  { FactoryGirl.build_stubbed :annal, :docx_file, user: user }
     let(:params) { DummyResponses.json_test }
-    describe '#validates JSON string whitout problem' do
+    describe '#validates JSON string without problem' do
       it 'JSON is OK' do
         result = annal.verify_or_save(params, user.id)
         expect(result).to eql 6
@@ -103,7 +103,7 @@ RSpec.describe Annal, type: :model do
   context 'New quiz test is saved succesfully' do
     let(:annal)  { FactoryGirl.build :annal, :docx_file, user: user }
     let(:params) { DummyResponses.json_test }
-    describe '#saves JSON string whitout problem' do
+    describe '#saves JSON string without problem' do
       it 'JSON is OK, new test created' do
         result = annal.verify_or_save(params, user.id, true)
         expect(result).to eql 11

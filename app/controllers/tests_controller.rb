@@ -21,6 +21,16 @@ class TestsController < ApplicationController
   def edit
   end
 
+  # GET /tests/1/print
+  def print
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf:                            'file_name',
+               page_size:                      'Letter'            # default A4
+      end
+    end
+  end
   # POST /tests
   def create
     @test = Test.new(test_params)
