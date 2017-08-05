@@ -6,8 +6,11 @@
   = @test.description
 %p
   - @test.questions.each_with_index do |q, index|
-    %div.some{ style: "padding: 30px;" }
-      = "#{index +1 }) #{q.question}"
+    %div.some{ style: "margin:4px 0 4px 0; padding: 30px;border:1px dotted gray;" }
+      %div.some{ style: "padding: 10px 0 10px 0;" }= "#{index +1 }) #{q.question}"
+      - if q.answer.blank?
+        %div.some{ style: "margin-top: 25px;" }
+          = "______________________________________________________________________________________"
       - q.answer.each_with_index do |a, i|
         - letters = ('a'..'z').to_a
         %div
