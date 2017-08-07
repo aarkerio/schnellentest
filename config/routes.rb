@@ -31,6 +31,7 @@ Rails.application.routes.draw do
   end
 
   get '/tests/' => 'tests#index', as: 'tests_index'
+  get '/tests/:id/print' => 'tests#print', as: 'tests_print'
 
   namespace :api, defaults: {format: :json} do
     namespace :v1 do

@@ -15,6 +15,7 @@ gem 'hamlit-rails'
 gem 'jwt'       # JSON Web Token
 gem 'pdf-reader'
 gem 'doc_ripper'
+gem 'wicked_pdf'
 
 # Use Puma as the app server
 gem 'puma'

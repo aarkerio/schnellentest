@@ -3,6 +3,7 @@
 class Question < ApplicationRecord
   belongs_to :user
   has_many   :answer
+  has_many   :composite_answer
 
   validates :question, presence: true
   validates :qtype, presence: true
@@ -54,6 +55,7 @@ class Question < ApplicationRecord
     all[:question]    = question.question
     all[:id]          = question.id
     all[:answers]   = Array.new
+    # TODO:  question.answer.reduce({})
     question.answer.each do |a|
       all[:answers] << a
     end

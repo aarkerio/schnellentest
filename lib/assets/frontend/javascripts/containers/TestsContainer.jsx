@@ -61,6 +61,7 @@ export class TestsContainer extends Component {
              <th style={{width: '35px', textAlign:'center', padding:0}} key='kdate'><a href="#" onClick={this.orderList.bind(this, 'date', 'asc')}>Created</a></th>
              <th style={{width: '35px', textAlign:'center', padding:0}} key='kacrive'>Active</th>
              <th style={{width: '35px', textAlign:'center', padding:0}} key='kshared'>Shared</th>
+             <th style={{width: '35px', textAlign:'center', padding:0}} key='kprint'>Print</th>
              <th style={{width: '35px', textAlign:'center', padding:0}} key='kdel'>Delete</th>
            </tr>
          </thead>

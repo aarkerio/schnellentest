@@ -34,7 +34,7 @@ module DummyResponses
                     "qtype" : "2",
                     "hint" : "First Some hint",
                     "explanation": "",
-                    "question": "First Some question"
+                    "question": "First Some Open question (no answers)"
                   },
                   {
                     "status": "1",

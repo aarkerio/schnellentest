@@ -1,7 +1,7 @@
 # Chipotle Software (c) 2016-2017 MIT License
 
 class TestsController < ApplicationController
-  before_action :set_test, only: [:show, :edit, :update, :destroy]
+  before_action :set_test, only: [:show, :edit, :update, :destroy, :print]
 
   # GET /tests
   def index
@@ -21,6 +21,15 @@ class TestsController < ApplicationController
   def edit
   end
 
+  # GET /tests/1/print
+  def print
+    respond_to do |format|
+      format.pdf do
+        render pdf:            'file_name',     # Excluding ".pdf" extension.
+               page_size:      'Letter'         # default A4
+      end
+    end
+  end
   # POST /tests
   def create
     @test = Test.new(test_params)

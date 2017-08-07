@@ -19,6 +19,7 @@ class Annal < ApplicationRecord
   # Checks if the json will be properly saved
   def verify_or_save(params, user_id, save=false)
     return 4 if done
+
     begin
       message = verify_or_save_json(params[:json], user_id, save)
       self.update_attribute(:done, true)  if message == 11
