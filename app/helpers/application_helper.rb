@@ -15,5 +15,14 @@ module ApplicationHelper
     end
     nil
   end
+  def display_status(status)
+    (status == true) ? image('icon_true.png') : image('icon_false.png')
+  end
+
+  private
+
+  def image(icon)
+     image_tag icon
+  end
 
 end

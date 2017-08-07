@@ -20,7 +20,18 @@
   = @question.active
 %p
   %b Type:
-  = @question.type
+  = @question.qtype
+%p
+  %b Spellcheck:
+  = @question.spellcheck
+
+%p
+  %b Copyright:
+  = @question.copyright
+
+%p
+  %b Lang:
+  = @question.lang
 
 = link_to 'Edit', edit_question_path(@question)
 \|

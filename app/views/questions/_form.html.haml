@@ -7,25 +7,36 @@
           %li= msg
 
   .field
-    = f.label :user
-    = f.text_field :user
-  .field
     = f.label :question
-    = f.text_area :question
+    = f.text_area :question, cols: '80', rows: '4'
   .field
     = f.label :hint
-    = f.text_area :hint
+    = f.text_area :hint, cols: '80', rows: '2'
   .field
     = f.label :explanation
-    = f.text_area :explanation
+    = f.text_area :explanation, cols: '80', rows: '2'
   .field
     = f.label :worth
-    = f.number_field :worth
+    = f.select(:worth, options_for_select((1..10)))
   .field
     = f.label :active
     = f.check_box :active
   .field
-    = f.label :type
-    = f.check_box :type
+    = f.label :qtype
+    = f.select(:worth, options_for_select([['Multiple option',1],['Open question',2],['True/False',3],['Fullfill',4],['Composite question', 5]]))
+  .field
+    = f.label :spellcheck
+    = f.check_box :spellcheck
+  .field
+    = f.label :copyright
+    = f.check_box :copyright
+  .field
+    = f.label :lang
+    = f.select(:worth, options_for_select(['En', 'Es', 'Fr']))
+
+  - if @question.qtype == 1
+    - @question.answers.each do |ans|
+    
+
   .actions
     = f.submit 'Save'

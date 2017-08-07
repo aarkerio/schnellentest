@@ -3,7 +3,7 @@
   %head
     = favicon_link_tag 'favicon.ico'
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
-    %title ::Schnell Test::
+    %title ::Schnellen Test::
     = javascript_include_tag Rails.env.development? ? 'http://localhost:8080/build/styles.js'  : '/assets/styles.js'
     = stylesheet_link_tag Rails.env.development? ? 'http://localhost:8080/build/styles.css' : '/assets/styles.css'
     = csrf_meta_tags
@@ -20,6 +20,8 @@
           %li
             = link_to 'Home', '/'
           - if user_signed_in?
+            %li
+              = link_to 'Questions', questions_path
             %li
               = link_to 'Tests', tests_index_path
             %li
