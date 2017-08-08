@@ -7,7 +7,8 @@
 # server "example.com", user: "deploy", roles: %w{app web}, other_property: :other_value
 # server "db.example.com", user: "deploy", roles: %w{db}
 
-
+set :stage, :production
+set :branch, "master"
 
 # role-based syntax
 # ==================
@@ -16,22 +17,15 @@
 # group is considered to be the first unless any hosts have the primary
 # property set. Specify the username and a domain or IP for the server.
 # Don't use `:all`, it's a meta role.
+server '45.77.114.119', user: 'wuser', roles: %w{web app db}, primary: true
 
 # role :app, %w{deploy@example.com}, my_property: :my_value
 # role :web, %w{user1@primary.com user2@additional.com}, other_property: :other_value
 # role :db,  %w{deploy@example.com}
 
-
-
-# Configuration
-# =============
-# You can set any configuration variable like in config/deploy.rb
-# These variables are then only loaded and set in this stage.
-# For available Capistrano configuration variables see the documentation page.
-# http://capistranorb.com/documentation/getting-started/configuration/
-# Feel free to add new variables to customise your setup.
-
-
+# don't try and infer something as important as environment from
+# stage name.
+set :rails_env, :production
 
 # Custom SSH Options
 # ==================

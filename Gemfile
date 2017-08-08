@@ -21,8 +21,6 @@ gem 'wicked_pdf'
 gem 'puma'
 gem 'draper'  # presenters
 
-# Use Capistrano for deployment
-gem 'capistrano-rails'
 gem 'will_paginate', '~> 3.1.0'
 gem 'carrierwave', '~> 1.0'
 gem 'json', '< 2'
@@ -30,8 +28,11 @@ gem 'json_pure', '< 2'
 
 group :development do
   gem 'web-console', '~> 3.0'
-#  gem 'capybara-webkit'
+  #  gem 'capybara-webkit'
   gem 'poltergeist'
+  # Use Capistrano for deployment
+  gem 'capistrano', '~> 3.6'
+  gem 'capistrano-rails', '~> 1.3'
 end
 
 group :development, :test do
