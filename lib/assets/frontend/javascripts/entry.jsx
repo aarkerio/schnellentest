@@ -31,6 +31,7 @@ if ( document.getElementById('reactroot')) {
         <Router history={history}>
           <Route name="app" path="/tests/" component={AppContainer} />
           <Route path="/questions/:test_id" component={QuestionsComponent}>
+            <Route path="/questions/:question_id/edit" component={QuestionEditComponent} />
             <Route path="/answers/:question_id/:test_id" component={AnswersModalComponent} />
           </Route>
           <Route path="/search/:test_id/:terms" component={QuestionSearchComponent} />
