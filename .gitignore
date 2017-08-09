@@ -40,6 +40,7 @@ vendor/assets/tests/*.*
 vendor/assets/tests/
 public/uploads/*.*
 public/uploads/*
+public/assets/.*
 spec/support/coverage/
 *~
 # emacs temp files
