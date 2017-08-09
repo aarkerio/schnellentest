@@ -8,7 +8,7 @@
 # server "db.example.com", user: "deploy", roles: %w{db}
 
 set :stage, :production
-set :branch, "master"
+set :branch, 'master'
 
 # role-based syntax
 # ==================
