@@ -33,6 +33,7 @@ group :development do
   # Use Capistrano for deployment
   gem 'capistrano', '~> 3.6'
   gem 'capistrano-rails', '~> 1.3'
+  gem 'capistrano-rvm'
 end
 
 group :development, :test do
