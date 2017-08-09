@@ -14,6 +14,9 @@ module Schnell
     config.time_zone = 'Central Time (US & Canada)'
     config.autoload_paths += %W(#{config.root}/lib)
 
+    # we use webpack, so:
+    config.assets.enabled = false
+
     # turn off generators
     config.generators do |g|
       g.stylesheets = false
