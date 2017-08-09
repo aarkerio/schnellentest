@@ -18,6 +18,9 @@ set :deploy_to, "/home/wuser/projects/rails/schnellentest"
 # Skip migration if files in db/migrate were not modified
 set :conditionally_migrate, true
 
+# avoid assets precompile
+set :assets_roles, []
+
 # Symlinks
 set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system', 'public/uploads')
 set :linked_files, fetch(:linked_files, []).push('config/database.yml', 'config/secrets.yml')
