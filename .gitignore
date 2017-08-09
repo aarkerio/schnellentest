@@ -38,7 +38,8 @@ app/assets/frontend/javascripts/built/*.woff
 lib/assets/frontend/javascripts/.tmp/
 vendor/assets/tests/*.*
 vendor/assets/tests/
-public/uploads/
+public/uploads/*.*
+public/uploads/*
 spec/support/coverage/
 *~
 # emacs temp files
