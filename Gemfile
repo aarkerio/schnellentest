@@ -20,6 +20,7 @@ gem 'wicked_pdf'
 # Use Puma as the app server
 gem 'puma'
 gem 'draper'  # presenters
+gem 'aasm'
 
 gem 'will_paginate', '~> 3.1.0'
 gem 'carrierwave', '~> 1.0'
