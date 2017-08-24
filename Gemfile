@@ -21,11 +21,16 @@ gem 'wicked_pdf'
 gem 'puma'
 gem 'draper'  # presenters
 gem 'aasm'
+gem "interactor", "~> 3.0"
 
 gem 'will_paginate', '~> 3.1.0'
 gem 'carrierwave', '~> 1.0'
 gem 'json', '< 2'
 gem 'json_pure', '< 2'
+gem 'active_model_serializers'
+
+#breadcrumb
+gem 'gretel'
 
 group :development do
   gem 'web-console', '~> 3.0'
@@ -35,6 +40,8 @@ group :development do
   gem 'capistrano', '~> 3.6'
   gem 'capistrano-rails', '~> 1.3'
   gem 'capistrano-rvm'
+  gem "capistrano-sidekiq", "~> 0.5.3"
+  gem 'active_record_query_trace'
 end
 
 group :development, :test do

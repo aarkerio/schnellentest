@@ -321,6 +321,6 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default withRouter(connect(mapStateToProps)(QuestionsComponent));
+export default withRouter(connect(mapStateToProps)(QuestionsComponent)); // Binding React component with the Redux store
 
 

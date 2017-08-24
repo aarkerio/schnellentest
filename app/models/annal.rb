@@ -15,6 +15,36 @@ class Annal < ApplicationRecord
   before_validation :set_md5
 
   after_commit :process, on: :create
+  # State machine
+  include AASM
+  enum status: [:processed, :pending]
+  aasm do
+    state :added, inital: true
+    state :joined
+    state :started
+    state :finished
+    #  state :canceled
+
+    event :join do
+      transitions from: :added, to: :joined
+    end
+
+    event :start do
+      transitions from: :joined, to: :started
+    end
+
+    event :finish do
+      transitions from: :started, to: :finished
+    end
+
+    event :reset do
+      transitions from: [:started, :finished, :canceled], to: :joined
+    end
+
+    #  event :cancel do
+    #    transitions from : [:started, :finished], to: :canceled
+    #  end
+  end
 
   # Checks if the json will be properly saved
   def verify_or_save(params, user_id, save=false)

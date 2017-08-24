@@ -2,8 +2,8 @@
 #  Chipotle Software (c) 2016-2017   MIT License
 class Question < ApplicationRecord
   belongs_to :user
-  has_many   :answer
-  has_many   :composite_answer
+  has_many   :answer, dependent: :destroy
+  has_many   :composite_answer, dependent: :destroy
 
   validates :question, presence: true
   validates :qtype, presence: true
