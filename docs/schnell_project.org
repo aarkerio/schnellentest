@@ -1,0 +1,45 @@
+#+TITLE: Schnell TODO org
+#+AUTHOR: MM
+#+DATE: TODAY
+#+STARTUP: Chipotle
+#+OPTIONS: toc:nil
+#+TODO: TODO IN-PROGRESS WAITING STAGING DONE
+
+* Chipotle-Schnell Project
+
+** RSPEC for answers
+
+
+** DONE Competences comparative with_ideal_profile.html :a new tag:
+   app/views/v2/modules/comparative_participant_competences/html/_with_ideal_profile.html.slim
+   terminate
+   SCHEDULED: <2017-10-03 Die>
+   :LOGBOOK:
+   CLOCK: [2017-10-02 Mon 16:17]
+   CLOCK: [2017-10-02 Mon 15:58]
+   CLOCK: [2017-10-02 Mon 15:13]
+   CLOCK: [2017-10-02 Mon 14:47]--[2017-10-02 Mon 14:58] =>  0:11
+   CLOCK: [2017-10-02 Mon 14:43]--[2017-10-02 Mon 14:47] =>  0:04
+   :END:
+
+
+** DONE Groups results in "skills" template                          :skills:
+   SCHEDULED: <2017-10-03 Die 15:05>
+   This needs by grouping data. *This is important*
+   - One
+     - One.two
+   - Two
+
+
+** DONE script for the cluster selection screen                      :skills:
+
+  :LOGBOOK:
+  CLOCK: [2017-10-02 Mon 14:29]--[2017-10-02 Mon 14:43] =>  0:14
+  :END:
+
+
+
+
+
+
+
