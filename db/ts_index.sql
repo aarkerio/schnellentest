@@ -9,10 +9,10 @@ CREATE TEXT SEARCH DICTIONARY schnellen_en (
     language = english
 );
 
--- A text search configuration specifies a text search parser that can divide a string into tokens, 
+-- A text search configuration specifies a text search parser that can divide a string into tokens,
 -- plus dictionaries that can be used to determine which tokens are of interest for searching.
 -- See: http://developer.postgresql.org/pgdocs/postgres/textsearch-configuration.html
-CREATE TEXT SEARCH CONFIGURATION public.schnellen_en ( COPY = pg_catalog.english ); 
+CREATE TEXT SEARCH CONFIGURATION public.schnellen_en ( COPY = pg_catalog.english );
 
 -- FTS (Full Text Search) index = Storing preprocessed documents optimized for searching
 --Also allow create ranked searchs
@@ -36,7 +36,7 @@ qtype,
 lang,
 status)
 VALUES (1,'lorem ipsum doloret amend',
-'lorem ipsum doloret amend', 
+'lorem ipsum doloret amend',
 'lorem ipsum doloret amend',
 'lorem ipsum doloret amend',
 1,
@@ -44,7 +44,7 @@ VALUES (1,'lorem ipsum doloret amend',
 CURRENT_TIMESTAMP,
 CURRENT_TIMESTAMP,
 true,
-true, 
+true,
 'en',
 1
 );
