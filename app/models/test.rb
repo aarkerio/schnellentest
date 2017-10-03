@@ -3,12 +3,20 @@
 # Chipotle Software (c) 2016-2017 GPL
 class Test < ApplicationRecord
 
+  # Relationships
   belongs_to :user
 
   has_many :question_tests, -> { order(:order) }
   has_many :questions, through: :question_tests
 
+  # Scopes
+  scope :active, -> { where(active: true) }
+
+  # Validations
   validates :title, presence: true
+
+  # Methods
+  # -------------------------------------------------------
 
   def create_test(params)
     create_params = order_params params
@@ -16,7 +24,7 @@ class Test < ApplicationRecord
     test.save
   end
 
-  # Get one test ans its questions
+  # Get one test and its questions
   def get_one
     serialize_test
   end

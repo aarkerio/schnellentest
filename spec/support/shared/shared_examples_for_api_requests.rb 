@@ -1,0 +1,15 @@
+
+shared_examples 'api_requests' do |name, explanation|
+  header 'Accept', 'application/json'
+  header 'Content-Type', 'application/json'
+
+  example_request name do
+    explanation explanation
+
+    do_request
+
+    expect(status).to eq(subject.status)
+  end
+end
+
+

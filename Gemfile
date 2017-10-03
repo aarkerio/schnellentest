@@ -25,11 +25,7 @@ gem "interactor", "~> 3.0"
 
 gem 'will_paginate', '~> 3.1.0'
 gem 'carrierwave', '~> 1.0'
-gem 'json', '< 2'
-gem 'json_pure', '< 2'
-gem 'active_model_serializers'
-
-#breadcrumb
+gem 'json'
 gem 'gretel'
 
 group :development do
