@@ -41,9 +41,9 @@ class Annal < ApplicationRecord
       transitions from: [:started, :finished, :canceled], to: :joined
     end
 
-    #  event :cancel do
-    #    transitions from : [:started, :finished], to: :canceled
-    #  end
+    event :cancel do
+      transitions from : [:started, :finished], to: :canceled
+    end
   end
 
   # Checks if the json will be properly saved
