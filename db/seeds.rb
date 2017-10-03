@@ -19,13 +19,14 @@ test_2  = Test.create! title: 'Test Zweig Mexikan Neerland gesichte', descriptio
 test_3  = Test.create! title: 'Test Drei brasilianische Wirtschaft',  description: 'Test Drei Description', active: true, user_id: tchr_1.id
 
 ipsum = %(Lorem ipsum dolor sit amet consetetur sadipscing elitr)
+
 question_1 = Question.create! user_id: tchr_1.id, question: ipsum, hint: ipsum, explanation: ipsum, tags: ipsum, worth: 1, active: true, qtype: 1
 question_2 = Question.create! user_id: tchr_1.id, question: ipsum, hint: ipsum, explanation: ipsum, tags: ipsum, worth: 1, active: true, qtype: 1
 question_3 = Question.create! user_id: tchr_1.id, question: ipsum, hint: ipsum, explanation: ipsum, tags: ipsum, worth: 1, active: true, qtype: 1
 
-tq1 = test_1.question_tests.create! question_id: question_1.id
-tq2 = test_1.question_tests.create! question_id: question_2.id
-tq3 = test_1.question_tests.create! question_id: question_3.id
+tq1 = test_1.question_tests.create! question: question_1
+tq2 = test_1.question_tests.create! question: question_2
+tq3 = test_1.question_tests.create! question: question_3
 
 answer_1 = question_1.answer.create! answer: 'This is the Answer 1111', correct: true
 answer_2 = question_1.answer.create! answer: 'This is the Answer 222', correct: true
@@ -33,10 +34,10 @@ answer_3 = question_1.answer.create! answer: 'This is the Answer 222', correct: 
 
 (1..46).each do |i|
   ipsum = FFaker::BaconIpsum.sentence
-  Question.create! user_id: tchr_1.id, question: ipsum, hint: ipsum, explanation: ipsum, tags: ipsum, worth: 1, active: true, qtype:true
+  Question.create! user: tchr_1, question: ipsum, hint: ipsum, explanation: ipsum, tags: ipsum, worth: 1, active: true, qtype:true
 end
 
-# Composite question
+# Composite question, a.k.a. related columns
 
 composite_question_1 = { user_id: tchr_1.id, question: ipsum, hint: ipsum, explanation: ipsum, tags: ipsum, worth: 1, active: true, qtype: 5 }
 

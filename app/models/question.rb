@@ -61,6 +61,5 @@ class Question < ApplicationRecord
     end
     all
   end
-
 end
 
