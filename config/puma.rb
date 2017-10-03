@@ -12,7 +12,7 @@ threads threads_count, threads_count
 port        ENV.fetch("PORT") { 3000 }
 
 # Set up socket location
-bind "unix:///home/wuser/projects/rails/schnellentest/shared/sockets/puma.sock"
+#bind "unix:///home/wuser/projects/rails/schnellentest/shared/sockets/puma.sock"
 
 # Specifies the `environment` that Puma will run in.
 #
