@@ -15,26 +15,24 @@ import * as TestsActionCreators from '../actions/tests'
 // export for unconnected component (for mocha tests)
 export class QuestionEditComponent extends Component {
   constructor(props) {
-      super(props);
-      this.state = {
-          questions:   [],
-          question_id: this.props.routeParams.question_id
-         }
-
-      this.alertOptions = {
-          offset:     14,
-          position:   'top left',
-          theme:      'dark',
-          time:       5000,
-          transition: 'scale'
-      }
-      this.openModal    = this.openModal.bind(this)
-      this.newOrder     = this.newOrder.bind(this)
-      //Test mocha:  console.log('This props >>>>>>' + JSON.stringify(this.props));
+    super(props);
+    this.state = {
+        questions:   [],
+        question_id: this.props.routeParams.question_id
+       }
+    this.alertOptions = {
+      offset:     14,
+      position:   'top left',
+      theme:      'dark',
+      time:       5000,
+      transition: 'scale'
+    }
+    this.openModal    = this.openModal.bind(this)
+    this.newOrder     = this.newOrder.bind(this)
   }
 
   static propTypes = {
-      cookies: new Cookies()
+    cookies: new Cookies()
   }
 
   /**
@@ -291,19 +289,20 @@ export class QuestionEditComponent extends Component {
   }
 }
 
-QuestionsComponent.propTypes = {
+QuestionEditComponent.propTypes = {
   OneTestArrayProp:   PropTypes.object,
   QuestionsArrayProp: PropTypes.array,
   dispatch:           PropTypes.func,
   cookies:            PropTypes.object
 }
 
-QuestionsComponent.defaultProps = {
+QuestionEditComponent.defaultProps = {
   OneTestArrayProp:  {},
   QuestionsArrayProp: [],
   cookies: new Cookies
 }
 
+// Redux binding
 const mapStateToProps = (state) => {
   return {
     OneTestArrayProp: state.rootReducer.tests_rdcr.OneTestArrayProp,

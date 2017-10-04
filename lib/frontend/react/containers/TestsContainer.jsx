@@ -2,31 +2,33 @@
 
 import { connect } from 'react-redux'
 import { render } from 'react-dom'
-import * as TestsActionCreators from '../actions/tests'
 import React, { Component } from 'react'
 import { Link, browserHistory } from 'react-router'
-import TestRowComponent   from '../components/TestRowComponent'
 import PropTypes from 'prop-types'
 import Cookies from 'universal-cookie'
+
+// Chipotle
+import TestRowComponent   from '../components/TestRowComponent'
+import * as TestsActionCreators from '../actions/tests'
 
 // export for unconnected component (for mocha tests)
 export class TestsContainer extends Component {
 
   constructor(props) {
-      super(props)
-      this.state = {
-         user_id: this.props.cookies.get('user_id')
-      }
+    super(props)
+    this.state = {
+      user_id: this.props.cookies.get('user_id')
+    }
   }
 
   /**
    * Load tests
    **/
   componentWillMount() {
-     if ( ! this.props.TestsArrayProp.length ) {
-       let action = TestsActionCreators.fetchTests(this.state.user_id)
-       this.props.dispatch(action)
-     }
+    if ( ! this.props.TestsArrayProp.length ) {
+      let action = TestsActionCreators.fetchTests(this.state.user_id)
+      this.props.dispatch(action)
+    }
   }
 
   /**

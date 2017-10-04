@@ -15,7 +15,7 @@
     %nav{ class: 'navbar navbar-default' }
       %div{ class: 'container-fluid' }
         %div{ class: 'navbar-header' }
-          = link_to 'SchnellenSite', '/aboutus', class:"navbar-brand"
+          = link_to 'SchnellenSite', '/', class:"navbar-brand"
         %ul{ class: "nav navbar-nav" }
           %li
             = link_to 'Home', '/'
@@ -40,6 +40,6 @@
   #footer
     %br
     %span.copy Copyright Chipotle Software &copy; 2015-2017
-    %a{ href: '/site/about'} Read more
+    %a{ href: '/about_us'} Read more
   - js_bundle = Rails.env.development? ? 'http://localhost:8080/build/bundle.js' : '/assets/bundle.js'
   = javascript_include_tag js_bundle

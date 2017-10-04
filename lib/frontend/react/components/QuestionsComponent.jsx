@@ -4,19 +4,19 @@ import Cookies from 'universal-cookie'
 import { connect } from 'react-redux'
 import { render } from 'react-dom'
 import { dialogStyle, modalConfig } from '../config/modals'
-import HeaderComponent  from './HeaderComponent'
-import * as TestsActionCreators from '../actions/tests'
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Link, browserHistory, withRouter} from 'react-router'
 import { Button, Modal } from 'react-bootstrap'
 import AlertContainer from 'react-alert'
+import HeaderComponent  from './HeaderComponent'
+import * as TestsActionCreators from '../actions/tests'
 
 // export for unconnected component (for mocha tests)
 export class QuestionsComponent extends Component {
   constructor(props) {
-      super(props);
-      this.state = {
+    super(props);
+    this.state = {
           questions:   [],
           test_id:     this.props.routeParams.test_id,
           showModal:   false,
@@ -29,18 +29,17 @@ export class QuestionsComponent extends Component {
           active:      true,
           qtype:       true,
           terms:       ''
-         }
+    }
 
-      this.alertOptions = {
+    this.alertOptions = {
           offset:     14,
           position:   'top left',
           theme:      'dark',
           time:       5000,
           transition: 'scale'
-      }
-      this.openModal    = this.openModal.bind(this);
-      this.newOrder     = this.newOrder.bind(this);
-      //Test mocha:  console.log('This props >>>>>>' + JSON.stringify(this.props));
+    }
+    this.openModal    = this.openModal.bind(this);
+    this.newOrder     = this.newOrder.bind(this);
   }
 
   static propTypes = {

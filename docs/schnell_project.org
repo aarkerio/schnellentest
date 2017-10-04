@@ -7,7 +7,11 @@
 
 * Chipotle-Schnell Project
 
-** TODO RSPEC for answers
+** IN-PROGRESS RSPEC for answers
+   Code the Unit Test
+   :LOGBOOK:
+   CLOCK: [2017-10-04 Mit 11:41]--[2017-10-04 Mit 11:42] =>  0:01
+   :END:
 
 
 ** DONE Competences comparative with_ideal_profile.html :a new tag:
@@ -15,9 +19,6 @@
    terminate
    SCHEDULED: <2017-10-03 Die>
    :LOGBOOK:
-   CLOCK: [2017-10-02 Mon 16:17]
-   CLOCK: [2017-10-02 Mon 15:58]
-   CLOCK: [2017-10-02 Mon 15:13]
    CLOCK: [2017-10-02 Mon 14:47]--[2017-10-02 Mon 14:58] =>  0:11
    CLOCK: [2017-10-02 Mon 14:43]--[2017-10-02 Mon 14:47] =>  0:04
    :END:

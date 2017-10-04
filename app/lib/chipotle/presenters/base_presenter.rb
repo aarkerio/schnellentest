@@ -1,12 +1,16 @@
 module Chipotle
-class Presenters::BasePresenter < SimpleDelegator
-  def initialize(model, view)
-    @model, @view = model, view
-    super(@model)
-  end
+  module Presenters
+    # Base Presenter class
+    class BasePresenter < SimpleDelegator
+      def initialize(model, view)
+        @model = model
+        @view  = view
+        super(@model)
+      end
 
-  def h
-    @view
+      def h
+        @view
+      end
+    end
   end
-end
 end

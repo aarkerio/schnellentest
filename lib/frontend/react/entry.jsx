@@ -16,6 +16,7 @@ import TestModalNewComponent   from './components/TestModalNewComponent'
 import QuestionsComponent      from './components/QuestionsComponent'
 import AnswersModalComponent   from './components/AnswersModalComponent'
 import QuestionSearchComponent from './components/QuestionSearchComponent'
+import QuestionEditComponent   from './components/QuestionEditComponent'
 import NotFound                from './components/NotFound'
 import HeaderComponent         from './components/HeaderComponent'
 import configureStore          from './config/configureStore'     // load redux store
