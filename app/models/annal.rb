@@ -42,7 +42,7 @@ class Annal < ApplicationRecord
     end
 
     event :cancel do
-      transitions from : [:started, :finished], to: :canceled
+      transitions from: [:started, :finished], to: :canceled
     end
   end
 

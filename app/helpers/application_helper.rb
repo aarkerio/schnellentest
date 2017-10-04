@@ -19,6 +19,16 @@ module ApplicationHelper
     (status == true) ? image('icon_true.png') : image('icon_false.png')
   end
 
+  # Public. Call the presenter for the model
+  #
+  # model - the AR model.
+  # Return a Presenter Object.
+  def present(model, presenter_class=nil)
+    klass = presenter_class || "Chipotle::Presenters::#{model.class}Presenter".constantize
+    presenter = klass.new(model, self)
+    yield(presenter) if block_given?
+   end
+
   private
 
   def image(icon)

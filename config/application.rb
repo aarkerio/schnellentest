@@ -12,7 +12,8 @@ module Schnell
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
     config.time_zone = 'Central Time (US & Canada)'
-    config.autoload_paths += %W(#{config.root}/lib)
+    # config.autoload_paths << "#{Rails.root}/app/lib"
+    # config.eager_load_paths << "#{Rails.root}/lib"
 
     # we use webpack, so:
     config.assets.enabled = false
