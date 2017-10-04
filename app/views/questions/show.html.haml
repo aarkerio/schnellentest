@@ -1,9 +1,6 @@
 %p#notice= notice
 
 %p
-  %b User:
-  = @question.user
-%p
   %b Question:
   = @question.question
 %p
@@ -20,7 +17,7 @@
   = @question.active
 %p
   %b Type:
-  = @question.qtype
+  = question_type @question.qtype.to_i
 %p
   %b Spellcheck:
   = @question.spellcheck
