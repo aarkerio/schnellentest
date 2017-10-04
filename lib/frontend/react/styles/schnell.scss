@@ -1,4 +1,6 @@
 
+@import "~bootstrap/dist/css/bootstrap.css";
+
 $font-stack:    Helvetica, sans-serif;
 $primary-color: #333;
 
@@ -229,4 +231,31 @@ label {display:block;clear:both;width:100%;}
 .actions{
   margin: 15px 0 15px 0;
   padding: 3px 0 2px 0;
+}
+
+/* Home page classes */
+header.masthead {
+    background: url('https://unsplash.it/1900/1080?image=304') no-repeat center center scroll;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+    h1{
+        color: #fff;
+    }
+    h2{
+        color: #fff;
+    }
+}
+
+header.masthead > .overlay {
+    padding: 5rem 0;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.6);
+}
+
+@media (min-width: 992px) {
+    header.masthead > .overlay {
+        padding: 10rem 0;
+    }
 }

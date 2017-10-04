@@ -310,6 +310,6 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default withRouter(connect(mapStateToProps)(QuestionEditComponent));
+export default withRouter(connect(mapStateToProps)(QuestionEditComponent))
 
 
