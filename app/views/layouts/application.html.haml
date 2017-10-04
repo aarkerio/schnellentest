@@ -2,7 +2,7 @@
 %html
   %head
     = favicon_link_tag 'favicon.ico'
-    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"} /
     %title ::Schnellen Test::
     = javascript_include_tag Rails.env.development? ? 'http://localhost:8080/build/styles.js'  : '/assets/styles.js'
     = stylesheet_link_tag Rails.env.development? ? 'http://localhost:8080/build/styles.css' : '/assets/styles.css'
@@ -10,137 +10,31 @@
 
 %body
   - flash_messages
-
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-      <div class="container">
-        <a class="navbar-brand" href="#">Start Bootstrap</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home
-                <span class="sr-only">(current)</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">About</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Services</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Contact</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-
-    <header class="masthead">
-      <div class="overlay">
-        <div class="container">
-          <h1 class="display-1 text-white">One Page Wonder</h1>
-          <h2 class="display-4 text-white">Will Rock Your Socks Off</h2>
-        </div>
-      </div>
-    </header>
-
-    <section>
-      <div class="container">
-        <div class="row align-items-center">
-          <div class="col-md-6 order-2">
-            <div class="p-5">
-              <img class="img-fluid rounded-circle" src="https://unsplash.it/500/500?image=836" alt="">
-            </div>
-          </div>
-          <div class="col-md-6 order-1">
-            <div class="p-5">
-              <h2 class="display-4">For those about to rock...</h2>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia odio veniam sit iste esse assumenda amet aperiam exercitationem, ea animi blanditiis recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <div class="container">
-        <div class="row align-items-center">
-          <div class="col-md-6">
-            <div class="p-5">
-              <img class="img-fluid rounded-circle" src="https://unsplash.it/500/500?image=452" alt="">
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="p-5">
-              <h2 class="display-4">We salute you!</h2>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia odio veniam sit iste esse assumenda amet aperiam exercitationem, ea animi blanditiis recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <div class="container">
-        <div class="row align-items-center">
-          <div class="col-md-6 order-2">
-            <div class="p-5">
-              <img class="img-fluid rounded-circle" src="https://unsplash.it/500/500?image=453" alt="">
-            </div>
-          </div>
-          <div class="col-md-6 order-1">
-            <div class="p-5">
-              <h2 class="display-4">Let there be rock!</h2>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia odio veniam sit iste esse assumenda amet aperiam exercitationem, ea animi blanditiis recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="py-5 bg-dark">
-      <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2017</p>
-      </div>
-      <!-- /.container -->
-    </footer>
-
-
-
-
-
-  #header
-    %nav{ class: 'navbar navbar-default' }
-      %div{ class: 'container-fluid' }
-        %div{ class: 'navbar-header' }
-          = link_to 'SchnellenSite', '/', class:"navbar-brand"
-        %ul{ class: "nav navbar-nav" }
-          %li
-            = link_to 'Home', '/'
+  - # Navigation
+  %nav{ class:"navbar navbar-expand-lg navbar-dark bg-dark fixed-top" }
+    .container
+      - link_to "Start Bootstrap", "#",  class: "navbar-brand"
+      %button{ class:"navbar-toggler", type: "button", "data-toggle": "collapse", "data-target": "#navbarResponsive", "aria-controls": "navbarResponsive", "aria-expanded": 'false', 'aria-label':"Toggle navigation" }
+      %span{ class: "navbar-toggler-icon" }
+      .collapse.navbar-collapse{ id: "navbarResponsive" }
+        %ul{ class:"navbar-nav ml-auto" }
+          %li{ class: "nav-item active" }
+            = link_to 'Home', "/", class: "nav-link"
+            %span{ class: "sr-only" }
           - if user_signed_in?
-            %li
-              = link_to 'Questions', questions_path
-            %li
-              = link_to 'Tests', tests_index_path
-            %li
-              = link_to 'Imports', annals_path
-            %li
-              = link_to 'Statics', '/statics'
-            %li
-              = link_to 'Users', users_path
-          %li
-            = link_to 'Map', '/map'
-
-        =render partial: 'site/loginbar'
+            %li{ class: "nav-item" }
+              = link_to 'Questions', questions_path, class: "nav-link"
+            %li{ class: "nav-item" }
+              = link_to 'Tests', tests_index_path, class: "nav-link"
+            %li{ class: "nav-item" }
+              = link_to 'Imports', annals_path, class: "nav-link"
+            %li{ class: "nav-item" }
+              = link_to 'Users', users_path, class: "nav-link"
 
   %header{ class: "masthead" }
     .overlay
       .container
+        = yield
         %h1{ class: "display-1 text-white" }
           Welcome to Schnell Test
         %h2{ class: "display-4 text-white"}
@@ -160,13 +54,40 @@
             %p
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia odio veniam sit iste esse assumenda amet aperiam exercitationem,
               ea animi blanditiis recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.
+    %section
+      .container
+        .row.align-items-center
+          .col-md-6
+            .p-5
+              %img{ class:"img-fluid rounded-circle", src:"https://unsplash.it/500/500?image=452", alt:"" }
 
-  #main
-    = yield
+          .col-md-6
+            .p-5
+              %h2{ class: "display-4" }
+                We salute you!
+              %p
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia odio veniam sit iste esse assumenda amet aperiam exercitationem,
+                ea animi blanditiis recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.
+    %section>
+      .container
+        .row.align-items-center
+          .col-md-6.order-2
+            .p-5
+              %img{ class:"img-fluid rounded-circle", src:"https://unsplash.it/500/500?image=453", alt:"" }
 
-  #footer{class: "py-5 bg-dark"}
-    %br
-    %span.copy Copyright Chipotle Software &copy; 2015-2017
-    %a{ href: '/about_us'} Read more
+          .col-md-6.order-1
+            .p-5
+              %h2{ class:"display-4" }
+                Let there be rock!
+              %p
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia odio veniam sit iste esse assumenda amet aperiam exercitationem,
+                ea animi blanditiis recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.
+  - # Footer
+  %footer{ class: "py-5 bg-dark" }
+    .container
+      %p{ class: "m-0 text-center text-white" }
+        Copyright Chipotle Software &copy; 2015-2017
+
   - js_bundle = Rails.env.development? ? 'http://localhost:8080/build/bundle.js' : '/assets/bundle.js'
   = javascript_include_tag js_bundle
+
