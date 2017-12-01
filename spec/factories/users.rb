@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 # Chipotle Software (c) 2016-2017
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :user, class: User do
     uname  { FFaker::Internet.user_name }
     fname  { FFaker::Name.first_name }

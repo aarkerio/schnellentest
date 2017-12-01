@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :composite_answer do
     question nil
     user nil
