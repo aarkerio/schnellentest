@@ -2,7 +2,7 @@
 %html
   %head
     = favicon_link_tag 'favicon.ico'
-    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"} /
+    %meta{ :content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type" }
     %title ::Schnellen Test::
     = javascript_include_tag Rails.env.development? ? 'http://localhost:8080/build/styles.js'  : '/assets/styles.js'
     = stylesheet_link_tag Rails.env.development? ? 'http://localhost:8080/build/styles.css' : '/assets/styles.css'
@@ -30,6 +30,8 @@
               = link_to 'Imports', annals_path, class: "nav-link"
             %li{ class: "nav-item" }
               = link_to 'Users', users_path, class: "nav-link"
+        - unless user_signed_in?
+          =render partial: 'site/loginbar'
 
   %header{ class: "masthead" }
     .overlay

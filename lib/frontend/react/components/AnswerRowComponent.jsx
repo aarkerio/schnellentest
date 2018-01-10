@@ -87,7 +87,7 @@ class AnswerRow extends Component {
             classLoading="loading"
             classInvalid="invalid" />
 
-        <a href="#" onClick={() => {if(confirm('Delete answer?')) {this.deleteAnswer(answer.id)};}} className="removable"><i className="glyphicon glyphicon-trash"></i></a>
+        <a href="#" onClick={() => { if(confirm('Delete answer?')) {this.deleteAnswer(answer.id)}; }} className="removable"><i className="glyphicon glyphicon-trash"></i></a>
       </div>
     )
   }

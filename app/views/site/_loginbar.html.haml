@@ -1,13 +1,16 @@
+-unless user_signed_in?
+  = form_tag user_session_path, method: :post do
+    = text_field_tag "login"
+    = password_field_tag "login"
+    = submit_tag "Login"
+
 %ul{ class: "nav navbar-nav navbar-right" }
   -unless user_signed_in?
     %li
       %a{ href: edit_user_registration_path }
         %span.glyphicon.glyphicon-user
         Sign Up
-    %li
-      %a{ href: new_user_session_path }
-        %span.glyphicon.glyphicon-log-in
-        Log in
+
   -else
     %li
       = "Guten Tag Lehrer! #{cookies[:fullname]}"

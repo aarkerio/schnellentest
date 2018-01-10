@@ -3,13 +3,13 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails'
 # Use pg as the database for Active Record
-gem 'pg'
+gem 'pg', '~> 0.20'
+
 # Use SCSS for stylesheets
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 gem 'devise'
 gem 'sidekiq'
-gem 'sass-rails'
 gem 'hamlit'
 gem 'hamlit-rails'
 gem 'jwt'       # JSON Web Token
