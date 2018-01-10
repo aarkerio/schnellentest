@@ -1103,10 +1103,6 @@ boom@2.x.x:
   dependencies:
     hoek "2.x.x"
 
-bootstrap-css@^3.0.0:
-  version "3.3.7"
-  resolved "https://registry.yarnpkg.com/bootstrap-css/-/bootstrap-css-3.3.7.tgz#f5d436f1e7e5a8890483dcf59d5d5ae450cda25b"
-
 bootstrap-loader@^2.0.0-beta.21:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/bootstrap-loader/-/bootstrap-loader-2.1.0.tgz#6e4596eeb890edcfd86e4f40ae4e3b95e5cee27a"
@@ -1128,9 +1124,9 @@ bootstrap-webpack@0.0.5:
   version "0.0.5"
   resolved "https://registry.yarnpkg.com/bootstrap-webpack/-/bootstrap-webpack-0.0.5.tgz#c843494022140b545b711b5cd272942b9da01766"
 
-bootstrap@^3.3.7:
-  version "3.3.7"
-  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-3.3.7.tgz#5a389394549f23330875a3b150656574f8a9eb71"
+bootstrap@^4.0.0-alpha.6:
+  version "4.0.0-beta.3"
+  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-4.0.0-beta.3.tgz#60f0660bc3d121176514b361f6f83201c7ff8874"
 
 boundary@^1.0.1:
   version "1.0.1"
