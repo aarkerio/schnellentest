@@ -142,7 +142,7 @@
     "react-bootstrap": "^0.32.0",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.5",
-    "react-router": "^4.2.0",
+    "react-router": "^3.2.0",
     "react-router-redux": "^4.0.8",
     "react-select": "^1.0.0-beta12",
     "react-stub-context": "^0.8.1",

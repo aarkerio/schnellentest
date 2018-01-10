@@ -1,5 +1,4 @@
 
-
 let rand = (Math.floor(Math.random() * 20) - 10);
 
 export const modalConfig = {
