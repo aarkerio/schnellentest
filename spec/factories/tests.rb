@@ -1,6 +1,6 @@
-# Chipotle Software (c) 2016  MIT License
+# Chipotle Software (c) 2016-2017  MIT License
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :test do
     title        { 'Test title ' + FFaker::Lorem.words.join(' ')   }
     description  { 'Test description ' + FFaker::Lorem.words.join(', ')  }

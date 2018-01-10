@@ -1,5 +1,8 @@
+# coding: utf-8
+# frozen_string_literal: true
+
 # Chipotle Software (c) 2016-2017  MIT License
-FactoryGirl.define do
+FactoryBot.define do
   factory :question_tests, class: 'QuestionTest' do
     question
     test

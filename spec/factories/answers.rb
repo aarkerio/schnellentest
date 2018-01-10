@@ -1,5 +1,5 @@
 # Chipotle Software (c) 2016-2017   MIT License
-FactoryGirl.define do
+FactoryBot.define do
   factory :answer do
     answer { 'Die Antwort ist ' + FFaker::Lorem.words.join(' ')   }
     correct false
