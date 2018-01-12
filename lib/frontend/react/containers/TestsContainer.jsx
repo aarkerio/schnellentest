@@ -48,9 +48,9 @@ export class TestsContainer extends Component {
       <div className="container_div">
       <div>
         <Link to="/testnew">
-            <button type="button" className="btn btn-default btn-sm">
-              <span className="glyphicon glyphicon-plus"></span>
-            </button>
+          <button type="button" className="btn btn-primary">
+            New Test
+          </button>
         </Link>
       </div>
       <table className="table_class">

@@ -7,7 +7,7 @@ import { Link, browserHistory } from 'react-router'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as testsActionCreators from '../actions/tests'
-import { Button, Modal } from 'react-bootstrap'
+import { Button, Modal } from 'reactstrap'
 
 class TestModalNewComponent extends Component {
   constructor(props) {
@@ -24,7 +24,7 @@ class TestModalNewComponent extends Component {
   }
 
 /**
- * Sends the data to create a new appointment
+ * Sends the data to create a new test
  **/
   handleSubmit(e) {
     e.preventDefault();

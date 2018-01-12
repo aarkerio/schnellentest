@@ -23,13 +23,11 @@
             %span{ class: "sr-only" }
           - if user_signed_in?
             %li{ class: "nav-item" }
-              = link_to 'Questions', questions_path, class: "nav-link"
+              = link_to 'Tour', questions_path, class: "nav-link"
             %li{ class: "nav-item" }
-              = link_to 'Tests', tests_index_path, class: "nav-link"
+              = link_to 'Plans', tests_index_path, class: "nav-link"
             %li{ class: "nav-item" }
-              = link_to 'Imports', annals_path, class: "nav-link"
-            %li{ class: "nav-item" }
-              = link_to 'Users', users_path, class: "nav-link"
+              = link_to 'About Us', annals_path, class: "nav-link"
         - unless user_signed_in?
           =render partial: 'site/loginbar'
 

@@ -3,28 +3,32 @@
 %html{xmlns: 'http://www.w3.org/1999/xhtml'}
   %head
   %meta{:content => "text/html; charset=utf-8", "http-equiv" => "Content-Type"}
+  = javascript_include_tag Rails.env.development? ? 'http://localhost:8080/build/styles.js'  : '/assets/styles.js'
+  = stylesheet_link_tag Rails.env.development? ? 'http://localhost:8080/build/styles.css' : '/assets/styles.css'
   = favicon_link_tag 'images/favicon.ico'
-  %title Vet4pet :: Admin
+  %title Schnell::Admin
   = stylesheet_link_tag 'admin'
   = csrf_meta_tags
   %body
     - flash.each do |k, v|
-      %div{id: k}= v
-    %div{id: 'wrap'}
-      %div{id: 'header'}
-        %h1 Schnellentest
+      %div{id: k} = v
+    #wrap
+      #header
+        %h1 Schnellentest Admin
+        #nav
+          %ul
+            %li= link_to 'Questions', questions_path
+            %li= link_to 'Tests', tests_index_path
+            %li= link_to 'Imports', annals_path
+            %li= link_to 'Users', users_path
+            %li= link_to 'Logout', destroy_user_session_path
 
-      %div{id: 'main'}
+      #main
         =yield
-      %div{id: 'sidebar'}
-        %h2 Column 2
-        %p
-          Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Mauris vel magna.
-        %ul
-          %li= link_to 'Link 1', 'fsddsfdsf'
-          %li= link_to 'Link 2', '111'
-          %li= link_to 'Link 3', '2222222'
+
       %div{id: 'footer'}
-        %p ChipotleSoftware &copy; 2015-2016
-  = javascript_include_tag 'bundle'
+        %p ChipotleSoftware &copy; 2016-2018
+
+  - js_bundle = Rails.env.development? ? 'http://localhost:8080/build/bundle.js' : '/assets/bundle.js'
+  = javascript_include_tag js_bundle
 

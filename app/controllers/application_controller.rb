@@ -1,4 +1,4 @@
-# GPLv3 Chipotle Software (c) 2016-2017
+# GPLv3 Chipotle Software (c) 2016-2018
 
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
@@ -6,6 +6,10 @@ class ApplicationController < ActionController::Base
   #
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
+
+  before_action :layout_by_action
+
+  @@actions = %w(new edit create update index)
 
   before_action :configure_permitted_parameters, if: :devise_controller?
 
@@ -28,5 +32,13 @@ class ApplicationController < ActionController::Base
     render 'errors/internal_server_error', status: :internal_server_error
   end
 
+  # Layout for action
+  def layout_by_action
+    if @@actions.include? params[:action]
+      self.class.layout 'admin'
+    else
+      self.class.layout 'application'
+    end
+  end
 
 end

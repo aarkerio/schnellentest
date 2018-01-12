@@ -22,6 +22,7 @@ gem 'puma'
 gem 'draper'  # presenters
 gem 'aasm'
 gem "interactor", "~> 3.0"
+gem "sass-rails"
 
 gem 'will_paginate', '~> 3.1.0'
 gem 'carrierwave', '~> 1.0'
