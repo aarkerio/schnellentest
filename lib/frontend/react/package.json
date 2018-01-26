@@ -43,6 +43,7 @@
     "modal": "^1.2.0",
     "moment": "^2.12.0",
     "prop-types": "^15.5.10",
+    "react-alert-template-basic": "^1.0.0",
     "requirejs": "^2.2.0",
     "universal-cookie": "^2.0.8"
   },

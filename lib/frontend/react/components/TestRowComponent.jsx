@@ -31,16 +31,16 @@ class TestRow extends Component {
     const { test, keyRow } = this.props;
     return (
       <tr key={keyRow}>
-        <td style={{width: '35px', padding:0, textAlign: 'center'}}> <Link to={"/testedit/"+test.id+"/"}>  <i className="glyphicon glyphicon-pencil"></i></Link></td>
-        <td style={{width: '35px', padding:0, textAlign: 'center'}}> <Link to={"/questions/"+test.id+"/"}> <i className="glyphicon glyphicon-apple"></i></Link></td>
+        <td style={{width: '35px', padding:0, textAlign: 'center'}}> <Link to={"/testedit/"+test.id+"/"}> <button type="button" className="btn btn-secondary btn-sm">Edit</button> </Link></td>
+        <td style={{width: '35px', padding:0, textAlign: 'center'}}> <Link to={"/questions/"+test.id+"/"}> <button type="button" className="btn btn-secondary btn-sm"> Questions</button> </Link></td>
         <td style={{width: '35px', padding:0}}> {test.title}   </td>
         <td style={{width: '35px', padding:0}}> {test.description}    </td>
         <td style={{width: '35px', padding:0, textAlign: 'center'}}> {test.created}    </td>
         <td style={{width: '35px', padding:0, textAlign: 'center'}}> {test.active} </td>
         <td style={{width: '35px', padding:0, textAlign: 'center'}}> {test.shared}  </td>
-        <td style={{width: '35px', padding:0, textAlign: 'center'}}> <a href={"/tests/"+test.id+"/print.pdf"}> <i className="glyphicon glyphicon-print" alt="drucken"></i></a></td>
+        <td style={{width: '35px', padding:0, textAlign: 'center'}}> <a href={"/tests/"+test.id+"/print.pdf"}> <button type="button" className="btn btn-secondary btn-sm">Print</button></a></td>
         <td style={{width: '35px', padding:0, textAlign:'center'}}>
-          <a href="#" onClick={() => {if(confirm('Delete the item?')) {this.deleteTest(test.id)};}} className="removable"><i className="glyphicon glyphicon-trash"></i></a>
+          <a href="#" onClick={() => {if(confirm('Delete the item?')) {this.deleteTest(test.id)};}} className="removable"><button type="button" className="btn btn-secondary btn-sm">Delete</button></a>
         </td>
       </tr>
     )

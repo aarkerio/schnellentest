@@ -3,12 +3,12 @@
 import Cookies from 'universal-cookie'
 import { connect } from 'react-redux'
 import { render } from 'react-dom'
-import { dialogStyle, modalConfig } from '../config/modals'
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Link, browserHistory, withRouter} from 'react-router'
-import { Button, Modal } from 'react-bootstrap'
-import AlertContainer from 'react-alert'
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
+import { Provider as AlertProvider } from 'react-alert'
+import AlertTemplate from 'react-alert-template-basic'
 import HeaderComponent  from './HeaderComponent'
 import * as TestsActionCreators from '../actions/tests'
 
@@ -17,22 +17,22 @@ export class QuestionsComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-          questions:   [],
-          test_id:     this.props.routeParams.test_id,
-          showModal:   false,
-          user_id:     0,    // not valid value
-          question:    '',
-          explanation: '',
-          hint:        '',
-          tags:        '',
-          worth:       1,
-          active:      true,
-          qtype:       true,
-          terms:       ''
+        questions:   [],
+        test_id:     this.props.routeParams.test_id,
+        showModal:   false,
+        user_id:     0,    // not valid value
+        question:    '',
+        explanation: '',
+        hint:        '',
+        tags:        '',
+        worth:       1,
+        active:      true,
+        qtype:       true,
+        terms:       ''
     }
 
     this.alertOptions = {
-          offset:     14,
+          offset:     '30px',
           position:   'top left',
           theme:      'dark',
           time:       5000,
@@ -165,9 +165,7 @@ export class QuestionsComponent extends Component {
       return (
               <div className="right_button">
                 <Link to={"/answers/"+id+"/"+this.state.test_id+"/"}>
-                  <button type="button" className="btn btn-default btn-sm" title="Manage answers">
-                    <span className="glyphicon glyphicon-check"></span>
-                  </button>
+                  <button type="button" className="btn btn-default btn-sm" title="Manage answers">Check</button>
                 </Link>
               </div>
       );
@@ -191,14 +189,14 @@ export class QuestionsComponent extends Component {
     let title = up ? 'up' : 'down';
     return (<div className="right_button">
               <button type="button" onClick={() => {this.newOrder(id, title)}} className="btn btn-default btn-sm" title={"Move question "+title}>
-                <span className={"glyphicon glyphicon-"+title+"load"}></span>
+               {title}
               </button>
             </div>
     );
   }
-/**
- * Sends the data to create a new appointment
- **/
+ /**
+  * Sends the data to create a new appointment
+  **/
   submitSearch(e) {
     e.preventDefault();
     this.props.router.replace('/search/'+ this.state.test_id + '/' + this.state.terms);
@@ -207,13 +205,10 @@ export class QuestionsComponent extends Component {
   render() {
     return (
       <div className="container_div">
-        <AlertContainer ref={(a) => global.msg = a} {...this.alertOptions} />
         <HeaderComponent />
         <h1> {this.props.OneTestArrayProp.title} </h1>
         <div>
-          <button type="button" onClick={this.openModal} className="btn btn-default btn-sm" title="Frage hinzüfugen">
-            <span className="glyphicon glyphicon-plus"></span>
-          </button>
+          <button type="button" onClick={this.openModal} className="btn btn-default btn-sm" title="Frage hinzüfugen"> Add </button>
           <form>
             <label htmlFor="terms">Search:</label>
             <input className="form-control" name="terms" value={this.state.terms} onChange={this.handleChange.bind(this, 'terms')} />
@@ -231,9 +226,7 @@ export class QuestionsComponent extends Component {
               <div><b>Type</b>: { q.qtype  ?  'Multiple Option' : 'Open question' } </div>
               <div className="right_button">
                 <Link to={"/questionedit/"+q.id+"/"}>
-                  <button type="button" className="btn btn-default btn-sm" title="Edit question">
-                    <span className="glyphicon glyphicon-pencil"></span>
-                  </button>
+                  <button type="button" className="btn btn-default btn-sm" title="Edit question">Edit </button>
                 </Link>
               </div>
 
@@ -242,7 +235,7 @@ export class QuestionsComponent extends Component {
               { this.renderReorderButton(q.id, i, false) }
               <div className="right_button">
                 <button type="button" onClick={() => {if(confirm('Delete the question?')) {this.deleteQuestion(q.id)};}} className="btn btn-default btn-sm" title="Delete question">
-                  <span className="glyphicon glyphicon-trash"></span>
+                  Delete
                 </button>
               </div>
         </div>
@@ -250,15 +243,9 @@ export class QuestionsComponent extends Component {
       </div>
       { this.props.children }
       <div id="questionform" className="modal hide fade" tabIndex="-1" >
-          <Modal
-            aria-labelledby='modal-label'
-            backdropStyle={modalConfig.backdropStyle}
-            show={this.state.showModal}
-          >
-          <Modal.Header>
-            <Modal.Title> Modal Überschrift </Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
+        <Modal isOpen={this.state.showModal} toggle={this.toggle} className="foo">
+          <ModalHeader>Modal Überschrift  </ModalHeader>
+          <ModalBody>
             <form>
               <label htmlFor="question">Question:</label>
               <input className="form-control" name="question" value={this.state.question} onChange={this.handleChange.bind(this, 'question')} />
@@ -288,16 +275,22 @@ export class QuestionsComponent extends Component {
                 <input type="checkbox" name="qtype" value={this.state.qtype} checked={this.state.qtype} onChange={this.toggleCheckbox.bind(this, 'qtype')} />
               </div>
              </form>
-          </Modal.Body>
-          <Modal.Footer>
+          </ModalBody>
+          <ModalFooter>
              <Button onClick={this.closeModal.bind(this)}>Cancel</Button>
              <Button onClick={this.handleSubmit.bind(this)}>Änderungen speichern</Button>
-          </Modal.Footer>
+          </ModalFooter>
         </Modal>
         </div>
       </div>
     )
   }
+
+
+
+
+
+    
 }
 
 QuestionsComponent.propTypes = {
@@ -321,5 +314,4 @@ const mapStateToProps = (state) => {
 }
 
 export default withRouter(connect(mapStateToProps)(QuestionsComponent)); // Binding React component with the Redux store
-
 
