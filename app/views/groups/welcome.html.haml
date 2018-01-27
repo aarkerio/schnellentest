@@ -1,7 +1,50 @@
-%h1 Welcome to Schnell Test
+%header{ class: "masthead" }
+  .overlay
+    .container
+      %h1{ class: "display-1 text-white" }
+        Welcome to Schnell Test
+      %h2{ class: "display-4 text-white"}
+        Will Rock Your Socks Off
 
-#whatever
-  Welcome group HAML view
+%section
+  .container
+    %div{ class:"row align-items-center" }
+      .col-md-6.order-2
+        .p-5
+          %img{ class: "img-fluid rounded-circle", src: "https://unsplash.it/500/500?image=836", alt:"" }
+      .col-md-6.order-1
+        .p-5
+          %h2{ class: "display-4" }
+            For those about to rock...
+          %p
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia odio veniam sit iste esse assumenda amet aperiam exercitationem,
+            ea animi blanditiis recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.
+%section
+  .container
+    .row.align-items-center
+      .col-md-6
+        .p-5
+          %img{ class:"img-fluid rounded-circle", src:"https://unsplash.it/500/500?image=452", alt:"" }
 
-%div{ style: "text-align:center; padding:5px;margin:5px;" }
-  = image_tag 'banner_1.png', alt: 'Test cool', title: 'Title cool'
+      .col-md-6
+        .p-5
+          %h2{ class: "display-4" }
+            We salute you!
+          %p
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia odio veniam sit iste esse assumenda amet aperiam exercitationem,
+            ea animi blanditiis recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.
+%section
+  .container
+    .row.align-items-center
+      .col-md-6.order-2
+        .p-5
+          %img{ class:"img-fluid rounded-circle", src:"https://unsplash.it/500/500?image=453", alt:"" }
+
+      .col-md-6.order-1
+        .p-5
+          %h2{ class:"display-4" }
+            Let there be rock!
+          %p
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia odio veniam sit iste esse assumenda amet aperiam exercitationem, ea animi blanditiis recusandae!
+            Ratione voluptatum molestiae adipisci, beatae obcaecati.
+

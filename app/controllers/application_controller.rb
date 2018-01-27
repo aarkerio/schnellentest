@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
 
   before_action :layout_by_action
 
-  @@actions = %w(new edit create update index)
+  @@actions = %w(new edit create update index elaboration)
 
   before_action :configure_permitted_parameters, if: :devise_controller?
 
