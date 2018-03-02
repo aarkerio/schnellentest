@@ -1,5 +1,9 @@
 -- Schnell Test Tables
--- Chipotle Software (c) 2015-2016   MIT License
+-- Chipotle Software (c) 2015-2018   MIT License
+
+-- What are the options for field:type?
+-- primary_key, :string, :text, :integer, :float, :decimal, :datetime, :timestamp,
+-- :time, :date, :binary, :boolean, :references
 
 -- Group Model
 -- bin/rails g scaffold Group name:string description:string
@@ -100,7 +104,7 @@ CREATE TABLE vclassrooms (
     "streaming" text,
     "evaluation" smallint NOT NULL DEFAULT 0, -- active / desactive student evaluation when course finish
     "diploma" smallint NOT NULL DEFAULT 0, -- active / desactive diploma when student get enough points
-    "gcalendar_id" varchar(70) 
+    "gcalendar_id" varchar(70)
 );
 
 COMMENT ON TABLE vclassrooms IS 'Virtual classrooms';
@@ -118,7 +122,7 @@ CREATE TABLE evaluations (
  "intructors" text,
  "materiales" text,
  "take_another" boolean,
- "free" text, 
+ "free" text,
  "created" timestamp(0) with time zone DEFAULT now() NOT NULL
 );
 

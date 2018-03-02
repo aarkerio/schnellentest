@@ -1,5 +1,5 @@
 # coding: utf-8
-# Chipotle Software 2016-2017 (c)  MIT License
+# Chipotle Software 2016-2018 (c)  MIT License
 
 admin      = Group.create! name: 'Admin', description: 'Admin'
 teachers   = Group.create! name: 'Teacher group', description: 'Teacher group'
