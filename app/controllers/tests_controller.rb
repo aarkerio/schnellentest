@@ -30,6 +30,7 @@ class TestsController < ApplicationController
       end
     end
   end
+
   # POST /tests
   def create
     @test = Test.new(test_params)

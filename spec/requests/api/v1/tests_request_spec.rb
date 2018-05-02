@@ -2,8 +2,8 @@ require 'spec_helper'
 
 RSpec.describe Api::V1::TestsController, type: :request do
 
-  let(:user)  { FactoryGirl.create :user }
-  let(:tests) { FactoryGirl.create_list :test, 5, user: user }
+  let(:user)  { FactoryBot.create :user }
+  let(:tests) { FactoryBot.create_list :test, 5, user: user }
 
   describe "POST#listing" do
     it "returns a successful 200 response for listing action" do
@@ -17,7 +17,7 @@ RSpec.describe Api::V1::TestsController, type: :request do
   end
 
   describe "POST#get_one" do
-    let(:test)      { FactoryGirl.create :test, user: user }
+    let(:test)      { FactoryBot.create :test, user: user }
     it "returns a successful 200 response for get_one action" do
       post api_v1_tests_get_one_path, {params: {id: test.id}}
       expect(response).to be_success
@@ -27,10 +27,10 @@ RSpec.describe Api::V1::TestsController, type: :request do
   end
 
   describe "PATCH#reorder" do
-    let(:test)             { FactoryGirl.create :test, user: user }
-    let(:question_test_1)  { FactoryGirl.create :question_with_test, question: 'Frage Eins',  user: user, test: test }
-    let(:question_test_2)  { FactoryGirl.create :question_with_test, question: 'Frage Zweig', user: user, test: test }
-    let(:question_test_3)  { FactoryGirl.create :question_with_test, question: 'Frage Drei',  user: user, test: test }
+    let(:test)             { FactoryBot.create :test, user: user }
+    let(:question_test_1)  { FactoryBot.create :question_with_test, question: 'Frage Eins',  user: user, test: test }
+    let(:question_test_2)  { FactoryBot.create :question_with_test, question: 'Frage Zweig', user: user, test: test }
+    let(:question_test_3)  { FactoryBot.create :question_with_test, question: 'Frage Drei',  user: user, test: test }
     it "move the question up and successful 200" do
       question_test_1
       question_test_2
