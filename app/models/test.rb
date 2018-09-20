@@ -1,6 +1,6 @@
 # coding: utf-8
 # frozen_string_literal: true
-# Chipotle Software (c) 2016-2017 GPL
+# Chipotle Software (c) 2016-2018 GPL
 class Test < ApplicationRecord
 
   # Relationships
@@ -69,17 +69,16 @@ class Test < ApplicationRecord
   #
   # Returns hash object or nil.
   def order_params(params)
-    { title:       params['title'],
-      description: params['description'],
-      tags:        params['tags'],
-      active:      params['active'],
-      shared:      params['shared'],
-      user_id:     params['user_id']
-    }
+    {title:       params['title'],
+     description: params['description'],
+     tags:        params['tags'],
+     active:      params['active'],
+     shared:      params['shared'],
+     user_id:     params['user_id']}
   end
 
   # Private
-  # Serialize a test ans its questions
+  # Serialize a test and its questions
   # Returns Hash.
   def serialize_test
     all               = Hash.new
