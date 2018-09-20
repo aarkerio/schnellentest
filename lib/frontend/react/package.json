@@ -45,6 +45,7 @@
     "prop-types": "^15.5.10",
     "react-alert-template-basic": "^1.0.0",
     "requirejs": "^2.2.0",
+    "sass.js": "^0.10.10",
     "universal-cookie": "^2.0.8"
   },
   "scripts": {

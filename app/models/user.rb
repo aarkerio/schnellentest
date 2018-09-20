@@ -1,6 +1,6 @@
 # coding: utf-8
 # frozen_string_literal: true
-# GPLv3 Chipotle Software (c) 2016-2017
+# GPLv3 Chipotle Software (c) 2016-2018
 class User < ApplicationRecord
 
   # Include default devise modules. Others available are:
@@ -35,6 +35,10 @@ class User < ApplicationRecord
   end
 
   private
+
+  def full_name
+    [fname, lname].join(' ')
+  end
 
   def generate_guid
     self.guid = get_guid
