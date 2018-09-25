@@ -67,7 +67,7 @@
     "babel-preset-survivejs-kanban": "^0.3.3",
     "babel-types": "^6.15.0",
     "babelify": "^8.0.0",
-    "bootstrap": "4.0.0",
+    "bootstrap": "4.1.2",
     "bootstrap-loader": "^2.2.0",
     "bootstrap-sass": "^3.3.7",
     "bootstrap-webpack": "0.0.6",
