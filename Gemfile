@@ -1,40 +1,33 @@
 source 'https://rubygems.org'
 
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails'
-# Use pg as the database for Active Record
-gem 'pg', '~> 0.20'
+gem 'rails'                 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
+gem 'pg', '~> 0.20'         # Use pg as the database for Active Record
 
-# Use SCSS for stylesheets
-# See https://github.com/rails/execjs#readme for more supported runtimes
-# gem 'therubyracer', platforms: :ruby
 gem 'devise'
 gem 'sidekiq'
 gem 'hamlit'
 gem 'hamlit-rails'
-gem 'jwt'       # JSON Web Token
+gem 'jwt'                   # JSON Web Token
 gem 'pdf-reader'
 gem 'doc_ripper'
 gem 'wicked_pdf'
 
-# Use Puma as the app server
-gem 'puma'
-gem 'draper'  # presenters
-gem 'aasm'
-gem "interactor", "~> 3.0"
-gem "sass-rails"
+gem 'puma'                  # our app server
+gem 'draper'                # presenters and view logic
+gem 'aasm'                  # State machines are cool!
+gem 'interactor', '~> 3.0'  # interactions design pattern
+gem 'sass-rails'
 
 gem 'will_paginate', '~> 3.1.0'
 gem 'carrierwave', '~> 1.0'
 gem 'json'
-gem 'gretel'
+gem 'gretel'                # Flexible Ruby on Rails breadcrumbs plugin.
+gem 'hamster'               # Efficient, Immutable, Thread-Safe data structures
+
 
 group :development do
   gem 'web-console', '~> 3.0'
-  #  gem 'capybara-webkit'
-  gem 'poltergeist'
-  # Use Capistrano for deployment
-  gem 'capistrano', '~> 3.6'
+  gem 'capistrano', '~> 3.6'    # Use Capistrano for deployment
   gem 'capistrano-rails', '~> 1.3'
   gem 'capistrano-rvm'
   gem "capistrano-sidekiq", "~> 0.5.3"
@@ -42,8 +35,7 @@ group :development do
 end
 
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'pry-byebug'
+  gem 'pry-byebug'    # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'rspec'
   gem 'rspec-rails'
   gem 'factory_bot'
@@ -51,9 +43,8 @@ group :development, :test do
   gem 'ffaker'
   gem 'better_errors'
   gem 'binding_of_caller'
-  gem 'bullet'     # Detect N+1 situations
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring'
+  gem 'bullet'           # Detect N+1 queries
+  gem 'spring'           # Spring speeds up development by keeping your application running in the background.
   gem 'spring-commands-rspec'
   gem 'guard-rspec'
   gem 'mutant-rspec'
