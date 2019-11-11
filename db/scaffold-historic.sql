@@ -1,5 +1,5 @@
 -- Schnell Test Tables
--- Chipotle Software (c) 2015-2018   MIT License
+-- Chipotle Software (c) 2015-2019   MIT License
 
 -- What are the options for field:type?
 -- primary_key, :string, :text, :integer, :float, :decimal, :datetime, :timestamp,
@@ -32,7 +32,7 @@ COMMENT ON COLUMN questions.order IS 'Order in test';
 -- bin/rails g model CompositeAnswer question:references user:references first_column:string second_column:string correct_column:string
 
 -- Archive Model
--- bin/rails g model Annal user:references notes:string sumcheck:string file:string
+-- bin/rails g model Import notes:string sumcheck:string file:string
 
 --  Model
 -- bin/rails g model Import user:references notes:string file:string tags: string
