@@ -6,33 +6,14 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module Schnell
+module Gqlblog
   class Application < Rails::Application
+    # Initialize configuration defaults for originally generated Rails version.
+    config.load_defaults 6.0
+
     # Settings in config/environments/* take precedence over those specified here.
-    # Application configuration should go into files in config/initializers
-    # -- all .rb files in that directory are automatically loaded.
-    config.time_zone = 'Central Time (US & Canada)'
-    # config.autoload_paths << "#{Rails.root}/app/lib"
-    # config.eager_load_paths << "#{Rails.root}/lib"
-
-    # we use webpack, so:
-    config.assets.enabled = false
-
-    # turn off generators
-    config.generators do |g|
-      g.stylesheets = false
-      g.javascripts = false
-      g.template_engine nil #to skip views
-      g.test_framework  nil #to skip test framework
-      g.helper = false
-      g.view = false
-      g.routing_specs = false
-      g.view_specs = false
-      g.helper_specs = false
-      g.javascript_engine :js
-      g.test_framework  :rspec, fixture: false
-      g.template_engine :haml
-      g.fixture_replacement :factory_girl, dir: 'spec/factories'
-    end
+    # Application configuration can go into files in config/initializers
+    # -- all .rb files in that directory are automatically loaded after loading
+    # the framework and any gems in your application.
   end
 end

@@ -56,7 +56,7 @@ class Annal < ApplicationRecord
       message
     rescue  => e
       logger.debug "## Test Exception on verify or save ###>>>  #{e.inspect}"
-      1 # general error
+      1            # general error
     end
   end
 
