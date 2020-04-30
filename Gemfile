@@ -16,7 +16,7 @@ gem 'jbuilder', '~> 2.7'
 gem 'devise'
 gem 'hamster'  # Immutable ruby structures
 gem 'hamlit'   # HAML
-
+gem 'react-rails'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
