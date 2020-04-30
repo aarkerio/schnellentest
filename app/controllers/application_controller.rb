@@ -1,4 +1,4 @@
-# GPLv3 Chipotle Software (c) 2016-2018
+# GPLv3 Chipotle Software (c) 2016-2020
 
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.

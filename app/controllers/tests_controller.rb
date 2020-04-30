@@ -1,4 +1,4 @@
-# Chipotle Software (c) 2016-2017 MIT License
+# Chipotle Software (c) 2016-2019 MIT License
 
 class TestsController < ApplicationController
   before_action :set_test, only: [:show, :edit, :update, :destroy, :print]
@@ -33,13 +33,9 @@ class TestsController < ApplicationController
 
   # POST /tests
   def create
-    @test = Test.new(test_params)
+    test = Test.new(test_params)
 
-    if @test.save
-      redirect_to @test, notice: 'Test was successfully created.'
-    else
-      render :new
-    end
+    redirect_to test, notice: 'Test was successfully created.' if test.save
   end
 
   # PATCH/PUT /tests/1
@@ -58,13 +54,14 @@ class TestsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_test
-      @test = Test.find(params[:id])
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def test_params
-      params.require(:test).permit(:user_id, :title, :description, :active, :shared)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_test
+    @test = Test.find(params[:id])
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def test_params
+    params.require(:test).permit(:title, :description, :active, :shared)
+  end
 end

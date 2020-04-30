@@ -7,7 +7,7 @@ require 'spec_helper'
 
 RSpec.describe Annal, type: :model do
 
-  let(:user)  { FactoryBot.create :user}
+  let(:user)  { FactoryBot.create :user }
 
   context 'Saves and convert a PDF file' do
     let(:annal) { FactoryBot.build :annal, user: user }
