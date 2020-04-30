@@ -17,8 +17,8 @@
         %h1 Schnellentest Admin
         #nav
           %ul
-            %li= link_to 'Questions', questions_path
-            %li= link_to 'Tests', tests_index_path
+            %li= link_to 'Posts', posts_path
+            %li= link_to 'Tests', tests_path
             %li= link_to 'Imports', annals_path
             %li= link_to 'Users', users_path
             %li= link_to 'Logout', destroy_user_session_path
@@ -27,7 +27,7 @@
         =yield
 
       %div{id: 'footer'}
-        %p ChipotleSoftware &copy; 2016-2018
+        %p ChipotleSoftware &copy; 2016-2020
 
   - js_bundle = Rails.env.development? ? 'http://localhost:8080/build/bundle.js' : '/assets/bundle.js'
   = javascript_include_tag js_bundle

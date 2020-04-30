@@ -1,6 +1,6 @@
 # coding: utf-8
 # frozen_string_literal: true
-# GPLv3 Chipotle Software (c) 2016-2018
+# GPLv3 Chipotle Software (c) 2016-2020
 class User < ApplicationRecord
 
   # Include default devise modules. Others available are:
@@ -45,7 +45,7 @@ class User < ApplicationRecord
   end
 
   def set_active
-    self.active   = true
+    self.active = true
     group = Group.find_by_name 'Admin'
     self.group_id = group.id
   end

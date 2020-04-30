@@ -1,4 +1,4 @@
-# Chipotle Software (c) 2016    MIT License
+# Chipotle Software (c) 2016-2020   MIT License
 class CreateUsers < ActiveRecord::Migration[5.0]
   def change
     create_table :users do |t|
