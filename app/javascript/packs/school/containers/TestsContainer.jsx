@@ -1,33 +1,27 @@
-'use strict'
+'use strict';
 
-import { connect } from 'react-redux'
-import { render } from 'react-dom'
-import React, { Component } from 'react'
-import { Link, browserHistory } from 'react-router'
-import PropTypes from 'prop-types'
-import Cookies from 'universal-cookie'
+import { connect } from 'react-redux';
+import { render } from 'react-dom';
+import React, { Component } from 'react';
+import { Link, browserHistory } from 'react-router';
+import PropTypes from 'prop-types';
+import Cookies from 'universal-cookie';
 
 // Chipotle
-import TestRowComponent   from '../components/TestRowComponent'
-import * as TestsActionCreators from '../actions/tests'
+import TestRowComponent   from '../components/TestRowComponent';
+import * as TestsActionCreators from '../actions/tests';
 
 // export for unconnected component (for mocha tests)
 export class TestsContainer extends Component {
 
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       user_id: this.props.cookies.get('user_id')
-    }
-  }
-
-  /**
-   * Load tests
-   **/
-  componentWillMount() {
+    };
     if ( ! this.props.TestsArrayProp.length ) {
-      let action = TestsActionCreators.fetchTests(this.state.user_id)
-      this.props.dispatch(action)
+      let action = TestsActionCreators.fetchTests(this.state.user_id);
+      this.props.dispatch(action);
     }
   }
 
@@ -39,10 +33,10 @@ export class TestsContainer extends Component {
   }
 
   render() {
-    let rows = []
+    let rows = [];
     this.props.TestsArrayProp.forEach(function(test) {
-       rows.push(<TestRowComponent test={test} key={test.id} keyRow={test.id} />)
-    })
+      rows.push(<TestRowComponent test={test} key={test.id} keyRow={test.id} />);
+    });
 
     return (
       <div className="container_div">
@@ -73,7 +67,7 @@ export class TestsContainer extends Component {
           </table>
           { this.props.children }
       </div>
-    )
+    );
   }
 };
 
@@ -81,17 +75,17 @@ TestsContainer.propTypes = {
   TestsArrayProp: PropTypes.array,
   dispatch:       PropTypes.func,
   cookies:        PropTypes.object
-}
+};
 
 TestsContainer.defaultProps = {
     TestsArrayProp:  [],
     cookies: new Cookies
-}
+};
 
 const mapStateToProps = (state) => {
   return {
     TestsArrayProp: state.rootReducer.tests_rdcr.TestsArrayProp
-  }
-}
+  };
+};
 
-export default connect(mapStateToProps)(TestsContainer)
+export default connect(mapStateToProps)(TestsContainer);

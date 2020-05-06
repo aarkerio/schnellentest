@@ -30,8 +30,8 @@ class AnswerRow extends Component {
        XHRDelay:    450,
        highlight:   false,
        showSource:  false
-    }
-    this.toggleAnswer = this.toggleAnswer.bind(this)
+    };
+    this.toggleAnswer = this.toggleAnswer.bind(this);
   }
 
   changeState(newState) {
@@ -39,13 +39,13 @@ class AnswerRow extends Component {
   }
 
   isStringAcceptable(string) {
-    return (string.length >= 4)  // Minimum 4 letters long
+    return (string.length >= 4);  // Minimum 4 letters long
   }
 
   handleChange(event){
-    this.setState({answer: event.answer})
-    let action = AnswersActionCreators.updateAnswer(this.state.id, event.answer)
-    this.props.dispatch(action)
+    this.setState({answer: event.answer});
+    let action = AnswersActionCreators.updateAnswer(this.state.id, event.answer);
+    this.props.dispatch(action);
   }
 
   toggleCheckbox(name, event){
@@ -54,30 +54,30 @@ class AnswerRow extends Component {
   }
 
   toggleAnswer() {
-    let new_state = !this.state.correct
-    this.setState({correct: new_state})
-    let action = AnswersActionCreators.toggleField('answers', 'correct', this.state.id)
-    this.props.dispatch(action)
+    let new_state = !this.state.correct;
+    this.setState({correct: new_state});
+    let action = AnswersActionCreators.toggleField('answers', 'correct', this.state.id);
+    this.props.dispatch(action);
   }
 
   loadAnswer(){
     let newcall = AnswersActionCreators.fetchOneAnswer( this.state.question_id );
-    this.props.dispatch(newcall)
+    this.props.dispatch(newcall);
   }
 
   deleteAnswer(id) {
     if (typeof this.props.onChange === 'function') {
-      this.props.onChange(id)
+      this.props.onChange(id);
     }
   }
 
   render() {
-    const { answer, keyRow } = this.props
-    let divStyle = { width: '100%', padding: '3px', margin: '2px' }
-    let graded   = this.state.correct ? {text:'Correct', style: {color:'green',fontWeight:'bold',margin:'8px'}} : {text:'Incorrect', style:{color:'red',fontWeight:'bold',margin:'8px'}}
+    const { answer, keyRow } = this.props;
+    let divStyle = { width: '100%', padding: '3px', margin: '2px' };
+    let graded   = this.state.correct ? {text:'Correct', style: {color:'green',fontWeight:'bold',margin:'8px'}} : {text:'Incorrect', style:{color:'red',fontWeight:'bold',margin:'8px'}};
     return (
       <div key={keyRow} style={divStyle}>
-        <a href="#" onClick={() => {this.toggleAnswer()}} className="removable" title="Switch Correct/Incorrect"><i className="glyphicon glyphicon-random"></i></a>
+        <a href="#" onClick={() => {this.toggleAnswer();}} className="removable" title="Switch Correct/Incorrect"><i className="glyphicon glyphicon-random"></i></a>
          <span style={graded.style}>{graded.text}</span>
         <RIEInput
             value={this.state.answer}
@@ -89,7 +89,7 @@ class AnswerRow extends Component {
 
         <a href="#" onClick={() => { if(confirm('Delete answer?')) {this.deleteAnswer(answer.id)}; }} className="removable"><i className="glyphicon glyphicon-trash"></i></a>
       </div>
-    )
+    );
   }
 }
 
@@ -97,7 +97,7 @@ AnswerRow.propTypes = {
   answer:    PropTypes.object,
   keyRow:    PropTypes.number,
   dispatch:  PropTypes.func
-}
+};
 
-export default connect()(AnswerRow)
+export default connect()(AnswerRow);
 

@@ -1,7 +1,7 @@
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
 
-import Cookies from 'universal-cookie'
+import Cookies from 'universal-cookie';
 
 export const RECEIVE_TESTS    = 'RECEIVE_TESTS';
 export const RECEIVE_ONE_TEST = 'RECEIVE_ONE_TEST';
@@ -21,9 +21,9 @@ function headers(set_cookie=false) {
         'Accept':       'application/json',
         'Content-Type': 'application/json',
         'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-      }
-  if (set_cookie){
-    headers['Authorization'] = "Bearer " + cookies.get('remember_user_token')
+  };
+  if (set_cookie) {
+    headers['Authorization'] = "Bearer " + cookies.get('remember_user_token');
   }
   return headers;
 }
@@ -32,8 +32,9 @@ function requestTest(test_id) {
   return {
     type: REQUEST_POSTS,
     test_id
-  }
+  };
 }
+
 // Get all the quiz tests from this user
 export function fetchTests(user_id, active=true) {
   return function (dispatch) {
@@ -46,13 +47,11 @@ export function fetchTests(user_id, active=true) {
                        active: active,  // get all
                    }),
       headers:     headers(true)
-    }
-    // pause until fetch returns
-    // let data = await fetch('http://sampleapi.com/posts')
+    };
     return fetch('/api/v1/tests/listing/', data)
           .then(response => response.json())
           .then(json => dispatch(receiveTests(json)));
-  }
+  };
 }
 
 /* Internal method */
@@ -60,7 +59,7 @@ function receiveTests(TestsArrayProp) {
   return {
     type:  RECEIVE_TESTS,
     TestsArrayProp: TestsArrayProp
-  }
+  };
 }
 
 export function createOrUpdateTest(fields, action='create') {
@@ -72,12 +71,12 @@ export function createOrUpdateTest(fields, action='create') {
       credentials: 'same-origin',
       mode:        'same-origin',
       headers:     headers(false)
-  }
+  };
   return dispatch => {
     return fetch('/api/v1/tests/'+action, data)
-           .then(response => response.json())
-           .then(json => console.log(JSON.stringify(json)))
-  }
+      .then(response => response.json())
+      .then(json => console.log(JSON.stringify(json)));
+  };
 }
 
 export function fulFillForm() {
@@ -174,11 +173,11 @@ export function deleteRow(id, controller){
         credentials: 'same-origin',
         mode:        'same-origin',
         headers:     headers(false)
-      }
+      };
       return fetch('/api/v1/'+controller+'/delete/'+id, data)
           .then(response => response.json())
           .then(json => console.log('Deleted id:  ' + id));
-  }
+     };
 }
 
 /*** QUESTIONS SECTION***/
@@ -194,18 +193,18 @@ export function fetchOneQuestion(question_id) {
                        id: question_id
                      }),
         headers:     headers(false)
-      }
+      };
       return fetch('/api/v1/questions/get_one/', data)
           .then(response => response.json())
-          .then(json => dispatch(setOneQuestion(json)))
-  }
+        .then(json => dispatch(setOneQuestion(json)));
+    };
 }
 
 function setOneQuestion(OneQuestionArrayProp) {
   return {
     type:  RECEIVE_ONE_QUESTION,
     OneQuestionArrayProp
-  }
+  };
 }
 
 export function createAnswer(fields) {

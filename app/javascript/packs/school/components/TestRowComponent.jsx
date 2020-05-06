@@ -1,20 +1,20 @@
-'use strict'
+'use strict';
 
-import React, { Component } from 'react'
-import { Router, Route, Link } from 'react-router'
-import { connect } from 'react-redux'
-import * as TestsActionCreators from '../actions/tests'
-import { browserHistory } from 'react-router'
-import PropTypes from 'prop-types'
+import React, { Component } from 'react';
+import { Router, Route, Link } from 'react-router';
+import { connect } from 'react-redux';
+import * as TestsActionCreators from '../actions/tests';
+import { browserHistory } from 'react-router';
+import PropTypes from 'prop-types';
 
 class TestRow extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       isHovering: false,
       isExecuting: false,
       textValues: ["Delete", "Are you sure?", "Deleting..."]
-    }
+    };
   }
 
  /**
@@ -40,7 +40,7 @@ class TestRow extends Component {
         <td style={{width: '35px', padding:0, textAlign: 'center'}}> {test.shared}  </td>
         <td style={{width: '35px', padding:0, textAlign: 'center'}}> <a href={"/tests/"+test.id+"/print.pdf"}> <button type="button" className="btn btn-secondary btn-sm">Print</button></a></td>
         <td style={{width: '35px', padding:0, textAlign:'center'}}>
-          <a href="#" onClick={() => {if(confirm('Delete the item?')) {this.deleteTest(test.id)};}} className="removable"><button type="button" className="btn btn-secondary btn-sm">Delete</button></a>
+          <a href="#" onClick={() => {if(confirm('Delete the item?')) {this.deleteTest(test.id);};}} className="removable"><button type="button" className="btn btn-secondary btn-sm">Delete</button></a>
         </td>
       </tr>
     )

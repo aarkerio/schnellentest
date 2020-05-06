@@ -1,33 +1,33 @@
-'use strict'
+//import { REQUEST_TESTS, RECEIVE_TESTS, RECEIVE_ONE_TEST, RECEIVE_ONE_QUESTION } from '../actions/users';
 
-import { REQUEST_TESTS, RECEIVE_TESTS, RECEIVE_ONE_TEST, RECEIVE_ONE_QUESTION, SEARCH_QUESTIONS } from '../actions/tests'
+export const RECEIVE_TESTS        = 'RECEIVE_TESTS';
+export const REQUEST_TESTS        = 'REQUEST_TESTS';
+export const RECEIVE_ONE_TEST     = 'RECEIVE_ONE_TEST';
+export const RECEIVE_ONE_QUESTION = 'RECEIVE_ONE_QUESTION';
+
 
 const initialState = {
-    TestsArrayProp:       [],
-    OneTestArrayProp:     {},
-    OneQuestionArrayProp: {},
-    AnswersArrayProp:     [],
-    QuestionsArrayProp:   [],
-    SearchArrayProp:      []
-}
+    TestsArrayProp: [],
+};
 
 const tests_rdcr = (state = initialState, action) => {
+  // console.log('>>>>>>>>>>>>> At tests_rdcr: ' + JSON.stringify(action));
   switch (action.type) {
     case RECEIVE_TESTS:
       return Object.assign({}, state, {
            TestsArrayProp: action.TestsArrayProp
-      })
+      });
 
     case REQUEST_TESTS:
       return Object.assign({}, state, {
         isFetching: true,
         didInvalidate: false
-      })
+      });
 
     case RECEIVE_ONE_TEST:
       return Object.assign({}, state, {
           OneTestArrayProp: action.OneTestArrayProp,
-          QuestionsArrayProp: action.OneTestArrayProp.questions
+          QuestionsTestArrayProp: action.OneTestArrayProp.questions
       });
 
     case RECEIVE_ONE_QUESTION:
@@ -36,16 +36,10 @@ const tests_rdcr = (state = initialState, action) => {
           AnswersArrayProp: action.OneQuestionArrayProp.answers
       });
 
-    case SEARCH_QUESTIONS:
-      return Object.assign({}, state, {
-        SearchArrayProp: action.SearchArrayProp.results,
-        TotalNumberProp: action.SearchArrayProp.total
-      });
-
     default:
       return state;
   }
-}
+};
 
-export default tests_rdcr
+export default tests_rdcr;
 

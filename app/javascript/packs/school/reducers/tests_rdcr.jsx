@@ -1,19 +1,17 @@
 'use strict';
 
-//import { REQUEST_TESTS, RECEIVE_TESTS, RECEIVE_ONE_TEST, RECEIVE_ONE_QUESTION } from '../actions/users';
-
-export const RECEIVE_TESTS        = 'RECEIVE_TESTS';
-export const REQUEST_TESTS        = 'REQUEST_TESTS';
-export const RECEIVE_ONE_TEST     = 'RECEIVE_ONE_TEST';
-export const RECEIVE_ONE_QUESTION = 'RECEIVE_ONE_QUESTION';
-
+import { REQUEST_TESTS, RECEIVE_TESTS, RECEIVE_ONE_TEST, RECEIVE_ONE_QUESTION, SEARCH_QUESTIONS } from '../actions/tests';
 
 const initialState = {
-    TestsArrayProp: [],
+    TestsArrayProp:       [],
+    OneTestArrayProp:     {},
+    OneQuestionArrayProp: {},
+    AnswersArrayProp:     [],
+    QuestionsArrayProp:   [],
+    SearchArrayProp:      []
 };
 
 const tests_rdcr = (state = initialState, action) => {
-  // console.log('>>>>>>>>>>>>> At tests_rdcr: ' + JSON.stringify(action)); 
   switch (action.type) {
     case RECEIVE_TESTS:
       return Object.assign({}, state, {
@@ -29,13 +27,19 @@ const tests_rdcr = (state = initialState, action) => {
     case RECEIVE_ONE_TEST:
       return Object.assign({}, state, {
           OneTestArrayProp: action.OneTestArrayProp,
-          QuestionsTestArrayProp: action.OneTestArrayProp.questions
+          QuestionsArrayProp: action.OneTestArrayProp.questions
       });
 
     case RECEIVE_ONE_QUESTION:
       return Object.assign({}, state, {
           OneQuestionArrayProp: action.OneQuestionArrayProp,
           AnswersArrayProp: action.OneQuestionArrayProp.answers
+      });
+
+    case SEARCH_QUESTIONS:
+      return Object.assign({}, state, {
+        SearchArrayProp: action.SearchArrayProp.results,
+        TotalNumberProp: action.SearchArrayProp.total
       });
 
     default:
