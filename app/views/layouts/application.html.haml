@@ -4,8 +4,8 @@
     = favicon_link_tag 'favicon.ico'
     %meta{ :content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type" }
     %title ::Schnellen Test::
-    = javascript_include_tag Rails.env.development? ? 'http://localhost:8080/build/styles.js'  : '/assets/styles.js'
-    = stylesheet_link_tag Rails.env.development? ? 'http://localhost:8080/build/styles.css' : '/assets/styles.css'
+    - # javascript_include_tag 'application'
+    - # stylesheet_link_tag 'application'
     = csrf_meta_tags
 
 %body
@@ -38,7 +38,4 @@
     .container
       %p{ class: "m-0 text-center text-white" }
         Copyright Chipotle Software &copy; 2016-2020
-
-  - js_bundle = Rails.env.development? ? 'http://localhost:8080/build/bundle.js' : '/assets/bundle.js'
-  = javascript_include_tag js_bundle
 

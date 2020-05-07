@@ -1,4 +1,4 @@
-# Chipotle Software (c) 2016  MIT License
+# Chipotle Software (c) 2016-2020  MIT License
 module Api
 module V1
   class AnswersController < ApiBaseController
@@ -18,7 +18,7 @@ module V1
       answer = Answer.new(answer_params)
 
       if answer.save
-        return render json: {message: 'Answer was created succesfully'} 
+        return render json: {message: 'Answer was created succesfully'}
       else
         return render json: {message: 'Error: Answer was not created succesfully'}
       end
@@ -29,7 +29,7 @@ module V1
     # Returns a Answer object.
     def update
       if @answer.update_attribute(:answer, params[:answer])
-        return render json: {message: 'Answer was updated succesfully'} 
+        return render json: {message: 'Answer was updated succesfully'}
       else
         return render json: {message: 'Error: Answer was not updated succesfully'}
       end
@@ -39,7 +39,7 @@ module V1
     def toggle
       toggle = !@answer.correct
       if @answer.update_attribute(:correct, toggle)
-        return render json: {message: 'Answer was toggled succesfully'} 
+        return render json: {message: 'Answer was toggled succesfully'}
       else
         return render json: {message: 'Error: Answer was not toggled succesfully'}
       end
@@ -66,7 +66,7 @@ module V1
     def answer_params
       params.require(:answer).permit(:answer, :active, :correct, :question_id)
     end
-    
+
   end
 end
 end
