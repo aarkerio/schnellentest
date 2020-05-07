@@ -1,6 +1,4 @@
 %h1 Website#welcome
 %p Find me in app/views/website/welcome.html.haml
 
-.loque TEAMS APP!!
-
 .content#approot
