@@ -1,16 +1,15 @@
-'use strict'
-
-import Cookies from 'universal-cookie'
-import { connect } from 'react-redux'
-import { render } from 'react-dom'
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { Link, browserHistory, withRouter} from 'react-router'
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
-import { Provider as AlertProvider } from 'react-alert'
-import AlertTemplate from 'react-alert-template-basic'
-import HeaderComponent  from './HeaderComponent'
-import * as TestsActionCreators from '../actions/tests'
+import Cookies from 'universal-cookie';
+import { connect } from 'react-redux';
+import { render } from 'react-dom';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { withRouter} from 'react-router';
+import { Link } from 'react-router-dom';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Provider as AlertProvider } from 'react-alert';
+import AlertTemplate from 'react-alert-template-basic';
+import HeaderComponent  from './HeaderComponent';
+import * as TestsActionCreators from '../actions/tests';
 
 // export for unconnected component (for mocha tests)
 export class QuestionsComponent extends Component {
@@ -29,7 +28,7 @@ export class QuestionsComponent extends Component {
         active:      true,
         qtype:       true,
         terms:       ''
-    }
+    };
 
     this.alertOptions = {
           offset:     '30px',
@@ -37,7 +36,7 @@ export class QuestionsComponent extends Component {
           theme:      'dark',
           time:       5000,
           transition: 'scale'
-    }
+    };
     this.openModal    = this.openModal.bind(this);
     this.newOrder     = this.newOrder.bind(this);
   }
@@ -79,7 +78,7 @@ export class QuestionsComponent extends Component {
  * Sends the data to create a new question
  **/
   handleSubmit(e) {
-    e.preventDefault()
+    e.preventDefault();
 
     let fields = {question: {
       user_id:     this.props.cookies.get('user_id'),
@@ -98,7 +97,7 @@ export class QuestionsComponent extends Component {
       console.log('Question not valid: ' + isValid['message']);
     }
     // save
-    let action = TestsActionCreators.createQuestion(fields)
+    let action = TestsActionCreators.createQuestion(fields);
     this.props.dispatch(action);  // thunk middleware
     this.setState({showModal: false});
     this.clearForm();
@@ -118,12 +117,12 @@ export class QuestionsComponent extends Component {
   }
 
   openModal(){
-    this.setState({showModal: true})
+    this.setState({showModal: true});
   }
 
   closeModal(){
-    this.setState({showModal: false})
-    this.clearForm()
+    this.setState({showModal: false});
+    this.clearForm();
   }
 
   /* Validates form*/
@@ -134,7 +133,7 @@ export class QuestionsComponent extends Component {
       valid['message']   = 'Question not valid';
     }
 
-    return valid
+    return valid;
   }
 
   handleChange(name, event) {
@@ -188,7 +187,7 @@ export class QuestionsComponent extends Component {
     if (this.props.QuestionsArrayProp.length == (i+1) && !up){ return null}
     let title = up ? 'up' : 'down';
     return (<div className="right_button">
-              <button type="button" onClick={() => {this.newOrder(id, title)}} className="btn btn-default btn-sm" title={"Move question "+title}>
+              <button type="button" onClick={() => {this.newOrder(id, title);}} className="btn btn-default btn-sm" title={"Move question "+title}>
                {title}
               </button>
             </div>
@@ -283,14 +282,8 @@ export class QuestionsComponent extends Component {
         </Modal>
         </div>
       </div>
-    )
+    );
   }
-
-
-
-
-
-    
 }
 
 QuestionsComponent.propTypes = {
@@ -298,20 +291,20 @@ QuestionsComponent.propTypes = {
   QuestionsArrayProp: PropTypes.array,
   dispatch:           PropTypes.func,
   cookies:            PropTypes.object
-}
+};
 
 QuestionsComponent.defaultProps = {
   OneTestArrayProp:  {},
   QuestionsArrayProp: [],
   cookies: new Cookies
-}
+};
 
 const mapStateToProps = (state) => {
   return {
     OneTestArrayProp: state.rootReducer.tests_rdcr.OneTestArrayProp,
     QuestionsArrayProp: state.rootReducer.tests_rdcr.QuestionsArrayProp
-  }
-}
+  };
+};
 
-export default withRouter(connect(mapStateToProps)(QuestionsComponent)); // Binding React component with the Redux store
+export default withRouter(connect(mapStateToProps)(QuestionsComponent));
 

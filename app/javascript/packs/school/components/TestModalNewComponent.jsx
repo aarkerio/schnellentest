@@ -1,12 +1,12 @@
-
-import Cookies from 'universal-cookie'
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { Link, browserHistory } from 'react-router'
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
-import * as testsActionCreators from '../actions/tests'
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
+import Cookies from 'universal-cookie';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as testsActionCreators from '../actions/tests';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import history from '../libs/history';
 
 class TestModalNewComponent extends Component {
   constructor(props) {
@@ -103,7 +103,7 @@ class TestModalNewComponent extends Component {
                </form>
             </ModalBody>
             <ModalFooter>
-              <Button onClick={() => browserHistory.push('/tests')}>Close</Button>
+              <Button onClick={() => history.push('/tests')}>Close</Button>
               <Button onClick={this.handleSubmit.bind(this)}>Änderungen speichern</Button>
             </ModalFooter>
         </Modal>

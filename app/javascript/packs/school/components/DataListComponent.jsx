@@ -1,6 +1,7 @@
-// Chipotle Software (c) 2016-2017
-
-import PropTypes from 'prop-types'
+// Chipotle Software (c) 2016-2020
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 
 class DataList extends Component {
   constructor(props) {
@@ -11,16 +12,16 @@ class DataList extends Component {
                      url: '/appointments/get_data',
                      owner: '',
                      options: []
-      }
-    },
-    changeList: function(e) {
+                 };
+    }
+    changeList(e) {
       console.log('>>>>>>>>>>>>>>>>>>>>>>>>>In changeList');
       var tmp = this.getData(e);
       this.forceUpdate();
-    },
-    getData: function(e) {
+    }
+    getData(e) {
       e.preventDefault();
-      ovalue = e.target.value
+      ovalue = e.target.valu;e
       this.setState({owner: ovalue});
       link = {url: this.state.url, ovalue: ovalue};
       $.ajax({
@@ -40,51 +41,51 @@ class DataList extends Component {
           console.error(this.state.url, status, err.toString());
         }.bind(this)
       });
-    },
-    setOptions: function(data) {
+    }
+    setOptions(data) {
       var tempo = [];
       for (var i = 0; i < data.length; i++) {
         var option = data[i];
         var tmp = <option key={i} value={option.name} id={option.value}>{option.name}</option>;
         tempo.push(tmp);
      }
-     console.log( ">>>>>> 170 TEMPO data >>>>>>>"+JSON.stringify(tempo.props));
+     console.log( ">>>>>> 51 TEMPO data >>>>>>>"+JSON.stringify(tempo.props));
      this.setState({options: tempo});
-    },
-    getDefaultProps: function() {
+    }
+    getDefaultProps() {
         return {
             value: ''
         };
-    },
-    changeHandler: function(e) {
+    }
+    changeHandler(e) {
         if (typeof this.props.onChange === 'function') {
             this.props.onChange(e.target.value);
         }
-    },
-    render: function() {
+    }
+    render() {
         return (
           <span>
             <input type="text" onChange={this.changeList} list="slist" id="owner_id" name="owner_id" />
             <datalist id="slist">{this.state.options}</datalist>
           </span>
-        )
+        );
     }
 }
 
-DataList.propTypes: {
+DataList.propTypes = {
   value:      PropTypes.string,
   onChange:   PropTypes.func
-}
+};
 
 DataList.defaultProps = {
   apposArrayProp:  []
-}
+};
 
 const mapStateToProps = (state) => {
   return {
     appo: state.rootReducer.appointments_rdcer.apposArrayProp
-  }
+  };
 }
-
-export default connect(mapStateToProps)(DataListComponent)
+;
+export default connect(mapStateToProps)(DataListComponent);
 

@@ -1,12 +1,12 @@
-'use strict';
-
 import React, { Component } from 'react';
-import { Link, browserHistory, withRouter } from 'react-router';
+import history from '../libs/history';
+
 import HeaderComponent from '../components/HeaderComponent';
 // require('bootstrap');
 // require('bootstrap-webpack');
 
 class AppContainer extends Component {
+
   constructor(props) {
     super(props);
   }
@@ -17,7 +17,7 @@ class AppContainer extends Component {
         <HeaderComponent />
         <h1>Anwendung</h1>
         <p><Link to="/">Zuhause.</Link></p>
-        <div><button onClick={() => browserHistory.push('/tests')}> Zu Ernennungs </button></div>
+        <div><button onClick={() => hstory.push('/tests')}> Zu Ernennungs </button></div>
         <p><Link to="/tests/11">Bearbeitung</Link></p>
         <p><Link to="/about">About</Link></p>
         <p><Link to="/users">Users</Link></p>
@@ -27,6 +27,6 @@ class AppContainer extends Component {
   }
 }
 
-// export default AppContainer;
+export default AppContainer;
 module.exports = withRouter(AppContainer);
 

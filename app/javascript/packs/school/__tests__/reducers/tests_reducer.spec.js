@@ -1,13 +1,11 @@
-/* */
-
 import {expect} from 'chai';
-import tests_rdcr from '../../reducers/test_rdcr';
+import tests_rdcr from '../../reducers/tests_rdcr';
 
-import configureStore from 'redux-mock-store'
-import thunk from 'redux-thunk'
+import configureStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
 
-const middlewares = [thunk] // add your middlewares like `redux-thunk`
-const mockStore = configureStore(middlewares)
+const middlewares = [thunk]; // add your middlewares like `redux-thunk`
+const mockStore = configureStore(middlewares);
 
 describe('Test Reducer', () => {
   it('Should handle INCREMENT', () => {
@@ -31,15 +29,15 @@ describe('Test Reducer', () => {
 
   // Test example with mocha and expect
   it('should dispatch action', () => {
-    const initialState = {}
-    const addTodo = { type: 'ADD_TODO' }
+    const initialState = {};
+    const addTodo = { type: 'ADD_TODO' };
 
-    const store = mockStore(initialState)
-    store.dispatch(addTodo)
+    const store = mockStore(initialState);
+    store.dispatch(addTodo);
 
-    const actions = store.getActions()
+    const actions = store.getActions();
 
-    expect(actions).toEqual([addTodo])
+    expect(actions).toEqual([addTodo]);
   });
 
   // Promise test example with mocha and expect
@@ -47,24 +45,24 @@ describe('Test Reducer', () => {
     function success() {
       return {
         type: 'FETCH_DATA_SUCCESS'
-      }
+      };
     }
 
     function fetchData () {
       return dispatch => {
         return fetch('/users.json') // Some async action with promise
-          .then(() => dispatch(success()))
+          .then(() => dispatch(success()));
       };
     }
 
-    const store = mockStore({})
+    const store = mockStore({});
 
     // Return the promise
     return store.dispatch(fetchData())
       .then(() => {
-        expect(store.getActions()[0]).toEqual(success())
-      })
-  })
+        expect(store.getActions()[0]).toEqual(success());
+      });
+  });
 
 });
 

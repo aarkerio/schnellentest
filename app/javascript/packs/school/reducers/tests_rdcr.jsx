@@ -1,5 +1,3 @@
-'use strict';
-
 import { REQUEST_TESTS, RECEIVE_TESTS, RECEIVE_ONE_TEST, RECEIVE_ONE_QUESTION, SEARCH_QUESTIONS } from '../actions/tests';
 
 const initialState = {
@@ -48,4 +46,3 @@ const tests_rdcr = (state = initialState, action) => {
 };
 
 export default tests_rdcr;
-

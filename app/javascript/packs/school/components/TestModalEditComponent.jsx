@@ -1,11 +1,10 @@
-'use strict'
-
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { Link, browserHistory } from 'react-router'
-import { connect } from 'react-redux'
-import * as testsActionCreators from '../actions/tests'
-import { Button, Modal } from 'react-bootstrap'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { browserHistory } from 'react-router';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import * as testsActionCreators from '../actions/tests';
+import { Button, Modal } from 'react-bootstrap';
 
 class TestModalEditComponent extends Component {
   constructor(props) {

@@ -1,17 +1,16 @@
-'use strict'
-
-import React, { Component } from 'react'
-import { Router, Route, Link } from 'react-router'
-import { connect } from 'react-redux'
-import * as AnswersActionCreators from '../actions/tests'
-import PropTypes from 'prop-types'
+import React, { Component } from 'react';
+import { Router, Route } from 'react-router';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import * as AnswersActionCreators from '../actions/tests';
+import PropTypes from 'prop-types';
 
 // Inline edition
-import { RIEToggle, RIEInput, RIETextArea, RIENumber, RIETags } from 'riek'
+import { RIEToggle, RIEInput, RIETextArea, RIENumber, RIETags } from 'riek';
 
 class AnswerRow extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
        isHovering:  false,
        isExecuting: false,
@@ -49,8 +48,8 @@ class AnswerRow extends Component {
   }
 
   toggleCheckbox(name, event){
-    let change = !this.state[name]
-    this.setState({name: change})
+    let change = !this.state[name];
+    this.setState({name: change});
   }
 
   toggleAnswer() {

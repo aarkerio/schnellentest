@@ -1,8 +1,7 @@
-'use strict'
-
-import React, { Component } from 'react'
-import { Link, browserHistory } from 'react-router'
-import PropTypes from 'prop-types'
+import React, { Component } from 'react';
+import { browserHistory } from 'react-router';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 //require('bootstrap')
 //require('bootstrap-webpack')
@@ -22,8 +21,8 @@ class HeaderComponent extends Component {
          {this.props.children}
         </ul>
       </div>
-      )
+    );
   }
 }
-export default HeaderComponent
+export default HeaderComponent;
 

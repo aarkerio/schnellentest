@@ -1,16 +1,15 @@
-'use strict'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { browserHistory, withRouter } from 'react-router';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { Link, browserHistory, withRouter } from 'react-router'
-import { connect } from 'react-redux'
-
-import { Button } from 'react-bootstrap'
-import * as TestsActionCreators from '../actions/tests'
+import { Button } from 'react-bootstrap';
+import * as TestsActionCreators from '../actions/tests';
 
 class QuestionSearchComponent extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
                  terms:    this.props.routeParams.terms,
                  selected: [],
@@ -20,7 +19,7 @@ class QuestionSearchComponent extends Component {
                  title: 'Test title',
                  page: 1,
                  per_page: 3
-             }
+    };
     this.loadQuestions   = this.loadQuestions.bind(this);
     this.pagination      = this.pagination.bind(this);
     this.getPage         = this.getPage.bind(this);
@@ -89,7 +88,7 @@ class QuestionSearchComponent extends Component {
     let current = this.state.page;
     let page  = this.state.per_page, left = false, right = false, rows  = [];
     let first_r = 0;
-    let x  = this.state.page < 10 ? 0 : this.state.page
+    let x  = this.state.page < 10 ? 0 : this.state.page;
     for(x;  x < total_rows; x += this.state.per_page){
       if (page > 9) {
         rows.push(page);
@@ -114,7 +113,7 @@ class QuestionSearchComponent extends Component {
               ) }
               { right ? <li key={last_r}><a href={"#"+last_r} onClick={() => this.getPage(last_r)}> &gt;&gt; </a></li> : null }
             </ul>
-           )
+    );
   }
 
   render() {
@@ -162,19 +161,19 @@ class QuestionSearchComponent extends Component {
 QuestionSearchComponent.propTypes = {
   SearchArrayProp: PropTypes.array,
   TotalNumberProp: PropTypes.number
-}
+};
 
 QuestionSearchComponent.defaultProps = {
   SearchArrayProp: [],
   TotalNumberProp: 0
-}
+};
 
 const mapStateToProps = (state) => {
   return {
       SearchArrayProp: state.rootReducer.tests_rdcr.SearchArrayProp,
       TotalNumberProp: state.rootReducer.tests_rdcr.TotalNumberProp
-  }
-}
+  };
+};
 
 // binding React-Router-Redux
 export default withRouter(connect(mapStateToProps)(QuestionSearchComponent));

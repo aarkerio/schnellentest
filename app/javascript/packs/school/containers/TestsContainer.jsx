@@ -1,9 +1,8 @@
-'use strict';
-
 import { connect } from 'react-redux';
 import { render } from 'react-dom';
 import React, { Component } from 'react';
-import { Link, browserHistory } from 'react-router';
+import { browserHistory } from 'react-router';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Cookies from 'universal-cookie';
 

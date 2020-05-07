@@ -1,16 +1,15 @@
-'use strict'
-
-import Cookies from 'universal-cookie'
-import { connect } from 'react-redux'
-import { render } from 'react-dom'
-import { dialogStyle, modalConfig } from '../config/modals'
-import HeaderComponent  from './HeaderComponent'
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { Link, browserHistory, withRouter} from 'react-router'
-import { Button, Modal } from 'react-bootstrap'
-import AlertContainer from 'react-alert'
-import * as TestsActionCreators from '../actions/tests'
+import Cookies from 'universal-cookie';
+import { connect } from 'react-redux';
+import { render } from 'react-dom';
+import { dialogStyle, modalConfig } from '../config/modals';
+import HeaderComponent  from './HeaderComponent';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { browserHistory, withRouter} from 'react-router';
+import { Link } from 'react-router-dom';
+import { Button, Modal } from 'react-bootstrap';
+import { Alert, AlertContainer } from 'react-bs-notifier';
+import * as TestsActionCreators from '../actions/tests';
 
 // export for unconnected component (for mocha tests)
 export class QuestionEditComponent extends Component {
@@ -19,16 +18,16 @@ export class QuestionEditComponent extends Component {
     this.state = {
         questions:   [],
         question_id: this.props.routeParams.question_id
-       }
+    };
     this.alertOptions = {
       offset:     14,
       position:   'top left',
       theme:      'dark',
       time:       5000,
       transition: 'scale'
-    }
-    this.openModal    = this.openModal.bind(this)
-    this.newOrder     = this.newOrder.bind(this)
+    };
+    this.openModal    = this.openModal.bind(this);
+    this.newOrder     = this.newOrder.bind(this);
   }
 
   static propTypes = {
@@ -87,7 +86,7 @@ export class QuestionEditComponent extends Component {
       console.log('Question not valid: ' + isValid['message']);
     }
     // save
-    let action = TestsActionCreators.createQuestion(fields)
+    let action = TestsActionCreators.createQuestion(fields);
     this.props.dispatch(action);  // thunk middleware
     this.setState({showModal: false});
     this.clearForm();
@@ -107,12 +106,12 @@ export class QuestionEditComponent extends Component {
   }
 
   openModal(){
-    this.setState({showModal: true})
+    this.setState({showModal: true});
   }
 
   closeModal(){
-    this.setState({showModal: false})
-    this.clearForm()
+    this.setState({showModal: false});
+    this.clearForm();
   }
 
   /* Validates form*/
@@ -122,8 +121,7 @@ export class QuestionEditComponent extends Component {
       valid['question']  = false;
       valid['message']   = 'Question not valid';
     }
-
-    return valid
+    return valid;
   }
 
   handleChange(name, event) {
@@ -179,7 +177,7 @@ export class QuestionEditComponent extends Component {
     if (this.props.QuestionsArrayProp.length == (i+1) && !up){ return null}
     let title = up ? 'up' : 'down';
     return (<div className="right_button">
-              <button type="button" onClick={() => {this.newOrder(id, title)}} className="btn btn-default btn-sm" title={"Move question "+title}>
+              <button type="button" onClick={() => {this.newOrder(id, title);}} className="btn btn-default btn-sm" title={"Move question "+title}>
                 <span className={"glyphicon glyphicon-"+title+"load"}></span>
               </button>
             </div>
@@ -196,7 +194,10 @@ export class QuestionEditComponent extends Component {
   render() {
     return (
       <div className="container_div">
-        <AlertContainer ref={(a) => global.msg = a} {...this.alertOptions} />
+        <AlertContainer>
+          <Alert type="info">Hello, world</Alert>
+          <Alert type="success">Oh, hai</Alert>
+        </AlertContainer>
         <HeaderComponent />
         <h1> {this.props.OneTestArrayProp.title} </h1>
         <div>
@@ -230,7 +231,7 @@ export class QuestionEditComponent extends Component {
               { this.renderReorderButton(q.id, i, true)  }
               { this.renderReorderButton(q.id, i, false) }
               <div className="right_button">
-                <button type="button" onClick={() => {if(confirm('Delete the question?')) {this.deleteQuestion(q.id)};}} className="btn btn-default btn-sm" title="Delete question">
+                <button type="button" onClick={() => {if(confirm('Delete the question?')) {this.deleteQuestion(q.id);};}} className="btn btn-default btn-sm" title="Delete question">
                   <span className="glyphicon glyphicon-trash"></span>
                 </button>
               </div>
@@ -285,7 +286,7 @@ export class QuestionEditComponent extends Component {
         </Modal>
         </div>
       </div>
-    )
+    );
   }
 }
 
@@ -294,22 +295,22 @@ QuestionEditComponent.propTypes = {
   QuestionsArrayProp: PropTypes.array,
   dispatch:           PropTypes.func,
   cookies:            PropTypes.object
-}
+};
 
 QuestionEditComponent.defaultProps = {
   OneTestArrayProp:  {},
   QuestionsArrayProp: [],
   cookies: new Cookies
-}
+};
 
 // Redux binding
 const mapStateToProps = (state) => {
   return {
     OneTestArrayProp: state.rootReducer.tests_rdcr.OneTestArrayProp,
     QuestionsArrayProp: state.rootReducer.tests_rdcr.QuestionsArrayProp
-  }
-}
+  };
+};
 
-export default withRouter(connect(mapStateToProps)(QuestionEditComponent))
+export default withRouter(connect(mapStateToProps)(QuestionEditComponent));
 
 

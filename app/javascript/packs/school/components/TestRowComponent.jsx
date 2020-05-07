@@ -1,7 +1,6 @@
-'use strict';
-
 import React, { Component } from 'react';
-import { Router, Route, Link } from 'react-router';
+import { Router, Route } from 'react-router';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as TestsActionCreators from '../actions/tests';
 import { browserHistory } from 'react-router';
@@ -43,7 +42,7 @@ class TestRow extends Component {
           <a href="#" onClick={() => {if(confirm('Delete the item?')) {this.deleteTest(test.id);};}} className="removable"><button type="button" className="btn btn-secondary btn-sm">Delete</button></a>
         </td>
       </tr>
-    )
+    );
   }
 }
 
@@ -51,7 +50,7 @@ TestRow.propTypes = {
   test:      PropTypes.object,
   keyRow:    PropTypes.string,
   dispatch:  PropTypes.func
-}
+};
 
-export default connect()(TestRow)
+export default connect()(TestRow);
 

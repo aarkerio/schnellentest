@@ -1,12 +1,12 @@
-'use strict'
-import React, { Component } from 'react'
-import { Link, browserHistory } from 'react-router'
-import { connect } from 'react-redux'
-import { Button, Modal } from 'react-bootstrap'
-import * as TestsActionCreators from '../actions/tests'
-import { dialogStyle, modalConfig } from '../config/modals'
-import AnswerRowComponent from './AnswerRowComponent'
-import PropTypes from 'prop-types'
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { Button, Modal } from 'react-bootstrap';
+import { dialogStyle, modalConfig } from '../config/modals';
+import AnswerRowComponent from './AnswerRowComponent';
+import PropTypes from 'prop-types';
+import history from '../libs/history';
+import * as TestsActionCreators from '../actions/tests';
 
 class AnswersModalComponent extends Component {
   constructor(props) {
@@ -19,13 +19,7 @@ class AnswersModalComponent extends Component {
                    nuser_id:    0,    // not valid values
                    nanswer:     '',
                    title:       'Question'
-             }
-  }
-
-  /**
-   * Load question data and answers
-   **/
-  componentWillMount() {
+                 };
     if ( ! this.props.QuestionArrayProp.length ) {
       let action = TestsActionCreators.fetchOneQuestion( this.state.question_id );
       this.props.dispatch(action);
@@ -88,7 +82,6 @@ class AnswersModalComponent extends Component {
   toggleCheckbox(name, event){
     let obj = {};
     obj[name] = !this.state[name];
-    console.log(JSON.stringify(obj))
     this.setState(obj);
   }
   /* Lädt Fragen und Antworten wieder.**/
@@ -139,7 +132,7 @@ class AnswersModalComponent extends Component {
           </form>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={() => browserHistory.push('/questions/' + this.state.test_id )}>Close</Button>
+          <Button onClick={() => history.push('/questions/' + this.state.test_id )}>Close</Button>
           <Button onClick={this.handleSubmit.bind(this)}>Änderungen speichern</Button>
         </Modal.Footer>
       </Modal>
@@ -167,6 +160,5 @@ const mapStateToProps = (state) => {
   };
 };
 
-// binding React-Redux
 export default connect(mapStateToProps)(AnswersModalComponent);
 
