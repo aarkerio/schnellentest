@@ -8,7 +8,7 @@ module.exports = function(api) {
   if (!validEnv.includes(currentEnv)) {
     throw new Error(
       'Please specify a valid `NODE_ENV` or ' +
-        '`BABEL_ENV` environment variables. Valid values are "development", ' +
+        '`BABEL_ENV` environment variables. gValid values are "development", ' +
         '"test", and "production". Instead, received: ' +
         JSON.stringify(currentEnv) +
         '.'
@@ -43,7 +43,8 @@ module.exports = function(api) {
           development: isDevelopmentEnv || isTestEnv,
           useBuiltIns: true
         }
-      ]
+      ],
+      ['@babel/preset-typescript', { 'allExtensions': true,'isTSX': true }]
     ].filter(Boolean),
     plugins: [
       'babel-plugin-macros',
