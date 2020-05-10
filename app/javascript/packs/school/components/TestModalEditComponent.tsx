@@ -6,6 +6,13 @@ import * as testsActionCreators from '../actions/tests';
 import { Button, Modal } from 'react-bootstrap';
 
 class TestModalEditComponent extends React.Component<any, any> {
+
+  static propTypes = {
+    backdropStyle:    PropTypes.string,
+    OneTestArrayProp: PropTypes.object,
+    dispatch:         PropTypes.func
+  }
+
   constructor(props) {
     super(props);
     this.state = { showModal:   true,
@@ -59,11 +66,11 @@ class TestModalEditComponent extends React.Component<any, any> {
     }
     let action = testsActionCreators.createOrUpdateTest(fields, 'update');
     this.props.dispatch(action);  // thunk middleware
-    window.location='/tests';
+    window.location.href ='/tests';
   }
 
   /* Validates form*/
-  validatesForm(fields){
+  validatesForm(fields: any){
     let valid = {pass: true, message: 'Not message yet'};
 
     if ( fields['title'] == 0 ) {
@@ -74,13 +81,13 @@ class TestModalEditComponent extends React.Component<any, any> {
     return valid;
   }
 
-  handleChange(name, event) {
+  handleChange(name: string, event: any) {
     let change = {};
     change[name] = event.target.value;
     this.setState(change);
   }
 
-  toggleCheckbox(name, event) {
+  toggleCheckbox(name: string, event: any) {
     let change = {};
     change[name] = !this.state[name];
     this.setState(change);
@@ -88,7 +95,7 @@ class TestModalEditComponent extends React.Component<any, any> {
 
   render() {
     let rand = ()=> (Math.floor(Math.random() * 20) - 10);
-    const modalStyle = { position: 'fixed', zIndex: 1040, top: 0, bottom: 0, left: 0, right: 0, zIndex: 'auto', backgroundColor: '#000', opacity: 0.5 };
+    const modalStyle = { position: 'fixed', zIndex: 1040, top: 0, bottom: 0, left: 0, right: 0, backgroundColor: '#000', opacity: 0.5 };
     const backdropStyle = { ...modalStyle };
 
     const dialogStyle = function() {
@@ -108,7 +115,7 @@ class TestModalEditComponent extends React.Component<any, any> {
 
 
     return (
-        <div id="responsive" className="modal hide fade" tabIndex="-1" >
+        <div id="responsive" className="modal hide fade" tabIndex={-1} >
         <Modal
           aria-labelledby='modal-label'
           backdropStyle={backdropStyle}
@@ -137,7 +144,7 @@ class TestModalEditComponent extends React.Component<any, any> {
             </form>
             </Modal.Body>
           <Modal.Footer>
-             <Button onClick={() => window.location='/tests'}>Close</Button>
+             <Button onClick={() => window.location.href='/tests'}>Close</Button>
              <Button onClick={this.handleSubmit.bind(this)}>Änderungen speichern</Button>
           </Modal.Footer>
         </Modal>
@@ -146,15 +153,6 @@ class TestModalEditComponent extends React.Component<any, any> {
   }
 };
 
-TestModalEditComponent.propTypes = {
-  backdropStyle:    PropTypes.string,
-  OneTestArrayProp: PropTypes.object,
-  dispatch:         PropTypes.func
-};
-
-TestModalEditComponent.defaultProps = {
-  OneTestArrayProp: {}
-};
 
 const mapStateToProps = (state) => {
   return {

@@ -1,7 +1,6 @@
 import Cookies from 'universal-cookie';
 import { connect } from 'react-redux';
-import { render } from 'react-dom';
-import { dialogStyle, modalConfig } from '../config/modals';
+import { modalConfig } from '../config/modals';
 import HeaderComponent  from './HeaderComponent';
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -11,34 +10,44 @@ import { Button, Modal } from 'react-bootstrap';
 import { Alert, AlertContainer } from 'react-bs-notifier';
 import * as TestsActionCreators from '../actions/tests';
 
+interface ObjectLiteral {
+  [key: string]: any
+}
+
+interface IPropTypes {
+  routeParams:     ObjectLiteral
+  OneTestHashProp: ObjectLiteral
+  QuestionsArrayProp: any[]
+  dispatch: any
+  cookies: any
+  router: any
+}
+
 // export for unconnected component (for mocha tests)
-export class QuestionEditComponent extends React.Component<any, any> {
+export class QuestionEditComponent extends React.Component<IPropTypes, any> {
+
+  static propTypes = {
+    OneTestHashProp:    PropTypes.object,
+    QuestionsArrayProp: PropTypes.array,
+    dispatch:           PropTypes.func,
+    cookies:            PropTypes.object
+  }
+
   constructor(props) {
     super(props);
     this.state = {
-        questions:   [],
-        question_id: this.props.routeParams.question_id
-    };
-    this.alertOptions = {
-      offset:     14,
-      position:   'top left',
-      theme:      'dark',
-      time:       5000,
-      transition: 'scale'
+      questions:   [],
+      question_id: this.props.routeParams.question_id
     };
     this.openModal    = this.openModal.bind(this);
     this.newOrder     = this.newOrder.bind(this);
-  }
-
-  static propTypes = {
-    cookies: new Cookies()
   }
 
   /**
    * Load test data and questions
    **/
   componentWillMount() {
-    if ( ! this.props.OneTestArrayProp.length ) {
+    if ( ! this.props.OneTestHashProp.length ) {
       this.loadTest();
     }
   }
@@ -55,17 +64,16 @@ export class QuestionEditComponent extends React.Component<any, any> {
     return field;
   }
 
-  showAlert(message){
-    msg.show(message, {
-      time: 2000,
-      type: 'success',
-      icon: <img src="/assets/close.png" />
-    });
+  showAlert(message: string){
+    <AlertContainer>
+      <Alert type="info"> message </Alert>
+      <Alert type="success">Oh, hai</Alert>
+    </AlertContainer>
   }
 
-/**
- * Sends the data to create a new question
- **/
+  /**
+   * Sends the data to create a new question
+   **/
   handleSubmit(e) {
     e.preventDefault()
 
@@ -81,7 +89,7 @@ export class QuestionEditComponent extends React.Component<any, any> {
       test_id:     this.props.routeParams.test_id
     }};
 
-    let isValid = this.validatesForm(fields);
+    let isValid = this.validatesForm();
     if ( !isValid['pass'] ) {
       console.log('Question not valid: ' + isValid['message']);
     }
@@ -91,9 +99,9 @@ export class QuestionEditComponent extends React.Component<any, any> {
     this.setState({showModal: false});
     this.clearForm();
     setTimeout(
-        () => { this.loadTest(); },
-        2000
-      );
+      () => { this.loadTest(); },
+      2000
+    );
   }
 
   clearForm(){
@@ -115,7 +123,7 @@ export class QuestionEditComponent extends React.Component<any, any> {
   }
 
   /* Validates form*/
-  validatesForm(fields){
+  validatesForm(){
     let valid = {pass: true, message: 'Not message yet'};
     if ( !this.state.question.length ) {
       valid['question']  = false;
@@ -124,39 +132,39 @@ export class QuestionEditComponent extends React.Component<any, any> {
     return valid;
   }
 
-  handleChange(name, event) {
+  handleChange(name: string, event: any) {
     let change = {};
     change[name] = event.target.value;
     this.setState(change);
   }
 
-  toggleCheckbox(name, event) {
+  toggleCheckbox(name: string, event: any) {
     let obj = {};
     obj[name] = !this.state[name];
     this.setState(obj);
   }
 
- /**
-  *  Delete Single Question
-  *  Private
-  */
-  deleteQuestion(question_id) {
+  /**
+   *  Delete Single Question
+   *  Private
+   */
+  deleteQuestion(question_id: number) {
     let action = TestsActionCreators.deleteQuestion(question_id, this.state.test_id);
     this.props.dispatch(action);
     this.showAlert('Question removed succesfully');
     setTimeout(() => { this.loadTest(); }, 2000);
   }
 
-  renderAnswersButton(type, id){
+  renderAnswersButton(type: string, id: number){
     if (type) {
       return (
-              <div className="right_button">
-                <Link to={"/answers/"+id+"/"+this.state.test_id+"/"}>
-                  <button type="button" className="btn btn-default btn-sm" title="Manage answers">
-                    <span className="glyphicon glyphicon-check"></span>
-                  </button>
-                </Link>
-              </div>
+        <div className="right_button">
+          <Link to={"/answers/"+id+"/"+this.state.test_id+"/"}>
+            <button type="button" className="btn btn-default btn-sm" title="Manage answers">
+              <span className="glyphicon glyphicon-check"></span>
+            </button>
+          </Link>
+        </div>
       );
     } else {
       return (
@@ -177,15 +185,15 @@ export class QuestionEditComponent extends React.Component<any, any> {
     if (this.props.QuestionsArrayProp.length == (i+1) && !up){ return null}
     let title = up ? 'up' : 'down';
     return (<div className="right_button">
-              <button type="button" onClick={() => {this.newOrder(id, title);}} className="btn btn-default btn-sm" title={"Move question "+title}>
-                <span className={"glyphicon glyphicon-"+title+"load"}></span>
-              </button>
-            </div>
+      <button type="button" onClick={() => {this.newOrder(id, title);}} className="btn btn-default btn-sm" title={"Move question "+title}>
+        <span className={"glyphicon glyphicon-"+title+"load"}></span>
+      </button>
+    </div>
     );
   }
-/**
- * Sends the data to create a new appointment
- **/
+  /**
+   * Sends the data to create a new appointment
+   **/
   submitSearch(e) {
     e.preventDefault();
     this.props.router.replace('/search/'+ this.state.test_id + '/' + this.state.terms);
@@ -199,7 +207,7 @@ export class QuestionEditComponent extends React.Component<any, any> {
           <Alert type="success">Oh, hai</Alert>
         </AlertContainer>
         <HeaderComponent />
-        <h1> {this.props.OneTestArrayProp.title} </h1>
+        <h1> {this.props.OneTestHashProp.title} </h1>
         <div>
           <button type="button" onClick={this.openModal} className="btn btn-default btn-sm" title="Frage hinzüfugen">
             <span className="glyphicon glyphicon-plus"></span>
@@ -235,82 +243,68 @@ export class QuestionEditComponent extends React.Component<any, any> {
                   <span className="glyphicon glyphicon-trash"></span>
                 </button>
               </div>
+            </div>
+          )}
         </div>
-        )}
-      </div>
-      { this.props.children }
-      <div id="questionform" className="modal hide fade" tabIndex="-1" >
+        { this.props.children }
+        <div id="questionform" className="modal hide fade">
           <Modal
             aria-labelledby='modal-label'
             backdropStyle={modalConfig.backdropStyle}
             show={this.state.showModal}
           >
-          <Modal.Header>
-            <Modal.Title> Modal Überschrift </Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <form>
-              <label htmlFor="question">Question:</label>
-              <input className="form-control" name="question" value={this.state.question} onChange={this.handleChange.bind(this, 'question')} />
+            <Modal.Header>
+              <Modal.Title> Modal Überschrift </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <form>
+                <label htmlFor="question">Question:</label>
+                <input className="form-control" name="question" value={this.state.question} onChange={this.handleChange.bind(this, 'question')} />
 
-              <label htmlFor="explanation">Explanation:</label>
-              <textarea className="form-control" name="explanation" value={this.state.explanation} onChange={this.handleChange.bind(this, 'explanation')}  />
+                <label htmlFor="explanation">Explanation:</label>
+                <textarea className="form-control" name="explanation" value={this.state.explanation} onChange={this.handleChange.bind(this, 'explanation')}  />
 
-              <label htmlFor="hint">Hint:</label>
-              <input className="form-control" name="hint" value={this.state.hint} onChange={this.handleChange.bind(this, 'hint')} />
+                <label htmlFor="hint">Hint:</label>
+                <input className="form-control" name="hint" value={this.state.hint} onChange={this.handleChange.bind(this, 'hint')} />
 
-              <label htmlFor="tags">Tags:</label>
-              <input className="form-control" name="tags" value={this.state.tags} onChange={this.handleChange.bind(this, 'tags')} />
+                <label htmlFor="tags">Tags:</label>
+                <input className="form-control" name="tags" value={this.state.tags} onChange={this.handleChange.bind(this, 'tags')} />
 
-              <label htmlFor="worth">Worth:</label>
-              <select className="form-control" name="worth" value={this.state.worth} onChange={this.handleChange.bind(this, 'worth')}>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-              </select>
-              <div>
-                <label htmlFor="active">Active:</label>
-                <input type="checkbox" name="active" value={this.state.active} checked={this.state.active} onChange={this.toggleCheckbox.bind(this, 'active')} />
-              </div>
-              <div>
-                <label htmlFor="qtype">Multiple choice question:</label>
-                <input type="checkbox" name="qtype" value={this.state.qtype} checked={this.state.qtype} onChange={this.toggleCheckbox.bind(this, 'qtype')} />
-              </div>
-             </form>
-          </Modal.Body>
-          <Modal.Footer>
-             <Button onClick={this.closeModal.bind(this)}>Cancel</Button>
-             <Button onClick={this.handleSubmit.bind(this)}>Änderungen speichern</Button>
-          </Modal.Footer>
-        </Modal>
+                <label htmlFor="worth">Worth:</label>
+                <select className="form-control" name="worth" value={this.state.worth} onChange={this.handleChange.bind(this, 'worth')}>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                </select>
+                <div>
+                  <label htmlFor="active">Active:</label>
+                  <input type="checkbox" name="active" value={this.state.active} checked={this.state.active} onChange={this.toggleCheckbox.bind(this, 'active')} />
+                </div>
+                <div>
+                  <label htmlFor="qtype">Multiple choice question:</label>
+                  <input type="checkbox" name="qtype" value={this.state.qtype} checked={this.state.qtype} onChange={this.toggleCheckbox.bind(this, 'qtype')} />
+                </div>
+              </form>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button onClick={this.closeModal.bind(this)}>Cancel</Button>
+              <Button onClick={this.handleSubmit.bind(this)}>Änderungen speichern</Button>
+            </Modal.Footer>
+          </Modal>
         </div>
       </div>
     );
   }
 }
 
-QuestionEditComponent.propTypes = {
-  OneTestArrayProp:   PropTypes.object,
-  QuestionsArrayProp: PropTypes.array,
-  dispatch:           PropTypes.func,
-  cookies:            PropTypes.object
-};
-
-QuestionEditComponent.defaultProps = {
-  OneTestArrayProp:  {},
-  QuestionsArrayProp: [],
-  cookies: new Cookies
-};
-
 // Redux binding
 const mapStateToProps = (state) => {
   return {
-    OneTestArrayProp: state.rootReducer.tests_rdcr.OneTestArrayProp,
+    OneTestHashProp: state.rootReducer.tests_rdcr.OneTestHashProp,
     QuestionsArrayProp: state.rootReducer.tests_rdcr.QuestionsArrayProp
   };
 };
 
 export default withRouter(connect(mapStateToProps)(QuestionEditComponent));
-
 

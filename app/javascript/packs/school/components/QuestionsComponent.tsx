@@ -1,57 +1,70 @@
 import Cookies from 'universal-cookie';
 import { connect } from 'react-redux';
-import { render } from 'react-dom';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter} from 'react-router';
 import { Link } from 'react-router-dom';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import { Provider as AlertProvider } from 'react-alert';
-import AlertTemplate from 'react-alert-template-basic';
 import HeaderComponent  from './HeaderComponent';
+import { Alert, AlertContainer } from 'react-bs-notifier';
 import * as TestsActionCreators from '../actions/tests';
 
+interface ObjectLiteral {
+  [key: string]: any
+}
+
+interface IPropTypes {
+  routeParams: ObjectLiteral
+  OneTestHashProp: ObjectLiteral
+  QuestionsHashProp: ObjectLiteral
+  dispatch: any
+  router: any
+}
+
 // export for unconnected component (for mocha tests)
-export class QuestionsComponent extends React.Component<any, any> {
+export class QuestionsComponent extends React.Component<IPropTypes, any> {
+
+  public cookies: any;
+
+  static propTypes = {
+    OneTestHashProp:   PropTypes.object,
+    QuestionsHashProp: PropTypes.object,
+    dispatch:          PropTypes.func
+  }
+
   constructor(props) {
     super(props);
+    this.cookies = new Cookies();
     this.state = {
-        questions:   [],
-        test_id:     this.props.routeParams.test_id,
-        showModal:   false,
-        user_id:     0,    // not valid value
-        question:    '',
-        explanation: '',
-        hint:        '',
-        tags:        '',
-        worth:       1,
-        active:      true,
-        qtype:       true,
-        terms:       ''
+      questions:   [],
+      test_id:     this.props.routeParams.test_id,
+      showModal:   false,
+      user_id:     0,    // not valid value
+      question:    '',
+      explanation: '',
+      hint:        '',
+      tags:        '',
+      worth:       1,
+      active:      true,
+      qtype:       true,
+      terms:       ''
     };
 
-    this.alertOptions = {
-          offset:     '30px',
-          position:   'top left',
-          theme:      'dark',
-          time:       5000,
-          transition: 'scale'
-    };
     this.openModal    = this.openModal.bind(this);
     this.newOrder     = this.newOrder.bind(this);
   }
-
-  static propTypes = {
-      cookies: new Cookies()
-  };
 
   /**
    * Load test data and questions
    **/
   componentWillMount() {
-    if ( ! this.props.OneTestArrayProp.length ) {
+    if ( ! this.props.OneTestHashProp.length ) {
       this.loadTest();
     }
+  }
+
+  toggle() {
+    "this.state.showModal = false;"
   }
 
   loadTest() {
@@ -62,26 +75,25 @@ export class QuestionsComponent extends React.Component<any, any> {
   /**
    * Order tests method
    */
-  orderList(field, order) {
-    return field;
+  orderList(field: number, order: string) {
+    return field + order;
   }
 
-  showAlert(message){
-    msg.show(message, {
-      time: 2000,
-      type: 'success',
-      icon: <img src="/assets/close.png" />
-    });
+  showAlert(message: string){
+    <AlertContainer>
+    <Alert type="info"> message </Alert>
+    <Alert type="success">Oh, hai</Alert>
+    </AlertContainer>
   }
 
-/**
- * Sends the data to create a new question
- **/
+  /**
+   * Sends the data to create a new question
+   **/
   handleSubmit(e) {
     e.preventDefault();
 
     let fields = {question: {
-      user_id:     this.props.cookies.get('user_id'),
+      user_id:     this.cookies.get('user_id'),
       question:    this.state.question,
       explanation: this.state.explanation,
       hint:        this.state.hint,
@@ -102,9 +114,9 @@ export class QuestionsComponent extends React.Component<any, any> {
     this.setState({showModal: false});
     this.clearForm();
     setTimeout(
-        () => { this.loadTest(); },
-        2000
-      );
+      () => { this.loadTest(); },
+      2000
+    );
   }
 
   clearForm(){
@@ -148,25 +160,25 @@ export class QuestionsComponent extends React.Component<any, any> {
     this.setState(obj);
   }
 
- /**
-  *  Delete Single Question
-  *  Private
-  */
-  deleteQuestion(question_id) {
+  /**
+   *  Delete Single Question
+   *  Private
+   */
+  deleteQuestion(question_id: number) {
     let action = TestsActionCreators.deleteQuestion(question_id, this.state.test_id);
     this.props.dispatch(action);
     this.showAlert('Question removed succesfully');
     setTimeout(() => { this.loadTest(); }, 2000);
   }
 
-  renderAnswersButton(type, id){
+  renderAnswersButton(type: string, id: number){
     if (type) {
       return (
-              <div className="right_button">
-                <Link to={"/answers/"+id+"/"+this.state.test_id+"/"}>
-                  <button type="button" className="btn btn-default btn-sm" title="Manage answers">Check</button>
-                </Link>
-              </div>
+        <div className="right_button">
+          <Link to={"/answers/"+id+"/"+this.state.test_id+"/"}>
+            <button type="button" className="btn btn-default btn-sm" title="Manage answers">Check</button>
+          </Link>
+        </div>
       );
     } else {
       return (
@@ -175,7 +187,7 @@ export class QuestionsComponent extends React.Component<any, any> {
     }
   }
 
-  newOrder(id, way){
+  newOrder(id: number, way: string){
     let action = TestsActionCreators.reorderQuestion(this.state.test_id, id, way);
     this.props.dispatch(action);
     this.showAlert('Question resorted succesfully');
@@ -184,18 +196,18 @@ export class QuestionsComponent extends React.Component<any, any> {
 
   renderReorderButton(id, i, up){
     if (i == 0 && up){ return null}
-    if (this.props.QuestionsArrayProp.length == (i+1) && !up){ return null}
+    if (this.props.QuestionsHashProp.length == (i+1) && !up){ return null}
     let title = up ? 'up' : 'down';
     return (<div className="right_button">
-              <button type="button" onClick={() => {this.newOrder(id, title);}} className="btn btn-default btn-sm" title={"Move question "+title}>
-               {title}
-              </button>
-            </div>
+      <button type="button" onClick={() => {this.newOrder(id, title);}} className="btn btn-default btn-sm" title={"Move question "+title}>
+        {title}
+      </button>
+    </div>
     );
   }
- /**
-  * Sends the data to create a new appointment
-  **/
+  /**
+   * Sends the data to create a new appointment
+   **/
   submitSearch(e) {
     e.preventDefault();
     this.props.router.replace('/search/'+ this.state.test_id + '/' + this.state.terms);
@@ -205,7 +217,7 @@ export class QuestionsComponent extends React.Component<any, any> {
     return (
       <div className="container_div">
         <HeaderComponent />
-        <h1> {this.props.OneTestArrayProp.title} </h1>
+        <h1> {this.props.OneTestHashProp.title} </h1>
         <div>
           <button type="button" onClick={this.openModal} className="btn btn-default btn-sm" title="Frage hinzüfugen"> Add </button>
           <form>
@@ -215,7 +227,7 @@ export class QuestionsComponent extends React.Component<any, any> {
           </form>
         </div>
         <div>
-          {this.props.QuestionsArrayProp.map((q, i) =>
+          {this.props.QuestionsHashProp.map((q, i) =>
             <div key={i} className="questions_div">
               <div><b>{i+1}.- Question</b>: {q.question} -- {q.id} </div>
               <div><b>Explanation</b>: {q.explanation}</div>
@@ -237,74 +249,60 @@ export class QuestionsComponent extends React.Component<any, any> {
                   Delete
                 </button>
               </div>
+            </div>
+          )}
         </div>
-        )}
-      </div>
-      { this.props.children }
-      <div id="questionform" className="modal hide fade" tabIndex="-1" >
-        <Modal isOpen={this.state.showModal} toggle={this.toggle} className="foo">
-          <ModalHeader>Modal Überschrift  </ModalHeader>
-          <ModalBody>
-            <form>
-              <label htmlFor="question">Question:</label>
-              <input className="form-control" name="question" value={this.state.question} onChange={this.handleChange.bind(this, 'question')} />
+        { this.props.children }
+        <div id="questionform" className="modal hide fade">
+          <Modal isOpen={this.state.showModal} toggle={this.toggle} className="foo">
+            <ModalHeader>Modal Überschrift  </ModalHeader>
+            <ModalBody>
+              <form>
+                <label htmlFor="question">Question:</label>
+                <input className="form-control" name="question" value={this.state.question} onChange={this.handleChange.bind(this, 'question')} />
 
-              <label htmlFor="explanation">Explanation:</label>
-              <textarea className="form-control" name="explanation" value={this.state.explanation} onChange={this.handleChange.bind(this, 'explanation')}  />
+                <label htmlFor="explanation">Explanation:</label>
+                <textarea className="form-control" name="explanation" value={this.state.explanation} onChange={this.handleChange.bind(this, 'explanation')}  />
 
-              <label htmlFor="hint">Hint:</label>
-              <input className="form-control" name="hint" value={this.state.hint} onChange={this.handleChange.bind(this, 'hint')} />
+                <label htmlFor="hint">Hint:</label>
+                <input className="form-control" name="hint" value={this.state.hint} onChange={this.handleChange.bind(this, 'hint')} />
 
-              <label htmlFor="tags">Tags:</label>
-              <input className="form-control" name="tags" value={this.state.tags} onChange={this.handleChange.bind(this, 'tags')} />
+                <label htmlFor="tags">Tags:</label>
+                <input className="form-control" name="tags" value={this.state.tags} onChange={this.handleChange.bind(this, 'tags')} />
 
-              <label htmlFor="worth">Worth:</label>
-              <select className="form-control" name="worth" value={this.state.worth} onChange={this.handleChange.bind(this, 'worth')}>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-              </select>
-              <div>
-                <label htmlFor="active">Active:</label>
-                <input type="checkbox" name="active" value={this.state.active} checked={this.state.active} onChange={this.toggleCheckbox.bind(this, 'active')} />
-              </div>
-              <div>
-                <label htmlFor="qtype">Multiple choice question:</label>
-                <input type="checkbox" name="qtype" value={this.state.qtype} checked={this.state.qtype} onChange={this.toggleCheckbox.bind(this, 'qtype')} />
-              </div>
-             </form>
-          </ModalBody>
-          <ModalFooter>
-             <Button onClick={this.closeModal.bind(this)}>Cancel</Button>
-             <Button onClick={this.handleSubmit.bind(this)}>Änderungen speichern</Button>
-          </ModalFooter>
-        </Modal>
+                <label htmlFor="worth">Worth:</label>
+                <select className="form-control" name="worth" value={this.state.worth} onChange={this.handleChange.bind(this, 'worth')}>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                </select>
+                <div>
+                  <label htmlFor="active">Active:</label>
+                  <input type="checkbox" name="active" value={this.state.active} checked={this.state.active} onChange={this.toggleCheckbox.bind(this, 'active')} />
+                </div>
+                <div>
+                  <label htmlFor="qtype">Multiple choice question:</label>
+                  <input type="checkbox" name="qtype" value={this.state.qtype} checked={this.state.qtype} onChange={this.toggleCheckbox.bind(this, 'qtype')} />
+                </div>
+              </form>
+            </ModalBody>
+            <ModalFooter>
+              <Button onClick={this.closeModal.bind(this)}>Cancel</Button>
+              <Button onClick={this.handleSubmit.bind(this)}>Änderungen speichern</Button>
+            </ModalFooter>
+          </Modal>
         </div>
       </div>
     );
   }
 }
 
-QuestionsComponent.propTypes = {
-  OneTestArrayProp:   PropTypes.object,
-  QuestionsArrayProp: PropTypes.array,
-  dispatch:           PropTypes.func,
-  cookies:            PropTypes.object
-};
-
-QuestionsComponent.defaultProps = {
-  OneTestArrayProp:  {},
-  QuestionsArrayProp: [],
-  cookies: new Cookies
-};
-
 const mapStateToProps = (state) => {
   return {
-    OneTestArrayProp: state.rootReducer.tests_rdcr.OneTestArrayProp,
-    QuestionsArrayProp: state.rootReducer.tests_rdcr.QuestionsArrayProp
+    OneTestHashProp: state.rootReducer.tests_rdcr.OneTestHashProp,
+    QuestionsHashProp: state.rootReducer.tests_rdcr.QuestionsHashProp
   };
 };
 
 export default withRouter(connect(mapStateToProps)(QuestionsComponent));
-

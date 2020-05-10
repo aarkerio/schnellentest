@@ -1,40 +1,50 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 import * as AnswersActionCreators from '../actions/tests';
 import PropTypes from 'prop-types';
 
 // Inline edition
 import { RIEInput } from 'riek';
 
-interface propTypes {
-  name?: string,
-  answer?:    PropTypes.object,
-  keyRow:    PropTypes.number,
-  dispatch:  PropTypes.func
+interface IPropTypes {
+  answer: {id:      number,
+           correct: boolean,
+           active:  boolean,
+           answer:  string },
+  keyRow:    string,
+  dispatch:  any,
+  onChange:  any
+};
 
-}
+class AnswerRow extends React.Component<IPropTypes, any> {
 
-class AnswerRow extends React.Component<any, any> {
-  constructor(props) {
+  static propTypes  = {
+    answer:    PropTypes.object,
+    keyRow:    PropTypes.string.isRequired,
+    dispatch:  PropTypes.func,
+    onChange:  PropTypes.func
+  };
+
+  constructor(props: any) {
     super(props);
     this.state = {
-       isHovering:  false,
-       isExecuting: false,
-       textValues:  ["Delete", "Are you sure?", "Deleting..."],
-       boolean:     true,
-       answer:      this.props.answer.answer,
-       id:          this.props.answer.id,
-       correct:     this.props.answer.correct,
-       active:      this.props.answer.active,
-       text:        '',            //initial prop value
-       propName:    '',            //name of the prop to return to the change function
-       change:      'handleSubmit', //function which will receive a plain object with a single key, provided in propName
-       date :       Date.now(),
-       tags:        new Set(["Math", "Geography", "History", "Science", "Chemistry"]),
-       simulateXHR: false,
-       XHRDelay:    450,
-       highlight:   false,
-       showSource:  false
+      isHovering:  false,
+      isExecuting: false,
+      textValues:  ["Delete", "Are you sure?", "Deleting..."],
+      boolean:     true,
+      id:          this.props.answer.id,
+      answer:      this.props.answer.answer,
+      correct:     this.props.answer.correct,
+      active:      this.props.answer.active,
+      text:        '',            //initial prop value
+      propName:    '',            //name of the prop to return to the change function
+      change:      'handleSubmit', //function which will receive a plain object with a single key, provided in propName
+      date :       Date.now(),
+      tags:        new Set(["Math", "Geography", "History", "Science", "Chemistry"]),
+      simulateXHR: false,
+      XHRDelay:    450,
+      highlight:   false,
+      showSource:  false
     };
     this.toggleAnswer = this.toggleAnswer.bind(this);
   }
@@ -53,7 +63,7 @@ class AnswerRow extends React.Component<any, any> {
     this.props.dispatch(action);
   }
 
-  toggleCheckbox(name: string, event: string){
+  toggleCheckbox(name: string){
     let change = !this.state[name];
     this.setState({name: change});
   }
@@ -79,18 +89,18 @@ class AnswerRow extends React.Component<any, any> {
   render() {
     const { answer, keyRow } = this.props;
     let divStyle = { width: '100%', padding: '3px', margin: '2px' };
-    let graded   = this.state.correct ? {text:'Correct', style: {color:'green',fontWeight:'bold',margin:'8px'}} : {text:'Incorrect', style:{color:'red',fontWeight:'bold',margin:'8px'}};
+    let graded   = this.state.correct ? {text:'Correct', style: {color:'green',fontWeight:'bold',margin:'8px'} as React.CSSProperties } : {text:'Incorrect', style:{color:'red',fontWeight:'bold',margin:'8px'} as React.CSSProperties};
     return (
       <div key={keyRow} style={divStyle}>
         <a href="#" onClick={() => {this.toggleAnswer();}} className="removable" title="Switch Correct/Incorrect"><i className="glyphicon glyphicon-random"></i></a>
-         <span style={graded.style}>{graded.text}</span>
+        <span style={graded.style}>{graded.text}</span>
         <RIEInput
-            value={this.state.answer}
-            change={this.handleChange.bind(this)}
-            propName='answer'
-            validate={this.isStringAcceptable}
-            classLoading="loading"
-            classInvalid="invalid" />
+          value={this.state.answer}
+          change={this.handleChange.bind(this)}
+          propName='answer'
+          validate={this.isStringAcceptable}
+          classLoading="loading"
+          classInvalid="invalid" />
 
         <a href="#" onClick={() => { if(confirm('Delete answer?')) {this.deleteAnswer(answer.id)}; }} className="removable"><i className="glyphicon glyphicon-trash"></i></a>
       </div>
@@ -98,11 +108,4 @@ class AnswerRow extends React.Component<any, any> {
   }
 }
 
-AnswerRow.propTypes = {
-  answer:    PropTypes.object,
-  keyRow:    PropTypes.number,
-  dispatch:  PropTypes.func
-};
-
-export default connect()(AnswerRow);
-
+export default AnswerRow;

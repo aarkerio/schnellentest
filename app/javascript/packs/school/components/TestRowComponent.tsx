@@ -1,11 +1,16 @@
 import React from 'react';
-import { Router, Route } from 'react-router';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as TestsActionCreators from '../actions/tests';
 import PropTypes from 'prop-types';
 
 class TestRow extends React.Component<any, any> {
+  static propTypes = {
+    test:      PropTypes.object,
+    keyRow:    PropTypes.string,
+    dispatch:  PropTypes.func
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -19,10 +24,10 @@ class TestRow extends React.Component<any, any> {
    *  Delete Single Test
    *  Private
    */
-  deleteTest(test_id) {
+  deleteTest(test_id: number) {
     let action = TestsActionCreators.deleteRow(test_id, 'tests');
     this.props.dispatch(action);
-    window.location='/tests';
+    window.location.href = '/tests';
   }
 
   render() {
@@ -45,11 +50,4 @@ class TestRow extends React.Component<any, any> {
   }
 }
 
-TestRow.propTypes = {
-  test:      PropTypes.object,
-  keyRow:    PropTypes.string,
-  dispatch:  PropTypes.func
-};
-
 export default connect()(TestRow);
-

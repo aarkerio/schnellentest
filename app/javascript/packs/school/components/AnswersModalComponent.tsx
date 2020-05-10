@@ -2,13 +2,37 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Button, Modal } from 'react-bootstrap';
-import { dialogStyle, modalConfig } from '../config/modals';
+import { modalConfig } from '../config/modals';
 import AnswerRowComponent from './AnswerRowComponent';
 import PropTypes from 'prop-types';
 import history from '../libs/history';
 import * as TestsActionCreators from '../actions/tests';
 
-class AnswersModalComponent extends React.Component<any, any> {
+interface ObjectLiteral {
+  [key: string]: any
+}
+
+interface ObjectAnswers {
+  [key: string]: any
+}
+
+interface IPropTypes {
+  routeParams:  ObjectLiteral
+  backdropStyle: string
+  QuestionHashProp: ObjectAnswers
+  AnswersHashProp: ObjectAnswers
+  dispatch: any
+}
+
+class AnswersModalComponent extends React.Component<IPropTypes, any> {
+
+  static propTypes = {
+    backdropStyle: PropTypes.string,
+    QuestionHashProp: PropTypes.object,
+    AnswersHashProp: PropTypes.array,
+    dispatch: PropTypes.func
+  }
+
   constructor(props) {
     super(props);
     this.state = { showModal:   true,
@@ -20,28 +44,17 @@ class AnswersModalComponent extends React.Component<any, any> {
                    nanswer:     '',
                    title:       'Question'
                  };
-    if ( ! this.props.QuestionArrayProp.length ) {
+    if ( ! this.props.QuestionHashProp.length ) {
       let action = TestsActionCreators.fetchOneQuestion( this.state.question_id );
       this.props.dispatch(action);
-      this.setState({title: this.props.QuestionArrayProp.question});
+      this.setState({title: this.props.QuestionHashProp.question});
     }
-  }
-
-  handleChange(name, event) {
-    let change = {};
-    change[name] = event.target.value;
-    this.setState(change);
-  }
-
-  toggleCheckbox(name, event) {
-    let change = !this.state[name];
-    this.setState({name: change});
   }
 
 /**
  * Sends the data to create a new appointment
  **/
-  handleSubmit(e) {
+  handleSubmit(e: any) {
     e.preventDefault();
 
     let fields = { answer: {
@@ -51,7 +64,7 @@ class AnswersModalComponent extends React.Component<any, any> {
       question_id: this.state.question_id
     }};
 
-    let isValid = this.validatesForm(fields);
+    let isValid = this.validatesForm();
 
     if ( !isValid['pass'] ) {
       console.log('Question not valid: ' + isValid['message']);
@@ -63,7 +76,7 @@ class AnswersModalComponent extends React.Component<any, any> {
   }
 
   /* Validates form*/
-  validatesForm(fields){
+  validatesForm(){
     let valid = {pass: true, message: 'Not message yet'};
 
     if ( this.state.nanswer.length < 2) {
@@ -73,13 +86,13 @@ class AnswersModalComponent extends React.Component<any, any> {
     return valid;
   }
 
-  handleChange(name, event){
+  handleChange(name: string, event: any){
     let change = {};
     change[name] = event.target.value;
     this.setState(change);
   }
 
-  toggleCheckbox(name, event){
+  toggleCheckbox(name: string, event: any){
     let obj = {};
     obj[name] = !this.state[name];
     this.setState(obj);
@@ -94,7 +107,7 @@ class AnswersModalComponent extends React.Component<any, any> {
   *  Delete Single Answer
   *  Private
   */
-  deleteAnswer(answer_id) {
+  deleteAnswer(answer_id: number) {
     let action = TestsActionCreators.deleteRow(answer_id, 'answers');
     this.props.dispatch(action);
     this.loadQuestion();
@@ -104,7 +117,7 @@ class AnswersModalComponent extends React.Component<any, any> {
     const backdropStyle = {...modalConfig};
 
     return (
-        <div id="responsive" className="modal hide fade" tabIndex="-1" >
+        <div id="responsive" className="modal hide fade">
         <Modal
           aria-labelledby='modal-label'
           backdropStyle={backdropStyle}
@@ -115,7 +128,7 @@ class AnswersModalComponent extends React.Component<any, any> {
           </Modal.Header>
           <Modal.Body>
           <div>
-            {this.props.AnswersArrayProp.map((answer, i) =>
+            {this.props.AnswersHashProp.map((answer, i) =>
               <AnswerRowComponent answer={answer} key={answer.id} keyRow={answer.id} onChange={this.deleteAnswer.bind(this)} />
             )}
           </div>
@@ -140,24 +153,5 @@ class AnswersModalComponent extends React.Component<any, any> {
   }
 }
 
-AnswersModalComponent.propTypes = {
-  backdropStyle: PropTypes.string,
-  QuestionArrayProp: PropTypes.object,
-  AnswersArrayProp: PropTypes.array,
-  dispatch: PropTypes.func
-};
-
-AnswersModalComponent.defaultProps = {
-  QuestionArrayProp: {},
-  AnswersArrayProp: []
-};
-
-const mapStateToProps = (state) => {
-  return {
-      QuestionArrayProp: state.rootReducer.tests_rdcr.QuestionArrayProp,
-      AnswersArrayProp: state.rootReducer.tests_rdcr.AnswersArrayProp
-  };
-};
-
-export default connect(mapStateToProps)(AnswersModalComponent);
+export default AnswersModalComponent;
 

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { render } from 'react-dom';
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Cookies from 'universal-cookie';
@@ -9,8 +9,32 @@ import Cookies from 'universal-cookie';
 import TestRowComponent   from '../components/TestRowComponent';
 import * as TestsActionCreators from '../actions/tests';
 
+interface ObjectLiteral {
+  [key: string]: any
+}
+
+interface ObjectAnswers {
+  [key: string]: any
+}
+
+interface IPropTypes {
+  routeParams:  ObjectLiteral
+  backdropStyle: string
+  QuestionHashProp: ObjectAnswers
+  TestsArrayProp:  any[]
+  AnswersHashProp: ObjectAnswers
+  dispatch: any
+  cookies: any
+}
+
 // export for unconnected component (for mocha tests)
-export class TestsContainer extends Component {
+export class TestsComponent extends React.Component<IPropTypes, any> {
+
+  static propTypes = {
+    TestsHashProp: PropTypes.object,
+    dispatch:       PropTypes.func,
+    cookies:        PropTypes.object
+  }
 
   constructor(props) {
     super(props);
@@ -69,21 +93,10 @@ export class TestsContainer extends Component {
   }
 };
 
-TestsContainer.propTypes = {
-  TestsArrayProp: PropTypes.array,
-  dispatch:       PropTypes.func,
-  cookies:        PropTypes.object
-};
-
-TestsContainer.defaultProps = {
-    TestsArrayProp:  [],
-    cookies: new Cookies
-};
-
 const mapStateToProps = (state) => {
   return {
     TestsArrayProp: state.rootReducer.tests_rdcr.TestsArrayProp
   };
 };
 
-export default connect(mapStateToProps)(TestsContainer);
+export default connect(mapStateToProps)(TestsComponent);

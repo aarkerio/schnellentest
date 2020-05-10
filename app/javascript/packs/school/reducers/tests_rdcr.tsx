@@ -1,6 +1,8 @@
-import { REQUEST_TESTS, RECEIVE_TESTS, RECEIVE_ONE_TEST, RECEIVE_ONE_QUESTION, SEARCH_QUESTIONS } from '../actions/tests';
+import { REQUEST_TESTS, RECEIVE_ONE_TEST, RECEIVE_ONE_QUESTION, SEARCH_QUESTIONS } from '../actions/tests';
 
-const initialState = {
+import { RECEIVE_TESTS } from '../libs/types/test-types';
+
+const initialState: object = {
     TestsArrayProp:       [],
     OneTestArrayProp:     {},
     OneQuestionArrayProp: {},
@@ -9,7 +11,7 @@ const initialState = {
     SearchArrayProp:      []
 };
 
-const tests_rdcr = (state = initialState, action) => {
+const tests_rdcr = (state: object = initialState, action: any) => {
   switch (action.type) {
     case RECEIVE_TESTS:
       return Object.assign({}, state, {

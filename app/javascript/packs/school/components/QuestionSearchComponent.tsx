@@ -7,9 +7,30 @@ import { connect } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import * as TestsActionCreators from '../actions/tests';
 
-class QuestionSearchComponent extends React.Component<any, any> {
+interface ObjectLiteral {
+  [key: string]: any
+}
+
+interface IPropTypes {
+  SearchArrayProp:  any[]
+  routeParams: ObjectLiteral
+  dispatch: any
+  router: any
+  TotalNumberProp: any
+}
+
+class QuestionSearchComponent extends React.Component<IPropTypes, any> {
+
+  static propTypes = {
+    SearchArrayProp: PropTypes.array,
+    TotalNumberProp: PropTypes.number
+  }
+
   constructor(props) {
     super(props);
+    if ( ! this.props.SearchArrayProp.length ) {
+      this.loadQuestions();
+    }
     this.state = {
                  terms:    this.props.routeParams.terms,
                  selected: [],
@@ -25,26 +46,9 @@ class QuestionSearchComponent extends React.Component<any, any> {
     this.getPage         = this.getPage.bind(this);
   }
 
-  componentWillMount() {
-    if ( ! this.props.SearchArrayProp.length ) {
-      this.loadQuestions();
-    }
-  }
-
   loadQuestions(){
     let action   = TestsActionCreators.searchQuestions(this.state.test_id, this.state.terms, this.state.page, this.state.per_page);
     this.props.dispatch(action);
-  }
-
-  handleChange(name, event) {
-    let change = {};
-    change[name] = event.target.value;
-    this.setState(change);
-  }
-
-  toggleCheckbox(name, event) {
-    let change = !this.state[name];
-    this.setState({name: change});
   }
 
 /**
@@ -57,11 +61,11 @@ class QuestionSearchComponent extends React.Component<any, any> {
     this.props.router.replace('/questions/'+ this.state.test_id);
   }
 
-  handleChange(event){
+  handleChange(event: any){
     this.setState({terms:event.target.value});
   }
 
-  toggleCheckbox(question_id, event){
+  toggleCheckbox(question_id: number, event: any){
     let index = this.state.selected.indexOf(question_id);
     if (index != -1) {
       this.state.selected.splice( index, 1 );
@@ -76,7 +80,7 @@ class QuestionSearchComponent extends React.Component<any, any> {
     this.loadQuestions();
   }
 
-  getPage(page) {
+  getPage(page: number) {
     this.setState({page: page});
     let self = this;
     setTimeout(function(){ self.loadQuestions() ; }, 1000);
@@ -126,7 +130,7 @@ class QuestionSearchComponent extends React.Component<any, any> {
           <div>
             <form>
               <label htmlFor="subject">Suche nach:</label>
-              <input className="form-control" maxLength="30" size="30" name="subject" value={this.state.terms} onChange={this.handleChange.bind(this)} />
+              <input className="form-control" maxLength={30} size={30} name="subject" value={this.state.terms} onChange={this.handleChange.bind(this)} />
               <Button onClick={this.submitSearch.bind(this)}>Search</Button>
             </form>
           </div>
@@ -156,17 +160,6 @@ class QuestionSearchComponent extends React.Component<any, any> {
      );
   }
 }
-
-
-QuestionSearchComponent.propTypes = {
-  SearchArrayProp: PropTypes.array,
-  TotalNumberProp: PropTypes.number
-};
-
-QuestionSearchComponent.defaultProps = {
-  SearchArrayProp: [],
-  TotalNumberProp: 0
-};
 
 const mapStateToProps = (state) => {
   return {

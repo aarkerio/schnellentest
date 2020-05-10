@@ -1,9 +1,10 @@
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
 
+import { IAllTests, RECEIVE_TESTS, IReceiveTestsTypes } from '../libs/types/test-types';
+
 import Cookies from 'universal-cookie';
 
-export const RECEIVE_TESTS    = 'RECEIVE_TESTS';
 export const RECEIVE_ONE_TEST = 'RECEIVE_ONE_TEST';
 export const REMOVE_TEST      = 'REMOVE_TEST';
 export const REQUEST_TESTS    = 'REQUEST_TESTS';
@@ -12,6 +13,7 @@ export const UPDATED_TEST     = 'UPDATED_TEST';
 export const SEARCH_QUESTIONS = 'SEARCH_QUESTIONS';
 export const FULFILL_FORM     = 'FULFILL_FORM';
 
+export const UPDATE_FORM = 'UPDATE_FORM';
 
 export const RECEIVE_QUESTIONS    = 'RECEIVE_QUESTIONS';
 export const RECEIVE_ONE_QUESTION = 'RECEIVE_ONE_QUESTION';

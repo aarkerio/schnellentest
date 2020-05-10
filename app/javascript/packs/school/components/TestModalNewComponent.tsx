@@ -1,14 +1,20 @@
 import Cookies from 'universal-cookie';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as testsActionCreators from '../actions/tests';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import history from '../libs/history';
 
 class TestModalNewComponent extends React.Component<any, any> {
+  static propTypes = {
+    backdropStyle: PropTypes.string,
+    dispatch:      PropTypes.func,
+    cookies:       PropTypes.object,
+    fade:          PropTypes.bool,
+    backdropClassName: PropTypes.string
+  }
+
   constructor(props) {
     super(props);
     this.state = { showModal:   true,
@@ -17,8 +23,7 @@ class TestModalNewComponent extends React.Component<any, any> {
                    tags:        'France, Revolution, History',
                    title:       'Some title',
                    active:      true,
-                   shared:      false,
-                   user_id:     this.props.cookies.get('user_id')
+                   shared:      false
                  };
     this.toggle = this.toggle.bind(this);
   }
@@ -45,7 +50,7 @@ class TestModalNewComponent extends React.Component<any, any> {
     }
     let action = testsActionCreators.createOrUpdateTest(fields, 'create');
     this.props.dispatch(action);  // thunk middleware
-    window.location='/tests';
+    window.location.href='/tests';
   }
 
   /* Validates form*/
@@ -61,13 +66,13 @@ class TestModalNewComponent extends React.Component<any, any> {
     return valid;
   }
 
-  handleChange(name, event) {
+  handleChange(name: string, event: any) {
     let change = {};
     change[name] = event.target.value;
     this.setState(change);
   }
 
-  toggleCheckbox(name, event) {
+  toggleCheckbox(name: string, event: any) {
     let change = {};
     change[name] = !this.state[name];
     this.setState(change);
@@ -111,18 +116,6 @@ class TestModalNewComponent extends React.Component<any, any> {
       );
   }
 }
-
-TestModalNewComponent.propTypes = {
-    backdropStyle: PropTypes.string,
-    dispatch:      PropTypes.func,
-    cookies:       PropTypes.object,
-    fade:          PropTypes.bool,
-    backdropClassName: PropTypes.string
-}
-
-TestModalNewComponent.defaultProps = {
-    cookies: new Cookies
-};
 
 // binding React-Redux
 export default connect()(TestModalNewComponent);

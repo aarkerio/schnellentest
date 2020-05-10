@@ -1,10 +1,11 @@
 import React from 'react';
-import Link from "react-dom";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 
 import HeaderComponent from '../components/HeaderComponent';
 
-class AppContainer extends React.Component<any, any> {
+import history from '../libs/history';
+
+class AppComponent extends React.Component<any, any> {
 
   constructor(props) {
     super(props);
@@ -26,6 +27,6 @@ class AppContainer extends React.Component<any, any> {
   }
 }
 
-export default AppContainer;
-module.exports = withRouter(AppContainer);
+export default AppComponent;
+module.exports = withRouter(AppComponent);
 
