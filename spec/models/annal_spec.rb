@@ -1,6 +1,6 @@
 # coding: utf-8
 # frozen_string_literal: true
-# Chipotle Software 2016-2018 (c) MIT License
+# Chipotle Software 2016-2020 (c) MIT License
 require 'spec_helper'
 
 # Tip: build_stubbed is faster than build and reduces dependency on DB.

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from "react-dom";
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import AppComponent            from './components/AppComponent';
 import TestsComponent          from './components/TestsComponent';
@@ -14,6 +14,8 @@ import QuestionEditComponent   from './components/QuestionEditComponent';
 import NotFound                from './components/NotFound';
 // import HeaderComponent         from './components/HeaderComponent';
 import configureStore          from './config/configureStore';     // load redux store
+
+require('./assets/stylesheet/main.scss');
 
 const my_store = configureStore();
 // const history  = syncHistoryWithStore(browserHistory, my_store);   // mix redux and route

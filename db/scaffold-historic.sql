@@ -1,5 +1,5 @@
 -- Schnell Test Tables
--- Chipotle Software (c) 2015-2019   MIT License
+-- Chipotle Software (c) 2015-2020 MIT License
 
 -- What are the options for field:type?
 -- primary_key, :string, :text, :integer, :float, :decimal, :datetime, :timestamp,
