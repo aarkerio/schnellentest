@@ -7,11 +7,11 @@
   = stylesheet_link_tag Rails.env.development? ? 'http://localhost:8080/build/styles.css' : '/assets/styles.css'
   = favicon_link_tag 'favicon.ico'
   %title Schnell::Admin
-  = stylesheet_link_tag 'admin'
   = csrf_meta_tags
   %body
     - flash.each do |k, v|
-      %div{id: k} = v
+      %div{id: k}
+        = v
     #wrap
       #header
         %h1 Schnellentest Admin

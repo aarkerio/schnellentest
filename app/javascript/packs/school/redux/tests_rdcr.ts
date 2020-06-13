@@ -15,7 +15,7 @@ const tests_rdcr = (state: object = initialState, action: any) => {
   switch (action.type) {
     case RECEIVE_TESTS:
       return Object.assign({}, state, {
-           TestsArrayProp: action.TestsArrayProp
+           TestsArrayProp: action.payload
       });
 
     case REQUEST_TESTS:
@@ -26,20 +26,20 @@ const tests_rdcr = (state: object = initialState, action: any) => {
 
     case RECEIVE_ONE_TEST:
       return Object.assign({}, state, {
-          OneTestArrayProp: action.OneTestArrayProp,
+          OneTestArrayProp: action.payload,
           QuestionsArrayProp: action.OneTestArrayProp.questions
       });
 
     case RECEIVE_ONE_QUESTION:
       return Object.assign({}, state, {
-          OneQuestionArrayProp: action.OneQuestionArrayProp,
+          OneQuestionArrayProp: action.payload,
           AnswersArrayProp: action.OneQuestionArrayProp.answers
       });
 
     case SEARCH_QUESTIONS:
       return Object.assign({}, state, {
-        SearchArrayProp: action.SearchArrayProp.results,
-        TotalNumberProp: action.SearchArrayProp.total
+        SearchArrayProp: action.payload.results,
+        TotalNumberProp: action.payload.total
       });
 
     default:

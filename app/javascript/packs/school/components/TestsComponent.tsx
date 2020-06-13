@@ -1,9 +1,7 @@
 import { connect } from 'react-redux';
-import { render } from 'react-dom';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import Cookies from 'universal-cookie';
 
 // Chipotle
 import TestRowComponent   from '../components/TestRowComponent';
@@ -22,6 +20,7 @@ interface IPropTypes {
   backdropStyle: string
   QuestionHashProp: ObjectAnswers
   TestsArrayProp:  any[]
+  TestsHashProp: {}
   AnswersHashProp: ObjectAnswers
   dispatch: any
   cookies: any
@@ -31,17 +30,17 @@ interface IPropTypes {
 export class TestsComponent extends React.Component<IPropTypes, any> {
 
   static propTypes = {
-    TestsHashProp: PropTypes.object,
+    TestsHashProp:  PropTypes.object,
     dispatch:       PropTypes.func,
     cookies:        PropTypes.object
   }
 
-  constructor(props) {
+  constructor(props: any) {
     super(props);
     this.state = {
       user_id: this.props.cookies.get('user_id')
     };
-    if ( ! this.props.TestsArrayProp.length ) {
+    if ( ! Object.keys(this.props.TestsHashProp).length ) {
       let action = TestsActionCreators.fetchTests(this.state.user_id);
       this.props.dispatch(action);
     }

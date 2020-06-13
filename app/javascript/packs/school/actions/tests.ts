@@ -1,5 +1,3 @@
-require('es6-promise').polyfill();
-require('isomorphic-fetch');
 
 import { IAllTests, RECEIVE_TESTS, IReceiveTestsTypes } from '../libs/types/test-types';
 
@@ -28,38 +26,43 @@ function headers(set_cookie: boolean =false) {
   };
   if (set_cookie) {
     headers['Authorization'] = "Bearer " + cookies.get('remember_user_token');
-  }
+ }
   return headers;
 }
 
 // Get all the quiz tests from this user
-export async function fetchTests(user_id: number, active: boolean = true) {
-  return function (dispatch: any) {
+export const fetchTests: any = (user_id: number, active: boolean = true) => async (dispatch: any) => {
     let data: RequestInit = {
-      method:      'POST',
-      credentials: 'same-origin',
-      mode:        'same-origin',
-      body:        JSON.stringify({
-        user_id: user_id,
-        active: active,  // get all
-      }),
-      headers:     headers(true)
-    };
-    return fetch('/api/v1/tests/listing/', data)
-      .then(response => response.json())
-      .then(json => dispatch(receiveTests(json)));
-  };
+        method:      'POST',
+        credentials: 'same-origin',
+        mode:        'same-origin',
+        body:        JSON.stringify({
+          user_id: user_id,
+          active: active,  // get all
+        }),
+        headers:     headers(true)
+      };
+
+    const URL  = '/api/v1/tests/listing/';
+    const res  = await fetch(URL, data);
+    try {
+      const response = await res.json();
+      const result   = await dispatch(receiveTest(response));
+      return result;
+    } catch (err) {
+      console.error('Error loading data: >> ', err.toString());
+  }
 }
 
 /* Internal method */
 function receiveTests(TestsArrayProp: any) {
   return {
     type:  RECEIVE_TESTS,
-    TestsArrayProp: TestsArrayProp
+    payload: TestsArrayProp
   };
 }
 
-export function createOrUpdateTest(fields: any, action: string = 'create') {
+export const createOrUpdateTest: any = (fields: any, action: string = 'create') => async (dispatch: any) => {
   let method = (action == 'create') ? 'POST' : 'PATCH';
   let felder = (action == 'create') ? {test: fields} : {id: fields['id'], test: fields };
   let data: RequestInit = {
@@ -69,36 +72,47 @@ export function createOrUpdateTest(fields: any, action: string = 'create') {
     mode:        'same-origin',
     headers:     headers(false)
   };
-  return dispatch => {
-    return fetch('/api/v1/tests/'+action, data)
-      .then(response => response.json())
-      .then(json => console.log(JSON.stringify(json)));
-  };
+
+  const URL  =  '/api/v1/tests/' + action;
+  const res  = await fetch(URL, data);
+  try {
+      const response = await res.json();
+      const result   = await dispatch(console.log(response));
+      return result;
+  } catch (err) {
+      console.error('Error loading data: >> ', err.toString());
+  }
 }
 
-export function fulFillForm() {
-  return function (dispatch) {
+export const fulFillForm: any = () => async (dispatch: any) => {
+
     let data: RequestInit = {
       method:      'GET',
       credentials: 'same-origin',
       mode:        'same-origin',
       headers:     headers(false)
     }
-    return fetch('/api/v1/tests/fulfill_form', data)
-      .then(response => response.json())
-      .then(json => dispatch(setTestForm(json)));
-  }
+
+    const res  = await fetch('/api/v1/tests/fulfill_form', data);
+    try {
+        const response = await res.json();
+        const result   = await dispatch(setTestForm(response));
+        return result;
+    } catch (err) {
+        console.error('Error loading data: >> ', err.toString());
+    }
 }
 
 /*  Auxiliar Method */
 function setTestForm(test_arrays: any) {
   return {
     type:  FULFILL_FORM,
-    TEST_arrays: test_arrays
+    payload: test_arrays
   }
 }
 
-export function createQuestion(fields: any) {
+export const createQuestion: any = (fields: any) => async (dispatch: any) => {
+
   let data: RequestInit = {
     method:      'POST',
     body:        JSON.stringify(fields),
@@ -106,10 +120,13 @@ export function createQuestion(fields: any) {
     mode:        'same-origin',
     headers:     headers()
   }
-  return dispatch => {
-    return fetch('/api/v1/questions/create/', data)
-      .then(response => response.json())
-      .then(json => console.log(JSON.stringify(json)))
+  const res  = await fetch('/api/v1/questions/create/', data);
+  try {
+      const response = await res.json();
+      const result   = await dispatch(JSON.stringify(response));
+      return result;
+  } catch (err) {
+      console.error('Error loading data: >> ', err.toString());
   }
 }
 
@@ -199,8 +216,8 @@ export function fetchOneQuestion(question_id: number) {
 
 function setOneQuestion(OneQuestionArrayProp: any) {
   return {
-    type:  RECEIVE_ONE_QUESTION,
-    OneQuestionArrayProp
+      type:  RECEIVE_ONE_QUESTION,
+      payload: OneQuestionArrayProp
   };
 }
 

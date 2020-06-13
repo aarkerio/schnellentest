@@ -50,6 +50,7 @@ group :test do
   gem 'webdrivers'
   gem 'rspec'
   gem 'rspec-rails'
+  gem 'ffaker'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

@@ -1,8 +1,8 @@
-# Chipotle Software 2016 (c) MIT License
+# Chipotle Software 2016-2020 (c) MIT License
 class GroupsController < ApplicationController
 
   before_action :set_group, only: [:show, :edit, :update, :destroy]
-  
+
   # GET /groups/welcome
   def welcome
 
