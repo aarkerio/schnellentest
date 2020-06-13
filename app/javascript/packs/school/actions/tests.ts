@@ -52,15 +52,14 @@ export const fetchTests: any = (user_id: number, active: boolean = true) => asyn
     } catch (err) {
       console.error('Error loading data: >> ', err.toString());
   }
-}
+};
 
-/* Internal method */
-function receiveTests(TestsArrayProp: any) {
+const receiveTests: any = (TestsArrayProp: any) => {
   return {
     type:  RECEIVE_TESTS,
     payload: TestsArrayProp
   };
-}
+};
 
 export const createOrUpdateTest: any = (fields: any, action: string = 'create') => async (dispatch: any) => {
   let method = (action == 'create') ? 'POST' : 'PATCH';
@@ -104,22 +103,21 @@ export const fulFillForm: any = () => async (dispatch: any) => {
 }
 
 /*  Auxiliar Method */
-function setTestForm(test_arrays: any) {
+const setTestForm: any = (test_arrays: any) => {
   return {
     type:  FULFILL_FORM,
     payload: test_arrays
-  }
-}
+  };
+};
 
 export const createQuestion: any = (fields: any) => async (dispatch: any) => {
-
   let data: RequestInit = {
     method:      'POST',
     body:        JSON.stringify(fields),
     credentials: 'same-origin',
     mode:        'same-origin',
     headers:     headers()
-  }
+  };
   const res  = await fetch('/api/v1/questions/create/', data);
   try {
       const response = await res.json();
@@ -128,37 +126,39 @@ export const createQuestion: any = (fields: any) => async (dispatch: any) => {
   } catch (err) {
       console.error('Error loading data: >> ', err.toString());
   }
-}
+};
 
 /* Load data in form to edit test */
-export function updateTest(id: number) {
-  return function (dispatch) {
-    let data: RequestInit = {
+export const updateTest: any = (id: number) => async (dispatch: any) => {
+  let data: RequestInit = {
       method:      'POST',
       credentials: 'same-origin',
       mode:        'same-origin',
       body:        JSON.stringify({
-        id: id
+          id: id
       }),
       headers: headers(false)
-    }
-    return fetch('/api/v1/tests/update', data)
-      .then(response => response.json())  // promise
-      .then(json => dispatch(receiveTest(json)));
+  };
+  const res = await fetch('/api/v1/tests/update', data);
+  try {
+      const response = await res.json();
+      const result   = await dispatch(receiveTest(response));
+      return result;
+  } catch (err) {
+      console.error('Error loading data: >> ', err.toString());
   }
-}
+};
 
-function receiveTest(update_form: any) {
+const receiveTest:any = (update_form: any) => {
   return {
     type:  UPDATE_FORM,
-    oneTEST: update_form
-  }
-}
+    payload: update_form
+  };
+};
 
-/*   Load test and questions  */
-export function fetchOneTest(test_id: number) {
-  return function (dispatch) {
-    let data: RequestInit = {
+ /*   Load test and questions  */
+export const fetchOneTest: any = (test_id: number) => async (dispatch: any) => {
+  let data: RequestInit = {
       method:      'POST',
       credentials: 'same-origin',
       mode:        'same-origin',
@@ -166,39 +166,46 @@ export function fetchOneTest(test_id: number) {
         id: test_id
       }),
       headers:     headers(false)
-    }
-    return fetch('/api/v1/tests/get_one/', data)
-      .then(response => response.json())
-      .then(json => dispatch(setOneTest(json)));
   }
-}
+  const res = await fetch('/api/v1/tests/get_one/', data);
+  try {
+      const response = await res.json();
+      const result   = await dispatch(setOneTest(response));
+      return result;
+  } catch (err) {
+      console.error('Error loading data: >> ', err.toString());
+  }
+};
 
-function setOneTest(OneTestArrayProp) {
+const setOneTest: any = (OneTestArrayProp: any) => {
   return {
     type:  RECEIVE_ONE_TEST,
-    OneTestArrayProp
-  }
-}
+    payload: OneTestArrayProp
+  };
+};
 
-export function deleteRow(id, controller){
-  return function (dispatch) {
-    let data: RequestInit  = {
+export const deleteRow: any = (id: number, controller: string) => async (dispatch: any) => {
+  let data: RequestInit  = {
       method:      'DELETE',
       credentials: 'same-origin',
       mode:        'same-origin',
       headers:     headers(false)
     };
-    return fetch('/api/v1/'+controller+'/delete/'+id, data)
-      .then(response => response.json())
-      .then(json => console.log('Deleted id:  ' + id));
-  };
+
+  const res  = await fetch('/api/v1/'+controller+'/delete/'+id, data);
+  try {
+      const response = await res.json();
+      const result   = await dispatch(console.log(response));
+      return result;
+  } catch (err) {
+      console.error('Error loading data: >> ', err.toString());
+  }
 }
 
 /*** QUESTIONS SECTION***/
 
 /*   Load question and answers  */
-export function fetchOneQuestion(question_id: number) {
-  return function (dispatch) {
+export const fetchOneQuestion: any = (question_id: number) => async (dispatch: any) => {
     let data: RequestInit = {
       method:      'POST',
       credentials: 'same-origin',
@@ -208,20 +215,26 @@ export function fetchOneQuestion(question_id: number) {
       }),
       headers:     headers(false)
     };
-    return fetch('/api/v1/questions/get_one/', data)
-      .then(response => response.json())
-      .then(json => dispatch(setOneQuestion(json)));
-  };
+
+    const res = await fetch('/api/v1/questions/get_one/', data);
+    try {
+        const response = await res.json();
+        const result   = await dispatch(setOneQuestion(response));
+        return result;
+    } catch (err) {
+        console.error('Error loading data: >> ', err.toString());
+    }
 }
 
-function setOneQuestion(OneQuestionArrayProp: any) {
+const setOneQuestion = (OneQuestionArrayProp: any) => {
   return {
       type:  RECEIVE_ONE_QUESTION,
       payload: OneQuestionArrayProp
   };
 }
 
-export function createAnswer(fields: any) {
+export const createAnswer: any = (fields: string) => async (dispatch: any) => {
+
   let data: RequestInit = {
     method:      'POST',
     body:        JSON.stringify(fields),
@@ -229,30 +242,39 @@ export function createAnswer(fields: any) {
     mode:        'same-origin',
     headers:     headers(false)
   }
-  return dispatch => {
-    return fetch('/api/v1/answers/create/', data)
-      .then(response => response.json())
-      .then(json => console.log(JSON.stringify(json)))
+  const res = await fetch('/api/v1/answers/create/', data);
+  try {
+      const response = await res.json();
+      const result   = await dispatch(JSON.stringify(response));
+      return result;
+  } catch (err) {
+      console.error('Error loading data: >> ', err.toString());
   }
-}
+};
 
-export function deleteQuestion(id: number, test_id: number){
-  return function (dispatch) {
-    let data: RequestInit = {
+
+export const deleteQuestion: any = (id: number, test_id: number) => async (dispatch: any) => {
+
+  let data: RequestInit = {
       method:      'DELETE',
       credentials: 'same-origin',
       mode:        'same-origin',
       headers:     headers(false)
-    };
-    return fetch('/api/v1/questions/delete/'+id+'/'+test_id, data)
-      .then(response => response.json())
-      .then(json => console.log('Deleted id:  ' + id));
   };
+
+  const res  = await fetch('/api/v1/questions/delete/'+id+'/'+test_id, data);
+  try {
+      const response = await res.json();
+      const result   = await dispatch(console.log('Deleted id:  ' + id));
+      return result;
+  } catch (err) {
+      console.error('Error loading data: >> ', err.toString());
+  }
 };
 
-export function toggleField(controller: string, field: string, id: number){
-  return function (dispatch) {
-    let data: RequestInit = {
+export const toggleField: any = (controller: string, field: string, id: number) => async (dispatch: any) => {
+
+  let data: RequestInit = {
       method: 'PATCH',
       credentials: 'same-origin',
       mode:        'same-origin',
@@ -262,15 +284,20 @@ export function toggleField(controller: string, field: string, id: number){
       }),
       headers:     headers(false)
     };
-    return fetch('/api/v1/'+controller+'/toggle/', data)
-      .then(response => response.json())
-      .then(json => console.log('Toggle id:  ' + id));
-  };
+
+        const res  = await fetch('/api/v1/'+controller+'/toggle/', data);
+  try {
+      const response = await res.json();
+      const result   = console.log('Toggle id:  ' + id);
+      return result;
+  } catch (err) {
+      console.error('Error loading data: >> ', err.toString());
+  }
 };
 
-export function updateAnswer(id, answer){
-  return function (dispatch) {
-    let data: RequestInit = {
+export const updateAnswer: any = (id: number, answer: string) => async (dispatch: any) => {
+
+  let data: RequestInit = {
       method: 'PATCH',
       credentials: 'same-origin',
       mode:        'same-origin',
@@ -279,16 +306,21 @@ export function updateAnswer(id, answer){
         answer: answer
       }),
       headers:     headers(false)
-    };
-    return fetch('/api/v1/answers/update/', data)
-      .then(response => response.json())
-      .then(json => console.log('Update answer id:  ' + id));
   };
+
+  const res  = await fetch('/api/v1/answers/update/', data);
+  try {
+      const response = await res.json();
+      const result   = console.log('Update answer id:  ' + id + ' >>> ' + response);
+      return result;
+  } catch (err) {
+      console.error('Error loading data: >> ', err.toString());
+  }
 };
 
-export function fetchOneAnswer(answer_id: number) {
-  return function (dispatch) {
-    let data: RequestInit = {
+export const fetchOneAnswer: any = (answer_id: number) => async (dispatch: any) => {
+
+  let data: RequestInit = {
       method:      'POST',
       credentials: 'same-origin',
       mode:        'same-origin',
@@ -296,16 +328,20 @@ export function fetchOneAnswer(answer_id: number) {
         id: answer_id
       }),
       headers:     headers(false)
-    }
-    return fetch('/api/v1/answers/get_one/', data)
-      .then(response => response.json())
-      .then(json => dispatch(setOneTest(json)));
+  };
+
+  const res  = await fetch('/api/v1/answers/get_one/', data);
+  try {
+      const response = await res.json();
+      const result   = await dispatch(receiveTest(response));
+      return result;
+  } catch (err) {
+      console.error('Error loading data: >> ', err.toString());
   }
 };
 
-export function searchQuestions(id: number, terms: any, page: any, per_page: any) {
-  return function (dispatch: any) {
-    let data: RequestInit = {
+export const searchQuestions: any = (id: number, terms: any, page: any, per_page: any) => async (dispatch: any) => {
+  let data: RequestInit = {
       method:      'POST',
       credentials: 'same-origin',
       mode:        'same-origin',
@@ -316,45 +352,50 @@ export function searchQuestions(id: number, terms: any, page: any, per_page: any
         per_page: per_page
       }}),
       headers:     headers(false)
-    }
-    return fetch('/api/v1/tests/search/', data)
-      .then(response => response.json())
-      .then(json => dispatch(setSearch(json)));
+  };
+
+  const res = await fetch('/api/v1/tests/search/', data);
+  try {
+      const response = await res.json();
+      const result   = await dispatch(setSearch(response));
+      return result;
+  } catch (err) {
+      console.error('Error loading data: >> ', err.toString());
   }
 };
 
-function setSearch(SearchArrayProp: any) {
-  return {
-    type:  SEARCH_QUESTIONS,
-    SearchArrayProp
-  }
+const setSearch: any = (SearchArrayProp: any) => {
+     return {
+         type:  SEARCH_QUESTIONS,
+         payload: SearchArrayProp
+     }
 };
 
-export function addQuestions(id: number, ids: any) {
-  let question_ids = [];
-  for (var i = 0; i < ids.length; i++){
-    question_ids.push({id: ids[i]});
-  }
-  return function () {
-    let data: RequestInit = {
+export const addQuestions: any = (id: number, ids: number[]) => async (dispatch: any) => {
+  let question_ids = ids.reduce( (acc, value) => { acc.push({id: value}); return acc; },  []);
+  let data: RequestInit = {
       method:      'POST',
       credentials: 'same-origin',
       mode:        'same-origin',
       body:        JSON.stringify({id: id, test: {
-        id: id,
-        question_ids: question_ids
+          id: id,
+          question_ids: question_ids
       }}),
       headers:     headers(false)
+  };
+
+  const res  = await fetch('/api/v1/tests/linking/', data);
+    try {
+        const response = await res.json();
+        const result   = await dispatch(console.log(response));
+        return result;
+    } catch (err) {
+        console.error('Error loading data: >> ', err.toString());
     }
-    return fetch('/api/v1/tests/linking/', data)
-      .then(response => response.json())
-      .then(json => console.log(json));
-  }
 };
 
-export function reorderQuestion(id: number, question_id: number, way: any) {
-  return function (dispatch: any) {
-    let data: RequestInit = {
+export const reorderQuestion: any = (id: number, question_id: number, way: any) => async (dispatch: any) => {
+  let data: RequestInit = {
       method:      'PATCH',
       credentials: 'same-origin',
       mode:        'same-origin',
@@ -364,9 +405,14 @@ export function reorderQuestion(id: number, question_id: number, way: any) {
         way: way
       }}),
       headers:     headers(false)
-    }
-    return fetch('/api/v1/tests/reorder/', data)
-      .then(response => response.json())
-      .then(json => dispatch(console.log(json)));
+  };
+
+  const res  = await fetch('/api/v1/tests/reorder/', data);
+  try {
+      const response = await res.json();
+      const result   = await dispatch(console.log(response));
+      return result;
+  } catch (err) {
+      console.error('Error loading data: >> ', err.toString());
   }
 };
