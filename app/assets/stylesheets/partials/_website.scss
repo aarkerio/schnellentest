@@ -77,6 +77,37 @@ tfoot th, tfoot td {
 }
 
 /** Bootstrap template STARTS  **/
+
+body {
+  padding: 0;
+  margin: 0;
+  background: #f2f6e9;
+}
+
+/*--- navigation bar ---*/
+
+.navbar {
+  background:#6ab446;
+}
+
+.nav-link,
+.navbar-brand {
+  color: #fff;
+  cursor: pointer;
+}
+
+.nav-link {
+  margin-right: 1em !important;
+}
+
+.nav-link:hover {
+  color: #000;
+}
+
+.navbar-collapse {
+  justify-content: flex-end;
+}
+
 .header {
   background-image: url('/assets/images/benetto.jpg');
   background-size: cover;

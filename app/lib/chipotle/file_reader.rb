@@ -1,6 +1,6 @@
 # coding: utf-8
 # frozen_string_literal: true
-# Chipotle Software (c) 2016-2018  MIT License
+# Chipotle Software (c) 2016-2020  MIT License
 require 'doc_ripper'
 
 module Chipotle

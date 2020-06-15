@@ -40,6 +40,9 @@ COMMENT ON COLUMN questions.order IS 'Order in test';
 -- Doc uploads
 --bin/bundle exec bin/rails g scaffold Doc name:string description:text file:string hash:string user:references content:text json:text
 
+-- Test Post
+-- bin/rails g model Post user:references title:string body:text published:boolean
+
 ----- ######## FUTURE #########################
 --  Model
 -- bin/rails g model Result user:references classroom:references test:references question:references answer:references answertxt:text correct:boolean
