@@ -1,6 +1,3 @@
-require('es6-promise').polyfill();
-require('isomorphic-fetch');
-
 import Cookies from 'universal-cookie'
 
 export const RECEIVE_QUESTION  = 'RECEIVE_QUESTION';
@@ -21,10 +18,9 @@ function headers(set_cookie: boolean = false) {
   return headers;
 }
 
-// Get all the quiz tests from this user
-export function fetchQuestion(user_id: number, active:boolean = true) {
-  return function (dispatch) {
-    let data: RequestInit = {
+export const fetchQuestion: any = (user_id: number, active:boolean = true) => async (dispatch: any) => {
+
+  let data: RequestInit = {
       method:      'POST',
       credentials: 'same-origin',
       mode:        'same-origin',
@@ -33,10 +29,15 @@ export function fetchQuestion(user_id: number, active:boolean = true) {
         active: active,  // get all
       }),
       headers:     headers(true)
+    };
+
+    try {
+        const res  = await fetch('/api/v1/tests/listing/', data);
+        const response = await res.json();
+        const result   = await dispatch(JSON.stringify(response));
+        return result;
+    } catch (err) {
+        console.error('Error loading data: >> ', err.toString());
     }
-    return fetch('/api/v1/tests/listing/', data)
-      .then(response => response.json())
-      .then(json => dispatch(console.log(json)))
-  }
-}
+};
 

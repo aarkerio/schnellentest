@@ -184,6 +184,7 @@ const setOneTest: any = (OneTestArrayProp: any) => {
   };
 };
 
+// Deletes test, question or answer
 export const deleteRow: any = (id: number, controller: string) => async (dispatch: any) => {
   let data: RequestInit  = {
       method:      'DELETE',
@@ -285,14 +286,14 @@ export const toggleField: any = (controller: string, field: string, id: number) 
       headers:     headers(false)
     };
 
-        const res  = await fetch('/api/v1/'+controller+'/toggle/', data);
-  try {
-      const response = await res.json();
-      const result   = console.log('Toggle id:  ' + id);
-      return result;
-  } catch (err) {
-      console.error('Error loading data: >> ', err.toString());
-  }
+    try {
+        const res      = await fetch('/api/v1/'+controller+'/toggle/', data);
+        const response = await res.json();
+        const result   = console.log('Toggle id:  ' + id + "  >> " + response);
+        return result;
+    } catch (err) {
+        console.error('Error loading data: >> ', err.toString());
+    }
 };
 
 export const updateAnswer: any = (id: number, answer: string) => async (dispatch: any) => {
@@ -407,8 +408,8 @@ export const reorderQuestion: any = (id: number, question_id: number, way: any) 
       headers:     headers(false)
   };
 
-  const res  = await fetch('/api/v1/tests/reorder/', data);
   try {
+      const res  = await fetch('/api/v1/tests/reorder/', data);
       const response = await res.json();
       const result   = await dispatch(console.log(response));
       return result;

@@ -2,8 +2,8 @@ import Cookies from 'universal-cookie';
 import { connect } from 'react-redux';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withRouter} from 'react-router';
-import { Link } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router';
+import { Link, withRouter } from 'react-router-dom';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import HeaderComponent  from './HeaderComponent';
 import { Alert, AlertContainer } from 'react-bs-notifier';
@@ -13,24 +13,74 @@ interface ObjectLiteral {
   [key: string]: any
 }
 
-interface IPropTypes {
-  routeParams: ObjectLiteral
-  OneTestHashProp: ObjectLiteral
-  QuestionsHashProp: ObjectLiteral
-  dispatch: any
-  router: any
+interface IOwnProps {
+  routeParams:        ObjectLiteral
+  question:           ObjectLiteral
+  QuestionsArrayProp: any
+  QuestionsHashProp:  ObjectLiteral
+  OneTestHashProp:    any
+  question_id:        number
+  dispatch:           any
+  cookies:            any
+  router:             any
 }
 
+interface StateProps {
+  DataArrayProp:   any[]
+  SearchArrayProp: any
+}
+
+interface DispatchProps {
+  loadQuestion:   () => void
+  loadSearch: () => void
+}
+
+// Type whatever you expect in 'this.props.match.params.*'
+type PathParamsType = {
+  param1: string,
+}
+
+// Your component own properties
+type PropsType = RouteComponentProps<PathParamsType> & {
+  someString: string,
+}
+
+type Props = StateProps & DispatchProps & IOwnProps & PropsType;
+
+interface RootState {
+  questions:   any
+  question:    string
+  question_id: number
+  explanation: string
+  hint:        string
+  tags:        string
+  worth:       number
+  active:      any
+  qtype:       any
+  showModal:   boolean
+  change:      any
+  test_id:     number
+  user_id:     number
+  terms:       string
+}
+
+const mapDispatchToProps = (dispatch: any, ownProps: IOwnProps) => ({
+  // loadSearch: () => dispatch( TestsActionCreators.loadSearch(ownProps.QuestionsArrayProp) ),
+  loadQuestion: () => dispatch( TestsActionCreators.fetchOneQuestion(ownProps.question_id) ),
+  dispatch
+});
+
+const mapStateToProps = (state: any) => {
+  return {
+    OneTestHashProp: state.rootReducer.tests_rdcr.OneTestHashProp,
+    QuestionsHashProp: state.rootReducer.tests_rdcr.QuestionsHashProp
+  };
+};
+
 // export for unconnected component (for mocha tests)
-export class QuestionsComponent extends React.Component<IPropTypes, any> {
+export class QuestionsComponent extends React.Component<Props, RootState> {
 
   public cookies: any;
-
-  static propTypes = {
-    OneTestHashProp:   PropTypes.object,
-    QuestionsHashProp: PropTypes.object,
-    dispatch:          PropTypes.func
-  }
 
   constructor(props) {
     super(props);
@@ -47,17 +97,13 @@ export class QuestionsComponent extends React.Component<IPropTypes, any> {
       worth:       1,
       active:      true,
       qtype:       true,
-      terms:       ''
+      terms:       '',
+      question_id: 0,
+      change:      undefined
     };
 
     this.openModal    = this.openModal.bind(this);
     this.newOrder     = this.newOrder.bind(this);
-  }
-
-  /**
-   * Load test data and questions
-   **/
-  componentWillMount() {
     if ( ! this.props.OneTestHashProp.length ) {
       this.loadTest();
     }
@@ -81,15 +127,15 @@ export class QuestionsComponent extends React.Component<IPropTypes, any> {
 
   showAlert(message: string){
     <AlertContainer>
-    <Alert type="info"> message </Alert>
-    <Alert type="success">Oh, hai</Alert>
+      <Alert type="info"> message </Alert>
+      <Alert type="success">Oh, hai</Alert>
     </AlertContainer>
   }
 
   /**
    * Sends the data to create a new question
    **/
-  handleSubmit(e) {
+  handleSubmit(e: any) {
     e.preventDefault();
 
     let fields = {question: {
@@ -119,7 +165,7 @@ export class QuestionsComponent extends React.Component<IPropTypes, any> {
     );
   }
 
-  clearForm(){
+  clearForm() {
     let change = {};
     let fields = { question: '',  explanation: '', hint: '', tags: '', worth: 1, active: true, qtype: true };
     Object.keys(fields).forEach(function(key) {
@@ -138,7 +184,7 @@ export class QuestionsComponent extends React.Component<IPropTypes, any> {
   }
 
   /* Validates form*/
-  validatesForm(fields){
+  validatesForm(fields: any): object {
     let valid = {pass: true, message: 'Not message yet'};
     if ( !this.state.question.length ) {
       valid['question']  = false;
@@ -148,7 +194,7 @@ export class QuestionsComponent extends React.Component<IPropTypes, any> {
     return valid;
   }
 
-  handleChange(name, event) {
+  handleChange(name: string, event: any) {
     let change = {};
     change[name] = event.target.value;
     this.setState(change);
@@ -171,7 +217,7 @@ export class QuestionsComponent extends React.Component<IPropTypes, any> {
     setTimeout(() => { this.loadTest(); }, 2000);
   }
 
-  renderAnswersButton(type: string, id: number){
+  renderAnswersButton(type: string, id: number): Element | JSX.Element {
     if (type) {
       return (
         <div className="right_button">
@@ -194,7 +240,7 @@ export class QuestionsComponent extends React.Component<IPropTypes, any> {
     setTimeout(() => { this.loadTest(); }, 2000);
   }
 
-  renderReorderButton(id, i, up){
+  renderReorderButton(id: number, i: any, up: boolean){
     if (i == 0 && up){ return null}
     if (this.props.QuestionsHashProp.length == (i+1) && !up){ return null}
     let title = up ? 'up' : 'down';
@@ -298,11 +344,4 @@ export class QuestionsComponent extends React.Component<IPropTypes, any> {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    OneTestHashProp: state.rootReducer.tests_rdcr.OneTestHashProp,
-    QuestionsHashProp: state.rootReducer.tests_rdcr.QuestionsHashProp
-  };
-};
-
-export default withRouter(connect(mapStateToProps)(QuestionsComponent));
+export default  withRouter(connect<any, any, IOwnProps>(mapStateToProps, mapDispatchToProps)(QuestionsComponent));

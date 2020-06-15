@@ -1,3 +1,145 @@
-// Place all the styles related to the Website controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: https://sass-lang.com/
+
+#appoList { width: 100%; border: 1px dotted green; }
+
+#myTable {margin-top:10px;}
+#appoDivForm {margin:10px 3px;}
+
+/*
+  Cusco Sky table styles
+  written by Braulio Soncco http://www.buayacorp.com
+*/
+table, th, td {
+  width: 100%;
+  border: 1px solid #d4e0ee;
+  border-collapse: collapse;
+  font-family: "Trebuchet MS", Arial, sans-serif;
+  color: #555;
+}
+
+caption {
+  font-size: 150%;
+  font-weight: bold;
+  margin: 5px;
+}
+
+td, th {
+  padding: 4px;
+}
+
+thead th {
+  text-align: center;
+  background: #e6edf5;
+  color: #4f76a3;
+  font-size: 100% !important;
+}
+
+tbody th {
+  font-weight: bold;
+}
+
+tbody tr { background: #FCFDFE; }
+
+tbody tr.odd { background: #F7F9FC; }
+
+table a:link {
+  color: #718ABE;
+  text-decoration: none;
+}
+
+table a:visited {
+  color: #718ABE;
+  text-decoration: none;
+}
+
+table a:hover {
+  color: #718ABE;
+  text-decoration: underline !important;
+}
+
+tfoot th, tfoot td {
+  font-size: 85%;
+}
+
+#content_msg {
+  display: none;
+  top: 20px;
+  float:center;
+  background: #fff;
+  border: 1px dotted orange;
+}
+
+#content_fibax {
+  display: none;
+  top: 20px;
+  float:center;
+  background: #fff;
+  border: 1px dotted orange;
+}
+
+/** Bootstrap template STARTS  **/
+.header {
+  background-image: url('/assets/images/benetto.jpg');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.overlay {
+  position: absolute;
+  min-height: 100%;
+  min-width: 100%;
+  left: 0;
+  top: 0;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.description {
+  left: 50%;
+  position: absolute;
+  top: 45%;
+  transform: translate(-50%, -55%);
+  text-align: center;
+}
+
+.description h1 {
+  color: #6ab446;
+}
+
+.description p {
+  color: #fff;
+  font-size: 1.3rem;
+  line-height: 1.5;
+}
+
+.features {
+  margin: 4em auto;
+  padding: 1em;
+  position: relative;
+}
+
+.feature-title {
+  color: #333;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.features img {
+  -webkit-box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+  margin-bottom: 16px;
+}
+
+.page-footer {
+  background-color: #222;
+  color: #ccc;
+  padding: 60px 0 30px;
+}
+
+.footer-copyright {
+  color: #666;
+  padding: 40px 0;
+}
+

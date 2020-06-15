@@ -1,41 +1,63 @@
+!!! XML
 !!!
-%html
+%html{xmlns: 'http://www.w3.org/1999/xhtml'}
   %head
     = favicon_link_tag 'favicon.ico'
     %meta{ :content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type" }
+    %meta{ :name => "viewport", :content => "width=device-width", :"initial-scale" => 1 }
     %title ::Schnellen Test::
-    - # javascript_include_tag 'application'
-    - # stylesheet_link_tag 'application'
+    = stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = csrf_meta_tags
 
-%body
-  - flash_messages
-  - # Navigation
-  %nav{ class:"navbar navbar-expand-lg navbar-dark bg-dark fixed-top" }
-    .container
-      - link_to "Start Bootstrap", "#",  class: "navbar-brand"
-      %button{ class:"navbar-toggler", type: "button", "data-toggle": "collapse", "data-target": "#navbarResponsive", "aria-controls": "navbarResponsive", "aria-expanded": 'false', 'aria-label':"Toggle navigation" }
-      %span{ class: "navbar-toggler-icon" }
-      .collapse.navbar-collapse{ id: "navbarResponsive" }
+  %body
+    - flash_messages
+
+    .navbar.navbar-expand-md
+
+      = link_to "Start Bootstrap", "#",  class: "navbar-brand"
+
+      %button{ class:"navbar-toggler", type: "button", "data-toggle": "collapse", "data-target": "#main-navigation" }
+        %span{ class: "navbar-toggler-icon" }
+
+      .collapse.navbar-collapse{ id: "main-navigation" }
         %ul{ class:"navbar-nav ml-auto" }
           %li{ class: "nav-item active" }
             = link_to 'Home', "/", class: "nav-link"
-            %span{ class: "sr-only" }
-          - if user_signed_in?
-            %li{ class: "nav-item" }
-              = link_to 'Tour', questions_path, class: "nav-link"
-            %li{ class: "nav-item" }
-              = link_to 'Your Tests', tests_index_path, class: "nav-link"
-            %li{ class: "nav-item" }
-              = link_to 'About Us', annals_path, class: "nav-link"
+        - if user_signed_in?
+          %li{ class: "nav-item" }
+            = link_to 'Tour', questions_path, class: "nav-link"
+          %li{ class: "nav-item" }
+            = link_to 'Your Tests', tests_path, class: "nav-link"
+          %li{ class: "nav-item" }
+            = link_to 'About Us', annals_path, class: "nav-link"
         - unless user_signed_in?
           =render partial: 'site/loginbar'
 
-  = yield
+    = yield
 
-  - # Footer
-  %footer{ class: "py-5 bg-dark" }
-    .container
-      %p{ class: "m-0 text-center text-white" }
+    %footer{ :class => "page-footer" }
+      .container
+        .row
+          %div{ :class => "col-lg-8 col-md-8 col-sm-12"}
+            %h6{ :class => "text-uppercase font-weight-bold"}
+              Additional Information
+            %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque interdum quam odio, quis placerat ante luctus eu. Sed aliquet dolor id sapien rutrum, id vulputate quam iaculis.
+            %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque interdum quam odio, quis placerat ante luctus eu. Sed aliquet dolor id sapien rutrum, id vulputate quam iaculis.
+
+          %div{ :class => "col-lg-4 col-md-4 col-sm-12" }
+            %h6{ :class => "text-uppercase font-weight-bold" }
+              Contact
+              %p
+                106 Torroella, Miguel Hidalgo, CDMX
+                %br/
+                info@mywebsite.com
+                %br/
+                + 01 234 567 88
+                %br/
+                + 01 234 567 89
+
+      %div{ :class => "footer-copyright text-center"}
         Copyright Chipotle Software &copy; 2016-2020
+
+    = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
 

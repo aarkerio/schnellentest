@@ -3,15 +3,13 @@
 %html{xmlns: 'http://www.w3.org/1999/xhtml'}
   %head
   %meta{:content => "text/html; charset=utf-8", "http-equiv" => "Content-Type"}
-  = javascript_include_tag Rails.env.development? ? 'http://localhost:8080/build/styles.js'  : '/assets/styles.js'
-  = stylesheet_link_tag Rails.env.development? ? 'http://localhost:8080/build/styles.css' : '/assets/styles.css'
+  %meta{:name => "viewport", :content => "width=device-width, :"initial-scale" => 1}
+  = stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
   = favicon_link_tag 'favicon.ico'
   %title Schnell::Admin
   = csrf_meta_tags
   %body
-    - flash.each do |k, v|
-      %div{id: k}
-        = v
+    - flash_messages
     #wrap
       #header
         %h1 Schnellentest Admin
@@ -29,6 +27,5 @@
       %div{id: 'footer'}
         %p ChipotleSoftware &copy; 2016-2020
 
-  - js_bundle = Rails.env.development? ? 'http://localhost:8080/build/bundle.js' : '/assets/bundle.js'
-  = javascript_include_tag js_bundle
+  = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
 
