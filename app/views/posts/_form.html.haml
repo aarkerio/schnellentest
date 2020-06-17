@@ -9,12 +9,12 @@
           %li= message
   .field
     = f.label :title
-    = f.text_field :title
+    = f.text_field :title, size: 100, maxlength: 100
   .field
     = f.label :body
-    = f.text_area :body
+    = f.text_area :body, rows: 23, cols: 100
   .field
     = f.label :published
-    = f.date_select :published
+    = f.check_box :published
   .actions
     = f.submit

@@ -9,58 +9,91 @@ import { Link } from 'react-router-dom';
 import { Button, Modal } from 'react-bootstrap';
 import { Alert, AlertContainer } from 'react-bs-notifier';
 import * as TestsActionCreators from '../actions/tests';
+import * as QuestionsActionCreators from '../actions/questions';
 
 interface ObjectLiteral {
   [key: string]: any
 }
 
-interface IPropTypes {
+interface IOwnProps {
   routeParams:     ObjectLiteral
-  OneTestHashProp: ObjectLiteral
-  QuestionsArrayProp: any[]
+  question: ObjectLiteral
+  QuestionsArrayProp: any
+  OneTestHashProp: any
+  question_id: number
   dispatch: any
   cookies: any
   router: any
 }
 
+interface StateProps {
+  DataArrayProp: any[]
+  SearchArrayProp: any
+}
+
+interface DispatchProps {
+  loadQuestion:   () => void
+  loadSearch: () => void
+}
+
+type Props = StateProps & DispatchProps & IOwnProps;
+
+interface RootState {
+  question: any
+  question_id: number
+  explanation: string
+  hint:        string
+  tags:        string
+  worth:       number
+  active:      any
+  qtype:       any
+  showModal:   boolean
+  change:      any
+  test_id:     number
+  terms:       string
+}
+
+// Redux binding
+const mapStateToProps = (state: any) => {
+  return {
+    OneTestHashProp: state.rootReducer.tests_rdcr.OneTestHashProp,
+    QuestionsArrayProp: state.rootReducer.tests_rdcr.QuestionsArrayProp
+  };
+};
+
+const mapDispatchToProps = (dispatch: any, ownProps: IOwnProps) => ({
+  // loadSearch: () => dispatch( TestsActionCreators.loadSearch(ownProps.QuestionsArrayProp) ),
+  loadQuestion: () => dispatch( TestsActionCreators.fetchOneQuestion(ownProps.question_id) ),
+  dispatch
+});
+
 // export for unconnected component (for mocha tests)
-export class QuestionEditComponent extends React.Component<IPropTypes, any> {
+export class QuestionEditComponent extends React.Component<Props, RootState> {
 
-  static propTypes = {
-    OneTestHashProp:    PropTypes.object,
-    QuestionsArrayProp: PropTypes.array,
-    dispatch:           PropTypes.func,
-    cookies:            PropTypes.object
-  }
-
-  constructor(props) {
+  constructor(props: any) {
     super(props);
     this.state = {
-      questions:   [],
-      question_id: this.props.routeParams.question_id
+      question:   [],
+      question_id: this.props.routeParams.question_id,
+      explanation: "",
+      hint:        "",
+      tags:        "",
+      worth:       0,
+      active:      "",
+      qtype:       false,
+      showModal:   false,
+      change:      {},
+      test_id:     0,
+      terms:       ""
     };
-    this.openModal    = this.openModal.bind(this);
-    this.newOrder     = this.newOrder.bind(this);
-  }
-
-  /**
-   * Load test data and questions
-   **/
-  componentWillMount() {
-    if ( ! this.props.OneTestHashProp.length ) {
-      this.loadTest();
-    }
-  }
-
-  loadTest() {
-    let action = TestsActionCreators.fetchOneTest( this.props.routeParams.test_id );
-    this.props.dispatch(action);
+    this.openModal  = this.openModal.bind(this);
+    this.newOrder   = this.newOrder.bind(this);
   }
 
   /**
    * Order tests method
    */
-  orderList(field, order) {
+  orderList(field: any, order: any) {
     return field;
   }
 
@@ -74,7 +107,7 @@ export class QuestionEditComponent extends React.Component<IPropTypes, any> {
   /**
    * Sends the data to create a new question
    **/
-  handleSubmit(e) {
+  handleSubmit(e: any) {
     e.preventDefault()
 
     let fields = {question: {
@@ -98,10 +131,6 @@ export class QuestionEditComponent extends React.Component<IPropTypes, any> {
     this.props.dispatch(action);  // thunk middleware
     this.setState({showModal: false});
     this.clearForm();
-    setTimeout(
-      () => { this.loadTest(); },
-      2000
-    );
   }
 
   clearForm(){
@@ -152,7 +181,6 @@ export class QuestionEditComponent extends React.Component<IPropTypes, any> {
     let action = TestsActionCreators.deleteQuestion(question_id, this.state.test_id);
     this.props.dispatch(action);
     this.showAlert('Question removed succesfully');
-    setTimeout(() => { this.loadTest(); }, 2000);
   }
 
   renderAnswersButton(type: string, id: number){
@@ -173,14 +201,13 @@ export class QuestionEditComponent extends React.Component<IPropTypes, any> {
     }
   }
 
-  newOrder(id, way){
+  newOrder(id: number, way: string){
     let action = TestsActionCreators.reorderQuestion(this.state.test_id, id, way);
     this.props.dispatch(action);
     this.showAlert('Question resorted succesfully');
-    setTimeout(() => { this.loadTest(); }, 2000);
   }
 
-  renderReorderButton(id, i, up){
+  renderReorderButton(id: number, i: number, up: boolean){
     if (i == 0 && up){ return null}
     if (this.props.QuestionsArrayProp.length == (i+1) && !up){ return null}
     let title = up ? 'up' : 'down';
@@ -194,7 +221,7 @@ export class QuestionEditComponent extends React.Component<IPropTypes, any> {
   /**
    * Sends the data to create a new appointment
    **/
-  submitSearch(e) {
+  submitSearch(e: any) {
     e.preventDefault();
     this.props.router.replace('/search/'+ this.state.test_id + '/' + this.state.terms);
   }
@@ -298,13 +325,5 @@ export class QuestionEditComponent extends React.Component<IPropTypes, any> {
   }
 }
 
-// Redux binding
-const mapStateToProps = (state) => {
-  return {
-    OneTestHashProp: state.rootReducer.tests_rdcr.OneTestHashProp,
-    QuestionsArrayProp: state.rootReducer.tests_rdcr.QuestionsArrayProp
-  };
-};
-
-export default withRouter(connect(mapStateToProps)(QuestionEditComponent));
+export default connect<any, any, IOwnProps>(mapStateToProps, mapDispatchToProps)(QuestionEditComponent);
 

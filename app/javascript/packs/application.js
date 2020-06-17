@@ -19,3 +19,11 @@ require("channels");
 var componentRequireContext = require.context("components", true);
 var ReactRailsUJS = require("react_ujs");
 ReactRailsUJS.useContext(componentRequireContext);
+
+import "bootstrap";
+import "../../assets/stylesheets/application";
+
+$(document).ready(function(){
+  $('.header').height($(window).height());
+});
+

@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router';
-import { Link } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-
 import { Button } from 'react-bootstrap';
 import * as TestsActionCreators from '../actions/tests';
 
@@ -11,7 +10,7 @@ interface ObjectLiteral {
   [key: string]: any
 }
 
-interface IPropTypes {
+interface IOwnProps {
   SearchArrayProp:  any[]
   routeParams: ObjectLiteral
   dispatch: any
@@ -19,12 +18,54 @@ interface IPropTypes {
   TotalNumberProp: any
 }
 
-class QuestionSearchComponent extends React.Component<IPropTypes, any> {
+interface StateProps {
+  DataArrayProp:   any[]
+  SearchArrayProp: any
+}
 
-  static propTypes = {
-    SearchArrayProp: PropTypes.array,
-    TotalNumberProp: PropTypes.number
-  }
+interface DispatchProps {
+  loadQuestion:   () => void
+  loadSearch: () => void
+}
+
+// Type whatever you expect in 'this.props.match.params.*'
+type PathParamsType = {
+  param1: string,
+}
+
+// Your component own properties
+type PropsType = RouteComponentProps<PathParamsType> & {
+  someString: string,
+}
+
+type Props = StateProps & DispatchProps & IOwnProps & PropsType;
+
+interface RootState {
+  terms:    string
+  selected: any[]
+  data:     any[]
+  offset:   number
+  test_id:  number
+  title:    string
+  page:     number
+  per_page: number
+  active:   boolean
+}
+
+const mapDispatchToProps = (dispatch: any, ownProps: IOwnProps) => ({
+  // loadSearch: () => dispatch( TestsActionCreators.loadSearch(ownProps.QuestionsArrayProp) ),
+  // loadQuestion: () => dispatch( TestsActionCreators.fetchOneQuestion(ownProps.question_id) ),
+  dispatch
+});
+
+const mapStateToProps = (state: any) => {
+  return {
+    SearchArrayProp: state.rootReducer.tests_rdcr.SearchArrayProp,
+    TotalNumberProp: state.rootReducer.tests_rdcr.TotalNumberProp
+  };
+};
+
+class QuestionSearchComponent extends React.Component<Props, RootState> {
 
   constructor(props) {
     super(props);
@@ -32,14 +73,15 @@ class QuestionSearchComponent extends React.Component<IPropTypes, any> {
       this.loadQuestions();
     }
     this.state = {
-                 terms:    this.props.routeParams.terms,
-                 selected: [],
-                 data: [],
-                 offset: 0,
-                 test_id:  this.props.routeParams.test_id,
-                 title: 'Test title',
-                 page: 1,
-                 per_page: 3
+      terms:    this.props.routeParams.terms,
+      selected: [],
+      data: [],
+      offset: 0,
+      test_id:  this.props.routeParams.test_id,
+      title: 'Test title',
+      page: 1,
+      per_page: 3,
+      active: false
     };
     this.loadQuestions   = this.loadQuestions.bind(this);
     this.pagination      = this.pagination.bind(this);
@@ -161,13 +203,5 @@ class QuestionSearchComponent extends React.Component<IPropTypes, any> {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-      SearchArrayProp: state.rootReducer.tests_rdcr.SearchArrayProp,
-      TotalNumberProp: state.rootReducer.tests_rdcr.TotalNumberProp
-  };
-};
-
-// binding React-Router-Redux
-export default withRouter(connect(mapStateToProps)(QuestionSearchComponent));
+export default  withRouter(connect<any, any, IOwnProps>(mapStateToProps, mapDispatchToProps)(QuestionSearchComponent));
 

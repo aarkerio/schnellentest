@@ -10,7 +10,6 @@ module Schnell
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0
-
     config.generators do |g|
       g.template_engine :haml
       g.stylesheets false

@@ -1,4 +1,4 @@
-const PnpWebpackPlugin = require('pnp-webpack-plugin')
+const PnpWebpackPlugin = require('pnp-webpack-plugin');
 
 module.exports = {
   test: /\.tsx?(\.erb)?$/,
@@ -8,4 +8,4 @@ module.exports = {
       options: PnpWebpackPlugin.tsLoaderOptions()
     }
   ]
-}
+};
