@@ -20,19 +20,17 @@ require('./assets/stylesheet/main.scss');
 const my_store = configureStore();
 // const history  = syncHistoryWithStore(browserHistory, my_store);   // mix redux and route
 
-if ( document.getElementById('reactroot')) {
-  ReactDOM.render(
-    <Provider store={my_store}>
-      <div>
-        { /* Tell the Router to use our enhanced history */ }
-        <Router>
-          <Route exact path="/tests/" component={AppComponent} />
-        </Router>
-      </div>
-    </Provider>,
-    document.getElementById('reactroot')
-  );
-}
+ReactDOM.render(
+  <Provider store={my_store}>
+    <div>
+      { /* Tell the Router to use our enhanced history */ }
+      <Router>
+        <Route exact path="/tests/" component={AppComponent} />
+      </Router>
+    </div>
+  </Provider>,
+  document.getElementById('reactroot')
+);
 
 /* if ( document.getElementById('reactroot')) {
  *   ReactDOM.render(

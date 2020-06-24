@@ -7,6 +7,7 @@
     %meta{ :name => "viewport", :content => "width=device-width", :"initial-scale" => 1 }
     %title ::Schnellen Test::
     = stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
     = csrf_meta_tags
 
   %body
@@ -58,6 +59,4 @@
 
       %div{ :class => "footer-copyright text-center"}
         Copyright Chipotle Software &copy; 2016-2020
-
-    = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
 
