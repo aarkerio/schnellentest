@@ -1,66 +1,48 @@
-import { connect } from 'react-redux';
-import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import Cookies from 'universal-cookie';
 
-// Chipotle
 import TestRowComponent   from '../components/TestRowComponent';
 import * as TestsActionCreators from '../actions/tests';
 
-interface ObjectLiteral {
-  [key: string]: any
-}
-
-interface ObjectAnswers {
-  [key: string]: any
-}
-
 interface IPropTypes {
-  routeParams:  ObjectLiteral
-  backdropStyle: string
-  QuestionHashProp: ObjectAnswers
+  routeParams:  any
   TestsArrayProp:  any[]
-  TestsHashProp: {}
-  AnswersHashProp: ObjectAnswers
   dispatch: any
   cookies: any
 }
 
+
 // export for unconnected component (for mocha tests)
-export class TestsComponent extends React.Component<IPropTypes, any> {
+const TestsComponent: React.FC<IPropTypes> = () => {
+  const cookies = new Cookies();
+  const dispatch = useDispatch();
+  const [user, setUser]        = useState<any>( cookies.get('user_id')   );
+  const [records, setRecords]  = useState<any>( dispatch( TestsActionCreators.fetchTests(user) ));
+  const TestsArray = [];
+  /* useEffect(() => {
+   *   dispatch(TestsActionCreators.loadRecords());
+   * }, []);
 
-  static propTypes = {
-    TestsHashProp:  PropTypes.object,
-    dispatch:       PropTypes.func,
-    cookies:        PropTypes.object
-  }
+   * const useRecords = () =>  useSelector((state: RootRState) => (state as any).rootReducer.api_rdcr.RecordsArray);
 
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      user_id: this.props.cookies.get('user_id')
-    };
-    if ( ! Object.keys(this.props.TestsHashProp).length ) {
-      let action = TestsActionCreators.fetchTests(this.state.user_id);
-      this.props.dispatch(action);
-    }
-  }
-
+   * const RecordsArray = useRecords();
+   */
   /**
    * Order tests method
    */
-  orderList(field: string, order: number) {
+  const orderList = (e: any, field: any, order: any) => {
     return field;
   }
-
-  render() {
-    let rows = [];
-    this.props.TestsArrayProp.forEach(function(test) {
-      rows.push(<TestRowComponent test={test} key={test.id} keyRow={test.id} />);
-    });
-
-    return (
-      <div className="container_div">
+  /* {TestsArray.forEach((test) => {
+   *   <TestRowComponent test={test} key={test.id} keyRow={test.id} />
+   * })
+   * }
+   */
+  return (
+    <div className="container_div">
       <div>
         <Link to="/testnew">
           <button type="button" className="btn btn-primary">
@@ -71,31 +53,22 @@ export class TestsComponent extends React.Component<IPropTypes, any> {
       <table className="table_class">
         <thead>
           <tr>
-             <th style={{width: '35px', textAlign:'center', padding:0}} key='kedit'>Edit</th>
-             <th style={{width: '35px', textAlign:'center', padding:0}} key='kquestions'>Questions</th>
-             <th style={{width: '35px', textAlign:'center', padding:0}} key='ktitle'><a href="#" onClick={this.orderList.bind(this, 'title', 'asc')}>Title</a></th>
-             <th style={{width: '35px', textAlign:'center', padding:0}} key='kdesc'>Description</th>
-             <th style={{width: '35px', textAlign:'center', padding:0}} key='kdate'><a href="#" onClick={this.orderList.bind(this, 'date', 'asc')}>Created</a></th>
-             <th style={{width: '35px', textAlign:'center', padding:0}} key='kacrive'>Active</th>
-             <th style={{width: '35px', textAlign:'center', padding:0}} key='kshared'>Shared</th>
-             <th style={{width: '35px', textAlign:'center', padding:0}} key='kprint'>Print</th>
-             <th style={{width: '35px', textAlign:'center', padding:0}} key='kdel'>Delete</th>
-           </tr>
-         </thead>
-         <tbody>
-            { rows }
-          </tbody>
-          </table>
-          { this.props.children }
-      </div>
-    );
-  }
+            <th style={{width: '35px', textAlign:'center', padding:0}} key='kedit'>Edit</th>
+            <th style={{width: '35px', textAlign:'center', padding:0}} key='kquestions'>Questions</th>
+            <th style={{width: '35px', textAlign:'center', padding:0}} key='ktitle'><a href="#" onClick={orderList(this, 'title', 'asc')}>Title</a></th>
+            <th style={{width: '35px', textAlign:'center', padding:0}} key='kdesc'>Description</th>
+            <th style={{width: '35px', textAlign:'center', padding:0}} key='kdate'><a href="#" onClick={orderList(this, 'date', 'asc')}>Created</a></th>
+            <th style={{width: '35px', textAlign:'center', padding:0}} key='kacrive'>Active</th>
+            <th style={{width: '35px', textAlign:'center', padding:0}} key='kshared'>Shared</th>
+            <th style={{width: '35px', textAlign:'center', padding:0}} key='kprint'>Print</th>
+            <th style={{width: '35px', textAlign:'center', padding:0}} key='kdel'>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+  );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    TestsArrayProp: state.rootReducer.tests_rdcr.TestsArrayProp
-  };
-};
-
-export default connect(mapStateToProps)(TestsComponent);
+export default TestsComponent;

@@ -2,59 +2,15 @@ import Cookies from 'universal-cookie';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector  } from "react-redux";
 import * as testsActionCreators from '../actions/tests';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import history from '../libs/history';
 
-class TestModalNewComponent extends React.Component<any, any> {
-  static propTypes = {
-    backdropStyle: PropTypes.string,
-    dispatch:      PropTypes.func,
-    cookies:       PropTypes.object,
-    fade:          PropTypes.bool,
-    backdropClassName: PropTypes.string
-  }
-
-  constructor(props) {
-    super(props);
-    this.state = { showModal:   true,
-                   user_id:     0,
-                   description: 'Brief description',
-                   tags:        'France, Revolution, History',
-                   title:       'Some title',
-                   active:      true,
-                   shared:      false
-                 };
-    this.toggle = this.toggle.bind(this);
-  }
-
-/**
- * Sends the data to create a new test
- **/
-  handleSubmit(e) {
-    e.preventDefault();
-
-    let fields = {
-         user_id:     this.state.user_id,
-         title:       this.state.title,
-         description: this.state.description,
-         tags:        this.state.tags,
-         active:      this.state.active,
-         shared:      this.state.shared
-    };
-
-    let isValid = this.validatesForm(fields);
-
-    if ( !isValid['pass'] ) {
-      console.log('Field not valid: ' + isValid['message']);
-    }
-    let action = testsActionCreators.createOrUpdateTest(fields, 'create');
-    this.props.dispatch(action);  // thunk middleware
-    window.location.href='/tests';
-  }
+const TestModalNewComponent: React.FC<> = () => {
 
   /* Validates form*/
-  validatesForm(fields){
+  const validatesForm = (fields) => {
     let valid = {pass: true, message: 'Not message yet'};
     //console.log(JSON.stringify(fields));
 
@@ -64,7 +20,7 @@ class TestModalNewComponent extends React.Component<any, any> {
     }
 
     return valid;
-  }
+  };
 
   handleChange(name: string, event: any) {
     let change = {};
@@ -83,8 +39,8 @@ class TestModalNewComponent extends React.Component<any, any> {
       modal: !this.state.showModal
     });
   }
-  render() {
-      return (
+
+  return (
           <div>
            <Button color="danger" onClick={this.toggle}>{this.props.buttonLabel}</Button>
            <Modal isOpen={this.state.showModal} toggle={this.toggle} className="foo">
@@ -114,8 +70,6 @@ class TestModalNewComponent extends React.Component<any, any> {
         </Modal>
         </div>
       );
-  }
-}
+};
 
-// binding React-Redux
-export default connect()(TestModalNewComponent);
+export default TestModalNewComponent;

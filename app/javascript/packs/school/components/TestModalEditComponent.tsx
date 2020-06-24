@@ -1,100 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector  } from "react-redux";
 import * as testsActionCreators from '../actions/tests';
 import { Button, Modal } from 'react-bootstrap';
 
-class TestModalEditComponent extends React.Component<any, any> {
+const TestModalEditComponent: React.FC<> = () => {
 
-  static propTypes = {
-    backdropStyle:    PropTypes.string,
-    OneTestArrayProp: PropTypes.object,
-    dispatch:         PropTypes.func
-  }
-
-  constructor(props) {
-    super(props);
-    this.state = { showModal:   true,
-                   id:          this.props.params.id,
-                   description: '',
-                   tags:        '',
-                   title:       '',
-                   active:      true,
-                   shared:      true
-             };
-    let action = testsActionCreators.fetchOneTest( this.props.params.id );
-    this.props.dispatch(action);
-    this.setValues = this.setValues.bind(this);
-  }
-
-  componentDidMount() {
-    let self = this;
-    setTimeout(function(){ self.setValues(); }, 2000);
-  }
-
-  setValues(){
-    let new_values = {title:       this.props.OneTestArrayProp.title,
-                      description: this.props.OneTestArrayProp.description,
-                      tags:        this.props.OneTestArrayProp.tags,
-                      active:      this.props.OneTestArrayProp.active,
-                      shared:      this.props.OneTestArrayProp.shared,
-                      response:    1
-                     };
-    this.setState(new_values);
-  }
-
-/**
- *  Sends the data to Rails
- **/
-  handleSubmit(e) {
-    e.preventDefault();
-
-    let fields = {
-      id:          this.state.id,
-      title:       this.state.title,
-      description: this.state.description,
-      tags:        this.state.tags,
-      active:      this.state.active,
-      shared:      this.state.shared
-    };
-
-    let isValid = this.validatesForm(fields);
-
-    if ( !isValid['pass'] ) {
-      console.log('Field not valid: ' + isValid['message']);
-    }
-    let action = testsActionCreators.createOrUpdateTest(fields, 'update');
-    this.props.dispatch(action);  // thunk middleware
-    window.location.href ='/tests';
-  }
-
-  /* Validates form*/
-  validatesForm(fields: any){
-    let valid = {pass: true, message: 'Not message yet'};
-
-    if ( fields['title'] == 0 ) {
-      valid['pass']    = false;
-      valid['message'] = 'Title not valid';
-    }
-
-    return valid;
-  }
-
-  handleChange(name: string, event: any) {
-    let change = {};
-    change[name] = event.target.value;
-    this.setState(change);
-  }
-
-  toggleCheckbox(name: string, event: any) {
-    let change = {};
-    change[name] = !this.state[name];
-    this.setState(change);
-  }
-
-  render() {
-    let rand = ()=> (Math.floor(Math.random() * 20) - 10);
+  let rand = ()=> (Math.floor(Math.random() * 20) - 10);
     const modalStyle = { position: 'fixed', zIndex: 1040, top: 0, bottom: 0, left: 0, right: 0, backgroundColor: '#000', opacity: 0.5 };
     const backdropStyle = { ...modalStyle };
 
@@ -112,7 +25,6 @@ class TestModalEditComponent extends React.Component<any, any> {
         padding: 20
       };
     };
-
 
     return (
         <div id="responsive" className="modal hide fade" tabIndex={-1} >
@@ -150,16 +62,7 @@ class TestModalEditComponent extends React.Component<any, any> {
         </Modal>
       </div>
       );
-  }
 };
 
-
-const mapStateToProps = (state) => {
-  return {
-    OneTestArrayProp: state.rootReducer.tests_rdcr.OneTestArrayProp
-  };
-};
-
-// binding React-Redux
-export default connect(mapStateToProps)(TestModalEditComponent);
+export default TestModalEditComponent;
 

@@ -24,7 +24,7 @@ gem 'react-rails'
 gem 'doc_ripper'
 gem 'will_paginate'
 gem 'carrierwave'
-
+gem 'graphql'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
 
