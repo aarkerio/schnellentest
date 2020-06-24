@@ -1,4 +1,4 @@
-# Chipotle Software (c) 2016-2019 MIT License
+# Chipotle Software (c) 2016-2020 MIT License
 
 class TestsController < ApplicationController
   before_action :set_test, only: [:show, :edit, :update, :destroy, :print]

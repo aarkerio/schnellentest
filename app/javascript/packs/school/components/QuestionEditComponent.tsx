@@ -25,89 +25,41 @@ interface IOwnProps {
   cookies: any
   router: any
 }
+const QuestionEditComponent: React.FC<IOwnProps> = () => {
 
-interface StateProps {
-  DataArrayProp: any[]
-  SearchArrayProp: any
-}
-
-interface DispatchProps {
-  loadQuestion:   () => void
-  loadSearch: () => void
-}
-
-type Props = StateProps & DispatchProps & IOwnProps;
-
-interface RootState {
-  question: any
-  question_id: number
-  explanation: string
-  hint:        string
-  tags:        string
-  worth:       number
-  active:      any
-  qtype:       any
-  showModal:   boolean
-  change:      any
-  test_id:     number
-  terms:       string
-}
-
-// Redux binding
-const mapStateToProps = (state: any) => {
-  return {
-    OneTestHashProp: state.rootReducer.tests_rdcr.OneTestHashProp,
-    QuestionsArrayProp: state.rootReducer.tests_rdcr.QuestionsArrayProp
-  };
-};
-
-const mapDispatchToProps = (dispatch: any, ownProps: IOwnProps) => ({
-  // loadSearch: () => dispatch( TestsActionCreators.loadSearch(ownProps.QuestionsArrayProp) ),
-  loadQuestion: () => dispatch( TestsActionCreators.fetchOneQuestion(ownProps.question_id) ),
-  dispatch
-});
-
-// export for unconnected component (for mocha tests)
-export class QuestionEditComponent extends React.Component<Props, RootState> {
-
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      question:   [],
-      question_id: this.props.routeParams.question_id,
-      explanation: "",
-      hint:        "",
-      tags:        "",
-      worth:       0,
-      active:      "",
-      qtype:       false,
-      showModal:   false,
-      change:      {},
-      test_id:     0,
-      terms:       ""
-    };
-    this.openModal  = this.openModal.bind(this);
-    this.newOrder   = this.newOrder.bind(this);
-  }
+ this.state = {
+   question:   [],
+   question_id: this.props.routeParams.question_id,
+   explanation: "",
+   hint:        "",
+   tags:        "",
+   worth:       0,
+   active:      "",
+   qtype:       false,
+   showModal:   false,
+   change:      {},
+   test_id:     0,
+   terms:       ""
+ };
 
   /**
    * Order tests method
    */
-  orderList(field: any, order: any) {
-    return field;
-  }
+   const orderList = (field: any, order: any) => {
+        return field;
+   };
 
-  showAlert(message: string){
-    <AlertContainer>
-      <Alert type="info"> message </Alert>
-      <Alert type="success">Oh, hai</Alert>
-    </AlertContainer>
-  }
+  const showAlert = (message: string) => {
+        <AlertContainer>
+          <Alert type="info"> message </Alert>
+          <Alert type="success">Oh, hai</Alert>
+        </AlertContainer>
+  };
 
   /**
    * Sends the data to create a new question
    **/
-  handleSubmit(e: any) {
+  const handleSubmit = (e: any) => {
     e.preventDefault()
 
     let fields = {question: {
@@ -131,59 +83,59 @@ export class QuestionEditComponent extends React.Component<Props, RootState> {
     this.props.dispatch(action);  // thunk middleware
     this.setState({showModal: false});
     this.clearForm();
-  }
+  };
 
-  clearForm(){
+  const clearForm = () => {
     let change = {};
     let fields = { question: '',  explanation: '', hint: '', tags: '', worth: 1, active: true, qtype: true };
     Object.keys(fields).forEach(function(key) {
       change[key] = fields[key];
     });
     this.setState(change);
-  }
+  };
 
-  openModal(){
+  const openModal = () => {
     this.setState({showModal: true});
-  }
+  };
 
-  closeModal(){
+  const closeModal = () => {
     this.setState({showModal: false});
     this.clearForm();
-  }
+  };
 
   /* Validates form*/
-  validatesForm(){
+  const validatesForm = () => {
     let valid = {pass: true, message: 'Not message yet'};
     if ( !this.state.question.length ) {
       valid['question']  = false;
       valid['message']   = 'Question not valid';
     }
     return valid;
-  }
+  };
 
-  handleChange(name: string, event: any) {
+  const handleChange = (name: string, event: any) => {
     let change = {};
     change[name] = event.target.value;
     this.setState(change);
-  }
+  };
 
-  toggleCheckbox(name: string, event: any) {
+  const toggleCheckbox = (name: string, event: any) => {
     let obj = {};
     obj[name] = !this.state[name];
     this.setState(obj);
-  }
+  };
 
   /**
    *  Delete Single Question
    *  Private
    */
-  deleteQuestion(question_id: number) {
+  const deleteQuestion = (question_id: number) => {
     let action = TestsActionCreators.deleteQuestion(question_id, this.state.test_id);
     this.props.dispatch(action);
     this.showAlert('Question removed succesfully');
-  }
+  };
 
-  renderAnswersButton(type: string, id: number){
+  const renderAnswersButton = (type: string, id: number) => {
     if (type) {
       return (
         <div className="right_button">
@@ -199,15 +151,15 @@ export class QuestionEditComponent extends React.Component<Props, RootState> {
         <div>Open question</div>
       );
     }
-  }
+  };
 
-  newOrder(id: number, way: string){
+  const newOrder = (id: number, way: string) => {
     let action = TestsActionCreators.reorderQuestion(this.state.test_id, id, way);
     this.props.dispatch(action);
     this.showAlert('Question resorted succesfully');
-  }
+  };
 
-  renderReorderButton(id: number, i: number, up: boolean){
+  const renderReorderButton = (id: number, i: number, up: boolean) => {
     if (i == 0 && up){ return null}
     if (this.props.QuestionsArrayProp.length == (i+1) && !up){ return null}
     let title = up ? 'up' : 'down';
@@ -217,17 +169,16 @@ export class QuestionEditComponent extends React.Component<Props, RootState> {
       </button>
     </div>
     );
-  }
+  };
   /**
    * Sends the data to create a new appointment
    **/
-  submitSearch(e: any) {
+  const submitSearch = (e: any) => {
     e.preventDefault();
     this.props.router.replace('/search/'+ this.state.test_id + '/' + this.state.terms);
-  }
+  };
 
-  render() {
-    return (
+  return (
       <div className="container_div">
         <AlertContainer>
           <Alert type="info">Hello, world</Alert>
@@ -273,7 +224,6 @@ export class QuestionEditComponent extends React.Component<Props, RootState> {
             </div>
           )}
         </div>
-        { this.props.children }
         <div id="questionform" className="modal hide fade">
           <Modal
             aria-labelledby='modal-label'
@@ -322,8 +272,7 @@ export class QuestionEditComponent extends React.Component<Props, RootState> {
         </div>
       </div>
     );
-  }
 }
 
-export default connect<any, any, IOwnProps>(mapStateToProps, mapDispatchToProps)(QuestionEditComponent);
+export default QuestionEditComponent;
 

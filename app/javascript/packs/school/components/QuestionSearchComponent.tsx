@@ -2,168 +2,80 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { RouteComponentProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector  } from "react-redux";
 import { Button } from 'react-bootstrap';
 import * as TestsActionCreators from '../actions/tests';
 
-interface ObjectLiteral {
-  [key: string]: any
-}
-
 interface IOwnProps {
   SearchArrayProp:  any[]
-  routeParams: ObjectLiteral
+  routeParams: any
   dispatch: any
   router: any
   TotalNumberProp: any
 }
 
-interface StateProps {
-  DataArrayProp:   any[]
-  SearchArrayProp: any
-}
+const QuestionSearchComponent: React.FC<IOwnProps> = () => {
 
-interface DispatchProps {
-  loadQuestion:   () => void
-  loadSearch: () => void
-}
-
-// Type whatever you expect in 'this.props.match.params.*'
-type PathParamsType = {
-  param1: string,
-}
-
-// Your component own properties
-type PropsType = RouteComponentProps<PathParamsType> & {
-  someString: string,
-}
-
-type Props = StateProps & DispatchProps & IOwnProps & PropsType;
-
-interface RootState {
-  terms:    string
-  selected: any[]
-  data:     any[]
-  offset:   number
-  test_id:  number
-  title:    string
-  page:     number
-  per_page: number
-  active:   boolean
-}
-
-const mapDispatchToProps = (dispatch: any, ownProps: IOwnProps) => ({
-  // loadSearch: () => dispatch( TestsActionCreators.loadSearch(ownProps.QuestionsArrayProp) ),
-  // loadQuestion: () => dispatch( TestsActionCreators.fetchOneQuestion(ownProps.question_id) ),
-  dispatch
-});
-
-const mapStateToProps = (state: any) => {
-  return {
-    SearchArrayProp: state.rootReducer.tests_rdcr.SearchArrayProp,
-    TotalNumberProp: state.rootReducer.tests_rdcr.TotalNumberProp
-  };
-};
-
-class QuestionSearchComponent extends React.Component<Props, RootState> {
-
-  constructor(props) {
-    super(props);
-    if ( ! this.props.SearchArrayProp.length ) {
-      this.loadQuestions();
-    }
-    this.state = {
-      terms:    this.props.routeParams.terms,
-      selected: [],
-      data: [],
-      offset: 0,
-      test_id:  this.props.routeParams.test_id,
-      title: 'Test title',
-      page: 1,
-      per_page: 3,
-      active: false
-    };
-    this.loadQuestions   = this.loadQuestions.bind(this);
-    this.pagination      = this.pagination.bind(this);
-    this.getPage         = this.getPage.bind(this);
+  if ( ! this.props.SearchArrayProp.length ) {
+    this.loadQuestions();
   }
+  this.state = {
+    terms:    this.props.routeParams.terms,
+    selected: [],
+    data: [],
+    offset: 0,
+    test_id:  this.props.routeParams.test_id,
+    title: 'Test title',
+    page: 1,
+    per_page: 3,
+    active: false
+  };
+  this.loadQuestions   = this.loadQuestions.bind(this);
+  this.pagination      = this.pagination.bind(this);
+  this.getPage         = this.getPage.bind(this);
+}
 
-  loadQuestions(){
+  const loadQuestions = () => {
     let action   = TestsActionCreators.searchQuestions(this.state.test_id, this.state.terms, this.state.page, this.state.per_page);
     this.props.dispatch(action);
-  }
+  };
 
 /**
  * Sends the data to create a new appointment
  **/
-  handleSubmit(e) {
-    e.preventDefault();
-    let action = TestsActionCreators.addQuestions(this.state.test_id, this.state.selected);
-    this.props.dispatch(action);  // thunk middleware
-    this.props.router.replace('/questions/'+ this.state.test_id);
-  }
+const handleSubmit = (e) => {
+  e.preventDefault();
+  let action = TestsActionCreators.addQuestions(this.state.test_id, this.state.selected);
+  this.props.dispatch(action);  // thunk middleware
+  this.props.router.replace('/questions/'+ this.state.test_id);
+};
 
-  handleChange(event: any){
-    this.setState({terms:event.target.value});
-  }
+const handleChange = (event: any) => {
+  this.setState({terms:event.target.value});
+};
 
-  toggleCheckbox(question_id: number, event: any){
-    let index = this.state.selected.indexOf(question_id);
-    if (index != -1) {
-      this.state.selected.splice( index, 1 );
-    } else {
-      this.state.selected.push(question_id);
-    }
-    this.setState({selected:this.state.selected});
+const toggleCheckbox = (question_id: number, event: any) => {
+  let index = this.state.selected.indexOf(question_id);
+  if (index != -1) {
+    this.state.selected.splice( index, 1 );
+  } else {
+    this.state.selected.push(question_id);
   }
+  this.setState({selected:this.state.selected});
+};
 
-  submitSearch(e) {
-    e.preventDefault();
-    this.loadQuestions();
-  }
+const submitSearch = (e) => {
+  e.preventDefault();
+  this.loadQuestions();
+};
 
-  getPage(page: number) {
+const getPage = (page: number) => {
     this.setState({page: page});
     let self = this;
     setTimeout(function(){ self.loadQuestions() ; }, 1000);
-  }
+  };
 
-  pagination(){
-    let total_rows = parseInt(this.props.TotalNumberProp);
-    if ( total_rows < 1) { return }
-    let current = this.state.page;
-    let page  = this.state.per_page, left = false, right = false, rows  = [];
-    let first_r = 0;
-    let x  = this.state.page < 10 ? 0 : this.state.page;
-    for(x;  x < total_rows; x += this.state.per_page){
-      if (page > 9) {
-        rows.push(page);
-        right = true;
-        break;
-      }
-
-      rows.push(page);
-      page++;
-    }
-    if (this.state.page != 1 ) {
-        left = true;
-        first_r  = this.state.page - 1;
-    }
-    let last_r   = rows[rows.length - 1] + 1;
-
-    return (
-            <ul className="pagination">
-              { left ? <li key={first_r}><a href={"#"+first_r} onClick={() => this.getPage(first_r)}> &lt;&lt; </a></li> : null }
-              {rows.map((r) =>
-                <li key={r}><a href={"#"+r} onClick={() => this.getPage(r)}>{r}</a></li>
-              ) }
-              { right ? <li key={last_r}><a href={"#"+last_r} onClick={() => this.getPage(last_r)}> &gt;&gt; </a></li> : null }
-            </ul>
-    );
-  }
-
-  render() {
-    return (
+  return (
         <div id="responsive">
           <h2> Search and add questions for the test: {this.state.title}</h2>
           <div>
@@ -200,8 +112,7 @@ class QuestionSearchComponent extends React.Component<Props, RootState> {
           </div>
         </div>
      );
-  }
-}
+};
 
-export default  withRouter(connect<any, any, IOwnProps>(mapStateToProps, mapDispatchToProps)(QuestionSearchComponent));
+export default withRouter(QuestionSearchComponent);
 

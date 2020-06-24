@@ -5,4 +5,6 @@ class WebsiteController < ApplicationController
   end
   def info
   end
+  def sweep
+  end
 end
