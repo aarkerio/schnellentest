@@ -1,4 +1,4 @@
-import { REQUEST_TESTS, RECEIVE_ONE_TEST, RECEIVE_ONE_QUESTION, SEARCH_QUESTIONS } from '../actions/tests';
+import { FETCH_FAILURE, REQUEST_TESTS, RECEIVE_ONE_TEST, RECEIVE_ONE_QUESTION, SEARCH_QUESTIONS } from '../actions/tests';
 
 import { RECEIVE_TESTS } from '../libs/types/test-types';
 
@@ -8,7 +8,9 @@ const initialState: object = {
     OneQuestionArrayProp: {},
     AnswersArrayProp:     [],
     QuestionsArrayProp:   [],
-    SearchArrayProp:      []
+    SearchArrayProp:      [],
+    isLoading: false,
+    isError: false
 };
 
 const tests_rdcr = (state: object = initialState, action: any) => {
@@ -41,6 +43,13 @@ const tests_rdcr = (state: object = initialState, action: any) => {
         SearchArrayProp: action.payload.results,
         TotalNumberProp: action.payload.total
       });
+
+   case FETCH_FAILURE:
+     return {
+         ...state,
+         isLoading: false,
+         isError: true,
+     };
 
     default:
       return state;

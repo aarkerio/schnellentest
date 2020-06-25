@@ -10,12 +10,12 @@ module Types
     end
 
     field :get_user_tests, [TestType], null: true do
-      description "Find all tests from a user"
-      argument :user_id, ID, required: true
-      argument :active, boolean, required: true
+      description "Find all tests from user_id integer"
+      argument :user_id, Integer, required: true
+      argument :active, Boolean, required: true
     end
 
-    def get_user_tests(user_id:, active:)
+    def get_user_tests(user_id: nil, active: nil)
       Test.user_tests(user_id: user_id, active: active)
     end
   end

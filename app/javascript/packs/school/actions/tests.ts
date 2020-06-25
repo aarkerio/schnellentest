@@ -1,7 +1,9 @@
+import gql from 'graphql-tag';
+import { DocumentNode } from "graphql";
+import ApolloClient from 'apollo-boost';
+import Cookies from 'universal-cookie';
 
 import { IAllTests, RECEIVE_TESTS, IReceiveTestsTypes } from '../libs/types/test-types';
-
-import Cookies from 'universal-cookie';
 
 export const RECEIVE_ONE_TEST = 'RECEIVE_ONE_TEST';
 export const REMOVE_TEST      = 'REMOVE_TEST';
@@ -10,6 +12,8 @@ export const CREATE_TEST      = 'CREATE_TEST';
 export const UPDATED_TEST     = 'UPDATED_TEST';
 export const SEARCH_QUESTIONS = 'SEARCH_QUESTIONS';
 export const FULFILL_FORM     = 'FULFILL_FORM';
+export const FETCH_FAILURE    = 'FETCH_FAILURE';
+
 
 export const UPDATE_FORM = 'UPDATE_FORM';
 
@@ -17,6 +21,12 @@ export const RECEIVE_QUESTIONS    = 'RECEIVE_QUESTIONS';
 export const RECEIVE_ONE_QUESTION = 'RECEIVE_ONE_QUESTION';
 
 const cookies = new Cookies();
+
+const API_URL = '/graphql';
+// Create the apollo client
+const client = new ApolloClient({
+  uri: API_URL
+});
 
 function headers(set_cookie: boolean =false) {
   let headers = {
@@ -30,35 +40,22 @@ function headers(set_cookie: boolean =false) {
   return headers;
 }
 
-// Get all the quiz tests from this user
-export const loadUserTests: any = (user_id: number, active: boolean = true) => async (dispatch: any) => {
-    let data: RequestInit = {
-        method:      'POST',
-        credentials: 'same-origin',
-        mode:        'same-origin',
-        body:        JSON.stringify({
-          user_id: user_id,
-          active: active,  // get all
-        }),
-        headers:     headers(true)
-      };
-
-    const URL  = '/api/v1/tests/listing/';
-    const res  = await fetch(URL, data);
+export const loadUserTests: any = () => async (dispatch: any) => {
     try {
-      const response = await res.json();
-      const result   = await dispatch(receiveTest(response));
-      return result;
+        const response = await client.query({
+            query: gql`{
+                 getRecords(limit: 6) { id name time createdAt }
+            }`});
+        dispatch({
+            type: RECEIVE_TESTS,
+            payload: response.data.getRecords
+        });
     } catch (err) {
-      console.error('Error loading data: >> ', err.toString());
-  }
-};
-
-const receiveTests: any = (TestsArrayProp: any) => {
-  return {
-    type:  RECEIVE_TESTS,
-    payload: TestsArrayProp
-  };
+        dispatch({
+            type: FETCH_FAILURE,
+            payload: { msg: err.toString() }
+        });
+    }
 };
 
 export const createOrUpdateTest: any = (fields: any, action: string = 'create') => async (dispatch: any) => {

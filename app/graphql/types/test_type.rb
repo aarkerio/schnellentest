@@ -6,10 +6,9 @@ module Types
     field :tags, String, null: false
     field :active, Boolean, null: true
     field :lang, String, null: true
-    field :subject, String, null: true
     field :subject_id, Integer, null: true
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
-    field :questions, [Types::QuestionType], null: true
+    # field :questions, [Types::QuestionType], null: true
   end
 end
