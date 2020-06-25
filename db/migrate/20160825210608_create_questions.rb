@@ -1,6 +1,6 @@
 # coding: utf-8
 # frozen_string_literal: true
-class CreateQuestions < ActiveRecord::Migration[5.0]
+class CreateQuestions < ActiveRecord::Migration[6.0]
   def change
     create_table :questions do |t|
       t.references :user, foreign_key: true
@@ -9,8 +9,8 @@ class CreateQuestions < ActiveRecord::Migration[5.0]
       t.text :hint
       t.string :tags
       t.column :searchtext, 'tsvector'
-      t.integer :worth, null: false, default: 5
-      t.integer :origin, null: false, default: 1
+      t.integer :points, null: false, default: 1
+      t.integer :origin, null: false, default: 0
 
       t.timestamps
     end

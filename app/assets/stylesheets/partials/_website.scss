@@ -174,3 +174,28 @@ body {
   padding: 40px 0;
 }
 
+.normal_container {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+  background-color: #fff;
+  width: 80%;
+  min-height: 20em;
+}
+
+@media (min-width: 768px) {
+  .normal_container {
+    width: 750px;
+  }
+}
+@media (min-width: 992px) {
+  .normal_container {
+    width: 970px;
+  }
+}
+@media (min-width: 1200px) {
+  .normal_container {
+    width: 80%;
+  }
+}

@@ -1,6 +1,6 @@
 # coding: utf-8
 # frozen_string_literal: true
-# Chipotle Software (c) 2016-2018 GPL
+# Chipotle Software (c) 2016-2020 GPL
 
 require 'hamster'
 
@@ -8,6 +8,7 @@ class Test < ApplicationRecord
 
   # Relationships
   belongs_to :user
+  belongs_to :subject
 
   has_many :question_tests, -> { order(:order) }
   has_many :questions, through: :question_tests
@@ -17,9 +18,15 @@ class Test < ApplicationRecord
 
   # Validations
   validates :title, presence: true
-
+  validates :uurlid, presence: true, uniqueness: true
+  validates :subject_id, presence: true
+  before_validation :ensure_uurlid_exists
   # Methods
   # -------------------------------------------------------
+
+  def self.user_tests(user_id, active)
+    where(user_id: user_id, active: active).includes(:subject).order(id: :desc)
+  end
 
   def create_test(params)
     create_params = order_params params
@@ -97,6 +104,21 @@ class Test < ApplicationRecord
       all[:questions] << q
     end
     all
+  end
+
+   def ensure_uurlid_exists
+      if uurlid.nil?
+        self.uurlid = create_uurlid
+      end
+    end
+
+  def create_uurlid
+    random_uurlid = ''
+    loop do
+      random_uurlid = SecureRandom.urlsafe_base64(nil, false)
+      break random_uurlid   unless ::Test.exists?(uurlid: random_uurlid)
+    end
+    random_uurlid
   end
 
 end

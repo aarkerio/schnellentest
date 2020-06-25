@@ -1,5 +1,5 @@
 # Chipotle Software (c) 2016-2020   MIT License
-class CreateUsers < ActiveRecord::Migration[5.0]
+class CreateUsers < ActiveRecord::Migration[6.0]
   def change
     create_table :users do |t|
       t.string :uname, unique: true, null: false

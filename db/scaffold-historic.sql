@@ -8,6 +8,9 @@
 -- Group Model
 -- bin/rails g scaffold Group name:string description:string
 
+-- Subject Model
+-- bin/rails g model Subject subject:string
+
 -- User Model
 -- bin/rails g scaffold User fname:string lname:string uname:string passwd:string active:boolean group:references
 

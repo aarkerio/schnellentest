@@ -1,4 +1,4 @@
-class CreateJoinTableQuestionTest < ActiveRecord::Migration[5.1]
+class CreateJoinTableQuestionTest < ActiveRecord::Migration[6.0]
   def change
     create_join_table :question, :tests do |t|
       t.integer :order, null: false

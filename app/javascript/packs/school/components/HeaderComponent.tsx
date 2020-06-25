@@ -7,7 +7,6 @@ const HeaderComponent: React.FC = () => {
       <ul id="nav">
         <li><Link to="/tests">Tests</Link></li>
         <li><Link to="/tests">Ernennungs</Link></li>
-        <li><Link to="/tests/view/11">Bearbeitung</Link></li>
       </ul>
     </div>
   );

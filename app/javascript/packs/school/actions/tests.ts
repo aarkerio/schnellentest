@@ -31,7 +31,7 @@ function headers(set_cookie: boolean =false) {
 }
 
 // Get all the quiz tests from this user
-export const fetchTests: any = (user_id: number, active: boolean = true) => async (dispatch: any) => {
+export const loadUserTests: any = (user_id: number, active: boolean = true) => async (dispatch: any) => {
     let data: RequestInit = {
         method:      'POST',
         credentials: 'same-origin',

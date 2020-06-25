@@ -4,8 +4,9 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import AppComponent            from './components/AppComponent';
-/* import TestsComponent          from './components/TestsComponent';
- * import TestModalEditComponent  from './components/TestModalEditComponent';
+import TestsComponent          from './components/TestsComponent';
+
+/* import TestModalEditComponent  from './components/TestModalEditComponent';
  * import TestModalNewComponent   from './components/TestModalNewComponent';
  * import QuestionsComponent      from './components/QuestionsComponent';
  * import AnswersModalComponent   from './components/AnswersModalComponent';
@@ -25,7 +26,8 @@ ReactDOM.render(
     <div>
       { /* Tell the Router to use our enhanced history */ }
       <Router>
-        <Route exact path="/tests/" component={AppComponent} />
+        <Route exact path="/" component={AppComponent} />
+        <Route path="/tests" component={TestsComponent} />
       </Router>
     </div>
   </Provider>,

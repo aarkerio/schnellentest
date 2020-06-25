@@ -1,4 +1,4 @@
-class AddLangAndStatusToQuestion < ActiveRecord::Migration[5.0]
+class AddLangAndStatusToQuestion < ActiveRecord::Migration[6.0]
   def change
     add_column :questions, :lang, :string, null: false, default: 'en'
     # status 1: not reviewed, not translated
