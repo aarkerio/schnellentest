@@ -5,7 +5,6 @@ class TestsController < ApplicationController
 
   # GET /tests
   def index
-    @tests = Test.all
   end
 
   # GET /tests/1

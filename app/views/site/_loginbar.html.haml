@@ -1,25 +1,29 @@
--unless user_signed_in?
-  = form_tag user_session_path, method: :post do
-    = text_field_tag "login"
-    = password_field_tag "login"
-    = submit_tag "Login"
-
-%ul{ class: "nav navbar-nav navbar-right" }
-  -unless user_signed_in?
-    %li
-      %a{ href: edit_user_registration_path }
-        %span.glyphicon.glyphicon-user
-        Sign Up
-
-  -else
-    %li
-      = "Guten Tag Lehrer! #{cookies[:fullname]}"
-    %li
-      %a{ href: edit_user_registration_path }
-        %span.glyphicon.glyphicon-apple
+- if user_signed_in?
+  %li{ class: "nav-item" }
+    %span
+      "Guten Tag Lehrer! #{current_user.fname} !"
+  %li{ class: "nav-item" }
+    = link_to 'Tour', questions_path, class: "nav-link"
+  %li{ class: "nav-item" }
+    = link_to 'Your Tests', tests_path, class: "nav-link"
+  %li{ class: "nav-item" }
+    = link_to 'About Us', annals_path, class: "nav-link"
+  %li
+    %a{ href: edit_user_registration_path }
+      %span.glyphicon.glyphicon-apple
         Edit Profile
-    %li
-      %a{ href: destroy_user_session_path }
-        %span.glyphicon.glyphicon-log-out
-        Logout
+  %li
+    = form_with url: destroy_user_session_path, method: :delete do |form|
+      = form.submit "Sign out"
+
+- else
+  %li
+    %a{ href: edit_user_registration_path }
+      %span.glyphicon.glyphicon-user
+        Sign Up
+  .login_box
+    = form_tag new_user_session_path, method: :post do
+      = text_field_tag "login"
+      = password_field_tag "login"
+      = submit_tag "Login"
 

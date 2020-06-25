@@ -1,7 +1,6 @@
 %h1 Editing test
 
-= render 'form'
+-# Entry point for ReactJS
+#reactroot
 
-= link_to 'Show', @test
-\|
-= link_to 'Back', tests_path
+= javascript_pack_tag 'school/index', 'data-turbolinks-track': 'reload'

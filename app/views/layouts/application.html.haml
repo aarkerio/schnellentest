@@ -23,15 +23,7 @@
       .collapse.navbar-collapse{ id: "main-navigation" }
         %ul{ class:"navbar-nav ml-auto" }
           %li{ class: "nav-item" }
-            = link_to 'Temp Link', "/", class: "nav-link"
-        - if user_signed_in?
-          %li{ class: "nav-item" }
-            = link_to 'Tour', questions_path, class: "nav-link"
-          %li{ class: "nav-item" }
-            = link_to 'Your Tests', tests_path, class: "nav-link"
-          %li{ class: "nav-item" }
-            = link_to 'About Us', annals_path, class: "nav-link"
-        - unless user_signed_in?
+            = link_to 'Register', "/users", class: "nav-link"
           = render partial: 'site/loginbar'
 
     = yield

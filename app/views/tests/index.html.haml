@@ -1,7 +1,27 @@
 %h1 Listing tests
 
--# Entry point for ReactJS
-#reactroot
+%table
+  %thead
+    %tr
+      %th Edit
+      %th Title
+      %th Tags
+      %th Subject
+      %th Apply to class
+      %th Delete
 
-= javascript_pack_tag 'school/index', 'data-turbolinks-track': 'reload'
+  %tbody
+    - @tests.each do |test|
+      %tr
+        %td= link_to 'Edit', edit_tests_path(test)
+        %td= test.title
+        %td= test.tags
+        %td= test.subject.subject
+        %td= test.id
+        %td= link_to 'Destroy', test, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New test', new_test_path
+
 

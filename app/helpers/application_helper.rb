@@ -1,3 +1,4 @@
+# coding: utf-8
 module ApplicationHelper
   def bootstrap_class_for flash_type
     { success: "alert-success", error: "alert-danger", alert: "alert-warning", notice: "alert-info" }[flash_type.to_sym] || flash_type.to_s
@@ -15,6 +16,7 @@ module ApplicationHelper
     end
     nil
   end
+
   def display_status(status)
     (status == true) ? image('icon_true.png') : image('icon_false.png')
   end
@@ -27,7 +29,7 @@ module ApplicationHelper
     klass = presenter_class || "Chipotle::Presenters::#{model.class}Presenter".constantize
     presenter = klass.new(model, self)
     yield(presenter) if block_given?
-   end
+  end
 
   private
 
