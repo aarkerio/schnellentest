@@ -10,6 +10,8 @@ subjects = %w[Math English Spanish Geography Art Music History Chemistry Physics
 
 subjects.each {|s| Subject.create!(subject: s) }
 
+ipsum = %(Lorem ipsum dolor sit amet consetetur sadipscing elitr doloret seum entia praeter necesitatem non sun multiplicanda)
+
 unless User.exists?(uname: 'admin')
   admin  = User.create! uname: 'admin', email: 'admin@example.com', password:'password', password_confirmation: 'password',fname: 'admin', lname: 'admin', group_id: admin.id, active: true
 end
@@ -18,23 +20,23 @@ tchr_3 = User.create_with(uname: 'emily77',email:'emily@exale.com', password: 'p
 stud_2 = User.create_with(uname: 'rose79',email:'rose@exale.com',password:'password',password_confirmation: 'password',fname:'Rose',lname: 'Martinez',group_id: students.id, active: true).find_or_create_by(uname: 'rose79')
 tchr_1 = User.create_with(uname: 'mmontoya', email:'mmontoya@exale.com', password: 'password', password_confirmation:'password',fname: 'Manuel',lname: 'Montoya', group_id: teachers.id, active: true).find_or_create_by(uname: 'mmontoya')
 
+subjects.each {|s| Post.create!(title: s, body: ipsum, user_id: 1, published: true) }
+
 test_1  = Test.create! title: 'Test Eins Neerland gesichte',  description: 'Test Eins Description', active: true, user_id: tchr_1.id, subject_id: rand(1...subjects.count)
 test_2  = Test.create! title: 'Test Zweig Mexikan Neerland gesichte', description: 'Test Zweig Description', active: true, user_id: tchr_1.id, subject_id: rand(1...subjects.count)
 test_3  = Test.create! title: 'Test Drei brasilianische Wirtschaft',  description: 'Test Drei Description', active: true, user_id: tchr_1.id, subject_id: rand(1...subjects.count)
 
-ipsum = %(Lorem ipsum dolor sit amet consetetur sadipscing elitr)
-
-question_1 = Question.create! user_id: tchr_1.id, question: ipsum, hint: ipsum, explanation: ipsum, tags: ipsum, worth: 1, active: true, qtype: 1
-question_2 = Question.create! user_id: tchr_1.id, question: ipsum, hint: ipsum, explanation: ipsum, tags: ipsum, worth: 1, active: true, qtype: 1
-question_3 = Question.create! user_id: tchr_1.id, question: ipsum, hint: ipsum, explanation: ipsum, tags: ipsum, worth: 1, active: true, qtype: 1
+question_1 = Question.create! user_id: tchr_1.id, question: ipsum, hint: ipsum, explanation: ipsum, tags: ipsum, points: 1, active: true, qtype: 1
+question_2 = Question.create! user_id: tchr_1.id, question: ipsum, hint: ipsum, explanation: ipsum, tags: ipsum, points: 1, active: true, qtype: 1
+question_3 = Question.create! user_id: tchr_1.id, question: ipsum, hint: ipsum, explanation: ipsum, tags: ipsum, points: 1, active: true, qtype: 1
 
 tq1 = test_1.question_tests.create! question: question_1
 tq2 = test_1.question_tests.create! question: question_2
 tq3 = test_1.question_tests.create! question: question_3
 
-# answer_1 = question_1.answer.create! answer: 'This is the Answer 1111', correct: true
-# answer_2 = question_1.answer.create! answer: 'This is the Answer 222', correct: true
-# answer_3 = question_1.answer.create! answer: 'This is the Answer 222', correct: true
+answer_1 = question_1.answer.create! answer: 'This is the Answer 1111', correct: true
+answer_2 = question_1.answer.create! answer: 'This is the Answer 222', correct: false
+answer_3 = question_1.answer.create! answer: 'This is the Answer 3333', correct: true
 
 # (1..46).each do |i|
 #   ipsum = FFaker::BaconIpsum.sentence
@@ -54,3 +56,5 @@ tq3 = test_1.question_tests.create! question: question_3
 # app.get '/'
 # token = app.session[:_csrf_token]
 # app.post '/users/sign_in/', params: {email: 'admin@example.com', password: 'password'}, headers: {'X-CSRF-Token' => token}
+
+# User.find_by(email: 'admin@example.com').reset_password!('password','password')

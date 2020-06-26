@@ -3,7 +3,7 @@ import { DocumentNode } from "graphql";
 import ApolloClient from 'apollo-boost';
 import Cookies from 'universal-cookie';
 
-import { IAllTests, RECEIVE_TESTS, IReceiveTestsTypes } from '../libs/types/test-types';
+import { IAllTests, LOAD_TESTS, SAVE_TEST, ILoadTestsTypes } from '../libs/types/test-types';
 
 export const RECEIVE_ONE_TEST = 'RECEIVE_ONE_TEST';
 export const REMOVE_TEST      = 'REMOVE_TEST';
@@ -40,15 +40,35 @@ function headers(set_cookie: boolean =false) {
   return headers;
 }
 
-export const loadUserTests: any = () => async (dispatch: any) => {
+export const loadUserTests: any = (user_guid: string, active: boolean) => async (dispatch: any) => {
     try {
         const response = await client.query({
-            query: gql`{
-                 getRecords(limit: 6) { id name time createdAt }
-            }`});
+            query: gql`{getUserTests(userGuid: "5c3c999c656d82abebda3998bd1d2b90", active: true)
+                          {uurlid title createdAt subjectId }}`,
+            variables: {user_guid, active}});
+
         dispatch({
-            type: RECEIVE_TESTS,
-            payload: response.data.getRecords
+            type: LOAD_TESTS,
+            payload: response.data.getUserTests
+        });
+    } catch (err) {
+        dispatch({
+            type: FETCH_FAILURE,
+            payload: { msg: err.toString() }
+        });
+    }
+};
+
+export const saveTest: any = (title: string, guid: string, description: string, subject_id: number) => async (dispatch: any) => {
+    try {
+        const mutation: DocumentNode = gql`mutation GET_RECORD($name: String!, $time: Int!)
+                                           {createRecord(name: $name, time: $time) { id name time createdAt }}`;
+
+        const response = await client.mutate({mutation, variables: {title, guid, description, subject_id}});
+
+        dispatch({
+            type: SAVE_TEST,
+            payload: response.data.createRecord
         });
     } catch (err) {
         dispatch({
@@ -78,7 +98,7 @@ export const createOrUpdateTest: any = (fields: any, action: string = 'create') 
   } catch (err) {
       console.error('Error loading data: >> ', err.toString());
   }
-}
+};
 
 export const fulFillForm: any = () => async (dispatch: any) => {
 

@@ -1,6 +1,7 @@
 export const SEND_MESSAGE   = 'SEND_MESSAGE';
 export const DELETE_MESSAGE = 'DELETE_MESSAGE';
-export const RECEIVE_TESTS    = 'RECEIVE_TESTS';
+export const LOAD_TESTS     = 'LOAD_TESTS';
+export const SAVE_TEST      = 'SAVE_TEST';
 
 export interface IAllTests {
   user: string
@@ -8,8 +9,8 @@ export interface IAllTests {
   timestamp: number
 }
 
-interface IReceiveTests {
-  type: typeof RECEIVE_TESTS
+interface ILoadTests {
+  type: typeof LOAD_TESTS
   payload: IAllTests
 }
 
@@ -33,4 +34,4 @@ interface DeleteMessageAction {
 
 export type ChatActionTypes = SendMessageAction | DeleteMessageAction;
 
-export type IReceiveTestsTypes = IReceiveTests;
+export type ILoadTestsTypes = ILoadTests;

@@ -1,7 +1,6 @@
 module Types
   class TestType < Types::BaseObject
     field :uurlid, ID, null: false
-    field :user_id, Integer, null: false
     field :title, String, null: false
     field :tags, String, null: false
     field :active, Boolean, null: true

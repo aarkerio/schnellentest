@@ -24,8 +24,9 @@ class Test < ApplicationRecord
   # Methods
   # -------------------------------------------------------
 
-  def self.user_tests(user_id, active)
-    where(user_id: user_id, active: active).includes(:subject).order(id: :desc)
+  def self.user_tests(user_guid, active)
+    user = User.find_by(guid: user_guid)
+    where(user_id: user.id, active: active).includes(:subject).order(id: :desc).limit(20)
   end
 
   def create_test(params)
@@ -35,8 +36,12 @@ class Test < ApplicationRecord
   end
 
   # Get one test and its questions
-  def get_one
-    serialize_test
+  def get_one(uurlid)
+    test = joins(:subject, :questions).select('subjects.subject, questions.id, tests.id, tests.title, tests.lang, tests.description, tests.level,
+                                  tests.created_at, tests.shared, tests.subject_id').find_by(uurlid: uurlid)
+    attr = test.attributes
+    attr["questions"] = test.questions.map { |q| q.attributes }
+    attr
   end
 
   # Returns all questions by subject or tag
@@ -99,6 +104,7 @@ class Test < ApplicationRecord
     all[:tags]        = tags
     all[:active]      = active
     all[:shared]      = shared
+    all[:subject]     = subject.subject
     all[:questions]   = []
     questions.select(:id, :question, :hint, :explanation, :tags, :qtype, :active, :lang, :worth, :status).each do |q|
       all[:questions] << q
@@ -115,7 +121,7 @@ class Test < ApplicationRecord
   def create_uurlid
     random_uurlid = ''
     loop do
-      random_uurlid = SecureRandom.urlsafe_base64(nil, false)
+      random_uurlid = SecureRandom.hex.downcase
       break random_uurlid   unless ::Test.exists?(uurlid: random_uurlid)
     end
     random_uurlid

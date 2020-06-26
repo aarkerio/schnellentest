@@ -28,7 +28,7 @@ class User < ApplicationRecord
   def get_guid
     random_guid = ''
     loop do
-      random_guid = SecureRandom.urlsafe_base64(nil, false)
+      random_guid = SecureRandom.hex.downcase
       break random_guid   unless ::User.exists?(guid: random_guid)
     end
     random_guid
