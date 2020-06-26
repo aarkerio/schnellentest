@@ -9,5 +9,7 @@ const rootReducer = combineReducers({
   users_rdcr
 });
 
+export type RootRState = ReturnType<typeof rootReducer>
+
 export default rootReducer;
 

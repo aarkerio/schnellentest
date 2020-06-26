@@ -3,7 +3,7 @@ import { DocumentNode } from "graphql";
 import ApolloClient from 'apollo-boost';
 import Cookies from 'universal-cookie';
 
-import { IAllTests, LOAD_TESTS, SAVE_TEST, ILoadTestsTypes } from '../libs/types/test-types';
+import { IAllTests, DELETE_TEST, LOAD_TESTS, SAVE_TEST, ILoadTestsTypes } from '../libs/types/test-types';
 
 export const RECEIVE_ONE_TEST = 'RECEIVE_ONE_TEST';
 export const REMOVE_TEST      = 'REMOVE_TEST';
@@ -28,24 +28,36 @@ const client = new ApolloClient({
   uri: API_URL
 });
 
-function headers(set_cookie: boolean =false) {
-  let headers = {
-    'Accept':       'application/json',
-    'Content-Type': 'application/json',
-    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-  };
-  if (set_cookie) {
-    headers['Authorization'] = "Bearer " + cookies.get('remember_user_token');
- }
-  return headers;
-}
+  const data: RequestInit = {
+      method: 'PATCH'
+    };
 
 export const loadUserTests: any = (user_guid: string, active: boolean) => async (dispatch: any) => {
     try {
         const response = await client.query({
-            query: gql`{getUserTests(userGuid: "5c3c999c656d82abebda3998bd1d2b90", active: true)
+            query: gql`{getUserTests(userGuid: $user_guid, active: $active)
                           {uurlid title createdAt subjectId }}`,
             variables: {user_guid, active}});
+
+        dispatch({
+            type: LOAD_TESTS,
+            payload: response.data.getUserTests
+        });
+    } catch (err) {
+        dispatch({
+            type: FETCH_FAILURE,
+            payload: { msg: err.toString() }
+        });
+    }
+};
+
+/*   Load test and questions  */
+export const getOneTest: any = (uurlid: string) => async (dispatch: any) => {
+    try {
+        const response = await client.query({
+            query: gql`{getOneTest(uurlid: $uurlid)
+                          {uurlid title createdAt subjectId }}`,
+            variables: {uurlid}});
 
         dispatch({
             type: LOAD_TESTS,
@@ -85,8 +97,7 @@ export const createOrUpdateTest: any = (fields: any, action: string = 'create') 
     method:      method,
     body:        JSON.stringify(felder),
     credentials: 'same-origin',
-    mode:        'same-origin',
-    headers:     headers(false)
+    mode:        'same-origin'
   };
 
   const URL  =  '/api/v1/tests/' + action;
@@ -100,41 +111,28 @@ export const createOrUpdateTest: any = (fields: any, action: string = 'create') 
   }
 };
 
-export const fulFillForm: any = () => async (dispatch: any) => {
-
-    let data: RequestInit = {
-      method:      'GET',
-      credentials: 'same-origin',
-      mode:        'same-origin',
-      headers:     headers(false)
-    }
-
-    const res  = await fetch('/api/v1/tests/fulfill_form', data);
+export const deleteTest: any = (uurlid: string) => async (dispatch: any) => {
     try {
-        const response = await res.json();
-        const result   = await dispatch(setTestForm(response));
-        return result;
+        const mutation: DocumentNode = gql`mutation DELETE_TEST($uurlid: String!)
+                                           {deleteTest(uurlid: $uurlid) { message }}`;
+
+        const response = await client.mutate({mutation, variables: {uurlid}});
+
+        dispatch({
+            type: DELETE_TEST,
+            payload: response.data?.deleteTest?.message
+        });
     } catch (err) {
         console.error('Error loading data: >> ', err.toString());
+        dispatch({
+            type: FETCH_FAILURE,
+            payload: { msg: err.toString() }
+        });
     }
-}
-
-/*  Auxiliar Method */
-const setTestForm: any = (test_arrays: any) => {
-  return {
-    type:  FULFILL_FORM,
-    payload: test_arrays
-  };
 };
 
 export const createQuestion: any = (fields: any) => async (dispatch: any) => {
-  let data: RequestInit = {
-    method:      'POST',
-    body:        JSON.stringify(fields),
-    credentials: 'same-origin',
-    mode:        'same-origin',
-    headers:     headers()
-  };
+
   const res  = await fetch('/api/v1/questions/create/', data);
   try {
       const response = await res.json();
@@ -145,70 +143,8 @@ export const createQuestion: any = (fields: any) => async (dispatch: any) => {
   }
 };
 
-/* Load data in form to edit test */
-export const updateTest: any = (id: number) => async (dispatch: any) => {
-  let data: RequestInit = {
-      method:      'POST',
-      credentials: 'same-origin',
-      mode:        'same-origin',
-      body:        JSON.stringify({
-          id: id
-      }),
-      headers: headers(false)
-  };
-  const res = await fetch('/api/v1/tests/update', data);
-  try {
-      const response = await res.json();
-      const result   = await dispatch(receiveTest(response));
-      return result;
-  } catch (err) {
-      console.error('Error loading data: >> ', err.toString());
-  }
-};
-
-const receiveTest:any = (update_form: any) => {
-  return {
-    type:  UPDATE_FORM,
-    payload: update_form
-  };
-};
-
- /*   Load test and questions  */
-export const fetchOneTest: any = (test_id: number) => async (dispatch: any) => {
-  let data: RequestInit = {
-      method:      'POST',
-      credentials: 'same-origin',
-      mode:        'same-origin',
-      body:        JSON.stringify({
-        id: test_id
-      }),
-      headers:     headers(false)
-  }
-  const res = await fetch('/api/v1/tests/get_one/', data);
-  try {
-      const response = await res.json();
-      const result   = await dispatch(setOneTest(response));
-      return result;
-  } catch (err) {
-      console.error('Error loading data: >> ', err.toString());
-  }
-};
-
-const setOneTest: any = (OneTestArrayProp: any) => {
-  return {
-    type:  RECEIVE_ONE_TEST,
-    payload: OneTestArrayProp
-  };
-};
-
 // Deletes test, question or answer
 export const deleteRow: any = (id: number, controller: string) => async (dispatch: any) => {
-  let data: RequestInit  = {
-      method:      'DELETE',
-      credentials: 'same-origin',
-      mode:        'same-origin',
-      headers:     headers(false)
-    };
 
   const res  = await fetch('/api/v1/'+controller+'/delete/'+id, data);
   try {
@@ -224,15 +160,6 @@ export const deleteRow: any = (id: number, controller: string) => async (dispatc
 
 /*   Load question and answers  */
 export const fetchOneQuestion: any = (question_id: number) => async (dispatch: any) => {
-    let data: RequestInit = {
-      method:      'POST',
-      credentials: 'same-origin',
-      mode:        'same-origin',
-      body:        JSON.stringify({
-        id: question_id
-      }),
-      headers:     headers(false)
-    };
 
     const res = await fetch('/api/v1/questions/get_one/', data);
     try {
@@ -253,13 +180,6 @@ const setOneQuestion = (OneQuestionArrayProp: any) => {
 
 export const createAnswer: any = (fields: string) => async (dispatch: any) => {
 
-  let data: RequestInit = {
-    method:      'POST',
-    body:        JSON.stringify(fields),
-    credentials: 'same-origin',
-    mode:        'same-origin',
-    headers:     headers(false)
-  }
   const res = await fetch('/api/v1/answers/create/', data);
   try {
       const response = await res.json();
@@ -273,13 +193,6 @@ export const createAnswer: any = (fields: string) => async (dispatch: any) => {
 
 export const deleteQuestion: any = (id: number, test_id: number) => async (dispatch: any) => {
 
-  let data: RequestInit = {
-      method:      'DELETE',
-      credentials: 'same-origin',
-      mode:        'same-origin',
-      headers:     headers(false)
-  };
-
   const res  = await fetch('/api/v1/questions/delete/'+id+'/'+test_id, data);
   try {
       const response = await res.json();
@@ -291,17 +204,6 @@ export const deleteQuestion: any = (id: number, test_id: number) => async (dispa
 };
 
 export const toggleField: any = (controller: string, field: string, id: number) => async (dispatch: any) => {
-
-  let data: RequestInit = {
-      method: 'PATCH',
-      credentials: 'same-origin',
-      mode:        'same-origin',
-      body:        JSON.stringify({
-        id: id,
-        field: field
-      }),
-      headers:     headers(false)
-    };
 
     try {
         const res      = await fetch('/api/v1/'+controller+'/toggle/', data);
@@ -315,17 +217,6 @@ export const toggleField: any = (controller: string, field: string, id: number) 
 
 export const updateAnswer: any = (id: number, answer: string) => async (dispatch: any) => {
 
-  let data: RequestInit = {
-      method: 'PATCH',
-      credentials: 'same-origin',
-      mode:        'same-origin',
-      body:        JSON.stringify({
-        id: id,
-        answer: answer
-      }),
-      headers:     headers(false)
-  };
-
   const res  = await fetch('/api/v1/answers/update/', data);
   try {
       const response = await res.json();
@@ -338,20 +229,10 @@ export const updateAnswer: any = (id: number, answer: string) => async (dispatch
 
 export const fetchOneAnswer: any = (answer_id: number) => async (dispatch: any) => {
 
-  let data: RequestInit = {
-      method:      'POST',
-      credentials: 'same-origin',
-      mode:        'same-origin',
-      body:        JSON.stringify({
-        id: answer_id
-      }),
-      headers:     headers(false)
-  };
-
   const res  = await fetch('/api/v1/answers/get_one/', data);
   try {
       const response = await res.json();
-      const result   = await dispatch(receiveTest(response));
+      const result   = await dispatch(console.log("  ############  ** VALUE ** :  >>>> ", JSON.stringify(response)));
       return result;
   } catch (err) {
       console.error('Error loading data: >> ', err.toString());
@@ -359,18 +240,6 @@ export const fetchOneAnswer: any = (answer_id: number) => async (dispatch: any) 
 };
 
 export const searchQuestions: any = (id: number, terms: any, page: any, per_page: any) => async (dispatch: any) => {
-  let data: RequestInit = {
-      method:      'POST',
-      credentials: 'same-origin',
-      mode:        'same-origin',
-      body:        JSON.stringify({id: id, test: {
-        id:    id,
-        terms: terms,
-        page:  page,
-        per_page: per_page
-      }}),
-      headers:     headers(false)
-  };
 
   const res = await fetch('/api/v1/tests/search/', data);
   try {
@@ -390,17 +259,8 @@ const setSearch: any = (SearchArrayProp: any) => {
 };
 
 export const addQuestions: any = (id: number, ids: number[]) => async (dispatch: any) => {
-  let question_ids = ids.reduce( (acc, value) => { acc.push({id: value}); return acc; },  []);
-  let data: RequestInit = {
-      method:      'POST',
-      credentials: 'same-origin',
-      mode:        'same-origin',
-      body:        JSON.stringify({id: id, test: {
-          id: id,
-          question_ids: question_ids
-      }}),
-      headers:     headers(false)
-  };
+  // let question_ids = ids.reduce( (acc, value) => { acc.push({id: value}); return acc; },  []);
+
 
   const res  = await fetch('/api/v1/tests/linking/', data);
     try {
@@ -413,18 +273,7 @@ export const addQuestions: any = (id: number, ids: number[]) => async (dispatch:
 };
 
 export const reorderQuestion: any = (id: number, question_id: number, way: any) => async (dispatch: any) => {
-  let data: RequestInit = {
-      method:      'PATCH',
-      credentials: 'same-origin',
-      mode:        'same-origin',
-      body:        JSON.stringify({id: id, test:{
-        question_id: question_id,
-        id: id,
-        way: way
-      }}),
-      headers:     headers(false)
-  };
-
+ 
   try {
       const res  = await fetch('/api/v1/tests/reorder/', data);
       const response = await res.json();
@@ -434,3 +283,4 @@ export const reorderQuestion: any = (id: number, question_id: number, way: any) 
       console.error('Error loading data: >> ', err.toString());
   }
 };
+

@@ -2,6 +2,7 @@ export const SEND_MESSAGE   = 'SEND_MESSAGE';
 export const DELETE_MESSAGE = 'DELETE_MESSAGE';
 export const LOAD_TESTS     = 'LOAD_TESTS';
 export const SAVE_TEST      = 'SAVE_TEST';
+export const DELETE_TEST    = 'DELETE_TEST';
 
 export interface IAllTests {
   user: string
