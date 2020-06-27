@@ -1,10 +1,11 @@
 # Chipotle Software (c) 2016-2020 MIT License
 
 class TestsController < ApplicationController
-  before_action :set_test, only: [:show, :edit, :update, :destroy, :print]
+  before_action :set_test, only: [:show, :update, :destroy, :print]
 
   # GET /tests
   def index
+    cookies[:guid] = current_user.guid
   end
 
   # GET /tests/1

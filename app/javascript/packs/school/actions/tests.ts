@@ -20,8 +20,6 @@ export const UPDATE_FORM = 'UPDATE_FORM';
 export const RECEIVE_QUESTIONS    = 'RECEIVE_QUESTIONS';
 export const RECEIVE_ONE_QUESTION = 'RECEIVE_ONE_QUESTION';
 
-const cookies = new Cookies();
-
 const API_URL = '/graphql';
 // Create the apollo client
 const client = new ApolloClient({
@@ -32,18 +30,20 @@ const client = new ApolloClient({
       method: 'PATCH'
     };
 
-export const loadUserTests: any = (user_guid: string, active: boolean) => async (dispatch: any) => {
+export const loadUserTests: any = (userGuid: string, active: boolean) => async (dispatch: any) => {
     try {
         const response = await client.query({
-            query: gql`{getUserTests(userGuid: $user_guid, active: $active)
-                          {uurlid title createdAt subjectId }}`,
-            variables: {user_guid, active}});
+            query: gql`query _getUserTests_userGu825($userGuid: String!, $active: Boolean!) {
+                          getUserTests(userGuid: $userGuid, active: $active) {
+                              uurlid title createdAt subjectId }}`,
+            variables: {userGuid: userGuid, active: active}});
 
         dispatch({
             type: LOAD_TESTS,
             payload: response.data.getUserTests
         });
     } catch (err) {
+        console.log("  ############  ** API ERROR ** :  >>>> ", JSON.stringify(err));
         dispatch({
             type: FETCH_FAILURE,
             payload: { msg: err.toString() }

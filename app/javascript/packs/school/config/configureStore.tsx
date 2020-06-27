@@ -17,9 +17,11 @@ let config: object = {
 
 declare global {
   interface Window {
-    devToolsExtension: any;
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
   }
 }
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__() || compose;
 
 export default function configureStore(initialState={}) {
 
@@ -32,7 +34,7 @@ export default function configureStore(initialState={}) {
     initialState,
     compose(
       applyMiddleware(thunk, createLogger()),
-      window.devToolsExtension ? window.devToolsExtension() : f => f
+      composeEnhancers
     )
   );
 
